@@ -1,5 +1,6 @@
 import './App.css'
 import { AppProviders } from './context'
+import AppConsumer from './AppConsumer'
 
 function App() {
   return (
@@ -7,11 +8,5 @@ function App() {
       <AppConsumer />
     </AppProviders>
   )
-}
-
-const AppConsumer = () => {
-  return <div className="App">
-    hello world
-  </div>
 }
 export default App
