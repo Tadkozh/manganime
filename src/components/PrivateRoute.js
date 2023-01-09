@@ -1,11 +1,10 @@
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { redirect } from 'react-router-dom'
 
 const PrivateRoute = ({ children }) => {
-  const navigate = useNavigate()
   const { data: authUser } = useAuth()
   if (authUser != null && authUser !== undefined) {
-    navigate('/')
+    redirect('/')
   }
   return children
 }
