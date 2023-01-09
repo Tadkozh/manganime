@@ -4,12 +4,12 @@ import axios from 'axios'
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
 
-  const id = 16143
+  const id = 190
 
   const getDataFromApi = () => {
     axios.get(`https://api.jikan.moe/v4/anime/${id}/news`).then((response) => {
-      console.log(response.data)
-      setAnimeNews(response.data)
+      console.log(response.data.data)
+      setAnimeNews(response.data.data)
     })
   }
 
@@ -19,17 +19,36 @@ export const NewsAnime = () => {
 
   return (
     <>
-      <h1>Anime News</h1>
-      <div>
+      <h2>News</h2>
+      <div className="hey">
         {animeNews
-          ? animeNews.map((animeNew) => (
-              <animeNew key={animeNew.mal_id} animeNew={animeNew} />
-            ))
-          : 'Loading...'}
+          ? animeNews.map((data, index) => {
+              return (
+                <div key={index} className="news">
+                  <p>{data.title}</p>
+                  <img src={data.images.jpg.image_url} alt="" target="_blank" />
+                  <p>excerpt: {data.excerpt}</p>
+                  <a href={data.forum_url}>See article</a>
+                </div>
+              )
+            })
+          : 'No news...'}
       </div>
     </>
   )
 }
+
+// {getNews?.data ? (
+//   <div className="hey">
+//   {getNews.data.map((data, index) => {
+//     return (
+//       <div key={index} className="news">
+//       <p>{data.title}</p>
+//       {/* <img /> */}
+//       <p>excerpt: {data.excerpt}</p>
+//       <a href={data.author_url}>author_url</a>
+//       <a href={data.forum_url}>forum_url</a>
+//       </div>)})}</div>) : null}
 
 // https://api.jikan.moe/v4/anime/{id}/news
 
