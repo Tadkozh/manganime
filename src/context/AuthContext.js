@@ -7,12 +7,13 @@ import {
   signOut,
 } from 'firebase/auth'
 import { auth } from '../firebase-config'
+import { useCleanupError } from '../hooks/cleanupError'
 
 const AuthContext = React.createContext()
 
 const AuthProviders = (props) => {
   const [data, setData] = React.useState({})
-  const [error, setError] = React.useState(null)
+  const { clean: error, setClean: setError } = useCleanupError(null)
 
   const register = (email, password) => {
     const errorForm = validateForm(email, password)
