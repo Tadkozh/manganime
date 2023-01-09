@@ -1,21 +1,7 @@
-import { Typography, Container, Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { ErrorTemplate } from './ErrorTemplate'
 
 const ErrorFallback = ({ error, resetErrorBoundary }) => {
-  const navigate = useNavigate()
-
-  const handleClick = () => {
-    navigate('/')
-    resetErrorBoundary()
-  }
-
-  return (
-    <Container>
-      <Typography variant="h1">Vous cherchez votre chemin ?</Typography>
-      <Typography variant="body1">{`Erreur : ${error}`}</Typography>
-      <Button onClick={handleClick}>Accueil</Button>
-    </Container>
-  )
+  return <ErrorTemplate error={error} reset={resetErrorBoundary} />
 }
 
 export { ErrorFallback }
