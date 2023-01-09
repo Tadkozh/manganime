@@ -5,7 +5,8 @@ import { BAD_USE_CONTEXT } from '../commons/constants'
 const AuthContext = React.createContext()
 
 const AuthProvider = (props) => {
-  return <AuthContext.Provider {...props} />
+  const values = null
+  return <AuthContext.Provider {...props} value={values}/>
 }
 
 const useAuth = () => {
