@@ -2,15 +2,13 @@ import React from 'react'
 import { BAD_USE_CONTEXT } from '../commons/constants'
 import { validateForm } from '../utils/helper'
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
+import { auth } from '../firebase-config'
 
 const AuthContext = React.createContext()
-
-const auth = getAuth()
 
 const AuthProviders = (props) => {
   const [data, setData] = React.useState({})
