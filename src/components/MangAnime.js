@@ -1,10 +1,11 @@
-import { TopAnimeSearch } from './TopMangAnime'
+import TopDetails from './TopDetails'
 
 const MangAnime = () => {
   return (
     <>
       <div>hello world</div>
-      <TopAnimeSearch />
+      <TopDetails name={'Animes'} />
+      <TopDetails name={'Mangas'} />
     </>
   )
 }
