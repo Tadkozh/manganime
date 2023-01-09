@@ -11,10 +11,11 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { DialogContent } from '@mui/material'
+import { Alert, DialogContent } from '@mui/material'
 
 export {
   Avatar,
+  Alert,
   Box,
   Button,
   Checkbox,

@@ -33,26 +33,5 @@ describe('LoginRegister component', () => {
   })
   test.todo(
     `Quand on clique sur le lien 'créer un compte', le header et le texte du boutton change`,
-    async () => {},
-  )
-  test.todo(
-    `Quand l'email est vide, on obtient un message d'erreur`,
-    async () => {},
-  )
-  test.todo(
-    `Quand le mot de passe est vide, on obtient un message d'erreur`,
-    async () => {},
-  )
-  test.todo(
-    `Quand le champs email est un incorrect, on obtient un message d'erreur`,
-    async () => {},
-  )
-  test.todo(
-    `Quand le champs mot de passe est un incorrect, on obtient un message d'erreur`,
-    async () => {},
-  )
-  test.todo(
-    `Quand la longeur du mot de passe est inférieur à six, on obtient un message d'erreur`,
-    async () => {},
   )
 })
