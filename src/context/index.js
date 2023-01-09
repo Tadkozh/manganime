@@ -1,7 +1,7 @@
-import { AuthProvider } from './AuthContext'
+import { AuthProviders } from './AuthContext'
 
-const AppProvider = ({ children }) => {
-  return <AuthProvider>{children}</AuthProvider>
+const AppProviders = ({ children }) => {
+  return <AuthProviders>{children}</AuthProviders>
 }
 
-export { AppProvider }
+export { AppProviders }

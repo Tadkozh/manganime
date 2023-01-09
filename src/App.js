@@ -1,11 +1,11 @@
 import './App.css'
-import { AppProvider } from './context'
+import { AppProviders } from './context'
 
 function App() {
   return (
-    <AppProvider>
+    <AppProviders>
       <AppConsumer />
-    </AppProvider>
+    </AppProviders>
   )
 }
 
