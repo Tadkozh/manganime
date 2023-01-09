@@ -1,6 +1,5 @@
 import {
   Avatar,
-  // eslint-disable-next-line no-unused-vars
   Alert,
   Box,
   Button,
@@ -16,6 +15,7 @@ import {
   DialogContent,
 } from '.'
 import * as React from 'react'
+import {useAuth} from '../context/AuthContext'
 
 const TextFieldCustom = ({
   name = '',
@@ -66,13 +66,8 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const login = (email, password, checked) => {
-    console.log('login')
-  }
-  const register = (email, password, checked) => {
-    console.log('register')
-  }
-  // const { login, register, authError: error } = useAuth()
+
+  const { login, register, error } = useAuth()
 
   const handleSignUp = () => {
     setCreate(false)
@@ -96,9 +91,9 @@ const LoginRegister = ({ signup = true }) => {
           </Typography>
           <DialogContent>
             <FormLogin login={login} register={register} create={create} />
-            {/* {error ? (
+            {error ? (
               <Alert severity="error">Erreur: {error.message}</Alert>
-            ) : null} */}
+            ) : null}
           </DialogContent>
 
           <Grid container>
