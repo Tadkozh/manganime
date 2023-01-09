@@ -1,5 +1,5 @@
 import { Typography, Container, Button } from '.'
-import { useNavigate, Link } from 'react-router-dom'
+import { redirect, Link } from 'react-router-dom'
 
 const getProps = {
   height: '100vh',
@@ -9,10 +9,8 @@ const getProps = {
 }
 
 const ErrorTemplate = ({ error = null, reset = () => {} }) => {
-  const navigate = useNavigate()
-
   const handleClick = () => {
-    navigate('/')
+    redirect('/')
     reset()
   }
 
