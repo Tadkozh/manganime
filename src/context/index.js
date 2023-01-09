@@ -1,5 +1,6 @@
 import { AuthProviders } from './AuthContext'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { ENV_DEV } from '../commons/constants'
 
 const queryClient = new QueryClient({
@@ -26,7 +27,9 @@ const AppProviders = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProviders>{children}</AuthProviders>
-      {process.env.NODE_ENV === ENV_DEV && <div></div>}
+      {process.env.NODE_ENV === ENV_DEV && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
     </QueryClientProvider>
   )
 }
