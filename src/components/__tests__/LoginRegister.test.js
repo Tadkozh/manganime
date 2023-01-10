@@ -1,7 +1,5 @@
 import { faker } from '@faker-js/faker'
-import {
-  screen
-} from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Navigate } from 'react-router-dom'
 import { render } from '../../test/test-utils'
@@ -24,6 +22,7 @@ jest.mock('firebase/auth', () => {
           email: email,
         },
       }),
+      setPersistence: () => Promise.resolve(),
   }
 })
 
