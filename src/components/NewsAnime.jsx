@@ -4,6 +4,9 @@ import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
+import Stack from '@mui/material/Stack'
+import Item from '@mui/material/Stack'
+// import Box from '@mui/material/Stack'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 export const NewsAnime = () => {
@@ -24,7 +27,7 @@ export const NewsAnime = () => {
 
   return (
     <>
-      <h2>News Accordion</h2>
+      <h2>News about this Anime</h2>
       <div className="hey">
         {animeNews
           ? animeNews.map((data, index) => {
@@ -36,18 +39,30 @@ export const NewsAnime = () => {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography>{data.title}</Typography>
+                      <Typography sx={{ fontWeight: 'bold' }}>
+                        {data.title}
+                      </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>
-                        <img
-                          src={data.images.jpg.image_url}
-                          alt=""
-                          target="_blank"
-                        />
-                        <span>excerpt: {data.excerpt}</span>
-                        <a href={data.forum_url}>See article</a>
-                      </Typography>
+                      <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        flexWrap="wrap"
+                        spacing={2}
+                      >
+                        <Item sx={{ width: 300, textAlign: 'center' }}>
+                          <img
+                            src={data.images.jpg.image_url}
+                            alt=""
+                            target="_blank"
+                          />
+                        </Item>
+                        <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
+                          <span>Excerpt: {data.excerpt}</span>
+                          <a href={data.forum_url}>See article</a>
+                        </Item>
+                      </Stack>
                     </AccordionDetails>
                   </Accordion>
                 </div>
