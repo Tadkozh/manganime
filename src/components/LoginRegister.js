@@ -1,21 +1,22 @@
+import * as React from 'react'
+import { Navigate } from 'react-router-dom'
 import {
-  Avatar,
-  // eslint-disable-next-line no-unused-vars
   Alert,
+  Avatar,
   Box,
   Button,
   Checkbox,
   CssBaseline,
+  DialogContent,
   FormControlLabel,
   Grid,
-  Link,
   LockOutlinedIcon,
   Paper,
   TextField,
-  Typography,
-  DialogContent,
+  Typography
 } from '.'
-import * as React from 'react'
+import { SIGN_IN, SIGN_UP } from '../commons/constants'
+import { useAuth } from '../context/AuthContext'
 
 const TextFieldCustom = ({
   name = '',
@@ -66,19 +67,17 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const login = (email, password, checked) => {
-    console.log('login')
-  }
-  const register = (email, password, checked) => {
-    console.log('register')
-  }
-  // const { login, register, authError: error } = useAuth()
+  const { preValidate, error, data } = useAuth()
 
   const handleSignUp = () => {
     setCreate(false)
   }
   const handleSignIn = () => {
     setCreate(true)
+  }
+
+  if (data !== null) {
+    return <Navigate to="/profile" />
   }
 
   const label = create ? 'Se connecter' : 'Créer un compte'
@@ -95,19 +94,19 @@ const LoginRegister = ({ signup = true }) => {
             {label}
           </Typography>
           <DialogContent>
-            <FormLogin login={login} register={register} create={create} />
-            {/* {error ? (
+            <FormLogin preValidate={preValidate} create={create} />
+            {error ? (
               <Alert severity="error">Erreur: {error.message}</Alert>
-            ) : null} */}
+            ) : null}
           </DialogContent>
 
           <Grid container>
             <Grid item xs></Grid>
             <Grid item>
               {create ? (
-                <Link onClick={handleSignUp}>Créer un compte</Link>
+                <Button onClick={handleSignUp}>Créer un compte</Button>
               ) : (
-                <Link onClick={handleSignIn}>Se connecter</Link>
+                <Button onClick={handleSignIn}>Se connecter</Button>
               )}
             </Grid>
           </Grid>
@@ -116,7 +115,7 @@ const LoginRegister = ({ signup = true }) => {
     </Grid>
   )
 }
-const FormLogin = ({ login, register, create }) => {
+const FormLogin = ({ preValidate, create }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [checked, setChecked] = React.useState(false)
@@ -125,11 +124,12 @@ const FormLogin = ({ login, register, create }) => {
   const handleChangePasword = (e) => setPassword(e.target.value)
   const handleChangeChecked = (e) => setChecked(e.target.checked)
 
+  // ajout checked à faire
   const handleSubmit = (event) => {
     event.preventDefault()
     create
-      ? login(email, password, checked)
-      : register(email, password, checked)
+      ? preValidate(email, password, SIGN_IN)
+      : preValidate(email, password, SIGN_UP)
   }
 
   return (
@@ -142,7 +142,8 @@ const FormLogin = ({ login, register, create }) => {
         onChange={handleChangeEmail}
       />
       <TextFieldCustom
-        name="mot de passe"
+        label="mot de passe"
+        name="password"
         complete="current-password"
         onChange={handleChangePasword}
       />
@@ -163,3 +164,4 @@ const FormLogin = ({ login, register, create }) => {
   )
 }
 export { LoginRegister }
+

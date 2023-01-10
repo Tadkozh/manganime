@@ -1,52 +1,56 @@
 import React from 'react'
-import { BAD_USE_CONTEXT } from '../commons/constants'
-import { validateForm } from '../utils/helper'
+
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
+  browserSessionPersistence, createUserWithEmailAndPassword, setPersistence, signInWithEmailAndPassword,
+  signOut
 } from 'firebase/auth'
+import { BAD_USE_CONTEXT, SIGN_IN } from '../commons/constants'
 import { auth } from '../firebase-config'
+import { useUserData } from '../hooks/useUserData'
+import { validateForm } from '../utils/helper'
 
 const AuthContext = React.createContext()
 
 const AuthProviders = (props) => {
-  const [data, setData] = React.useState({})
-  const [error, setError] = React.useState(null)
+  const { data, status, error, setError, execute, setData } = useUserData()
 
-  const register = (email, password) => {
-    const errorForm = validateForm(email, password)
-    if (!errorForm) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => setData(userCredential.user))
-        .catch((err) => {
-          setError(err)
-        })
-    } else {
-      setError(errorForm)
-    }
-  }
-  const login = (email, password) => {
-    const errorForm = validateForm(email, password)
-    if (!errorForm) {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => setData(userCredential.user))
-        .catch((err) => {
-          setError(err)
-        })
-    } else {
-      setError(errorForm)
-    }
-  }
-  const logout = () => {
+  const register = React.useCallback(
+    (email, password) => {
+      setPersistence(auth, browserSessionPersistence).then(() => {
+        execute(createUserWithEmailAndPassword(auth, email, password))
+      })
+    },
+    [execute],
+  )
+  const login = React.useCallback(
+    (email, password) => {
+      setPersistence(auth, browserSessionPersistence).then(() => {
+        execute(signInWithEmailAndPassword(auth, email, password))
+      })
+    },
+    [execute],
+  )
+  const preValidate = React.useCallback(
+    (email, password, action = SIGN_IN) => {
+      const errorForm = validateForm(email, password)
+      if (errorForm) {
+        setError(errorForm)
+        return
+      }
+      action === SIGN_IN ? login(email, password) : register(email, password)
+    },
+    [login, register, setError],
+  )
+
+  const logout = React.useCallback(() => {
     signOut(auth).then(() => {
       setData(null)
     })
-  }
+  }, [setData])
 
   const values = React.useMemo(
-    () => ({ login, logout, register, data, error }),
-    [data, error],
+    () => ({ preValidate, logout, data, error, status }),
+    [data, error, logout, preValidate, status],
   )
   return <AuthContext.Provider {...props} value={values} />
 }
@@ -60,3 +64,4 @@ const useAuth = () => {
 }
 
 export { AuthProviders, useAuth }
+
