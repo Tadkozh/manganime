@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
@@ -19,16 +24,32 @@ export const NewsAnime = () => {
 
   return (
     <>
-      <h2>News</h2>
+      <h2>News Accordion</h2>
       <div className="hey">
         {animeNews
           ? animeNews.map((data, index) => {
               return (
                 <div key={index} className="news">
-                  <p>{data.title}</p>
-                  <img src={data.images.jpg.image_url} alt="" target="_blank" />
-                  <p>excerpt: {data.excerpt}</p>
-                  <a href={data.forum_url}>See article</a>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>{data.title}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>
+                        <img
+                          src={data.images.jpg.image_url}
+                          alt=""
+                          target="_blank"
+                        />
+                        <span>excerpt: {data.excerpt}</span>
+                        <a href={data.forum_url}>See article</a>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
                 </div>
               )
             })
@@ -37,42 +58,3 @@ export const NewsAnime = () => {
     </>
   )
 }
-
-// {getNews?.data ? (
-//   <div className="hey">
-//   {getNews.data.map((data, index) => {
-//     return (
-//       <div key={index} className="news">
-//       <p>{data.title}</p>
-//       {/* <img /> */}
-//       <p>excerpt: {data.excerpt}</p>
-//       <a href={data.author_url}>author_url</a>
-//       <a href={data.forum_url}>forum_url</a>
-//       </div>)})}</div>) : null}
-
-// https://api.jikan.moe/v4/anime/{id}/news
-
-// {
-//   "pagination": {
-//     "last_visible_page": 0,
-//     "has_next_page": true
-//   },
-//   "data": [
-//     {
-//       "mal_id": 0,
-//       "url": "string",
-//       "title": "string",
-//       "date": "string",
-//       "author_username": "string",
-//       "author_url": "string",
-//       "forum_url": "string",
-//       "images": {
-//         "jpg": {
-//           "image_url": "string"
-//         }
-//       },
-//       "comments": 0,
-//       "excerpt": "string"
-//     }
-//   ]
-// }
