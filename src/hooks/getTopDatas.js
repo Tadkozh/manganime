@@ -17,7 +17,7 @@ const useGetTopDatas = (condition, url, dataToSet, setCondition) => {
     return () => {
       setCondition(false)
     }
-  },[condition, dataToSet, setCondition, url])
+  }, [condition, dataToSet, setCondition, url])
 }
 
 export default useGetTopDatas

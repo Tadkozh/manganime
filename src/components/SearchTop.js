@@ -1,9 +1,13 @@
 import React from 'react'
 
-const SearchTop = ({ handleSubmit }) => {
+const SearchTop = ({ name, handleSubmit }) => {
   return (
-    <button onClick={handleSubmit} value="Search">
-      Search
+    <button
+      type="button"
+      name={`${name}-search-btn`.toLowerCase()}
+      onClick={handleSubmit}
+    >
+      {`Search ${name}`}
     </button>
   )
 }

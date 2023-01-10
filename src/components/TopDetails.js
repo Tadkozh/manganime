@@ -3,7 +3,7 @@ import useGetTopDatas from '../hooks/getTopDatas'
 import SearchTop from './SearchTop'
 import TopView from './TopView'
 
-const TopsDetails = ({ name }) => {
+const TopDetails = ({ name }) => {
   const topAnimesApiUrl = 'https://api.jikan.moe/v4/top/anime'
   const topMangasApiUrl = 'https://api.jikan.moe/v4/top/manga'
   let url = ''
@@ -24,11 +24,11 @@ const TopsDetails = ({ name }) => {
     <>
       <article>
         <h2>Top {name}</h2>
-        <SearchTop handleSubmit={(e) => setisSubmitted(true)} />
+        <SearchTop name={name} handleSubmit={(e) => setisSubmitted(true)} />
         <TopView datas={topDatas} />
       </article>
     </>
   )
 }
 
-export default TopsDetails
+export default TopDetails
