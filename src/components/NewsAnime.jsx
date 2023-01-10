@@ -12,7 +12,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
 
+  // const id = 1
+  // const id = 100
   const id = 190
+
+  // const clientApi = (endpoint = null, params = {}) => {
+  //   return axios
+  //     .get(${url}/${params}/${endpoint})
+  //     .then((data) => data)
+  //     .catch((error) => error)
+  // }
 
   const getDataFromApi = () => {
     axios.get(`https://api.jikan.moe/v4/anime/${id}/news`).then((response) => {

@@ -4,7 +4,8 @@ import axios from 'axios'
 export const RecommendationAnim = () => {
   const [animeRecom, setAnimeRecom] = useState([])
 
-  const id = 190
+  // const id = 190
+  const id = 1
 
   const getDataFromApi = () => {
     axios
@@ -29,7 +30,7 @@ export const RecommendationAnim = () => {
                 <div key={index}>
                   <p>{data.entry.title}</p>
                   <img
-                    src={data.entry.images.webp.small_image_url}
+                    src={data.entry.images.jpg.small_image_url}
                     alt=""
                     target="_blank"
                   />
