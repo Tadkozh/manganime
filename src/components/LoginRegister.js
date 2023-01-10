@@ -1,21 +1,17 @@
+import * as React from 'react'
+import { Navigate } from 'react-router-dom'
 import {
-  Avatar,
-  Alert,
-  Box,
+  Alert, Avatar, Box,
   Button,
   Checkbox,
-  CssBaseline,
-  FormControlLabel,
+  CssBaseline, DialogContent, FormControlLabel,
   Grid,
-  Link,
   LockOutlinedIcon,
   Paper,
   TextField,
-  Typography,
-  DialogContent,
+  Typography
 } from '.'
-import * as React from 'react'
-import {useAuth} from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 
 const TextFieldCustom = ({
   name = '',
@@ -66,14 +62,17 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-
-  const { login, register, error } = useAuth()
+  const { login, register, error, data } = useAuth()
 
   const handleSignUp = () => {
     setCreate(false)
   }
   const handleSignIn = () => {
     setCreate(true)
+  }
+
+  if (data !== null) {
+    return <Navigate to='/profile'/>
   }
 
   const label = create ? 'Se connecter' : 'Créer un compte'
@@ -100,9 +99,9 @@ const LoginRegister = ({ signup = true }) => {
             <Grid item xs></Grid>
             <Grid item>
               {create ? (
-                <Link onClick={handleSignUp}>Créer un compte</Link>
+                <Button onClick={handleSignUp} >Créer un compte</Button>
               ) : (
-                <Link onClick={handleSignIn}>Se connecter</Link>
+                <Button onClick={handleSignIn}>Se connecter</Button>
               )}
             </Grid>
           </Grid>
@@ -137,7 +136,8 @@ const FormLogin = ({ login, register, create }) => {
         onChange={handleChangeEmail}
       />
       <TextFieldCustom
-        name="mot de passe"
+        label="mot de passe"
+        name="password"
         complete="current-password"
         onChange={handleChangePasword}
       />
@@ -158,3 +158,4 @@ const FormLogin = ({ login, register, create }) => {
   )
 }
 export { LoginRegister }
+
