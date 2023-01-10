@@ -1,16 +1,21 @@
 import * as React from 'react'
 import { Navigate } from 'react-router-dom'
 import {
-  Alert, Avatar, Box,
+  Alert,
+  Avatar,
+  Box,
   Button,
   Checkbox,
-  CssBaseline, DialogContent, FormControlLabel,
+  CssBaseline,
+  DialogContent,
+  FormControlLabel,
   Grid,
   LockOutlinedIcon,
   Paper,
   TextField,
   Typography
 } from '.'
+import { SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 
 const TextFieldCustom = ({
@@ -62,7 +67,7 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const { login, register, error, data } = useAuth()
+  const { preValidate, error, data } = useAuth()
 
   const handleSignUp = () => {
     setCreate(false)
@@ -72,7 +77,7 @@ const LoginRegister = ({ signup = true }) => {
   }
 
   if (data !== null) {
-    return <Navigate to='/profile'/>
+    return <Navigate to="/profile" />
   }
 
   const label = create ? 'Se connecter' : 'Créer un compte'
@@ -89,7 +94,7 @@ const LoginRegister = ({ signup = true }) => {
             {label}
           </Typography>
           <DialogContent>
-            <FormLogin login={login} register={register} create={create} />
+            <FormLogin preValidate={preValidate} create={create} />
             {error ? (
               <Alert severity="error">Erreur: {error.message}</Alert>
             ) : null}
@@ -99,7 +104,7 @@ const LoginRegister = ({ signup = true }) => {
             <Grid item xs></Grid>
             <Grid item>
               {create ? (
-                <Button onClick={handleSignUp} >Créer un compte</Button>
+                <Button onClick={handleSignUp}>Créer un compte</Button>
               ) : (
                 <Button onClick={handleSignIn}>Se connecter</Button>
               )}
@@ -110,7 +115,7 @@ const LoginRegister = ({ signup = true }) => {
     </Grid>
   )
 }
-const FormLogin = ({ login, register, create }) => {
+const FormLogin = ({ preValidate, create }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [checked, setChecked] = React.useState(false)
@@ -119,11 +124,12 @@ const FormLogin = ({ login, register, create }) => {
   const handleChangePasword = (e) => setPassword(e.target.value)
   const handleChangeChecked = (e) => setChecked(e.target.checked)
 
+  // ajout checked à faire
   const handleSubmit = (event) => {
     event.preventDefault()
     create
-      ? login(email, password, checked)
-      : register(email, password, checked)
+      ? preValidate(email, password, SIGN_IN)
+      : preValidate(email, password, SIGN_UP)
   }
 
   return (
