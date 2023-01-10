@@ -1,9 +1,11 @@
-import userEvent from '@testing-library/user-event'
-import { LoginRegister } from '../LoginRegister'
-import { screen } from '@testing-library/react'
 import { faker } from '@faker-js/faker'
-import { render } from '../../test/test-utils'
+import {
+  screen
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Navigate } from 'react-router-dom'
+import { render } from '../../test/test-utils'
+import { LoginRegister } from '../LoginRegister'
 
 jest.mock('../../firebase-config', () => {
   return {
@@ -55,10 +57,55 @@ describe('LoginRegister component', () => {
     expect(testUser).not.toBeInTheDocument()
     await user.click(connexionButton)
     expect(Navigate).toHaveBeenCalledTimes(1)
-    expect(Navigate).toHaveBeenCalledWith({'to':'/profile'},{})
-
+    expect(Navigate).toHaveBeenCalledWith({ to: '/profile' }, {})
   })
-  test.todo(
-    `Quand on clique sur le lien 'créer un compte', le header et le texte du boutton change`,
-  )
+  test(`Quand on clique sur le lien 'créer un compte', le header et le texte du boutton change`, async () => {
+    const user = userEvent.setup()
+    render(<LoginRegister />)
+
+    const createButton = screen.queryByRole('button', {
+      name: 'Créer un compte',
+    })
+    const loginButton = screen.queryByRole('button', {
+      name: 'Se connecter',
+    })
+
+    const submitCreateButton = screen.queryByRole('button', {
+      name: 'Créer',
+    })
+    const submitLoginButton = screen.queryByRole('button', {
+      name: 'Connexion',
+    })
+    const header = screen.queryByRole('heading')
+
+    expect(createButton).toBeInTheDocument()
+    expect(loginButton).not.toBeInTheDocument()
+    expect(submitLoginButton).toBeInTheDocument()
+    expect(submitCreateButton).not.toBeInTheDocument()
+    expect(header).toHaveTextContent('Se connecter')
+
+    await user.click(createButton)
+
+    expect(
+      screen.queryByRole('button', {
+        name: 'Créer un compte',
+      }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'Se connecter',
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', {
+        name: 'Connexion',
+      }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'Créer',
+      }),
+    ).toBeInTheDocument()
+    expect(header).toHaveTextContent('Créer un compte')
+  })
 })

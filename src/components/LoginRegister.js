@@ -6,7 +6,6 @@ import {
   Checkbox,
   CssBaseline, DialogContent, FormControlLabel,
   Grid,
-  Link,
   LockOutlinedIcon,
   Paper,
   TextField,
@@ -100,9 +99,9 @@ const LoginRegister = ({ signup = true }) => {
             <Grid item xs></Grid>
             <Grid item>
               {create ? (
-                <Link onClick={handleSignUp}>Créer un compte</Link>
+                <Button onClick={handleSignUp} >Créer un compte</Button>
               ) : (
-                <Link onClick={handleSignIn}>Se connecter</Link>
+                <Button onClick={handleSignIn}>Se connecter</Button>
               )}
             </Grid>
           </Grid>
