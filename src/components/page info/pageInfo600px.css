@@ -1,0 +1,41 @@
+@media (min-width: 600px) {
+  .info {
+    align-items: flex-start;
+  }
+
+  .infoHeaderAndSynopsis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .synopsisWrapper {
+    margin: 0;
+  }
+  .synopsis {
+    height: 100%;
+    max-height: 400px;
+  }
+  .synopsis.active {
+    max-height: 100%;
+  }
+  /* .synopsisWrapper button {
+    display: none;
+  } */
+
+  .miscellaneousInfos {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5px;
+  }
+  .miscellaneousInfos > div {
+    width: 100%;
+  }
+  .miscellaneousInfos > div > div {
+    display: flex;
+    align-items: center;
+  }
+}

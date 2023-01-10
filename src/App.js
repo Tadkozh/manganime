@@ -9,4 +9,5 @@ function App() {
     </AppProviders>
   )
 }
+
 export default App
