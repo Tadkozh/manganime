@@ -13,11 +13,12 @@ export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/news
+  //https://api.jikan.moe/v4/manga/{id}/news
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
   const id = 1 // id : 1, 190
-  const params = 'manga' // params : anime, manga
+  const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
   //   return axios
@@ -44,7 +45,7 @@ export const NewsAnime = () => {
 
   return (
     <>
-      <h2>News about this ${params}</h2>
+      <h2>News about this {params}</h2>
       <p>(click on a title to learn more)</p>
       <div>
         {animeNews
