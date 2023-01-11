@@ -1,5 +1,5 @@
 import React from 'react'
-import '../commons/common-css.css'
+import '../styles/common-css.css'
 
 const TopView = ({ datas }) => {
   return (

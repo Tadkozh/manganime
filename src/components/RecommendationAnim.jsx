@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import '../commons/common-css.css'
+import '../styles/common-css.css'
 
 export const RecommendationAnim = () => {
   const [animeRecom, setAnimeRecom] = useState([])
 
-  // id : 1, 100, 190
-  const id = 190
+  // https://api.jikan.moe/v4/anime/${id}/recommendations
+  //https://api.jikan.moe/v4/manga/{id}/recommendations
+
+  const APP_API_URL = 'https://api.jikan.moe/v4'
+  const endpoint = 'recommendations'
+  const id = 190 // id : 1, 100, 190
+  const params = 'manga' // params : anime, manga
+
+  // const clientApi = (endpoint = null, params = {}) => {
+  //   return axios
+  //     .get(${url}/${params}/${endpoint})
+  //     .then((data) => data)
+  //     .catch((error) => error)
+  // }
 
   const getDataFromApi = () => {
     axios
-      .get(`https://api.jikan.moe/v4/anime/${id}/recommendations`)
+      .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
       .then((response) => {
         console.log(response.data.data)
         setAnimeRecom(response.data.data)
       })
+      .catch((error) => error)
   }
 
   useEffect(() => {
@@ -23,7 +36,7 @@ export const RecommendationAnim = () => {
 
   return (
     <>
-      <h2>People who like this anime also enjoy</h2>
+      <h2>{`People who like this ${params} also enjoy`}</h2>
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {

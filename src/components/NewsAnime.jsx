@@ -12,8 +12,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
 
-  // id : 1, 100, 190
-  const id = 190
+  // https://api.jikan.moe/v4/anime/${id}/news
+
+  const APP_API_URL = 'https://api.jikan.moe/v4'
+  const endpoint = 'news'
+  const id = 1 // id : 1, 190
+  const params = 'manga' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
   //   return axios
@@ -24,8 +28,10 @@ export const NewsAnime = () => {
 
   const getDataFromApi = () => {
     axios
-      .get(`https://api.jikan.moe/v4/anime/${id}/news`)
+
+      .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
       .then((response) => {
+        console.log(`${APP_API_URL}/${params}/${id}/${endpoint}`)
         console.log(response.data.data)
         setAnimeNews(response.data.data)
       })
@@ -38,7 +44,7 @@ export const NewsAnime = () => {
 
   return (
     <>
-      <h2>News about this Anime</h2>
+      <h2>News about this ${params}</h2>
       <p>(click on a title to learn more)</p>
       <div>
         {animeNews
