@@ -3,7 +3,7 @@ import {
   EMAIL_NOT_VALID,
   EMAIL_REQUIRED,
   PASSWORD_REQUIRED,
-  PASSWORD_REQUIREMENT,
+  PASSWORD_REQUIREMENT
 } from '../constants'
 import { validateForm } from '../helper'
 

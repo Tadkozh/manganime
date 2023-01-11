@@ -1,5 +1,5 @@
-import { Typography, Container, Button } from '.'
-import { redirect, Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
+import { Button, Container, Typography } from '.'
 
 const getProps = {
   height: '100vh',

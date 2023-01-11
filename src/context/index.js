@@ -1,7 +1,7 @@
-import { AuthProviders } from './AuthContext'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { ENV_DEV } from '../commons/constants'
+import { AuthProviders } from './AuthContext'
 
 const queryClient = new QueryClient({
   defaultOptions: {
