@@ -3,7 +3,7 @@ import useGetTopDatas from '../hooks/getTopDatas'
 import TopView from './TopView'
 
 const TopDetails = ({ name }) => {
-  const topDatas = useGetTopDatas(name)
+  const { topDatas } = useGetTopDatas(name)
 
   return (
     <>

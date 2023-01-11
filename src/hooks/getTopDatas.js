@@ -21,7 +21,7 @@ const useGetTopDatas = (name) => {
     return () => clearTimeout(delay)
   }, [request, url])
 
-  return topDatas
+  return { topDatas }
 }
 
 export default useGetTopDatas
