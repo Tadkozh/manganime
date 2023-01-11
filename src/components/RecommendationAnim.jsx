@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import '../commons/common-css.css'
 
 export const RecommendationAnim = () => {
   const [animeRecom, setAnimeRecom] = useState([])
 
-  // const id = 190
-  const id = 1
+  // id : 1, 100, 190
+  const id = 190
 
   const getDataFromApi = () => {
     axios
@@ -23,24 +24,23 @@ export const RecommendationAnim = () => {
   return (
     <>
       <h2>People who like this anime also enjoy</h2>
-      <div className="hey">
+      <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
               return (
                 <div key={index}>
                   <p>{data.entry.title}</p>
-                  <img
-                    src={data.entry.images.jpg.small_image_url}
-                    alt=""
-                    target="_blank"
-                  />
+                  <img src={data.entry.images.jpg.image_url} alt="" />
                   <p>
                     <a href={data.entry.url}>Read more</a>
+                    <a
+                      href={data.entry.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Read more
+                    </a>
                   </p>
-
-                  {/* <img src={data.images.jpg.image_url} alt="" target="_blank" />
-                  <span>Excerpt: {data.excerpt}</span>
-                  <a href={data.forum_url}>See article</a> */}
                 </div>
               )
             })

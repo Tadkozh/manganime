@@ -12,8 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
 
-  // const id = 1
-  // const id = 100
+  // id : 1, 100, 190
   const id = 190
 
   // const clientApi = (endpoint = null, params = {}) => {
@@ -24,10 +23,13 @@ export const NewsAnime = () => {
   // }
 
   const getDataFromApi = () => {
-    axios.get(`https://api.jikan.moe/v4/anime/${id}/news`).then((response) => {
-      console.log(response.data.data)
-      setAnimeNews(response.data.data)
-    })
+    axios
+      .get(`https://api.jikan.moe/v4/anime/${id}/news`)
+      .then((response) => {
+        console.log(response.data.data)
+        setAnimeNews(response.data.data)
+      })
+      .catch((error) => error)
   }
 
   useEffect(() => {
@@ -37,7 +39,8 @@ export const NewsAnime = () => {
   return (
     <>
       <h2>News about this Anime</h2>
-      <div className="hey">
+      <p>(click on a title to learn more)</p>
+      <div>
         {animeNews
           ? animeNews.map((data, index) => {
               return (
@@ -47,8 +50,15 @@ export const NewsAnime = () => {
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
+                      sx={{
+                        background: 'silver',
+                      }}
                     >
-                      <Typography sx={{ fontWeight: 'bold' }}>
+                      <Typography
+                        sx={{
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {data.title}
                       </Typography>
                     </AccordionSummary>
@@ -69,7 +79,13 @@ export const NewsAnime = () => {
                         </Item>
                         <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
                           <span>Excerpt: {data.excerpt}</span>
-                          <a href={data.forum_url}>See article</a>
+                          <a
+                            href={data.forum_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            See article
+                          </a>
                         </Item>
                       </Stack>
                     </AccordionDetails>
