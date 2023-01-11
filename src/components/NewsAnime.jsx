@@ -3,22 +3,39 @@ import axios from 'axios'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Item from '@mui/material/Stack'
-// import Box from '@mui/material/Stack'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Button from '@mui/material/Button'
 
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
 
-  const id = 190
+  // https://api.jikan.moe/v4/anime/${id}/news
+
+  const APP_API_URL = 'https://api.jikan.moe/v4'
+  const endpoint = 'news'
+  const id = 1 // id : 1, 190
+  const params = 'manga' // params : anime, manga
+
+  // const clientApi = (endpoint = null, params = {}) => {
+  //   return axios
+  //     .get(${url}/${params}/${endpoint})
+  //     .then((data) => data)
+  //     .catch((error) => error)
+  // }
 
   const getDataFromApi = () => {
-    axios.get(`https://api.jikan.moe/v4/anime/${id}/news`).then((response) => {
-      console.log(response.data.data)
-      setAnimeNews(response.data.data)
-    })
+    axios
+
+      .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+      .then((response) => {
+        console.log(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+        console.log(response.data.data)
+        setAnimeNews(response.data.data)
+      })
+      .catch((error) => error)
   }
 
   useEffect(() => {
@@ -27,8 +44,9 @@ export const NewsAnime = () => {
 
   return (
     <>
-      <h2>News about this Anime</h2>
-      <div className="hey">
+      <h2>News about this ${params}</h2>
+      <p>(click on a title to learn more)</p>
+      <div>
         {animeNews
           ? animeNews.map((data, index) => {
               return (
@@ -38,8 +56,15 @@ export const NewsAnime = () => {
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
+                      sx={{
+                        background: 'silver',
+                      }}
                     >
-                      <Typography sx={{ fontWeight: 'bold' }}>
+                      <Typography
+                        sx={{
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {data.title}
                       </Typography>
                     </AccordionSummary>
@@ -60,7 +85,16 @@ export const NewsAnime = () => {
                         </Item>
                         <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
                           <span>Excerpt: {data.excerpt}</span>
-                          <a href={data.forum_url}>See article</a>
+                          <p>
+                            <Button
+                              variant="contained"
+                              href={data.forum_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              See article
+                            </Button>
+                          </p>
                         </Item>
                       </Stack>
                     </AccordionDetails>
