@@ -5,7 +5,8 @@ const PASSWORD_REQUIREMENT = 'Le mot de passe doit faire au moins 6 caractères'
 const USER_NOT_FOUND = "L'utilisateur n'existe pas"
 const WRONG_PASSWORD = 'Mot de passe incorrect'
 const TOO_MANY_REQUEST = 'Trop de tentative de conenxion, compte bloqué'
-
+const EMAIL_EXIST = "L'email est déjà utilisé"
+const USER_EXSIT = "L'utilisateur existe déjà"
 
 export {
   EMAIL_REQUIRED,
@@ -14,5 +15,7 @@ export {
   PASSWORD_REQUIREMENT,
   USER_NOT_FOUND,
   WRONG_PASSWORD,
-  TOO_MANY_REQUEST
+  TOO_MANY_REQUEST,
+  EMAIL_EXIST,
+  USER_EXSIT,
 }

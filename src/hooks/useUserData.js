@@ -1,37 +1,7 @@
 import React from 'react'
-import {
-  AUTH_TOO_MANY_REQUEST, AUTH_USER_NOT_FOUND,
-  AUTH_WRONG_PASSWORD, DONE, FAIL, FETCHING, IDLE
-} from '../commons/constants'
-import {
-  TOO_MANY_REQUEST, USER_NOT_FOUND,
-  WRONG_PASSWORD
-} from '../utils/constants'
+import { DONE, FAIL, FETCHING, IDLE } from '../commons/constants'
+import { errorAuth } from '../utils/helper'
 import { useCleanupError } from './cleanupError'
-
-
-const errorAuth = (error) => {
-  let message
-  switch (error.code) {
-    case AUTH_USER_NOT_FOUND:
-      message = USER_NOT_FOUND
-      break
-    case AUTH_WRONG_PASSWORD:
-      message = WRONG_PASSWORD
-      break
-    case AUTH_TOO_MANY_REQUEST:
-      message = TOO_MANY_REQUEST
-      break
-    default:
-      message = error.message
-      break
-  }
-  const newError = {
-    code: 400,
-    message: message,
-  }
-  return newError
-}
 
 const userReducer = (state, action) => {
   switch (action.type) {
@@ -73,7 +43,6 @@ const useUserData = () => {
   }
 
   const { data, status } = state
-
   return { data, status, error, setError, execute, setData }
 }
 

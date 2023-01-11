@@ -13,7 +13,7 @@ import {
   LockOutlinedIcon,
   Paper,
   TextField,
-  Typography
+  Typography,
 } from '.'
 import { SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
@@ -164,4 +164,3 @@ const FormLogin = ({ preValidate, create }) => {
   )
 }
 export { LoginRegister }
-

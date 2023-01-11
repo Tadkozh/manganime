@@ -1,9 +1,11 @@
-import React from 'react'
-
 import {
-  browserSessionPersistence, createUserWithEmailAndPassword, setPersistence, signInWithEmailAndPassword,
-  signOut
+  browserSessionPersistence,
+  createUserWithEmailAndPassword,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth'
+import React from 'react'
 import { BAD_USE_CONTEXT, SIGN_IN } from '../commons/constants'
 import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
@@ -41,7 +43,6 @@ const AuthProviders = (props) => {
     },
     [login, register, setError],
   )
-
   const logout = React.useCallback(() => {
     signOut(auth).then(() => {
       setData(null)
@@ -64,4 +65,3 @@ const useAuth = () => {
 }
 
 export { AuthProviders, useAuth }
-
