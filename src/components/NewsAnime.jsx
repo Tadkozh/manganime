@@ -3,11 +3,11 @@ import axios from 'axios'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Item from '@mui/material/Stack'
-// import Box from '@mui/material/Stack'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Button from '@mui/material/Button'
 
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
@@ -85,13 +85,16 @@ export const NewsAnime = () => {
                         </Item>
                         <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
                           <span>Excerpt: {data.excerpt}</span>
-                          <a
-                            href={data.forum_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            See article
-                          </a>
+                          <p>
+                            <Button
+                              variant="contained"
+                              href={data.forum_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              See article
+                            </Button>
+                          </p>
                         </Item>
                       </Stack>
                     </AccordionDetails>

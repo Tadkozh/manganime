@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import '../styles/common-css.css'
+import Button from '@mui/material/Button'
 
 export const RecommendationAnim = () => {
   const [animeRecom, setAnimeRecom] = useState([])
@@ -45,14 +46,14 @@ export const RecommendationAnim = () => {
                   <p>{data.entry.title}</p>
                   <img src={data.entry.images.jpg.image_url} alt="" />
                   <p>
-                    <a href={data.entry.url}>Read more</a>
-                    <a
+                    <Button
+                      variant="contained"
                       href={data.entry.url}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       Read more
-                    </a>
+                    </Button>
                   </p>
                 </div>
               )
