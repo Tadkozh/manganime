@@ -17,16 +17,16 @@ const AuthProviders = (props) => {
   const { data, status, error, setError, execute, setData } = useUserData()
 
   const register = React.useCallback(
-    (email, password) => {
-      setPersistence(auth, browserSessionPersistence).then(() => {
+    async (email, password) => {
+      await setPersistence(auth, browserSessionPersistence).then(() => {
         execute(createUserWithEmailAndPassword(auth, email, password))
       })
     },
     [execute],
   )
   const login = React.useCallback(
-    (email, password) => {
-      setPersistence(auth, browserSessionPersistence).then(() => {
+    async (email, password) => {
+      await setPersistence(auth, browserSessionPersistence).then(() => {
         execute(signInWithEmailAndPassword(auth, email, password))
       })
     },
