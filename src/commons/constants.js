@@ -11,6 +11,7 @@ const DONE = 'done'
 const FAIL = 'fail'
 const SIGN_IN = 'signIn'
 const SIGN_UP = 'signUp'
+const USER_COLLECTION = 'users'
 
 export {
   BAD_USE_CONTEXT,
@@ -26,4 +27,5 @@ export {
   FAIL,
   SIGN_IN,
   SIGN_UP,
+  USER_COLLECTION,
 }
