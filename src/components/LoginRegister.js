@@ -4,8 +4,10 @@ import {
   Alert,
   Avatar,
   Box,
+  Backdrop,
   Button,
   Checkbox,
+  CircularProgress,
   CssBaseline,
   DialogContent,
   FormControlLabel,
@@ -15,7 +17,7 @@ import {
   TextField,
   Typography,
 } from '.'
-import { SIGN_IN, SIGN_UP } from '../commons/constants'
+import { FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 
 const TextFieldCustom = ({
@@ -67,7 +69,7 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const { preValidate, error, data } = useAuth()
+  const { preValidate, error, data, status } = useAuth()
 
   const handleSignUp = () => {
     setCreate(false)
@@ -94,7 +96,11 @@ const LoginRegister = ({ signup = true }) => {
             {label}
           </Typography>
           <DialogContent>
-            <FormLogin preValidate={preValidate} create={create} />
+            <FormLogin
+              preValidate={preValidate}
+              create={create}
+              status={status}
+            />
             {error ? (
               <Alert severity="error">Erreur: {error.message}</Alert>
             ) : null}
@@ -115,7 +121,7 @@ const LoginRegister = ({ signup = true }) => {
     </Grid>
   )
 }
-const FormLogin = ({ preValidate, create }) => {
+const FormLogin = ({ preValidate, create, status }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [checked, setChecked] = React.useState(false)
@@ -134,6 +140,14 @@ const FormLogin = ({ preValidate, create }) => {
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+      {status === FETCHING ? (
+        <Backdrop
+          open={true}
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <CircularProgress />
+        </Backdrop>
+      ) : null}
       <TextFieldCustom
         label="adresse email"
         name="email"

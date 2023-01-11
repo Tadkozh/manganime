@@ -6,7 +6,8 @@ import {
   signOut,
 } from 'firebase/auth'
 import React from 'react'
-import { BAD_USE_CONTEXT, SIGN_IN } from '../commons/constants'
+import { BAD_USE_CONTEXT, SIGN_IN, SIGN_UP } from '../commons/constants'
+import { createUser } from '../database/operations'
 import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
 import { validateForm } from '../utils/helper'
@@ -15,18 +16,26 @@ const AuthContext = React.createContext()
 
 const AuthProviders = (props) => {
   const { data, status, error, setError, execute, setData } = useUserData()
+  const [authAction, setAuthAction] = React.useState(null)
+
+  React.useEffect(() => {
+    if (authAction === SIGN_UP && data != null) {
+      createUser(data.user)
+      setAuthAction(null)
+    }
+  }, [authAction, data])
 
   const register = React.useCallback(
-    (email, password) => {
-      setPersistence(auth, browserSessionPersistence).then(() => {
+    async (email, password) => {
+      await setPersistence(auth, browserSessionPersistence).then(() => {
         execute(createUserWithEmailAndPassword(auth, email, password))
       })
     },
     [execute],
   )
   const login = React.useCallback(
-    (email, password) => {
-      setPersistence(auth, browserSessionPersistence).then(() => {
+    async (email, password) => {
+      await setPersistence(auth, browserSessionPersistence).then(() => {
         execute(signInWithEmailAndPassword(auth, email, password))
       })
     },
@@ -40,6 +49,7 @@ const AuthProviders = (props) => {
         return
       }
       action === SIGN_IN ? login(email, password) : register(email, password)
+      setAuthAction(action)
     },
     [login, register, setError],
   )

@@ -1,5 +1,5 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { Alert, DialogContent } from '@mui/material'
+import { Alert, Backdrop, CircularProgress, DialogContent } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -17,8 +17,10 @@ export {
   Avatar,
   Alert,
   Box,
+  Backdrop,
   Button,
   Checkbox,
+  CircularProgress,
   Container,
   CssBaseline,
   DialogContent,
