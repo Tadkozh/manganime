@@ -9,6 +9,7 @@ import {
   EMAIL_EXIST,
   EMAIL_NOT_VALID,
   EMAIL_REQUIRED,
+  ERROR_UNKNOWN,
   PASSWORD_REQUIRED,
   PASSWORD_REQUIREMENT,
   TOO_MANY_REQUEST,
@@ -64,14 +65,15 @@ const errorAuth = (error) => {
       message = EMAIL_EXIST
       break
     default:
-      message = error.message
+      message = error.code
       break
   }
   const newError = {
     code: 400,
-    message: message,
+    message: message ?? ERROR_UNKNOWN,
   }
   return newError
 }
 
 export { validateForm, errorAuth }
+

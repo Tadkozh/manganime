@@ -1,46 +1,67 @@
+import { Backdrop, CircularProgress } from '@mui/material'
 import {
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
-  setPersistence,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
 import React from 'react'
-import { BAD_USE_CONTEXT, SIGN_IN, SIGN_UP } from '../commons/constants'
-import { createUser } from '../database/operations'
+import {
+  BAD_USE_CONTEXT,
+  DONE,
+  FETCHING,
+  SIGN_IN,
+  SIGN_UP,
+} from '../commons/constants'
+import { createUser, getUserByUid } from '../database/operations'
 import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
 import { validateForm } from '../utils/helper'
 
 const AuthContext = React.createContext()
 
+const afterAuth = (action, setAction, data) => {
+  if (action === SIGN_UP && data != null) {
+    createUser(data.user)
+    setAction(null)
+  }
+}
+
+const getUserConnect = async (currentUser) => {
+  const user = await getUserByUid(currentUser.uid)
+  return user
+}
 const AuthProviders = (props) => {
-  const { data, status, error, setError, execute, setData } = useUserData()
-  const [authAction, setAuthAction] = React.useState(null)
+  const { data, status, error, setError, setData, execute } = useUserData()
+
+  const retrieveUser = React.useCallback(
+    async (currentUser) => {
+      if (currentUser) {
+        const info = await getUserConnect(currentUser)
+        setData(info)
+      }
+    },
+    [setData],
+  )
 
   React.useEffect(() => {
-    if (authAction === SIGN_UP && data != null) {
-      createUser(data.user)
-      setAuthAction(null)
+    if (!data) {
+      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        if (currentUser) {
+          execute(getUserConnect(currentUser))
+        }
+      })
+      return unsubscribe
     }
-  }, [authAction, data])
+  }, [data, execute, retrieveUser, setData])
 
-  const register = React.useCallback(
-    async (email, password) => {
-      await setPersistence(auth, browserSessionPersistence).then(() => {
-        execute(createUserWithEmailAndPassword(auth, email, password))
-      })
-    },
-    [execute],
-  )
-  const login = React.useCallback(
-    async (email, password) => {
-      await setPersistence(auth, browserSessionPersistence).then(() => {
-        execute(signInWithEmailAndPassword(auth, email, password))
-      })
-    },
-    [execute],
-  )
+  const register = React.useCallback(async (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+  }, [])
+
+  const login = React.useCallback(async (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+  }, [])
   const preValidate = React.useCallback(
     (email, password, action = SIGN_IN) => {
       const errorForm = validateForm(email, password)
@@ -49,9 +70,9 @@ const AuthProviders = (props) => {
         return
       }
       action === SIGN_IN ? login(email, password) : register(email, password)
-      setAuthAction(action)
+      afterAuth(action, data)
     },
-    [login, register, setError],
+    [data, login, register, setError],
   )
   const logout = React.useCallback(() => {
     signOut(auth).then(() => {
@@ -60,10 +81,20 @@ const AuthProviders = (props) => {
   }, [setData])
 
   const values = React.useMemo(
-    () => ({ preValidate, logout, data, error, status }),
-    [data, error, logout, preValidate, status],
+    () => ({ data, error, status, logout, preValidate }),
+    [data, error, status, logout, preValidate],
   )
-  return <AuthContext.Provider {...props} value={values} />
+
+  if (status === FETCHING) {
+    return (
+      <Backdrop open={true}>
+        <CircularProgress />
+      </Backdrop>
+    )
+  }
+  if (status === DONE) {
+    return <AuthContext.Provider {...props} value={values} />
+  }
 }
 
 const useAuth = () => {

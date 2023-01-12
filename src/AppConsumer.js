@@ -21,14 +21,9 @@ const AppConsumer = () => {
         <Route path="/news" element={<NewsAnime />} />
         <Route path="/recommendations" element={<RecommendationAnim />} />
         <Route path="*" element={<Error404 />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <UserProfile />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/profile" element={<UserProfile />} />
+        </Route>
         <Route path="/infos" element={<PageInfo />} />
       </Routes>
     </Router>
