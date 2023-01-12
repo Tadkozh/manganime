@@ -4,8 +4,8 @@ const MangAnime = () => {
   return (
     <>
       <div>hello world</div>
-      <TopDetails name={'Animes'} />
-      <TopDetails name={'Mangas'} />
+      <TopDetails name={'anime'} />
+      <TopDetails name={'manga'} />
     </>
   )
 }
