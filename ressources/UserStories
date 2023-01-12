@@ -1,0 +1,16 @@
+Users Stories
+
+- En tant qu'utilisateur, je dois être en mesure de récupérer la liste complète des Anime/Mangas.
+- En tant qu'utilisateur, je dois pouvoir récupérer un Anime/Manga par son ID.
+- En tant qu'utilisateur, je dois pouvoir à partir de cet ID, voir les informations sur cet Anime/Manga, notamment :
+
+  - les news et les recommandations.
+  - des citations issues de cet Anime/Manga (deuxième API)
+    (Réfléchir à une manière de présenter l'ensemble de ces données, peut-être via un menu ou un sous menu)
+
+- En tant qu'utilisateur connecté, je dois pouvoir mettre un Anime/Manga en favoris (depuis la page des informations de cet Anime/Manga)
+- En tant qu'utilisateur connecté, je dois pouvoir écrire un avis sur un Anime/Manga (depuis la page des informations de cet Anime/Manga)
+
+- En tant qu'utilisateur connecté, je dois pouvoir voir tous les Anime/Manga que j'ai mis en favoris (depuis ma page profil)
+- En tant qu'utilisateur connecté, je dois pouvoir voir tous mes avis (depuis ma page profil)
+- En tant qu'utilisateur connecté, je dois pouvoir retourner aux info de l'Anime/Manga en cliquant sur un favori ou un avis (depuis ma page profil)

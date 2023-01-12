@@ -124,6 +124,7 @@ const LoginRegister = ({ signup = true }) => {
 const FormLogin = ({ preValidate, create, status }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  // eslint-disable-next-line no-unused-vars
   const [checked, setChecked] = React.useState(false)
 
   const handleChangeEmail = (e) => setEmail(e.target.value)

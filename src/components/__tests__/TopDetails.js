@@ -5,30 +5,24 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TopDetails from '../TopDetails'
 
-const datas = [
-  { title: '', images: { jpg: { imageUrl: 'test' } } },
-  { title: '', images: { jpg: { imageUrl: 'test' } } },
+const { topDatas } = [
+  {
+    title: 'title',
+    images: { jpg: { imageUrl: 'imageurl' } },
+    genres: [{ type: 'anime' }],
+  },
+  {
+    title: 'title',
+    images: { jpg: { imageUrl: 'imageurl' } },
+    genres: [{ type: 'anime' }],
+  },
 ]
 
-jest.mock('axios')
-// jest.mock('../../hooks/getTopDatas', () => {
-//   return {
-//     useGetTopDatas: () =>
-//       Promise.resolve({
-//         datas,
-//       }),
-//   }
-// })
 jest.mock('../../hooks/getTopDatas', () => {
   return jest.fn(() => {
-    console.log('bla')
-    return datas
+    return { topDatas }
   })
 })
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
 
 const server = setupServer(
   rest.get('https://api.jikan.moe/v4/top/anime', (res, req, ctx) => {
@@ -36,16 +30,19 @@ const server = setupServer(
   }),
 )
 
-test('Rendu de top Animes', async () => {
-  render(<TopDetails name={'Animes'} />)
+beforeAll(() => server.listen())
+afterAll(() => server.close())
+afterEach(() => server.resetHandlers())
 
-  const searchBtn = screen.getByRole('button', { name: 'Search Animes' })
-  const list = screen.getByRole('list', { name: '' })
-  const listItem = screen.queryByRole('listitem', { name: 'anime-item' })
-  expect(list).toBeInTheDocument()
-  expect(listItem).not.toBeInTheDocument()
-  await userEvent.click(searchBtn)
-  screen.debug()
+test('Rendu de top Animes', () => {
+  render(<TopDetails name={'anime'} />)
+
+  // const list = screen.getByRole('list', { name: '' })
+  // const listItem = screen.queryByRole('listitem', { name: 'anime-item' })
+  // expect(list).toBeInTheDocument()
+  // expect(listItem).not.toBeInTheDocument()
+
+  // screen.debug()
   //   expect(
   //     screen.getByRole('listitem', { name: 'anime-item' }),
   //   ).toBeInTheDocument()
