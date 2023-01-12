@@ -3,39 +3,34 @@
     align-items: flex-start;
   }
 
-  .infoHeaderAndSynopsis {
+  .infoRow1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-areas:
+      'infoHeader synopsisWrapper'
+      'miscellaneousInfos miscellaneousInfos';
     align-items: flex-start;
     gap: 20px;
+    width: 100%;
   }
-
+  .infoHeader {
+    grid-area: infoHeader;
+  }
   .synopsisWrapper {
+    grid-area: synopsisWrapper;
     margin: 0;
   }
   .synopsis {
-    height: 100%;
     max-height: 400px;
   }
-  .synopsis.active {
+  /* .synopsis.active {
     max-height: 100%;
+  } */
+  .miscellaneousInfos {
+    grid-area: miscellaneousInfos;
   }
+
   /* .synopsisWrapper button {
     display: none;
   } */
-
-  .miscellaneousInfos {
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 5px;
-  }
-  .miscellaneousInfos > div {
-    width: 100%;
-  }
-  .miscellaneousInfos > div > div {
-    display: flex;
-    align-items: center;
-  }
 }

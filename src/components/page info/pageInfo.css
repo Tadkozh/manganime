@@ -12,14 +12,14 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(8, 133, 182);
+  /* background-color: rgb(8, 133, 182); */
   padding: 10px;
 }
 .info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: skyblue;
+  /* background-color: skyblue; */
   padding: 10px;
   border-radius: 10px;
 }
@@ -83,19 +83,21 @@ embed {
 .synopsisWrapper {
   display: flex;
   flex-direction: column;
+  min-width: 200px;
   text-align: justify;
   padding: 10px;
   border-radius: 5px;
-  margin: 20px auto;
   box-shadow: 0 0 12px -5px #000;
+  margin: 20px auto;
 }
 .synopsis {
-  height: 100px;
-  overflow-y: hidden;
+  overflow-y: auto;
+  max-height: 200px;
+  padding-right: 10px;
 }
-.synopsis.active {
-  height: 100%;
-}
+/* .synopsis.active {
+  max-height: auto;
+} */
 .synopsisWrapper button {
   background-color: rgb(89, 192, 232);
   color: #fff;
@@ -105,9 +107,12 @@ embed {
 
 .miscellaneousInfos {
   width: 100%;
+  min-width: 300px;
+  max-height: 400px;
   background-color: rgba(128, 128, 128, 0.5);
   padding: 5px 10px;
   margin: 20px auto;
+  overflow-y: scroll;
 }
 .miscellaneousInfos > div {
   display: flex;
@@ -124,11 +129,12 @@ embed {
   padding: 5px;
 }
 
-.anecdote {
+.backgroundStory {
   width: 100%;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 15px -10px #000;
+  margin: 20px auto;
 }
 
 form {
@@ -136,7 +142,7 @@ form {
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  background-color: rgb(102, 181, 212);
+  /* background-color: rgb(102, 181, 212); */
   padding: 20px;
   border-radius: 10px;
   margin: 0 auto;
