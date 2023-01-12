@@ -1,23 +1,27 @@
 import axios from 'axios'
 import React from 'react'
 
-const useGetTopDatas = (condition, url, dataToSet, setCondition) => {
+const useGetTopDatas = (name) => {
+  const url = `https://api.jikan.moe/v4/top/${name}`
+  const [topDatas, setTopDatas] = React.useState([])
+
+  const request = React.useCallback((url) => {
+    axios
+      .get(url)
+      .then((response) => {
+        setTopDatas(response.data.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }, [])
+
   React.useEffect(() => {
-    if (condition) {
-      axios
-        .get(url)
-        .then((response) => {
-          dataToSet(response.data.data)
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    }
-    return () => {
-      setCondition(false)
-    }
-  }, [condition, dataToSet, setCondition, url])
+    const delay = setTimeout(() => request(url), 200)
+    return () => clearTimeout(delay)
+  }, [request, url])
+
+  return { topDatas }
 }
 
 export default useGetTopDatas
