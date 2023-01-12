@@ -17,7 +17,7 @@ export const NewsAnime = () => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
-  const id = 1 // id : 1, 190
+  const id = 100 // id : 1, 190 - 100 : No news
   const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
@@ -29,7 +29,6 @@ export const NewsAnime = () => {
 
   const getDataFromApi = () => {
     axios
-
       .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
       .then((response) => {
         console.log(`${APP_API_URL}/${params}/${id}/${endpoint}`)
@@ -46,12 +45,12 @@ export const NewsAnime = () => {
   return (
     <>
       <h2>News about this {params}</h2>
-      <p>(click on a title to learn more)</p>
       <div>
         {animeNews
           ? animeNews.map((data, index) => {
               return (
                 <div key={index} className="news">
+                  <p>(click on a title to learn more)</p>
                   <Accordion>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
