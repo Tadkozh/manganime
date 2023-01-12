@@ -1,0 +1,25 @@
+@media (min-width: 1024px) {
+  .infoRow1 {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+  }
+  .infoRow1 > div {
+    width: 33%;
+  }
+  .synopsisWrapper {
+    order: -1;
+    max-height: 500px;
+  }
+  .synopsis {
+    max-height: 500px;
+  }
+  .miscellaneousInfos {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-height: 500px;
+    margin: 0;
+  }
+}

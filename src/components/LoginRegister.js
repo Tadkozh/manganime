@@ -3,8 +3,8 @@ import { Navigate } from 'react-router-dom'
 import {
   Alert,
   Avatar,
-  Box,
   Backdrop,
+  Box,
   Button,
   Checkbox,
   CircularProgress,
@@ -17,7 +17,7 @@ import {
   TextField,
   Typography,
 } from '.'
-import { FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
+import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 
 const TextFieldCustom = ({
@@ -78,7 +78,7 @@ const LoginRegister = ({ signup = true }) => {
     setCreate(true)
   }
 
-  if (data !== null) {
+  if (data !== null && status === DONE) {
     return <Navigate to="/profile" />
   }
 
@@ -124,6 +124,7 @@ const LoginRegister = ({ signup = true }) => {
 const FormLogin = ({ preValidate, create, status }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  // eslint-disable-next-line no-unused-vars
   const [checked, setChecked] = React.useState(false)
 
   const handleChangeEmail = (e) => setEmail(e.target.value)

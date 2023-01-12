@@ -8,7 +8,7 @@ const TopDetails = ({ name }) => {
   return (
     <>
       <article>
-        <h2>Top {name.toUpperCase()}</h2>
+        <h2>Top {name}</h2>
         <TopView datas={topDatas} />
       </article>
     </>

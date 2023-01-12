@@ -1,25 +1,26 @@
 import {
   collection,
   doc,
-  getDoc,
-  query, setDoc,
-  where
+  getDocs,
+  query,
+  setDoc,
+  where,
 } from 'firebase/firestore'
 import { USER_COLLECTION } from '../commons/constants'
 import { db } from '../firebase-config'
 
-const getUser = async (id) => {
+const getUserByUid = async (uid) => {
   try {
-    const q = query(collection(db, USER_COLLECTION), where('id', '==', id))
-    const queySnapshot = await getDoc(q)
+    const q = query(collection(db, USER_COLLECTION), where('uid', '==', uid))
+    const querySnapshot = await getDocs(q)
 
-    let data
-    queySnapshot.forEach((doc) => {
-      data = doc.data()
+    let user = null
+    querySnapshot.forEach((doc) => {
+      user = doc.data()
     })
-    return data
+    return user
   } catch (e) {
-    console.log('getUser error :', e)
+    throw new Error('addUser operation fail')
   }
 }
 
@@ -40,8 +41,6 @@ const createUser = (data) => {
 
 // todo : modifier pour la fusion (update)
 const addUser = async (user) => {
-  console.log('user', user)
-
   try {
     const docUser = doc(collection(db, USER_COLLECTION))
 
@@ -57,9 +56,8 @@ const addUser = async (user) => {
       manga_opinion: user.manga_opinion,
     })
   } catch (e) {
-    console.log('addUser error :', e)
+    throw new Error('addUser operation fail')
   }
 }
 
-export { getUser, createUser }
-
+export { getUserByUid, createUser }

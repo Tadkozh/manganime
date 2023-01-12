@@ -1,13 +1,16 @@
 import { faker } from '@faker-js/faker'
+import { AUTH_USER_NOT_FOUND } from '../../commons/constants'
 import {
   EMAIL_NOT_VALID,
   EMAIL_REQUIRED,
+  ERROR_UNKNOWN,
   PASSWORD_REQUIRED,
-  PASSWORD_REQUIREMENT
+  PASSWORD_REQUIREMENT,
+  USER_NOT_FOUND,
 } from '../constants'
-import { validateForm } from '../helper'
+import { errorAuth, validateForm } from '../helper'
 
-describe('helper validateForm', () => {
+describe('validateForm', () => {
   test('Si email et mot de sont corrects, on retourne null', () => {
     const email = faker.internet.email()
     const password = faker.internet.password()
@@ -51,5 +54,33 @@ describe('helper validateForm', () => {
 
     expect(result.status).toBe(400)
     expect(result.message).toBe(PASSWORD_REQUIREMENT)
+  })
+})
+
+describe('errorAuth', () => {
+  test(`Si l'erreur est code d'erreur géré alors on a un message personnalisé`, () => {
+    const error = {
+      code: AUTH_USER_NOT_FOUND,
+    }
+
+    const result = errorAuth(error)
+    expect(result.code).toBe(400)
+    expect(result.message).toBe(USER_NOT_FOUND)
+  })
+  test(`Si l'erreur est code d'erreur non géré alors on a un message de firebase`, () => {
+    const error = {
+      code: 'auth/error-auth-email',
+    }
+    const result = errorAuth(error)
+    expect(result.code).toBe(400)
+    expect(result.message).toBe(error.code)
+  })
+  test(`Si l'erreur n'est pas défini, alors on à un message d'erreur par défaut`, () => {
+    const error = {
+      code: null,
+    }
+    const result = errorAuth(error)
+    expect(result.code).toBe(400)
+    expect(result.message).toBe(ERROR_UNKNOWN)
   })
 })

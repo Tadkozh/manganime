@@ -9,6 +9,8 @@ import { RecommendationAnim } from './components/RecommendationAnim'
 import { UserProfile } from './components/UserProfile'
 import { PrivateRoute } from './components/PrivateRoute'
 
+import PageInfo from './components/page info/pageInfo'
+
 const AppConsumer = () => {
   return (
     <Router>
@@ -19,14 +21,10 @@ const AppConsumer = () => {
         <Route path="/news" element={<NewsAnime />} />
         <Route path="/recommendations" element={<RecommendationAnim />} />
         <Route path="*" element={<Error404 />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <UserProfile />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/profile" element={<UserProfile />} />
+        </Route>
+        <Route path="/infos" element={<PageInfo />} />
       </Routes>
     </Router>
   )
