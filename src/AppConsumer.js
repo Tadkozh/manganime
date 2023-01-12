@@ -9,6 +9,8 @@ import { RecommendationAnim } from './components/RecommendationAnim'
 import { UserProfile } from './components/UserProfile'
 import { PrivateRoute } from './components/PrivateRoute'
 
+import PageInfo from './components/page info/pageInfo'
+
 const AppConsumer = () => {
   return (
     <Router>
@@ -27,6 +29,7 @@ const AppConsumer = () => {
             </PrivateRoute>
           }
         />
+        <Route path="/infos" element={<PageInfo />} />
       </Routes>
     </Router>
   )
