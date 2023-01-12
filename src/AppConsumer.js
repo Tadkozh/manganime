@@ -28,7 +28,6 @@ const AppConsumer = () => {
           }
         />
       </Routes>
-      NewsAnime
     </Router>
   )
 }
