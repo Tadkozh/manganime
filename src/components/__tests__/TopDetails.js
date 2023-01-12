@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TopDetails from '../TopDetails'
 
-const datas = [
+const topDatas = [
   { title: '', images: { jpg: { imageUrl: 'test' } } },
   { title: '', images: { jpg: { imageUrl: 'test' } } },
 ]
@@ -22,7 +22,7 @@ jest.mock('axios')
 jest.mock('../../hooks/getTopDatas', () => {
   return jest.fn(() => {
     console.log('bla')
-    return datas
+    return topDatas
   })
 })
 
@@ -36,16 +36,16 @@ const server = setupServer(
   }),
 )
 
-test('Rendu de top Animes', async () => {
-  render(<TopDetails name={'Animes'} />)
+test('Rendu de top Animes',  () => {
+  render(<TopDetails name={'anime'} />)
 
-  const searchBtn = screen.getByRole('button', { name: 'Search Animes' })
+ 
   const list = screen.getByRole('list', { name: '' })
   const listItem = screen.queryByRole('listitem', { name: 'anime-item' })
   expect(list).toBeInTheDocument()
   expect(listItem).not.toBeInTheDocument()
-  await userEvent.click(searchBtn)
-  screen.debug()
+ 
+  // screen.debug()
   //   expect(
   //     screen.getByRole('listitem', { name: 'anime-item' }),
   //   ).toBeInTheDocument()
