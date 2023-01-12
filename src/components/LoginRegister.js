@@ -17,7 +17,7 @@ import {
   TextField,
   Typography,
 } from '.'
-import { FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
+import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 
 const TextFieldCustom = ({
@@ -78,7 +78,7 @@ const LoginRegister = ({ signup = true }) => {
     setCreate(true)
   }
 
-  if (data !== null) {
+  if (data !== null && status === DONE) {
     return <Navigate to="/profile" />
   }
 
