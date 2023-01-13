@@ -3,7 +3,7 @@ import {
   AUTH_TOO_MANY_REQUEST,
   AUTH_USER_ALREADY_EXIST,
   AUTH_USER_NOT_FOUND,
-  AUTH_WRONG_PASSWORD
+  AUTH_WRONG_PASSWORD,
 } from '../commons/constants'
 import {
   EMAIL_EXIST,
@@ -15,7 +15,7 @@ import {
   TOO_MANY_REQUEST,
   USER_EXSIT,
   USER_NOT_FOUND,
-  WRONG_PASSWORD
+  WRONG_PASSWORD,
 } from './constants'
 
 const validateForm = (email, password) => {
@@ -75,5 +75,11 @@ const errorAuth = (error) => {
   return newError
 }
 
-export { validateForm, errorAuth }
+const getImageName = (url) => {
+  const text = url.split(/[/]/)
+  const image = text[text.length - 1]
+  const imageSplit = image.split(/./)
+  return imageSplit[0]
+}
 
+export { validateForm, errorAuth, getImageName }
