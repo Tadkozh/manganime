@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Item from '@mui/material/Stack'
 import Button from '@mui/material/Button'
+import CustomizedAccordions from './NewsAccordion'
 
 export const NewsAnime = () => {
   const [animeNews, setAnimeNews] = useState([])
@@ -17,7 +18,7 @@ export const NewsAnime = () => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
-  const id = 100 // id : 1, 190 - 100 : No news
+  const id = 190 // id : 1, 190 : No news Manga
   const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
@@ -50,8 +51,11 @@ export const NewsAnime = () => {
           ? animeNews.map((data, index) => {
               return (
                 <div key={index} className="news">
-                  <p>(click on a title to learn more)</p>
-                  <Accordion>
+                  <Accordion
+                    sx={{
+                      fontWeight: 'bold',
+                    }}
+                  >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
@@ -104,6 +108,7 @@ export const NewsAnime = () => {
             })
           : 'No news...'}
       </div>
+      <CustomizedAccordions />
     </>
   )
 }

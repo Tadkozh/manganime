@@ -1,5 +1,6 @@
 Users Stories
 
+- En tant qu'utilisateur, je dois pouvoir choisir entre dark et light mode.
 - En tant qu'utilisateur, je dois être en mesure de récupérer la liste complète des Anime/Mangas.
 - En tant qu'utilisateur, je dois pouvoir récupérer un Anime/Manga par son ID.
 - En tant qu'utilisateur, je dois pouvoir à partir de cet ID, voir les informations sur cet Anime/Manga, notamment :
