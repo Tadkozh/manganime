@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import AccordionCustomized from './AccordionCustomized'
+import { AccordionBasic } from './AccordionBasic'
 
-export const NewsAnime = () => {
+export const NewsById = () => {
   const [animeNews, setAnimeNews] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/news
@@ -38,16 +38,23 @@ export const NewsAnime = () => {
   return (
     <>
       <h2>News about this {params}</h2>
+
       <div>
-        {animeNews
-          ? animeNews.map((data, index) => {
+        {animeNews ? (
+          <div>
+            <p>(click on a title to learn more)</p>
+
+            {animeNews.map((data, index) => {
               return (
                 <div key={index}>
-                  <AccordionCustomized data={data} />
+                  <AccordionBasic data={data} />
                 </div>
               )
-            })
-          : 'No news...'}
+            })}
+          </div>
+        ) : (
+          <p>No news about this {params}</p>
+        )}
       </div>
     </>
   )
