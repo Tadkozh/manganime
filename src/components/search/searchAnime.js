@@ -68,7 +68,7 @@ function SearchAnime() {
       <div className="settingsBar">
         <p>{getAnime?.pagination?.items?.total} results</p>
 
-        <label for="typeInput">Type: </label>
+        <label htmlFor="typeInput">Type: </label>
         <select
           name="typeInput"
           onChange={(e) => setType(e.target.value)}
@@ -83,7 +83,7 @@ function SearchAnime() {
           <option value="music">Music</option>
         </select>
 
-        <label for="scoreInput">Score (min) : </label>
+        <label htmlFor="scoreInput">Score (min) : </label>
         <select
           name="scoreInput"
           onChange={(e) => setScoreMin(e.target.value)}
@@ -101,7 +101,7 @@ function SearchAnime() {
           <option value="9">9</option>
         </select>
 
-        <label for="statusInput">Status: </label>
+        <label htmlFor="statusInput">Status: </label>
         <select
           name="statusInput"
           onChange={(e) => setStatus(e.target.value)}
