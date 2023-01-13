@@ -38,13 +38,12 @@ const useUserData = () => {
     [setError],
   )
 
-  const setData = () => {
+  const setData = React.useCallback((data) => {
     dispatch({ type: DONE, payload: data })
-  }
+  }, [])
 
   const { data, status } = state
   return { data, status, error, setError, execute, setData }
 }
 
 export { useUserData }
-
