@@ -11,8 +11,8 @@ export const RecommendationAnim = () => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
-  const id = 190 // id : 1, 100, 190
-  const params = 'manga' // params : anime, manga
+  const id = 1 // id : 1, 100, 190
+  const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
   //   return axios
