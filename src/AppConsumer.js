@@ -7,11 +7,10 @@ import { Error404 } from './components/Error404'
 import { ErrorFallback } from './components/ErrorFallBack'
 import { LoginRegister } from './components/LoginRegister'
 import { MangAnime } from './components/MangAnime'
-import { NewsAnime } from './components/NewsAnime'
-import { NewsById } from './components/NewsById'
+import { NewsById } from './components/page info/NewsById'
+import { RecommendationById } from './components/page info/RecommendationById'
 import PageInfo from './components/page info/pageInfo'
 import { PrivateRoute } from './components/PrivateRoute'
-import { RecommendationById } from './components/RecommendationById'
 import { UserProfile } from './components/UserProfile'
 import { ColorModeContext } from './context/ColorModeContext'
 import MUISwitchMode from './MUISwitchMode'
@@ -34,8 +33,8 @@ const AppConsumer = () => {
       <Routes>
         <Route path="/" element={<MangAnime />} />
         <Route path="/login" element={<LoginRegister />} />
-        <Route path="/news" element={<NewsById />} />
-        <Route path="/recommendations" element={<RecommendationById />} />
+        {/* <Route path="/news" element={<NewsById />} />
+        <Route path="/recommendations" element={<RecommendationById />} /> */}
         <Route path="/search-anime" element={<SearchAnime />}></Route>
         <Route path="/infos/:id/:title" element={<PageInfo />}>
           <Route path="/infos/:id/:title/reviews" element={<Reviews />}></Route>
