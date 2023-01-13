@@ -12,6 +12,9 @@ const FAIL = 'fail'
 const SIGN_IN = 'signIn'
 const SIGN_UP = 'signUp'
 const USER_COLLECTION = 'users'
+const LIGHT = 'light'
+const DARK = 'dark'
+const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
 
 export {
   BAD_USE_CONTEXT,
@@ -28,4 +31,7 @@ export {
   SIGN_IN,
   SIGN_UP,
   USER_COLLECTION,
+  LIGHT,
+  DARK,
+  THEME_COLOR_LOCAL_STORAGE
 }
