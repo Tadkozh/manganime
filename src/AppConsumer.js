@@ -16,6 +16,7 @@ import { ColorModeContext } from './context/ColorModeContext'
 import MUISwitchMode from './MUISwitchMode'
 import Reviews from './components/page info/reviews'
 import SearchAnime from './components/search/searchAnime'
+import AppSkeleton from './components/AppSkeleton'
 
 const AppConsumer = () => {
   const theme = useTheme()
@@ -44,6 +45,7 @@ const AppConsumer = () => {
           <Route path="/profile" element={<UserProfile />} />
         </Route>
         <Route path="/infos" element={<PageInfo />} />
+        <Route path="/skeleton" element={<AppSkeleton />} />
       </Routes>
     </Router>
   )
