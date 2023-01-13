@@ -1,0 +1,24 @@
+/* .css-wjh20t-MuiPagination-ul {
+  justify-content: center;
+} */
+.settingsBar {
+  display: flex;
+  gap: 10px;
+}
+.searchAnime {
+  display: grid;
+  justify-content: center;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fill, 200px);
+  max-width: 1920px;
+  padding: 10px;
+}
+.searchAnime .item {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.searchAnime img {
+  max-width: 200px;
+  max-height: 200px;
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 // CSS Files
 import './pageInfo.css'
@@ -16,10 +17,12 @@ import Synopsis from './synopsis'
 import MiscellaneousInfos from './miscellaneousInfos'
 import BackgroundStory from './backgroundStory'
 import FormInfo from './formInfo'
-import Comments from './comments'
+import Reviews from './reviews'
 
 function PageInfo() {
-  const linkInfo = `https://api.jikan.moe/v4/anime/1/full`
+  let { id } = useParams()
+
+  const linkInfo = `https://api.jikan.moe/v4/anime/${id}/full`
   const [getInfo, setGetInfo] = useState(null)
 
   //   useEffect(() => {
@@ -58,7 +61,8 @@ function PageInfo() {
               <BackgroundStory getInfo={getInfo} />
               <div className="news">Espace news (FRANCK)</div>
               <FormInfo />
-              <Comments />
+
+              <Reviews id={id} />
             </div>
           </>
         ) : null}

@@ -26,7 +26,7 @@ function InfoHeader({ getInfo }) {
     <>
       <div className="infoHeader">
         <div className="titles">
-          <h2>{getInfo.data.title_english}</h2>
+          <h2>{getInfo.data.title_english ?? getInfo.data.titles[0].title}</h2>
           <p className="japaneseTitle">{getInfo.data.title_japanese}</p>
           <p>Rank: {getInfo.data.rank}</p>
           <FavIcon getInfo={getInfo} />
@@ -39,10 +39,14 @@ function InfoHeader({ getInfo }) {
         />
         <a href="#trailer">WATCH TRAILER</a>
         {getInfo.data.streaming[0]?.name ? (
-          <Button variant="contained" size="small">
+          <Button
+            href={getInfo.data.streaming[0].url}
+            variant="contained"
+            size="small"
+          >
             WATCH STREAMING
             <br />
-            On {getInfo.data.streaming[0]?.name}
+            On {getInfo.data.streaming[0].name}
           </Button>
         ) : null}
 
@@ -57,11 +61,13 @@ function InfoHeader({ getInfo }) {
             />
             <p>
               <small>
-                (On{' '}
-                {rankBtnValue
-                  ? getInfo.data.scored_by + 1
-                  : getInfo.data.scored_by}{' '}
-                notes)
+                (
+                {getInfo?.data?.scored_by
+                  ? rankBtnValue
+                    ? `On ${getInfo.data.scored_by + 1} notes`
+                    : `On ${getInfo.data.scored_by} notes`
+                  : 'No notes yet'}
+                )
               </small>
             </p>
           </div>

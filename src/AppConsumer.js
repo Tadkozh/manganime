@@ -14,6 +14,7 @@ import { RecommendationAnim } from './components/RecommendationAnim'
 import { UserProfile } from './components/UserProfile'
 import { ColorModeContext } from './context/ColorModeContext'
 import MUISwitchMode from './MUISwitchMode'
+import Reviews from './components/page info/reviews'
 
 const AppConsumer = () => {
   const theme = useTheme()
@@ -33,6 +34,10 @@ const AppConsumer = () => {
         <Route path="/login" element={<LoginRegister />} />
         <Route path="/news" element={<NewsAnime />} />
         <Route path="/recommendations" element={<RecommendationAnim />} />
+        <Route path="/search-anime" element={<SearchAnime />}></Route>
+        <Route path="/infos/:id/:title" element={<PageInfo />}>
+          <Route path="/infos/:id/:title/reviews" element={<Reviews />}></Route>
+        </Route>
         <Route path="*" element={<Error404 />} />
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/profile" element={<UserProfile />} />
