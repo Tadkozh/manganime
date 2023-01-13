@@ -16,6 +16,8 @@ import InfoHeader from './infoHeader'
 import Synopsis from './synopsis'
 import MiscellaneousInfos from './miscellaneousInfos'
 import BackgroundStory from './backgroundStory'
+import NewsById from './NewsById'
+import RecommendationById from './RecommendationById'
 import FormInfo from './formInfo'
 import Reviews from './reviews'
 
@@ -59,7 +61,8 @@ function PageInfo() {
               </div>
 
               <BackgroundStory getInfo={getInfo} />
-              <div className="news">Espace news (FRANCK)</div>
+              {/* <div className="news">Espace news (FRANCK)</div> */}
+
               <FormInfo />
 
               <Reviews id={id} />
@@ -67,6 +70,8 @@ function PageInfo() {
           </>
         ) : null}
       </div>
+      <NewsById id={id} />
+      <RecommendationById id={id} />
     </>
   )
 }

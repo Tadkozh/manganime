@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import '../styles/common-css.css'
+import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-export const RecommendationById = () => {
+const RecommendationById = ({ id }) => {
   const [animeRecom, setAnimeRecom] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/recommendations
@@ -11,7 +11,7 @@ export const RecommendationById = () => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
-  const id = 1 // id : 1, 100, 190
+  // const id = 1 // id : 1, 100, 190
   const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
@@ -65,3 +65,4 @@ export const RecommendationById = () => {
     </>
   )
 }
+export default RecommendationById
