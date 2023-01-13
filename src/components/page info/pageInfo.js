@@ -52,7 +52,7 @@ function PageInfo() {
                     src={getInfo?.data?.trailer?.embed_url}
                   ></embed>
                 ) : (
-                  <p>No trailer found.</p>
+                  <p>No trailer was found.</p>
                 )} */}
 
                 <MiscellaneousInfos getInfo={getInfo} />
