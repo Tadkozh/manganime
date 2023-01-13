@@ -3,7 +3,7 @@ import axios from 'axios'
 import '../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-export const RecommendationAnim = () => {
+export const RecommendationById = () => {
   const [animeRecom, setAnimeRecom] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/recommendations
@@ -41,22 +41,24 @@ export const RecommendationAnim = () => {
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
-              return (
-                <div key={index}>
-                  <p>{data.entry.title}</p>
-                  <img src={data.entry.images.jpg.image_url} alt="" />
-                  <p>
-                    <Button
-                      variant="contained"
-                      href={data.entry.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Read more
-                    </Button>
-                  </p>
-                </div>
-              )
+              if (index < 10) {
+                return (
+                  <div key={index}>
+                    <p>{data.entry.title}</p>
+                    <img src={data.entry.images.jpg.image_url} alt="" />
+                    <p>
+                      <Button
+                        variant="contained"
+                        href={data.entry.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Read more
+                      </Button>
+                    </p>
+                  </div>
+                )
+              }
             })
           : 'No recommendation...'}
       </div>

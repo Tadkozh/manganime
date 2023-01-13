@@ -11,7 +11,7 @@ import { NewsAnime } from './components/NewsAnime'
 import { NewsById } from './components/NewsById'
 import PageInfo from './components/page info/pageInfo'
 import { PrivateRoute } from './components/PrivateRoute'
-import { RecommendationAnim } from './components/RecommendationAnim'
+import { RecommendationById } from './components/RecommendationById'
 import { UserProfile } from './components/UserProfile'
 import { ColorModeContext } from './context/ColorModeContext'
 import MUISwitchMode from './MUISwitchMode'
@@ -34,9 +34,8 @@ const AppConsumer = () => {
       <Routes>
         <Route path="/" element={<MangAnime />} />
         <Route path="/login" element={<LoginRegister />} />
-        <Route path="/newsAccoCustom" element={<NewsAnime />} />
         <Route path="/news" element={<NewsById />} />
-        <Route path="/recommendations" element={<RecommendationAnim />} />
+        <Route path="/recommendations" element={<RecommendationById />} />
         <Route path="/search-anime" element={<SearchAnime />}></Route>
         <Route path="/infos/:id/:title" element={<PageInfo />}>
           <Route path="/infos/:id/:title/reviews" element={<Reviews />}></Route>
