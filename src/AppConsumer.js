@@ -15,6 +15,7 @@ import { UserProfile } from './components/UserProfile'
 import { ColorModeContext } from './context/ColorModeContext'
 import MUISwitchMode from './MUISwitchMode'
 import Reviews from './components/page info/reviews'
+import SearchAnime from './components/search/searchAnime'
 
 const AppConsumer = () => {
   const theme = useTheme()
