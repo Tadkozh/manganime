@@ -45,11 +45,13 @@ export const NewsById = () => {
             <p>(click on a title to learn more)</p>
 
             {animeNews.map((data, index) => {
-              return (
-                <div key={index}>
-                  <AccordionBasic data={data} />
-                </div>
-              )
+              if (index < 10) {
+                return (
+                  <div key={index}>
+                    <AccordionBasic data={data} />
+                  </div>
+                )
+              }
             })}
           </div>
         ) : (
