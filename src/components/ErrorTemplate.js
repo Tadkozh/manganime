@@ -1,14 +1,18 @@
+import { Box } from '@mui/system'
 import { Link, redirect } from 'react-router-dom'
 import { Button, Container, Typography } from '.'
+import { getImageName } from '../utils/helper'
+import '../styles/image.css'
 
 const getProps = {
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
 }
 
-const ErrorTemplate = ({ error = null, reset = () => {} }) => {
+const ErrorTemplate = ({ error = null, reset = () => {}, image = null }) => {
   const handleClick = () => {
     redirect('/')
     reset()
@@ -16,17 +20,19 @@ const ErrorTemplate = ({ error = null, reset = () => {} }) => {
 
   return (
     <Container sx={{ ...getProps }}>
-      <Typography variant="h4">Vous cherchez votre chemin ?</Typography>
+      <Box>
+        <img src={image} alt={getImageName(image)} className="error" />
+      </Box>
+      <Typography variant="h4">Oh, êtes vous perdu?</Typography>
       {error ? (
         <>
           <Typography variant="body1">{`Erreur : ${error}`}</Typography>
-          <Button onClick={handleClick}>Accueil</Button>
+          <Button onClick={handleClick}>Revenez en sécurité</Button>
         </>
       ) : (
         <>
-          <Typography variant="body1">Erreur 404</Typography>
           <Link to="/">
-            <Button>Accueil</Button>
+            <Button color="primary">Revenez en sécurité</Button>
           </Link>
         </>
       )}
