@@ -1,104 +1,61 @@
-import * as React from 'react'
-import { styled } from '@mui/material/styles'
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
-import MuiAccordion from '@mui/material/Accordion'
-import MuiAccordionSummary from '@mui/material/AccordionSummary'
-import MuiAccordionDetails from '@mui/material/AccordionDetails'
-import Typography from '@mui/material/Typography'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { AccordionBasic } from './AccordionBasic'
 
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  '&:not(:last-child)': {
-    borderBottom: 0,
-  },
-  '&:before': {
-    display: 'none',
-  },
-}))
+export const NewsById = () => {
+  const [animeNews, setAnimeNews] = useState([])
 
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, .05)'
-      : 'rgba(0, 0, 0, .03)',
-  flexDirection: 'row-reverse',
-  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-    transform: 'rotate(90deg)',
-  },
-  '& .MuiAccordionSummary-content': {
-    marginLeft: theme.spacing(1),
-  },
-}))
+  // https://api.jikan.moe/v4/anime/${id}/news
+  //https://api.jikan.moe/v4/manga/{id}/news
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: '1px solid rgba(0, 0, 0, .125)',
-}))
+  const APP_API_URL = 'https://api.jikan.moe/v4'
+  const endpoint = 'news'
+  const id = 1 // id : 1, 190 : No news Manga
+  const params = 'anime' // params : anime, manga
 
-export default function CustomizedAccordions() {
-  const [expanded, setExpanded] = React.useState('panel1')
+  // const clientApi = (endpoint = null, params = {}) => {
+  //   return axios
+  //     .get(${url}/${params}/${endpoint})
+  //     .then((data) => data)
+  //     .catch((error) => error)
+  // }
 
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false)
+  const getDataFromApi = () => {
+    axios
+      .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+      .then((response) => {
+        console.log(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+        console.log(response.data.data)
+        setAnimeNews(response.data.data)
+      })
+      .catch((error) => error)
   }
 
+  useEffect(() => {
+    getDataFromApi()
+  }, [])
+
   return (
-    <div>
-      <Accordion
-        expanded={expanded === 'panel1'}
-        onChange={handleChange('panel1')}
-      >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Collapsible Group Item #1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        expanded={expanded === 'panel2'}
-        onChange={handleChange('panel2')}
-      >
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Collapsible Group Item #2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        expanded={expanded === 'panel3'}
-        onChange={handleChange('panel3')}
-      >
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Collapsible Group Item #3</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-    </div>
+    <>
+      <h2>News about this {params}</h2>
+
+      <div>
+        {animeNews ? (
+          <div>
+            <p>(click on a title to learn more)</p>
+
+            {animeNews.map((data, index) => {
+              return (
+                <div key={index}>
+                  <AccordionBasic data={data} />
+                </div>
+              )
+            })}
+          </div>
+        ) : (
+          <p>No news about this {params}</p>
+        )}
+      </div>
+    </>
   )
 }
