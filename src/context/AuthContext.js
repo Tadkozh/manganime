@@ -49,6 +49,8 @@ const AuthProviders = (props) => {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
           execute(getUserConnect(currentUser))
+        } else {
+          setData(null)
         }
       })
       return unsubscribe
