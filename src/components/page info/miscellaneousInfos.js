@@ -4,7 +4,8 @@ function MiscellaneousInfos({ getInfo }) {
   const miscellaneousInfos = [
     {
       label: 'Type',
-      data: getInfo.data.producers[0]?.type ?? unknown,
+      data:
+        `${getInfo.data.type}, ${getInfo.data.producers[0]?.type}` ?? unknown,
     },
     {
       label: 'Genre',
