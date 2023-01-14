@@ -31,12 +31,21 @@ const TopDetails = ({ name }) => {
             top: '55%',
             width: '100%',
             backgroundColor: 'inherit',
+            '.MuiMobileStepper-dots': {
+              display: 'none',
+            },
           }}
           variant="dots"
           steps={maxSteps}
           position="static"
           nextButton={
             <Button
+              // hover
+              sx={{
+                zIndex: 1,
+                color: '#fff',
+                '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
+              }}
               size="small"
               onClick={handleNext}
               disabled={activeStep === maxSteps - 1}
@@ -46,6 +55,12 @@ const TopDetails = ({ name }) => {
           }
           backButton={
             <Button
+              className="top-article--arrow"
+              sx={{
+                zIndex: 1,
+                color: '#fff',
+                '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
+              }}
               size="small"
               onClick={handleBack}
               disabled={activeStep === 0}
