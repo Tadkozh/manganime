@@ -8,6 +8,9 @@ const TOO_MANY_REQUEST = 'Trop de tentative de conenxion, compte bloqué'
 const EMAIL_EXIST = "L'email est déjà utilisé"
 const USER_EXSIT = "L'utilisateur existe déjà"
 const ERROR_UNKNOWN = 'Erreur inatendu'
+const LOG_OUT = 'Déconnexion'
+const LOG_IN = 'Se connecter'
+const PROFILE = 'Profile'
 
 export {
   EMAIL_REQUIRED,
@@ -20,4 +23,7 @@ export {
   EMAIL_EXIST,
   USER_EXSIT,
   ERROR_UNKNOWN,
+  LOG_IN,
+  LOG_OUT,
+  PROFILE,
 }

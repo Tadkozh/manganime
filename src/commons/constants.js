@@ -15,6 +15,10 @@ const USER_COLLECTION = 'users'
 const LIGHT = 'light'
 const DARK = 'dark'
 const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
+const ROUTE_HOME = '/'
+const ROUTE_LOGIN_REGISTER = '/login'
+const ROUTE_PROFILE = '/profile'
+const ROUTE_404 = '*'
 
 export {
   BAD_USE_CONTEXT,
@@ -33,5 +37,9 @@ export {
   USER_COLLECTION,
   LIGHT,
   DARK,
-  THEME_COLOR_LOCAL_STORAGE
+  THEME_COLOR_LOCAL_STORAGE,
+  ROUTE_HOME,
+  ROUTE_LOGIN_REGISTER,
+  ROUTE_PROFILE,
+  ROUTE_404,
 }

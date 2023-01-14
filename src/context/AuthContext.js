@@ -3,15 +3,14 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut,
+  signOut
 } from 'firebase/auth'
 import React from 'react'
 import {
   BAD_USE_CONTEXT,
   DONE,
   FETCHING,
-  SIGN_IN,
-  SIGN_UP,
+  SIGN_IN
 } from '../commons/constants'
 import { createUser, getUserByUid } from '../database/operations'
 import { auth } from '../firebase-config'
@@ -20,10 +19,9 @@ import { validateForm } from '../utils/helper'
 
 const AuthContext = React.createContext()
 
-const afterAuth = (action, setAction, data) => {
-  if (action === SIGN_UP && data != null) {
+const storeNewUser = (data) => {
+  if (data != null) {
     createUser(data.user)
-    setAction(null)
   }
 }
 
@@ -31,19 +29,10 @@ const getUserConnect = async (currentUser) => {
   const user = await getUserByUid(currentUser.uid)
   return user
 }
-const AuthProviders = (props) => {
+const AuthProviders = ({ children }) => {
   const { data, status, error, setError, setData, execute } = useUserData()
 
-  const retrieveUser = React.useCallback(
-    async (currentUser) => {
-      if (currentUser) {
-        const info = await getUserConnect(currentUser)
-        setData(info)
-      }
-    },
-    [setData],
-  )
-
+  // Check if user is already connected
   React.useEffect(() => {
     if (!data) {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -55,26 +44,26 @@ const AuthProviders = (props) => {
       })
       return unsubscribe
     }
-  }, [data, execute, retrieveUser, setData])
+  }, [data, execute, setData])
 
   const register = React.useCallback(async (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password)
+    const user = await createUserWithEmailAndPassword(auth, email, password)
+    storeNewUser(user)
   }, [])
 
-  const login = React.useCallback(async (email, password) => {
+  const login = React.useCallback((email, password) => {
     signInWithEmailAndPassword(auth, email, password)
   }, [])
   const preValidate = React.useCallback(
-    (email, password, action = SIGN_IN) => {
+    async (email, password, action = SIGN_IN) => {
       const errorForm = validateForm(email, password)
       if (errorForm) {
         setError(errorForm)
         return
       }
       action === SIGN_IN ? login(email, password) : register(email, password)
-      afterAuth(action, data)
     },
-    [data, login, register, setError],
+    [login, register, setError],
   )
   const logout = React.useCallback(() => {
     signOut(auth).then(() => {
@@ -94,9 +83,11 @@ const AuthProviders = (props) => {
       </Backdrop>
     )
   }
-  if (status === DONE) {
-    return <AuthContext.Provider {...props} value={values} />
-  }
+  return (
+    <AuthContext.Provider value={values}>
+      {status === DONE && children}
+    </AuthContext.Provider>
+  )
 }
 
 const useAuth = () => {
@@ -108,3 +99,4 @@ const useAuth = () => {
 }
 
 export { AuthProviders, useAuth }
+
