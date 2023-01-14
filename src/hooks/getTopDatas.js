@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 
-const useGetTopDatas = (name, limit = 5) => {
+const useGetTopDatas = (name, limit = 4) => {
   const url = `https://api.jikan.moe/v4/top/${name}?limit=${limit}`
   const [topDatas, setTopDatas] = React.useState([])
 
