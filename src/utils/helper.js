@@ -82,4 +82,10 @@ const getImageName = (url) => {
   return imageSplit[0]
 }
 
-export { validateForm, errorAuth, getImageName }
+const getRandomNumber = () => {
+  const min = 1
+  const max = 10
+  return Math.round(Math.random() * (max - min) + min)
+}
+
+export { validateForm, errorAuth, getImageName, getRandomNumber }
