@@ -1,4 +1,4 @@
-import { deepPurple, grey, red, purple } from '@mui/material/colors'
+import { grey, purple, red } from '@mui/material/colors'
 import { DARK, LIGHT } from '../commons/constants'
 
 const lightPalette = {
@@ -13,8 +13,8 @@ const darkPalette = {
   mode: DARK,
   primary: purple,
   background: {
-    default: deepPurple[900],
-    paper: deepPurple[900],
+    default: '#262626',
+    paper: '#262626',
   },
   text: {
     primary: '#fff',
