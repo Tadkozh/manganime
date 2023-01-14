@@ -17,8 +17,6 @@ import PageInfo from './components/page info/pageInfo'
 import Reviews from './components/page info/reviews'
 import { PrivateRoute } from './components/PrivateRoute'
 import { UserProfile } from './components/UserProfile'
-import Reviews from './components/page info/reviews'
-import SearchAnime from './components/search/searchAnime'
 
 const AppConsumer = () => {
   return (
