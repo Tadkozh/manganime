@@ -7,7 +7,7 @@ const TopDetails = ({ name }) => {
 
   return (
     <>
-      <article>
+      <article className=" top-article">
         <h2>Top {name}</h2>
         <TopView datas={topDatas} />
       </article>

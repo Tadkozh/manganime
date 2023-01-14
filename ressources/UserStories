@@ -1,16 +1,23 @@
 Users Stories
 
 - En tant qu'utilisateur, je dois pouvoir choisir entre dark et light mode.
-- En tant qu'utilisateur, je dois être en mesure de récupérer la liste complète des Anime/Mangas.
-- En tant qu'utilisateur, je dois pouvoir récupérer un Anime/Manga par son ID.
-- En tant qu'utilisateur, je dois pouvoir à partir de cet ID, voir les informations sur cet Anime/Manga, notamment :
+- En tant qu'utilisateur, je dois être en mesure de récupérer le top des Anime/Mangas (TopView)
+- En tant qu'utilisateur, je dois être en mesure de récupérer la liste complète des Anime/Mangas (SearchAnime, SearchManga)
+- En tant qu'utilisateur, je dois pouvoir récupérer un Anime/Manga par différents moyens : Par type, par score, par status, par public, en tapant son titre... (searchBar)
+- En tant qu'utilisateur, je dois pouvoir à partir de cet ID, voir les informations sur cet Anime/Manga :
+  - Titre, cover
+  - synopsis
+  - infos diverses (Miscellaneous)
+  - About this artwork (BackgroundStory)
+  - Les commentaires des lecteurs (Reviews) : ceux de l'API + ceux de l'appli
+  - les news (NewsById)
+  - les recommandations(RecommendationsById)
+  - (des citations issues de cet Anime/Manga (deuxième API))
+    (Réfléchir à une manière de présenter l'ensemble de ces données, peut-être via un menu ou un sous menu : problème d'erreur 429 (Too Many Requests))
 
-  - les news et les recommandations.
-  - des citations issues de cet Anime/Manga (deuxième API)
-    (Réfléchir à une manière de présenter l'ensemble de ces données, peut-être via un menu ou un sous menu)
-
-- En tant qu'utilisateur connecté, je dois pouvoir mettre un Anime/Manga en favoris (depuis la page des informations de cet Anime/Manga)
-- En tant qu'utilisateur connecté, je dois pouvoir écrire un avis sur un Anime/Manga (depuis la page des informations de cet Anime/Manga)
+- En tant qu'utilisateur connecté, je dois pouvoir mettre un Anime/Manga en favoris (depuis la page des informations de cet Anime/Manga - icône coeur)
+- En tant qu'utilisateur connecté, je dois pouvoir noter un Anime/Manga - 5 étoiles (depuis la page des informations de cet Anime/Manga)
+- En tant qu'utilisateur connecté, je dois pouvoir écrire un avis ou commentaire sur un Anime/Manga (depuis la page des informations de cet Anime/Manga : FormInfo)
 
 - En tant qu'utilisateur connecté, je dois pouvoir voir tous les Anime/Manga que j'ai mis en favoris (depuis ma page profil)
 - En tant qu'utilisateur connecté, je dois pouvoir voir tous mes avis (depuis ma page profil)
