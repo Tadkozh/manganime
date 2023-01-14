@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 // CSS Files
 import './pageInfo.css'
@@ -16,8 +16,6 @@ import InfoHeader from './infoHeader'
 import Synopsis from './synopsis'
 import MiscellaneousInfos from './miscellaneousInfos'
 import BackgroundStory from './backgroundStory'
-import NewsById from './NewsById'
-import RecommendationById from './RecommendationById'
 import FormInfo from './formInfo'
 import Reviews from './reviews'
 
@@ -61,7 +59,6 @@ function PageInfo() {
               </div>
 
               <BackgroundStory getInfo={getInfo} />
-              {/* <div className="news">Espace news (FRANCK)</div> */}
 
               <FormInfo />
 
@@ -70,8 +67,8 @@ function PageInfo() {
           </>
         ) : null}
       </div>
-      <NewsById id={id} />
-      <RecommendationById id={id} />
+      {/* <NewsById id={id} />
+      <RecommendationById id={id} /> */}
     </>
   )
 }
