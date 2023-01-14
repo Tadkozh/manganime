@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-// const RecommendationById = ({ id }) => {
 const RecommendationById = () => {
+  // const RecommendationById = () => {
+  let { id } = useParams()
+
   const [animeRecom, setAnimeRecom] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/recommendations
@@ -12,7 +15,7 @@ const RecommendationById = () => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
-  const id = 1 // id : 1, 100, 190
+  // const id = 1 // id : 1, 100, 190
   const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
@@ -53,8 +56,11 @@ const RecommendationById = () => {
               if (index < 10) {
                 return (
                   <div key={index}>
+                    <p>{data.entry.mal_id}</p>
                     <p>{data.entry.title}</p>
-                    <img src={data.entry.images.jpg.image_url} alt="" />
+                    <Link to={`/infosManga/main/${data.entry.mal_id}`}>
+                      <img src={data.entry.images.jpg.image_url} alt="" />
+                    </Link>
                     <p>
                       <Button
                         variant="contained"
@@ -68,8 +74,9 @@ const RecommendationById = () => {
                   </div>
                 )
               }
+              return null
             })
-          : null}
+          : 'loading...'}
       </div>
     </>
   )

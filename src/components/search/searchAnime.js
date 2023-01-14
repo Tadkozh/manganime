@@ -22,11 +22,11 @@ function SearchAnime() {
   const letterUrl = letter !== '' ? `?letter=${letter}` : '?'
   const scoreMinUrl = scoreMin !== '' ? `&min_score=${scoreMin}` : ''
   const typeUrl = type !== '' ? `&type=${type}` : ''
-  // const statusUrl = status !== '' ? `&status=${status}` : ''
+  const statusUrl = status !== '' ? `&status=${status}` : ''
   const ratingsUrl = rating !== '' ? `&rating=${rating}` : ''
   const hentaisUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${ratingsUrl}${hentaisUrl}&page=${page}`
+  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingsUrl}${hentaisUrl}&page=${page}`
 
   useEffect(() => {
     fetch(link)
@@ -70,7 +70,7 @@ function SearchAnime() {
               return (
                 <div className="item" key={index}>
                   <Link
-                    to={`/infos/${data.mal_id}/${
+                    to={`/infosManga/main/${data.mal_id}/${
                       data.title_english ?? data.titles[0].title
                     }`}
                   >
