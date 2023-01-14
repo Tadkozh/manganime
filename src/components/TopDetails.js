@@ -9,6 +9,13 @@ import '../styles/top-css.css'
 
 const TopDetails = ({ name }) => {
   const { topDatas } = useGetTopDatas(name)
+  console.log(topDatas)
+  const [filteredTopDatas, setFilteredTopDatas] = React.useState()
+
+  // const newArray = topDatas.filter()
+  // console.log(newArray)
+
+  React.useEffect(() => {}, [])
 
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas.length
@@ -28,7 +35,7 @@ const TopDetails = ({ name }) => {
         <MobileStepper
           sx={{
             position: 'absolute',
-            top: '55%',
+            top: '40%',
             width: '100%',
             backgroundColor: 'inherit',
             '.MuiMobileStepper-dots': {
@@ -71,6 +78,7 @@ const TopDetails = ({ name }) => {
         />
         <h2>Top {name}</h2>
         <TopView datas={topDatas} />
+        {/* <TopView datas={filteredTopDatas} /> */}
       </article>
     </>
   )
