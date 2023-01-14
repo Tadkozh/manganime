@@ -8,8 +8,9 @@ import {
   LIGHT,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE,
+  ROUTE_PROFILE
 } from '../commons/constants'
+import { useAuth } from '../context/AuthContext'
 import { ColorModeContext } from '../context/ColorModeContext'
 import { useStorageColorTheme } from '../hooks/storageColorTheme'
 import MUISwitchMode from '../MUISwitchMode'
@@ -27,9 +28,8 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography,
+  Typography
 } from './index'
-import { useAuth } from '../context/AuthContext'
 
 const pages = ['News', 'Recommandations', 'Production', 'Product']
 const settings = [PROFILE, LOG_OUT, LOG_IN]
@@ -186,7 +186,7 @@ const AppBarProfile = () => {
   }
 
   const handleAuthOption = (option) => {
-    if (!Object(option)) {
+    if (typeof option !== 'object') {
       switch (option) {
         case LOG_IN:
           navigate(ROUTE_LOGIN_REGISTER)
@@ -237,3 +237,4 @@ const AppBarProfile = () => {
 }
 
 export { MangAnimeAppBar }
+
