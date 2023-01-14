@@ -5,3 +5,7 @@
   justify-content: center;
   gap: 30px;
 }
+
+.datagrid li {
+  list-style: none;
+}
