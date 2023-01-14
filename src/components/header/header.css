@@ -1,0 +1,7 @@
+.mainMenu ul {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: beige;
+  padding: 10px;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, Rating } from '@mui/material'
+import { Button, Rating, Typography } from '@mui/material'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 // import StarRoundedIcon from '@mui/icons-material/StarRounded'
 
@@ -52,7 +52,7 @@ function InfoHeader({ getInfo }) {
 
         <div className="rating">
           <div>
-            <p>Global score:</p>
+            <Typography component="legend">Global score:</Typography>
             <Rating
               name="rating"
               defaultValue={getInfo.data.score / 2}
@@ -72,10 +72,10 @@ function InfoHeader({ getInfo }) {
             </p>
           </div>
           <div>
-            <p>Your score:</p>
+            <Typography component="legend">Your score:</Typography>
             <Rating
               name="rating"
-              defaultValue={1}
+              defaultValue={null}
               precision={0.5}
               readOnly={rankBtnValue ? true : false}
             />
