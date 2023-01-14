@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import '../styles/common-css.css'
+import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-export const RecommendationAnim = () => {
+const RecommendationById = ({ id }) => {
   const [animeRecom, setAnimeRecom] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/recommendations
@@ -11,8 +11,8 @@ export const RecommendationAnim = () => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
-  const id = 190 // id : 1, 100, 190
-  const params = 'manga' // params : anime, manga
+  // const id = 1 // id : 1, 100, 190
+  const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
   //   return axios
@@ -41,25 +41,28 @@ export const RecommendationAnim = () => {
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
-              return (
-                <div key={index}>
-                  <p>{data.entry.title}</p>
-                  <img src={data.entry.images.jpg.image_url} alt="" />
-                  <p>
-                    <Button
-                      variant="contained"
-                      href={data.entry.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Read more
-                    </Button>
-                  </p>
-                </div>
-              )
+              if (index < 10) {
+                return (
+                  <div key={index}>
+                    <p>{data.entry.title}</p>
+                    <img src={data.entry.images.jpg.image_url} alt="" />
+                    <p>
+                      <Button
+                        variant="contained"
+                        href={data.entry.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Read more
+                      </Button>
+                    </p>
+                  </div>
+                )
+              }
             })
           : 'No recommendation...'}
       </div>
     </>
   )
 }
+export default RecommendationById

@@ -1,38 +1,44 @@
 import { faker } from '@faker-js/faker'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Navigate } from 'react-router-dom'
+import {
+  createUserWithEmailAndPassword, signInWithEmailAndPassword
+} from 'firebase/auth'
+import { DONE } from '../../commons/constants'
+import { auth } from '../../firebase-config'
+import { useUserData } from '../../hooks/useUserData'
 import { render } from '../../test/test-utils'
 import { LoginRegister } from '../LoginRegister'
 
 jest.mock('../../firebase-config', () => {
   return {
     initializeApp: jest.fn(),
-    getAuth: jest.fn(),
+    auth: jest.fn(),
     getFirestore: jest.fn(),
   }
 })
 
 jest.mock('firebase/auth', () => {
   return {
-    signInWithEmailAndPassword: (email, password) =>
-      Promise.resolve({
-        user: {
-          token: '123456',
-          email: email,
-        },
-      }),
-      setPersistence: () => Promise.resolve(),
+    signInWithEmailAndPassword: jest.fn(),
+    createUserWithEmailAndPassword: jest.fn(),
+    onAuthStateChanged: jest.fn(),
   }
 })
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Navigate: jest.fn(),
-}))
+jest.mock('../../hooks/useUserData', () => ({ useUserData: jest.fn() }))
 
 describe('LoginRegister component', () => {
-  test('Quand les champs sont correctement renseigné, on accède à la page utilisateur', async () => {
+  test('Quand les champs sont correctement renseigné, on appelle la promise signInWithEmailAndPassword', async () => {
+    useUserData.mockReturnValue({
+      data: null,
+      status: DONE,
+      error: null,
+      setError: jest.fn(),
+      setData: jest.fn(),
+      execute: jest.fn(),
+    })
+
     const user = userEvent.setup()
     render(<LoginRegister />)
 
@@ -40,7 +46,6 @@ describe('LoginRegister component', () => {
       name: /adresse email/i,
     })
     const inputPassword = await screen.findByLabelText(/mot de passe/i)
-
     const email = faker.internet.email()
     const password = faker.internet.password()
 
@@ -55,10 +60,56 @@ describe('LoginRegister component', () => {
 
     expect(testUser).not.toBeInTheDocument()
     await user.click(connexionButton)
-    expect(Navigate).toHaveBeenCalledTimes(1)
-    expect(Navigate).toHaveBeenCalledWith({ to: '/profile' }, {})
+    expect(signInWithEmailAndPassword).toHaveBeenLastCalledWith(
+      auth,
+      email,
+      password,
+    )
+  })
+  test('Quand les champs sont correctement renseigné, on appelle la promise createUserWithEmailAndPassword', async () => {
+    useUserData.mockReturnValue({
+      data: null,
+      status: DONE,
+      error: null,
+      setError: jest.fn(),
+      setData: jest.fn(),
+      execute: jest.fn(),
+    })
+
+    const user = userEvent.setup()
+    render(<LoginRegister />)
+
+    const inputEmail = await screen.findByRole('textbox', {
+      name: /adresse email/i,
+    })
+    const inputPassword = await screen.findByLabelText(/mot de passe/i)
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+
+    const createButton = screen.queryByRole('button', {
+      name: 'Créer un compte',
+    })
+    await user.click(createButton)
+    const submitCreateButton = screen.queryByRole('button', {
+      name: 'Créer',
+    })
+
+    await user.type(inputEmail, email)
+    await user.type(inputPassword, password)
+    await user.click(submitCreateButton)
+
+    expect(createUserWithEmailAndPassword).toHaveBeenLastCalledWith(auth, email, password)
   })
   test(`Quand on clique sur le lien 'créer un compte', le header et le texte du boutton change`, async () => {
+    useUserData.mockReturnValue({
+      data: null,
+      status: DONE,
+      error: null,
+      setError: jest.fn(),
+      setData: jest.fn(),
+      execute: jest.fn(),
+    })
+
     const user = userEvent.setup()
     render(<LoginRegister />)
 
