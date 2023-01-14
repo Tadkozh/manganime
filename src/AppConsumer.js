@@ -13,23 +13,13 @@ import PageInfo from './components/page info/pageInfo'
 import { PrivateRoute } from './components/PrivateRoute'
 import { RecommendationAnim } from './components/RecommendationAnim'
 import { UserProfile } from './components/UserProfile'
-import { ColorModeContext } from './context/ColorModeContext'
-import MUISwitchMode from './MUISwitchMode'
+
 import Reviews from './components/page info/reviews'
 import SearchAnime from './components/search/searchAnime'
 
 const AppConsumer = () => {
-  const theme = useTheme()
-  const colorMode = React.useContext(ColorModeContext)
-  const mode = theme.palette.mode
-
   return (
     <Router>
-      <MUISwitchMode
-        mode={mode}
-        onClick={colorMode.toggleColorMode}
-        checked={mode === LIGHT ? false : true}
-      />
       <ErrorBoundary FallbackComponent={ErrorFallback}></ErrorBoundary>
       <Routes>
         <Route path="/" element={<MangAnime />} />
