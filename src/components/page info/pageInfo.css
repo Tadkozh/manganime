@@ -19,6 +19,14 @@ ul {
   /* background-color: rgb(8, 133, 182); */
   padding: 10px;
 }
+.subMenu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  background-color: beige;
+  padding: 10px;
+}
 .info {
   display: flex;
   flex-direction: column;

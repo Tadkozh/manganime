@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-const RecommendationById = ({ id }) => {
+const RecommendationById = () => {
+  let { id } = useParams()
+
   const [animeRecom, setAnimeRecom] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/recommendations
@@ -58,11 +61,12 @@ const RecommendationById = ({ id }) => {
                     </p>
                   </div>
                 )
-              }
+              } return null
             })
           : 'No recommendation...'}
       </div>
     </>
   )
 }
+
 export default RecommendationById
