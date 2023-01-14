@@ -1,7 +1,7 @@
 function SearchManga() {
   return (
     <>
-      <p>Pas encore créé</p>
+      <p>Pas encore créé, bruh, bruh</p>
     </>
   )
 }
