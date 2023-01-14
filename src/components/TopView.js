@@ -21,6 +21,7 @@ const TopView = ({ datas }) => {
               sx={{
                 maxWidth: '16em',
                 boxShadow: 'inherit',
+                backgroundImage: 'inherit',
               }}
             >
               <CardActionArea>
