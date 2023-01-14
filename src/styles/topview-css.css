@@ -1,0 +1,13 @@
+.top-article {
+  margin: 2em 0;
+}
+
+.top-article--box {
+  margin-top: 1em;
+}
+
+.top-article--box-item {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
