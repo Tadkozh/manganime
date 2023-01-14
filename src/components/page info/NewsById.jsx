@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
 
-const NewsById = ({ id }) => {
+const NewsById = () => {
+  let { id } = useParams()
+
   const [animeNews, setAnimeNews] = useState([])
 
   //https://api.jikan.moe/v4/anime/${id}/news
@@ -51,7 +54,7 @@ const NewsById = ({ id }) => {
                     <AccordionBasic data={data} />
                   </div>
                 )
-              }
+              } return null
             })}
           </div>
         ) : (
@@ -61,4 +64,5 @@ const NewsById = ({ id }) => {
     </>
   )
 }
+
 export default NewsById

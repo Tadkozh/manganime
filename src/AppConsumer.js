@@ -5,7 +5,7 @@ import {
   ROUTE_404,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE
+  ROUTE_PROFILE,
 } from './commons/constants'
 import { Error404 } from './components/Error404'
 import { ErrorFallback } from './components/ErrorFallBack'
@@ -14,8 +14,9 @@ import { MangAnime } from './components/MangAnime'
 import PageInfo from './components/page info/pageInfo'
 import SearchAnime from './components/search/searchAnime'
 import SearchManga from './components/search/searchManga'
-// import { NewsById } from './components/page info/NewsById'
-// import { RecommendationById } from './components/page info/RecommendationById'
+import InfosManga from './components/page info/infosManga'
+import { NewsById } from './components/page info/NewsById'
+import { RecommendationById } from './components/page info/RecommendationById'
 // import { NewsAnime } from './components/NewsAnime'
 import Reviews from './components/page info/reviews'
 import { PrivateRoute } from './components/PrivateRoute'
@@ -28,12 +29,16 @@ const AppConsumer = () => {
       <Routes>
         <Route path={ROUTE_HOME} element={<MangAnime />} />
         <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
-        {/* <Route path="/news" element={<NewsById />} />
-        <Route path="/recommendations" element={<RecommendationById />} /> */}
-        <Route path="/search-anime" element={<SearchAnime />}></Route>
-        <Route path="/search-manga" element={<SearchManga />}></Route>
-        <Route path="/infos/:id/:title" element={<PageInfo />}>
-          <Route path="/infos/:id/:title/reviews" element={<Reviews />}></Route>
+        <Route path="/search-anime" element={<SearchAnime />} />
+        <Route path="/search-manga" element={<SearchManga />} />
+        <Route path="/infosManga" element={<InfosManga />}>
+          <Route path="/infosManga/main/:id/:title" element={<PageInfo />} />
+          <Route path="/infosManga/news/:id/:title" element={<NewsById />} />
+          <Route
+            path="/infosManga/recommendations/:id/:title"
+            element={<RecommendationById />}
+          />
+          <Route path="/infosManga/reviews/:id/:title" element={<Reviews />} />
         </Route>
         <Route path={ROUTE_404} element={<Error404 />} />
         <Route path="/" element={<PrivateRoute />}>
