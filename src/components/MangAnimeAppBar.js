@@ -1,12 +1,19 @@
 import { useTheme } from '@mui/material'
 import * as React from 'react'
+import { useNavigate } from 'react-router'
 import avatarProfile from '../assets/images/avatar_2.gif'
 import { ReactComponent as LogoIconDark } from '../assets/images/logo_dark.svg'
 import { ReactComponent as LogoIconLight } from '../assets/images/logo_light.svg'
-import { LIGHT } from '../commons/constants'
+import {
+  LIGHT,
+  ROUTE_HOME,
+  ROUTE_LOGIN_REGISTER,
+  ROUTE_PROFILE,
+} from '../commons/constants'
 import { ColorModeContext } from '../context/ColorModeContext'
 import { useStorageColorTheme } from '../hooks/storageColorTheme'
 import MUISwitchMode from '../MUISwitchMode'
+import { LOG_IN, LOG_OUT, PROFILE } from '../utils/constants'
 import { getImageName } from '../utils/helper'
 import {
   AppBar,
@@ -20,11 +27,12 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography
+  Typography,
 } from './index'
+import { useAuth } from '../context/AuthContext'
 
 const pages = ['News', 'Recommandations', 'Production', 'Product']
-const settings = ['Profile', 'Log out', 'Log in']
+const settings = [PROFILE, LOG_OUT, LOG_IN]
 
 const getPropsLogo = {
   mr: 1,
@@ -165,13 +173,35 @@ const AppBarMenu = () => {
 }
 const AppBarProfile = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(false)
+  const navigate = useNavigate()
+  const { logout } = useAuth()
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (option) => {
     setAnchorElUser(null)
+    handleAuthOption(option)
+  }
+
+  const handleAuthOption = (option) => {
+    if (!Object(option)) {
+      switch (option) {
+        case LOG_IN:
+          navigate(ROUTE_LOGIN_REGISTER)
+          break
+        case LOG_OUT:
+          logout()
+          navigate(ROUTE_HOME)
+          break
+        case PROFILE:
+          navigate(ROUTE_PROFILE)
+          break
+        default:
+          throw new Error('option dans le menu app bar non défini')
+      }
+    }
   }
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -197,7 +227,7 @@ const AppBarProfile = () => {
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+          <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
             <Typography textAlign="center">{setting}</Typography>
           </MenuItem>
         ))}
@@ -207,4 +237,3 @@ const AppBarProfile = () => {
 }
 
 export { MangAnimeAppBar }
-
