@@ -17,12 +17,6 @@ function Header() {
           <Link to="/search-manga">Manga</Link>
         </li>
         <li>
-          <Link to="/news">News</Link>
-        </li>
-        <li>
-          <Link to="/recommendations">Recomendations</Link>
-        </li>
-        <li>
           <Link to="/*">Error404</Link>
         </li>
         <li>
