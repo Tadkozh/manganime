@@ -1,5 +1,5 @@
 import { useAuth } from '../context/AuthContext'
-import { MangAnimeAppBar } from './M'
+import { MangAnimeAppBar } from './MangAnimeAppBar'
 
 const UserProfile = () => {
   const { data } = useAuth()
