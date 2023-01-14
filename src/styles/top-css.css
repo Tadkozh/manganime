@@ -1,5 +1,6 @@
 .top-article {
   margin: 2em 0;
+  position: relative;
 }
 
 .top-article--box {
@@ -10,10 +11,6 @@
   list-style: none;
   display: flex;
   justify-content: center;
-}
-
-.MuiCardMedia-root:hover {
-  transform: scale(1.1);
 }
 
 .top-article--box-item-media {

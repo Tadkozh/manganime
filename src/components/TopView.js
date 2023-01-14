@@ -4,14 +4,31 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
+// import MobileStepper from '@mui/material/MobileStepper'
+// import Button from '@mui/material/Button'
+// import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
+// import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import '../styles/common-css.css'
-import '../styles/topview-css.css'
+import '../styles/top-css.css'
 
 const TopView = ({ datas }) => {
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,
     index: null,
   })
+
+  // const theme = useTheme();
+  // const [activeStep, setActiveStep] = React.useState(0)
+  // const maxSteps = datas.length
+  // console.log(maxSteps)
+
+  // const handleNext = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  // }
+
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  // }
 
   return (
     <ul className="datagrid top-article--box">
