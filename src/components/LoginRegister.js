@@ -15,10 +15,12 @@ import {
   LockOutlinedIcon,
   Paper,
   TextField,
-  Typography,
+  Typography
 } from '.'
 import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
+import { getRandomNumber } from '../utils/helper'
+import { MangAnimeAppBar } from './MangAnimeAppBar'
 
 const TextFieldCustom = ({
   name = '',
@@ -51,13 +53,17 @@ const ButtonCustom = ({ children, onClick, type = 'button' }) => (
   </Button>
 )
 
-const getGridProps = {
-  backgroundImage: 'url(https://source.unsplash.com/random)',
-  backgroundRepeat: 'no-repeat',
-  backgroundColor: (t) =>
-    t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
+const getGridProps = (number) => {
+  const image = require(`../assets/images/login/login_${number}.jpg`)
+  const props = {
+    backgroundImage: `url(${image})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: (t) =>
+      t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }
+  return props
 }
 const getBoxProps = {
   my: 8,
@@ -70,6 +76,7 @@ const getBoxProps = {
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
   const { preValidate, error, data, status } = useAuth()
+  const [imageRandom] = React.useState(getRandomNumber())
 
   const handleSignUp = () => {
     setCreate(false)
@@ -84,41 +91,50 @@ const LoginRegister = ({ signup = true }) => {
 
   const label = create ? 'Se connecter' : 'Créer un compte'
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} sx={{ ...getGridProps }} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box sx={{ ...getBoxProps }}>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {label}
-          </Typography>
-          <DialogContent>
-            <FormLogin
-              preValidate={preValidate}
-              create={create}
-              status={status}
-            />
-            {error ? (
-              <Alert severity="error">Erreur: {error.message}</Alert>
-            ) : null}
-          </DialogContent>
+    <>
+      <MangAnimeAppBar />
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{ ...getGridProps(imageRandom) }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box sx={{ ...getBoxProps }}>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {label}
+            </Typography>
+            <DialogContent>
+              <FormLogin
+                preValidate={preValidate}
+                create={create}
+                status={status}
+              />
+              {error ? (
+                <Alert severity="error">Erreur: {error.message}</Alert>
+              ) : null}
+            </DialogContent>
 
-          <Grid container>
-            <Grid item xs></Grid>
-            <Grid item>
-              {create ? (
-                <Button onClick={handleSignUp}>Créer un compte</Button>
-              ) : (
-                <Button onClick={handleSignIn}>Se connecter</Button>
-              )}
+            <Grid container>
+              <Grid item xs></Grid>
+              <Grid item>
+                {create ? (
+                  <Button onClick={handleSignUp}>Créer un compte</Button>
+                ) : (
+                  <Button onClick={handleSignIn}>Se connecter</Button>
+                )}
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }
 const FormLogin = ({ preValidate, create, status }) => {
@@ -179,3 +195,4 @@ const FormLogin = ({ preValidate, create, status }) => {
   )
 }
 export { LoginRegister }
+
