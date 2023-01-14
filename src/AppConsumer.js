@@ -15,9 +15,8 @@ import PageInfo from './components/page info/pageInfo'
 import SearchAnime from './components/search/searchAnime'
 import SearchManga from './components/search/searchManga'
 import InfosManga from './components/page info/infosManga'
-import { NewsById } from './components/page info/NewsById'
-import { RecommendationById } from './components/page info/RecommendationById'
-// import { NewsAnime } from './components/NewsAnime'
+import NewsById from './components/page info/NewsById'
+import RecommendationById from './components/page info/RecommendationById'
 import Reviews from './components/page info/reviews'
 import { PrivateRoute } from './components/PrivateRoute'
 import { UserProfile } from './components/UserProfile'
@@ -33,9 +32,10 @@ const AppConsumer = () => {
         <Route path="/search-manga" element={<SearchManga />} />
         <Route path="/infosManga" element={<InfosManga />}>
           <Route path="/infosManga/main/:id/:title" element={<PageInfo />} />
-          <Route path="/infosManga/news/:id/:title" element={<NewsById />} />
+          <Route path="/infosManga/main/:id/" element={<PageInfo />} />
+          <Route path="/infosManga/news/:id/" element={<NewsById />} />
           <Route
-            path="/infosManga/recommendations/:id/:title"
+            path="/infosManga/recommendations/:id"
             element={<RecommendationById />}
           />
           <Route path="/infosManga/reviews/:id/:title" element={<Reviews />} />

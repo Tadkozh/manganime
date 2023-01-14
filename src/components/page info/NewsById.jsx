@@ -4,6 +4,7 @@ import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
 
 const NewsById = () => {
+  //const NewsById = () => {
   let { id } = useParams()
 
   const [animeNews, setAnimeNews] = useState([])
@@ -38,31 +39,30 @@ const NewsById = () => {
     getDataFromApi()
   }, [])
 
+  let directives = ''
+  if (animeNews.length === 0) {
+    directives = `No news about this ${params}`
+  } else {
+    directives = `Click on a title to learn more`
+  }
+
   return (
     <>
       <h2>News about this {params}</h2>
-
-      <div>
-        {animeNews ? (
-          <div>
-            <p>(click on a title to learn more)</p>
-
-            {animeNews.map((data, index) => {
-              if (index < 10) {
-                return (
-                  <div key={index}>
-                    <AccordionBasic data={data} />
-                  </div>
-                )
-              } return null
-            })}
-          </div>
-        ) : (
-          <p>No news about this {params}</p>
-        )}
-      </div>
+      <p>{directives}</p>
+      {animeNews
+        ? animeNews.map((data, index) => {
+            if (index < 10) {
+              return (
+                <div key={index}>
+                  <AccordionBasic data={data} />
+                </div>
+              )
+            }
+            return null
+          })
+        : 'loading...'}
     </>
   )
 }
-
 export default NewsById

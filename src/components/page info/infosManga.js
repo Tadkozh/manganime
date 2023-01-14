@@ -1,21 +1,20 @@
 import { useParams, Link, Outlet } from 'react-router-dom'
 
-function InfosManga() {
+function InfosManga({ title }) {
   let { id } = useParams()
+  console.log(title)
 
   return (
     <>
       <ul className="subMenu">
         <li>
-          <Link to={`/infosManga/main/${id}/:title`}>Infos</Link>
+          <Link to={`/infosManga/main/${id}/${title}`}>Infos</Link>
         </li>
         <li>
-          <Link to={`/infosManga/news/${id}/:title`}>News</Link>
+          <Link to={`/infosManga/news/${id}/`}>News</Link>
         </li>
         <li>
-          <Link to={`/infosManga/recommendations/${id}/:title`}>
-            Recommendations
-          </Link>
+          <Link to={`/infosManga/recommendations/${id}`}>Recommendations</Link>
         </li>
       </ul>
 

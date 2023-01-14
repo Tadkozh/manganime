@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
 const RecommendationById = () => {
+  // const RecommendationById = () => {
   let { id } = useParams()
 
   const [animeRecom, setAnimeRecom] = useState([])
@@ -38,17 +39,28 @@ const RecommendationById = () => {
     getDataFromApi()
   }, [])
 
+  let directives = ''
+  if (animeRecom.length === 0) {
+    directives = `No recommendation about this ${params}`
+  } else {
+    directives = ''
+  }
+
   return (
     <>
       <h2>{`People who like this ${params} also enjoy`}</h2>
+      <p>{directives}</p>
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
               if (index < 10) {
                 return (
                   <div key={index}>
+                    <p>{data.entry.mal_id}</p>
                     <p>{data.entry.title}</p>
-                    <img src={data.entry.images.jpg.image_url} alt="" />
+                    <Link to={`/infosManga/main/${data.entry.mal_id}`}>
+                      <img src={data.entry.images.jpg.image_url} alt="" />
+                    </Link>
                     <p>
                       <Button
                         variant="contained"
@@ -61,12 +73,12 @@ const RecommendationById = () => {
                     </p>
                   </div>
                 )
-              } return null
+              }
+              return null
             })
-          : 'No recommendation...'}
+          : 'loading...'}
       </div>
     </>
   )
 }
-
 export default RecommendationById
