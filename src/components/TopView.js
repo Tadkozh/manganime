@@ -8,6 +8,11 @@ import '../styles/common-css.css'
 import '../styles/topview-css.css'
 
 const TopView = ({ datas }) => {
+  const [showOverlay, setShowOverlay] = React.useState({
+    status: false,
+    index: null,
+  })
+
   return (
     <ul className="datagrid top-article--box">
       {datas.map((data, index) => {
@@ -24,14 +29,26 @@ const TopView = ({ datas }) => {
                 backgroundImage: 'inherit',
               }}
             >
-              <CardActionArea>
+              <CardActionArea
+                sx={{ position: 'relative' }}
+                onMouseOver={(e) => {
+                  e.target.key = index
+                  setShowOverlay({ status: true, index: index })
+                }}
+                onMouseLeave={() => {
+                  setShowOverlay({ status: false, index: null })
+                }}
+              >
                 <CardMedia
                   component="img"
                   height="400"
-                  sx={{ objectFit: 'inherit' }}
+                  sx={{ objectFit: 'inherit', transition: 'all 0.2s ease' }}
                   image={data.images.jpg.image_url}
                   alt={data.title}
                 />
+                {showOverlay.status && showOverlay.index === index && (
+                  <div className="top-article--box-item-media" />
+                )}
               </CardActionArea>
               <CardContent sx={{ padding: 0 }}>
                 <Typography
