@@ -3,7 +3,8 @@ import axios from 'axios'
 import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-const RecommendationById = ({ id }) => {
+// const RecommendationById = ({ id }) => {
+const RecommendationById = () => {
   const [animeRecom, setAnimeRecom] = useState([])
 
   // https://api.jikan.moe/v4/anime/${id}/recommendations
@@ -11,7 +12,7 @@ const RecommendationById = ({ id }) => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
-  // const id = 1 // id : 1, 100, 190
+  const id = 1 // id : 1, 100, 190
   const params = 'anime' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
@@ -35,9 +36,17 @@ const RecommendationById = ({ id }) => {
     getDataFromApi()
   }, [])
 
+  let directives = ''
+  if (animeRecom.length === 0) {
+    directives = `No recommendation about this ${params}`
+  } else {
+    directives = ''
+  }
+
   return (
     <>
       <h2>{`People who like this ${params} also enjoy`}</h2>
+      <p>{directives}</p>
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
@@ -60,7 +69,7 @@ const RecommendationById = ({ id }) => {
                 )
               }
             })
-          : 'No recommendation...'}
+          : null}
       </div>
     </>
   )

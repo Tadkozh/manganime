@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
 
-const NewsById = ({ id }) => {
+// const NewsById = ({ id }) => {
+const NewsById = () => {
   const [animeNews, setAnimeNews] = useState([])
 
   //https://api.jikan.moe/v4/anime/${id}/news
@@ -10,8 +11,8 @@ const NewsById = ({ id }) => {
 
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
-  // const id = 1 // id : 1, 190 : No news Manga
-  const params = 'anime' // params : anime, manga
+  const id = 1 // id : 1, 190 : No news Manga
+  const params = 'manga' // params : anime, manga
 
   // const clientApi = (endpoint = null, params = {}) => {
   //   return axios
@@ -35,29 +36,29 @@ const NewsById = ({ id }) => {
     getDataFromApi()
   }, [])
 
+  let directives = ''
+  if (animeNews.length === 0) {
+    directives = `No news about this ${params}`
+  } else {
+    directives = 'Click on a title to learn more'
+  }
+
   return (
     <>
       <h2>News about this {params}</h2>
+      <p>{directives}</p>
 
-      <div>
-        {animeNews ? (
-          <div>
-            <p>(click on a title to learn more)</p>
-
-            {animeNews.map((data, index) => {
-              if (index < 10) {
-                return (
-                  <div key={index}>
-                    <AccordionBasic data={data} />
-                  </div>
-                )
-              }
-            })}
-          </div>
-        ) : (
-          <p>No news about this {params}</p>
-        )}
-      </div>
+      {animeNews
+        ? animeNews.map((data, index) => {
+            if (index < 10) {
+              return (
+                <div key={index}>
+                  <AccordionBasic data={data} />
+                </div>
+              )
+            }
+          })
+        : null}
     </>
   )
 }
