@@ -1,4 +1,4 @@
-function SearchManga() {
+function MangaSearch() {
   return (
     <>
       <p>Pas encore créé.</p>
@@ -6,4 +6,4 @@ function SearchManga() {
   )
 }
 
-export default SearchManga
+export default MangaSearch
