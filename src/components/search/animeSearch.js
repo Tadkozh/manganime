@@ -7,6 +7,7 @@ import './search.css'
 
 // Components
 import SearchBar from './searchBar'
+import MangAnimeAppBar from '../header/MangAnimeAppBar'
 
 function AnimeSearch() {
   const [getAnime, setGetAnime] = useState()
@@ -36,6 +37,7 @@ function AnimeSearch() {
 
   return (
     <>
+      <MangAnimeAppBar />
       {getAnime?.data ? (
         <>
           <div className="search">
