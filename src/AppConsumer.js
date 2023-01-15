@@ -5,16 +5,15 @@ import {
   ROUTE_404,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE,
+  ROUTE_PROFILE
 } from './commons/constants'
 import { Error404 } from './components/Error404'
 import { ErrorFallback } from './components/ErrorFallBack'
 import { LoginRegister } from './components/LoginRegister'
 import { MangAnime } from './components/MangAnime'
-import MangAnimeAppBar from './components/header/MangAnimeAppBar'
 
-import Collection from './components/search/collection'
 import AnimeSearch from './components/search/animeSearch'
+import Collection from './components/search/collection'
 import MangaSearch from './components/search/mangaSearch'
 
 import AnimeMainInfo from './components/page info/anime/animeMainInfo'
@@ -28,7 +27,6 @@ import { UserProfile } from './components/UserProfile'
 const AppConsumer = () => {
   return (
     <Router>
-      <MangAnimeAppBar />
       <ErrorBoundary FallbackComponent={ErrorFallback}></ErrorBoundary>
       <Routes>
         <Route path={ROUTE_HOME} element={<MangAnime />} />
