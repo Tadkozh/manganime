@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
@@ -41,18 +41,31 @@ const Recommendations = () => {
     getDataFromApi()
   }, [])
 
+  let directives = ''
+  if (animeRecom.length === 0) {
+    directives = `No recommendation about this ${collectionType}`
+  } else {
+    directives = ''
+  }
+
   return (
     <>
-    <NavBarInfo collectionType={collectionType} />
+      <NavBarInfo collectionType={collectionType} />
       <h2>{`People who like this ${collectionType} also enjoy`}</h2>
+      <p>{directives}</p>
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
               if (index < 10) {
                 return (
                   <div key={index}>
+                    <p>{data.entry.mal_id}</p>
                     <p>{data.entry.title}</p>
-                    <img src={data.entry.images.jpg.image_url} alt="" />
+                    <Link
+                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}`}
+                    >
+                      <img src={data.entry.images.jpg.image_url} alt="" />
+                    </Link>
                     <p>
                       <Button
                         variant="contained"
@@ -65,9 +78,10 @@ const Recommendations = () => {
                     </p>
                   </div>
                 )
-              } return null
+              }
+              return null
             })
-          : 'No recommendation...'}
+          : 'loading...'}
       </div>
     </>
   )

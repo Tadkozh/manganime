@@ -5,7 +5,7 @@ import {
   ROUTE_404,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE
+  ROUTE_PROFILE,
 } from './commons/constants'
 import { Error404 } from './components/Error404'
 import { ErrorFallback } from './components/ErrorFallBack'
@@ -44,14 +44,19 @@ const AppConsumer = () => {
             path="/collection/manga/search/main/:id/:title"
             element={<MangaMainInfo />}
           />
-
           <Route
-            path="/collection/anime/search/news/:id/:title"
-            element={<News />}
+            path="/collection/anime/search/main/:id/"
+            element={<AnimeMainInfo />}
+          />
+          <Route
+            path="/collection/manga/search/main/:id/"
+            element={<MangaMainInfo />}
           />
 
+          <Route path="/collection/anime/search/news/:id" element={<News />} />
+
           <Route
-            path="/collection/anime/search/recommendations/:id/:title"
+            path="/collection/anime/search/recommendations/:id"
             element={<Recommendations />}
           />
         </Route>

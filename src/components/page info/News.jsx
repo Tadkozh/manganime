@@ -41,32 +41,31 @@ const News = () => {
     getDataFromApi()
   }, [])
 
+  let directives = ''
+  if (animeNews.length === 0) {
+    directives = `No news about this ${collectionType}`
+  } else {
+    directives = `Click on a title to learn more`
+  }
+
   return (
     <>
-    <NavBarInfo collectionType={collectionType} />
+      <NavBarInfo collectionType={collectionType} />
       <h2>News about this {collectionType}</h2>
-
-      <div>
-        {animeNews ? (
-          <div>
-            <p>(click on a title to learn more)</p>
-
-            {animeNews.map((data, index) => {
-              if (index < 10) {
-                return (
-                  <div key={index}>
-                    <AccordionBasic data={data} />
-                  </div>
-                )
-              } return null
-            })}
-          </div>
-        ) : (
-          <p>No news about this {collectionType}</p>
-        )}
-      </div>
+      <p>{directives}</p>
+      {animeNews
+        ? animeNews.map((data, index) => {
+            if (index < 10) {
+              return (
+                <div key={index}>
+                  <AccordionBasic data={data} />
+                </div>
+              )
+            }
+            return null
+          })
+        : 'loading...'}
     </>
   )
 }
-
 export default News
