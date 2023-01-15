@@ -5,6 +5,7 @@ import { AccordionBasic } from './AccordionBasic'
 
 // Components
 import NavBarInfo from './navBarInfo'
+import MangAnimeAppBar from '../header/MangAnimeAppBar'
 
 const News = () => {
   let { id } = useParams()
@@ -50,6 +51,7 @@ const News = () => {
 
   return (
     <>
+      <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
       <h2>News about this {collectionType}</h2>
       <p>{directives}</p>

@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 
 // Components
 import NavBarInfo from './navBarInfo'
+import MangAnimeAppBar from '../header/MangAnimeAppBar'
 
 const Recommendations = () => {
   let { id } = useParams()
@@ -50,6 +51,7 @@ const Recommendations = () => {
 
   return (
     <>
+      <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
       <h2>{`People who like this ${collectionType} also enjoy`}</h2>
       <p>{directives}</p>
