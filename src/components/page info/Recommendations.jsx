@@ -9,7 +9,7 @@ import NavBarInfo from './navBarInfo'
 import MangAnimeAppBar from '../header/MangAnimeAppBar'
 
 const Recommendations = () => {
-  let { id } = useParams()
+  let { id, title } = useParams()
 
   const [animeRecom, setAnimeRecom] = useState([])
 
@@ -44,7 +44,7 @@ const Recommendations = () => {
 
   let directives = ''
   if (animeRecom.length === 0) {
-    directives = `No recommendation about this ${collectionType}`
+    directives = `No recommendation about ${title}`
   } else {
     directives = ''
   }
@@ -53,7 +53,7 @@ const Recommendations = () => {
     <>
       <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
-      <h2>{`People who like this ${collectionType} also enjoy`}</h2>
+      <h2>{`People who like ${title} also enjoy`}</h2>
       <p>{directives}</p>
       <div className="datagrid">
         {animeRecom
@@ -61,10 +61,9 @@ const Recommendations = () => {
               if (index < 10) {
                 return (
                   <div key={index}>
-                    <p>{data.entry.mal_id}</p>
                     <p>{data.entry.title}</p>
                     <Link
-                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}`}
+                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}/${data.entry.title}`}
                     >
                       <img src={data.entry.images.jpg.image_url} alt="" />
                     </Link>

@@ -8,7 +8,7 @@ import NavBarInfo from './navBarInfo'
 import MangAnimeAppBar from '../header/MangAnimeAppBar'
 
 const News = () => {
-  let { id } = useParams()
+  let { id, title } = useParams()
 
   const [animeNews, setAnimeNews] = useState([])
 
@@ -53,7 +53,7 @@ const News = () => {
     <>
       <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
-      <h2>News about this {collectionType}</h2>
+      <h2>News about {title}</h2>
       <p>{directives}</p>
       {animeNews
         ? animeNews.map((data, index) => {
@@ -70,4 +70,5 @@ const News = () => {
     </>
   )
 }
+
 export default News

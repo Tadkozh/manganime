@@ -45,18 +45,21 @@ const AppConsumer = () => {
             element={<MangaMainInfo />}
           />
           <Route
-            path="/collection/anime/search/main/:id/"
+            path="/collection/anime/search/main/:id/:title"
             element={<AnimeMainInfo />}
           />
           <Route
-            path="/collection/manga/search/main/:id/"
+            path="/collection/manga/search/main/:id/:title"
             element={<MangaMainInfo />}
           />
 
-          <Route path="/collection/anime/search/news/:id" element={<News />} />
+          <Route
+            path="/collection/anime/search/news/:id/:title"
+            element={<News />}
+          />
 
           <Route
-            path="/collection/anime/search/recommendations/:id"
+            path="/collection/anime/search/recommendations/:id/:title"
             element={<Recommendations />}
           />
         </Route>
