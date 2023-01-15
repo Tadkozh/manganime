@@ -19,6 +19,7 @@ import { ColorModeContext } from '../../context/ColorModeContext'
 import { useStorageColorTheme } from '../../hooks/storageColorTheme'
 import MUISwitchMode from '../../MUISwitchMode'
 import {
+  HOME,
   ALL_ANIME,
   ALL_MANGA,
   LOG_IN,
@@ -41,9 +42,9 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from '../index'
+} from '..'
 
-const pages = [TOP_ANIME, TOP_MANGA, ALL_ANIME, ALL_MANGA]
+const pages = [HOME, TOP_ANIME, TOP_MANGA, ALL_ANIME, ALL_MANGA]
 const settings = [PROFILE, LOG_OUT, LOG_IN]
 
 const getPropsTypo = {
@@ -127,6 +128,9 @@ const AppBarLogo = ({
 const handleMenuOption = (option, navigate) => {
   if (typeof option !== 'object') {
     switch (option) {
+      case HOME:
+        navigate(ROUTE_HOME)
+        break
       case TOP_ANIME:
         navigate(ROUTE_TOP_ANIME)
         break

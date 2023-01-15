@@ -9,14 +9,13 @@ import '../pageInfo800px.css'
 import '../pageInfo1024px.css'
 
 // Components
-import NavBarInfo from '../navBarInfo'
-import AnimePresentation from './animePresentation'
-import Synopsis from '../synopsis'
-import AnimeDetails from './animeDetails'
-import Story from '../story'
-import Form from '../form'
-import Reviews from '../reviews'
-import MangAnimeAppBar from '../../header/MangAnimeAppBar'
+import NavBarInfo from '../NavBarInfo'
+import AnimePresentation from './AnimePresentation'
+import Synopsis from '../Synopsis'
+import AnimeDetails from './AnimeDetails'
+import Story from '../Story'
+import Form from '../Form'
+import Reviews from '../Reviews'
 
 function AnimeMainInfo() {
   let { id } = useParams()
@@ -34,7 +33,6 @@ function AnimeMainInfo() {
 
   return (
     <>
-      <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
       <div className="infoWrapper">
         {getInfo?.data ? (

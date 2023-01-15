@@ -6,8 +6,7 @@ import { Pagination, Rating } from '@mui/material'
 import './search.css'
 
 // Components
-import SearchBar from './searchBar'
-import MangAnimeAppBar from '../header/MangAnimeAppBar'
+import SearchBar from './SearchBar'
 
 function AnimeSearch() {
   const [getAnime, setGetAnime] = useState()
@@ -37,7 +36,6 @@ function AnimeSearch() {
 
   return (
     <>
-      <MangAnimeAppBar />
       {getAnime?.data ? (
         <>
           <div className="search">
