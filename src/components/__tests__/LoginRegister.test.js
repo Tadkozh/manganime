@@ -2,7 +2,8 @@ import { faker } from '@faker-js/faker'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth'
 import { DONE } from '../../commons/constants'
 import { auth } from '../../firebase-config'
@@ -27,6 +28,7 @@ jest.mock('firebase/auth', () => {
 })
 
 jest.mock('../../hooks/useUserData', () => ({ useUserData: jest.fn() }))
+jest.mock('../header/MangAnimeAppBar')
 
 describe('LoginRegister component', () => {
   test('Quand les champs sont correctement renseigné, on appelle la promise signInWithEmailAndPassword', async () => {
@@ -98,7 +100,11 @@ describe('LoginRegister component', () => {
     await user.type(inputPassword, password)
     await user.click(submitCreateButton)
 
-    expect(createUserWithEmailAndPassword).toHaveBeenLastCalledWith(auth, email, password)
+    expect(createUserWithEmailAndPassword).toHaveBeenLastCalledWith(
+      auth,
+      email,
+      password,
+    )
   })
   test(`Quand on clique sur le lien 'créer un compte', le header et le texte du boutton change`, async () => {
     useUserData.mockReturnValue({
