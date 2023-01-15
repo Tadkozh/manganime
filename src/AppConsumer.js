@@ -44,19 +44,24 @@ const AppConsumer = () => {
             path="/collection/manga/search/main/:id/:title"
             element={<MangaMainInfo />}
           />
-          <Route
-            path="/collection/anime/search/main/:id/"
-            element={<AnimeMainInfo />}
-          />
-          <Route
-            path="/collection/manga/search/main/:id/"
-            element={<MangaMainInfo />}
-          />
-
-          <Route path="/collection/anime/search/news/:id" element={<News />} />
+          {/* <Route path="/collection/anime/top/main/:id/:title" element={<A />} />
+          <Route path="/collection/manga/top/main/:id/:title" element={<A />} /> */}
 
           <Route
-            path="/collection/anime/search/recommendations/:id"
+            path="/collection/anime/search/news/:id/:title"
+            element={<News />}
+          />
+          <Route
+            path="/collection/manga/search/news/:id/:title"
+            element={<News />}
+          />
+
+          <Route
+            path="/collection/anime/search/recommendations/:id/:title"
+            element={<Recommendations />}
+          />
+          <Route
+            path="/collection/manga/search/recommendations/:id/:title"
             element={<Recommendations />}
           />
         </Route>
