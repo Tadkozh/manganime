@@ -16,11 +16,11 @@ import AnimeSearch from './components/search/AnimeSearch'
 import Collection from './components/search/Collection'
 import MangaSearch from './components/search/MangaSearch'
 
-import AnimeMainInfo from './components/infos/anime/AnimeMain'
-import MangaMainInfo from './components/infos/manga/MangaMain'
+import AnimeMain from './components/collections/anime/AnimeMain'
+import MangaMain from './components/collections/manga/MangaMain'
 
-import News from './components/infos/News'
-import Recommendations from './components/infos/Recommendations'
+import News from './components/collections/News'
+import Recommendations from './components/collections/Recommendations'
 import { PrivateRoute } from './components/PrivateRoute'
 import { UserProfile } from './components/UserProfile'
 
@@ -40,11 +40,11 @@ const AppConsumer = () => {
 
           <Route
             path="/collection/anime/search/main/:id/:title"
-            element={<AnimeMainInfo />}
+            element={<AnimeMain />}
           />
           <Route
             path="/collection/manga/search/main/:id/:title"
-            element={<MangaMainInfo />}
+            element={<MangaMain />}
           />
           {/* <Route path="/collection/anime/top/main/:id/:title" element={<A />} />
           <Route path="/collection/manga/top/main/:id/:title" element={<A />} /> */}
