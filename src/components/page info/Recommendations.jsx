@@ -61,7 +61,9 @@ const Recommendations = () => {
                   <div key={index}>
                     <p>{data.entry.mal_id}</p>
                     <p>{data.entry.title}</p>
-                    <Link to={`/infosManga/main/${data.entry.mal_id}`}>
+                    <Link
+                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}/:title$`}
+                    >
                       <img src={data.entry.images.jpg.image_url} alt="" />
                     </Link>
                     <p>

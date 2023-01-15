@@ -52,6 +52,7 @@ const News = () => {
     <>
       <NavBarInfo collectionType={collectionType} />
       <h2>News about this {collectionType}</h2>
+      <p>{directives}</p>
       {animeNews
         ? animeNews.map((data, index) => {
             if (index < 10) {
