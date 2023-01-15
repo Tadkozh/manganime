@@ -5,27 +5,22 @@ import avatarProfile from '../../assets/images/avatar_2.gif'
 import { ReactComponent as LogoIconDark } from '../../assets/images/logo_dark.svg'
 import { ReactComponent as LogoIconLight } from '../../assets/images/logo_light.svg'
 import {
-  LIGHT,
-  ROUTE_HOME,
+  LIGHT, ROUTE_ALL_ANIME,
+  ROUTE_ALL_MANGA, ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
   ROUTE_TOP_ANIME,
-  ROUTE_TOP_MANGA,
-  ROUTE_ALL_ANIME,
-  ROUTE_ALL_MANGA,
+  ROUTE_TOP_MANGA
 } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { ColorModeContext } from '../../context/ColorModeContext'
 import { useStorageColorTheme } from '../../hooks/storageColorTheme'
 import MUISwitchMode from '../../MUISwitchMode'
 import {
-  LOG_IN,
+  ALL_ANIME, ALL_MANGA, LOG_IN,
   LOG_OUT,
   PROFILE,
-  TOP_ANIME,
-  ALL_ANIME,
-  TOP_MANGA,
-  ALL_MANGA,
+  TOP_ANIME, TOP_MANGA
 } from '../../utils/constants'
 import { getImageName } from '../../utils/helper'
 import {
@@ -40,7 +35,7 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography,
+  Typography
 } from '../index'
 
 const pages = [TOP_ANIME, TOP_MANGA, ALL_ANIME, ALL_MANGA]
@@ -57,9 +52,11 @@ const getPropsLogo = {
 }
 
 const MangAnimeAppBar = () => {
+  const navigate = useNavigate()
   const theme = useTheme()
   const colorMode = React.useContext(ColorModeContext)
   const mode = theme.palette.mode
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -71,8 +68,8 @@ const MangAnimeAppBar = () => {
             sx={{ mr: 4 }}
           />
           <AppBarLogo display={{ xs: 'none', md: 'flex' }} variant="body1" />
-          <AppBarMenu />
-          <AppBarProfile />
+          <AppBarMenu navigate={navigate} />
+          <AppBarProfile navigate={navigate} />
         </Toolbar>
       </Container>
     </AppBar>
@@ -102,8 +99,28 @@ const AppBarLogo = ({ variant, display, flexGrow = 0.4 }) => {
   )
 }
 
-const AppBarMenu = () => {
-  const navigate = useNavigate()
+const handleMenuOption = (option, navigate) => {
+  if (typeof option !== 'object') {
+    switch (option) {
+      case TOP_ANIME:
+        navigate(ROUTE_TOP_ANIME)
+        break
+      case TOP_MANGA:
+        navigate(ROUTE_TOP_MANGA)
+        break
+      case ALL_ANIME:
+        navigate(ROUTE_ALL_ANIME)
+        break
+      case ALL_MANGA:
+        navigate(ROUTE_ALL_MANGA)
+        break
+      default:
+        throw new Error('Option dans le menu app bar non défini')
+    }
+  }
+}
+
+const AppBarMenu = ({ navigate }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(false)
 
   const handleOpenNavMenu = (event) => {
@@ -111,28 +128,7 @@ const AppBarMenu = () => {
   }
   const handleCloseNavMenu = (option) => {
     setAnchorElNav(null)
-    handleMenuOption(option)
-  }
-
-  const handleMenuOption = (option) => {
-    if (typeof option !== 'object') {
-      switch (option) {
-        case TOP_ANIME:
-          navigate(ROUTE_TOP_ANIME)
-          break
-        case TOP_MANGA:
-          navigate(ROUTE_TOP_MANGA)
-          break
-        case ALL_ANIME:
-          navigate(ROUTE_ALL_ANIME)
-          break
-        case ALL_MANGA:
-          navigate(ROUTE_ALL_MANGA)
-          break
-        default:
-          throw new Error('Option dans le menu app bar non défini')
-      }
-    }
+    handleMenuOption(option, navigate)
   }
 
   return (
@@ -207,9 +203,25 @@ const AppBarMenu = () => {
     </>
   )
 }
-
-const AppBarProfile = () => {
-  const navigate = useNavigate()
+const handleAuthOption = (option, navigate, logout) => {
+  if (typeof option !== 'object') {
+    switch (option) {
+      case LOG_IN:
+        navigate(ROUTE_LOGIN_REGISTER)
+        break
+      case LOG_OUT:
+        logout()
+        navigate(ROUTE_HOME)
+        break
+      case PROFILE:
+        navigate(ROUTE_PROFILE)
+        break
+      default:
+        throw new Error('option dans le menu app bar non défini')
+    }
+  }
+}
+const AppBarProfile = ({ navigate }) => {
   const { logout } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState(false)
 
@@ -219,26 +231,7 @@ const AppBarProfile = () => {
 
   const handleCloseUserMenu = (option) => {
     setAnchorElUser(null)
-    handleAuthOption(option)
-  }
-
-  const handleAuthOption = (option) => {
-    if (typeof option !== 'object') {
-      switch (option) {
-        case LOG_IN:
-          navigate(ROUTE_LOGIN_REGISTER)
-          break
-        case LOG_OUT:
-          logout()
-          navigate(ROUTE_HOME)
-          break
-        case PROFILE:
-          navigate(ROUTE_PROFILE)
-          break
-        default:
-          throw new Error('option dans le menu app bar non défini')
-      }
-    }
+    handleAuthOption(option, navigate, logout)
   }
 
   return (
