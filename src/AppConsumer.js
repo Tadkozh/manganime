@@ -53,7 +53,7 @@ const AppConsumer = () => {
           />
 
           <Route
-            path="/infosManga/recommendations/:id/:title"
+            path="/collection/anime/search/recommendations/:id/:title"
             element={<Recommendations />}
           />
         </Route>
