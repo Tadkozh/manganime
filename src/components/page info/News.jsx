@@ -3,7 +3,10 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
 
-const NewsById = () => {
+// Components
+import NavBarInfo from './navBarInfo'
+
+const News = () => {
   let { id } = useParams()
 
   const [animeNews, setAnimeNews] = useState([])
@@ -14,20 +17,20 @@ const NewsById = () => {
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
   // const id = 1 // id : 1, 190 : No news Manga
-  const params = 'anime' // params : anime, manga
+  const collectionType = 'anime' // collectionType : anime, manga
 
-  // const clientApi = (endpoint = null, params = {}) => {
+  // const clientApi = (endpoint = null, collectionType = {}) => {
   //   return axios
-  //     .get(${url}/${params}/${endpoint})
+  //     .get(${url}/${collectionType}/${endpoint})
   //     .then((data) => data)
   //     .catch((error) => error)
   // }
 
   const getDataFromApi = () => {
     axios
-      .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+      .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
       .then((response) => {
-        console.log(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+        console.log(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
         console.log(response.data.data)
         setAnimeNews(response.data.data)
       })
@@ -40,7 +43,8 @@ const NewsById = () => {
 
   return (
     <>
-      <h2>News about this {params}</h2>
+    <NavBarInfo collectionType={collectionType} />
+      <h2>News about this {collectionType}</h2>
 
       <div>
         {animeNews ? (
@@ -58,11 +62,11 @@ const NewsById = () => {
             })}
           </div>
         ) : (
-          <p>No news about this {params}</p>
+          <p>No news about this {collectionType}</p>
         )}
       </div>
     </>
   )
 }
 
-export default NewsById
+export default News

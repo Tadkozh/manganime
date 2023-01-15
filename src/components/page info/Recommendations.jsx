@@ -4,7 +4,10 @@ import axios from 'axios'
 import '../../styles/common-css.css'
 import Button from '@mui/material/Button'
 
-const RecommendationById = () => {
+// Components
+import NavBarInfo from './navBarInfo'
+
+const Recommendations = () => {
   let { id } = useParams()
 
   const [animeRecom, setAnimeRecom] = useState([])
@@ -15,18 +18,18 @@ const RecommendationById = () => {
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
   // const id = 1 // id : 1, 100, 190
-  const params = 'anime' // params : anime, manga
+  const collectionType = 'anime' // collectionType : anime, manga
 
-  // const clientApi = (endpoint = null, params = {}) => {
+  // const clientApi = (endpoint = null, collectionType = {}) => {
   //   return axios
-  //     .get(${url}/${params}/${endpoint})
+  //     .get(${url}/${collectionType}/${endpoint})
   //     .then((data) => data)
   //     .catch((error) => error)
   // }
 
   const getDataFromApi = () => {
     axios
-      .get(`${APP_API_URL}/${params}/${id}/${endpoint}`)
+      .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
       .then((response) => {
         console.log(response.data.data)
         setAnimeRecom(response.data.data)
@@ -40,7 +43,8 @@ const RecommendationById = () => {
 
   return (
     <>
-      <h2>{`People who like this ${params} also enjoy`}</h2>
+    <NavBarInfo collectionType={collectionType} />
+      <h2>{`People who like this ${collectionType} also enjoy`}</h2>
       <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
@@ -69,4 +73,4 @@ const RecommendationById = () => {
   )
 }
 
-export default RecommendationById
+export default Recommendations

@@ -4,13 +4,17 @@ const PASSWORD_REQUIRED = 'Le mote de passe est obligatoire'
 const PASSWORD_REQUIREMENT = 'Le mot de passe doit faire au moins 6 caractères'
 const USER_NOT_FOUND = "L'utilisateur n'existe pas"
 const WRONG_PASSWORD = 'Mot de passe incorrect'
-const TOO_MANY_REQUEST = 'Trop de tentative de conenxion, compte bloqué'
+const TOO_MANY_REQUEST = 'Trop de tentative de connexion, compte bloqué'
 const EMAIL_EXIST = "L'email est déjà utilisé"
 const USER_EXSIT = "L'utilisateur existe déjà"
 const ERROR_UNKNOWN = 'Erreur inatendu'
 const LOG_OUT = 'Déconnexion'
 const LOG_IN = 'Se connecter'
 const PROFILE = 'Profile'
+const TOP_ANIME = 'Top Animes'
+const ALL_ANIME = 'All Animes'
+const TOP_MANGA = 'Top Mangas'
+const ALL_MANGA = 'All Mangas'
 
 export {
   EMAIL_REQUIRED,
@@ -26,4 +30,8 @@ export {
   LOG_IN,
   LOG_OUT,
   PROFILE,
+  TOP_ANIME,
+  ALL_ANIME,
+  TOP_MANGA,
+  ALL_MANGA,
 }

@@ -18,6 +18,10 @@ const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
 const ROUTE_HOME = '/'
 const ROUTE_LOGIN_REGISTER = '/login'
 const ROUTE_PROFILE = '/profile'
+const ROUTE_TOP_ANIME = '/collection/anime/top'
+const ROUTE_TOP_MANGA = '/collection/manga/top'
+const ROUTE_ALL_ANIME = '/collection/anime/search'
+const ROUTE_ALL_MANGA = '/collection/manga/search'
 const ROUTE_404 = '*'
 
 export {
@@ -42,4 +46,8 @@ export {
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
   ROUTE_404,
+  ROUTE_TOP_ANIME,
+  ROUTE_TOP_MANGA,
+  ROUTE_ALL_ANIME,
+  ROUTE_ALL_MANGA,
 }

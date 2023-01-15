@@ -15,12 +15,12 @@ import {
   LockOutlinedIcon,
   Paper,
   TextField,
-  Typography
+  Typography,
 } from '.'
 import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { getRandomNumber } from '../utils/helper'
-import { MangAnimeAppBar } from './MangAnimeAppBar'
+import MangAnimeAppBar from './header/MangAnimeAppBar'
 
 const TextFieldCustom = ({
   name = '',
@@ -195,4 +195,3 @@ const FormLogin = ({ preValidate, create, status }) => {
   )
 }
 export { LoginRegister }
-

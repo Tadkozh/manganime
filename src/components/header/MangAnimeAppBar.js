@@ -1,21 +1,33 @@
 import { useTheme } from '@mui/material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
-import avatarProfile from '../assets/images/avatar_2.gif'
-import { ReactComponent as LogoIconDark } from '../assets/images/logo_dark.svg'
-import { ReactComponent as LogoIconLight } from '../assets/images/logo_light.svg'
+import avatarProfile from '../../assets/images/avatar_2.gif'
+import { ReactComponent as LogoIconDark } from '../../assets/images/logo_dark.svg'
+import { ReactComponent as LogoIconLight } from '../../assets/images/logo_light.svg'
 import {
   LIGHT,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE
-} from '../commons/constants'
-import { useAuth } from '../context/AuthContext'
-import { ColorModeContext } from '../context/ColorModeContext'
-import { useStorageColorTheme } from '../hooks/storageColorTheme'
-import MUISwitchMode from '../MUISwitchMode'
-import { LOG_IN, LOG_OUT, PROFILE } from '../utils/constants'
-import { getImageName } from '../utils/helper'
+  ROUTE_PROFILE,
+  ROUTE_TOP_ANIME,
+  ROUTE_TOP_MANGA,
+  ROUTE_ALL_ANIME,
+  ROUTE_ALL_MANGA,
+} from '../../commons/constants'
+import { useAuth } from '../../context/AuthContext'
+import { ColorModeContext } from '../../context/ColorModeContext'
+import { useStorageColorTheme } from '../../hooks/storageColorTheme'
+import MUISwitchMode from '../../MUISwitchMode'
+import {
+  LOG_IN,
+  LOG_OUT,
+  PROFILE,
+  TOP_ANIME,
+  ALL_ANIME,
+  TOP_MANGA,
+  ALL_MANGA,
+} from '../../utils/constants'
+import { getImageName } from '../../utils/helper'
 import {
   AppBar,
   Avatar,
@@ -28,10 +40,10 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography
-} from './index'
+  Typography,
+} from '../index'
 
-const pages = ['News', 'Recommandations', 'Production', 'Product']
+const pages = [TOP_ANIME, TOP_MANGA, ALL_ANIME, ALL_MANGA]
 const settings = [PROFILE, LOG_OUT, LOG_IN]
 
 const getPropsLogo = {
@@ -91,12 +103,36 @@ const AppBarLogo = ({ variant, display, flexGrow = 0.4 }) => {
 }
 
 const AppBarMenu = () => {
+  const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(false)
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (option) => {
     setAnchorElNav(null)
+    handleMenuOption(option)
+  }
+
+  const handleMenuOption = (option) => {
+    if (typeof option !== 'object') {
+      switch (option) {
+        case TOP_ANIME:
+          navigate(ROUTE_TOP_ANIME)
+          break
+        case TOP_MANGA:
+          navigate(ROUTE_TOP_MANGA)
+          break
+        case ALL_ANIME:
+          navigate(ROUTE_ALL_ANIME)
+          break
+        case ALL_MANGA:
+          navigate(ROUTE_ALL_MANGA)
+          break
+        default:
+          throw new Error('Option dans le menu app bar non défini')
+      }
+    }
   }
 
   return (
@@ -132,7 +168,7 @@ const AppBarMenu = () => {
         }}
       >
         {pages.map((page) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
+          <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
             <Typography textAlign="center">{page}</Typography>
           </MenuItem>
         ))}
@@ -161,7 +197,7 @@ const AppBarMenu = () => {
         {pages.map((page) => (
           <Button
             key={page}
-            onClick={handleCloseNavMenu}
+            onClick={() => handleCloseNavMenu(page)}
             sx={{ my: 2, color: 'white', display: 'block' }}
           >
             {page}
@@ -171,10 +207,11 @@ const AppBarMenu = () => {
     </>
   )
 }
+
 const AppBarProfile = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState(false)
   const navigate = useNavigate()
   const { logout } = useAuth()
+  const [anchorElUser, setAnchorElUser] = React.useState(false)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -203,6 +240,7 @@ const AppBarProfile = () => {
       }
     }
   }
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
@@ -236,5 +274,4 @@ const AppBarProfile = () => {
   )
 }
 
-export { MangAnimeAppBar }
-
+export default MangAnimeAppBar

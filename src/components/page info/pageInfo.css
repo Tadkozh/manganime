@@ -1,15 +1,18 @@
-/* MAIN A DEPLACER */
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+.animeNavBar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  background-color: beige;
+  padding: 10px;
 }
-h2 {
-  max-width: 75%;
-  margin: 0 auto;
-}
-ul {
-  list-style-type: none;
+
+.subMenu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: rgb(75, 75, 75);
+  padding: 10px;
 }
 
 .infoWrapper {
@@ -17,14 +20,6 @@ ul {
   flex-direction: column;
   align-items: center;
   /* background-color: rgb(8, 133, 182); */
-  padding: 10px;
-}
-.subMenu {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  background-color: beige;
   padding: 10px;
 }
 .info {
@@ -66,7 +61,7 @@ ul {
   font-size: 0.75rem;
 }
 .star {
-  color: rgba(0, 0, 0, 0.25);
+  color: grey;
   font-size: 100px;
   width: 100px;
   cursor: pointer;
@@ -118,7 +113,7 @@ embed {
   margin: 10px;
 }
 
-.miscellaneousInfos {
+.details {
   width: 100%;
   min-width: 300px;
   max-height: 400px;
@@ -127,29 +122,29 @@ embed {
   margin: 20px auto;
   overflow-y: scroll;
 }
-.miscellaneousInfos > div {
+.details > div {
   display: flex;
   margin: 2px auto;
 }
-.miscellaneousInfos .label {
+.details .label {
   width: 50%;
   background-color: rgba(128, 128, 128, 0.5);
   padding: 5px 10px;
 }
-.miscellaneousInfos .data {
+.details .data {
   width: 50%;
   background-color: rgba(128, 128, 128, 0.75);
   padding: 5px;
 }
 
-.backgroundStory {
+.story {
   width: 100%;
   padding: 10px;
   margin: 20px auto;
   border-radius: 10px;
   box-shadow: 0 0 15px -10px #000;
 }
-.backgroundStory p {
+.story p {
   max-height: 200px;
   overflow-y: auto;
 }
