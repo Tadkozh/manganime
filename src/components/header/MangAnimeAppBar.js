@@ -5,22 +5,27 @@ import avatarProfile from '../../assets/images/avatar_2.gif'
 import { ReactComponent as LogoIconDark } from '../../assets/images/logo_dark.svg'
 import { ReactComponent as LogoIconLight } from '../../assets/images/logo_light.svg'
 import {
-  LIGHT, ROUTE_ALL_ANIME,
-  ROUTE_ALL_MANGA, ROUTE_HOME,
+  LIGHT,
+  ROUTE_ALL_ANIME,
+  ROUTE_ALL_MANGA,
+  ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
   ROUTE_TOP_ANIME,
-  ROUTE_TOP_MANGA
+  ROUTE_TOP_MANGA,
 } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { ColorModeContext } from '../../context/ColorModeContext'
 import { useStorageColorTheme } from '../../hooks/storageColorTheme'
 import MUISwitchMode from '../../MUISwitchMode'
 import {
-  ALL_ANIME, ALL_MANGA, LOG_IN,
+  ALL_ANIME,
+  ALL_MANGA,
+  LOG_IN,
   LOG_OUT,
   PROFILE,
-  TOP_ANIME, TOP_MANGA
+  TOP_ANIME,
+  TOP_MANGA,
 } from '../../utils/constants'
 import { getImageName } from '../../utils/helper'
 import {
@@ -35,13 +40,13 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography
+  Typography,
 } from '../index'
 
 const pages = [TOP_ANIME, TOP_MANGA, ALL_ANIME, ALL_MANGA]
 const settings = [PROFILE, LOG_OUT, LOG_IN]
 
-const getPropsLogo = {
+const getPropsTypo = {
   mr: 1,
   my: 1,
   fontFamily: 'monospace',
@@ -67,7 +72,11 @@ const MangAnimeAppBar = () => {
             checked={mode === LIGHT ? false : true}
             sx={{ mr: 4 }}
           />
-          <AppBarLogo display={{ xs: 'none', md: 'flex' }} variant="body1" />
+          <AppBarLogo
+            display={{ xs: 'none', md: 'flex' }}
+            variant="body1"
+            navigate={navigate}
+          />
           <AppBarMenu navigate={navigate} />
           <AppBarProfile navigate={navigate} />
         </Toolbar>
@@ -76,23 +85,39 @@ const MangAnimeAppBar = () => {
   )
 }
 
-const AppBarLogo = ({ variant, display, flexGrow = 0.4 }) => {
+const AppBarLogo = ({
+  variant,
+  display,
+  flexGrow = 0.4,
+  arialabel = 'desktop',
+  navigate,
+}) => {
   const { getColor } = useStorageColorTheme()
+  const handleCLick = () => {
+    navigate(ROUTE_HOME)
+  }
+  const props = {
+    role: 'img',
+    'aria-label': `Logo MangAnime ${arialabel}`,
+    onClick: handleCLick,
+  }
   const Logo = getColor() === LIGHT ? <LogoIconLight /> : <LogoIconDark />
+
   return (
     <Typography
       variant={variant}
       noWrap
       component="a"
-      href="/"
       sx={{
-        ...getPropsLogo,
+        ...getPropsTypo,
         display: display,
         flexGrow: flexGrow,
         letterSpacing: '.3rem',
         fontWeight: 700,
         textDecoration: 'none',
+        '&:hover': { cursor: 'pointer' },
       }}
+      {...props}
     >
       {Logo}
     </Typography>
@@ -174,6 +199,8 @@ const AppBarMenu = ({ navigate }) => {
         display={{ xs: 'flex', md: 'none' }}
         variant="h5"
         flexGrow={0.75}
+        arialabel={'mobile'}
+        navigate={navigate}
       />
       <Typography
         variant={'h5'}
@@ -181,7 +208,7 @@ const AppBarMenu = ({ navigate }) => {
         component="a"
         href="/"
         sx={{
-          ...getPropsLogo,
+          ...getPropsTypo,
           display: { xs: 'flex', md: 'none' },
           flexGrow: 1.25,
           letterSpacing: '.9rem',
