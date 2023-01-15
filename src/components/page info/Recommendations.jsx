@@ -62,7 +62,7 @@ const Recommendations = () => {
                     <p>{data.entry.mal_id}</p>
                     <p>{data.entry.title}</p>
                     <Link
-                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}/:title$`}
+                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}`}
                     >
                       <img src={data.entry.images.jpg.image_url} alt="" />
                     </Link>

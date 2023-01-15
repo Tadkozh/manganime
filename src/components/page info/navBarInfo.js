@@ -12,13 +12,13 @@ function NavBarInfo({ collectionType }) {
           </Link>
         </li>
         <li>
-          <Link to={`/collection/${collectionType}/search/news/${id}/${title}`}>
+          <Link to={`/collection/${collectionType}/search/news/${id}`}>
             News
           </Link>
         </li>
         <li>
           <Link
-            to={`/collection/${collectionType}/search/recommendations/${id}/${title}`}
+            to={`/collection/${collectionType}/search/recommendations/${id}`}
           >
             Recommendations
           </Link>
