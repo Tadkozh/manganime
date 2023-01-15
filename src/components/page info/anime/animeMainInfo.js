@@ -16,6 +16,7 @@ import AnimeDetails from './animeDetails'
 import Story from '../story'
 import Form from '../form'
 import Reviews from '../reviews'
+import MangAnimeAppBar from '../../header/MangAnimeAppBar'
 
 function AnimeMainInfo() {
   let { id } = useParams()
@@ -33,6 +34,7 @@ function AnimeMainInfo() {
 
   return (
     <>
+      <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
       <div className="infoWrapper">
         {getInfo?.data ? (
