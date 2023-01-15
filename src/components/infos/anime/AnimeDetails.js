@@ -37,15 +37,17 @@ function AnimeDetails({ getInfo }) {
     },
     {
       label: 'Aired to',
-      data: `${
-        getInfo.data.aired.prop.to?.day < 10
-          ? `0${getInfo.data.aired.prop.to?.day}`
-          : getInfo.data.aired.prop.to?.day
-      }/${
-        getInfo.data.aired.prop.to?.month < 10
-          ? `0${getInfo.data.aired.prop.to?.month}`
-          : getInfo.data.aired.prop.to?.month
-      }/${getInfo.data.aired.prop.to?.year}`,
+      data: getInfo.data.aired.prop.to.year
+        ? `${
+            getInfo.data.aired.prop.to.day < 10
+              ? `0${getInfo.data.aired.prop.to?.day}`
+              : getInfo.data.aired.prop.to.day
+          }/${
+            getInfo.data.aired.prop.to.month < 10
+              ? `0${getInfo.data.aired.prop.to?.month}`
+              : getInfo.data.aired.prop.to.month
+          }/${getInfo.data.aired.prop.to.year}`
+        : 'Still active',
     },
     {
       label: 'Episodes',

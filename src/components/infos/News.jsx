@@ -4,8 +4,7 @@ import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
 
 // Components
-import NavBarInfo from './navBarInfo'
-import MangAnimeAppBar from '../header/MangAnimeAppBar'
+import NavBarInfo from './NavBarInfo'
 
 const News = () => {
   let { id, title } = useParams()
@@ -51,7 +50,6 @@ const News = () => {
 
   return (
     <>
-      <MangAnimeAppBar />
       <NavBarInfo collectionType={collectionType} />
       <h2>News about {title}</h2>
       <p>{directives}</p>

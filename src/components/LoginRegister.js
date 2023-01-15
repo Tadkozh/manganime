@@ -20,7 +20,6 @@ import {
 import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { getRandomNumber } from '../utils/helper'
-import MangAnimeAppBar from './header/MangAnimeAppBar'
 
 const TextFieldCustom = ({
   name = '',
@@ -92,7 +91,6 @@ const LoginRegister = ({ signup = true }) => {
   const label = create ? 'Se connecter' : 'Créer un compte'
   return (
     <>
-      <MangAnimeAppBar />
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid

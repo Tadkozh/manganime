@@ -12,22 +12,24 @@ import { ErrorFallback } from './components/ErrorFallBack'
 import { LoginRegister } from './components/LoginRegister'
 import { MangAnime } from './components/MangAnime'
 
-import AnimeSearch from './components/search/animeSearch'
-import Collection from './components/search/collection'
-import MangaSearch from './components/search/mangaSearch'
+import AnimeSearch from './components/search/AnimeSearch'
+import Collection from './components/search/Collection'
+import MangaSearch from './components/search/MangaSearch'
 
-import AnimeMainInfo from './components/page info/anime/animeMainInfo'
-import MangaMainInfo from './components/page info/manga/mangaMainInfo'
+import AnimeMainInfo from './components/infos/anime/AnimeMain'
+import MangaMainInfo from './components/infos/manga/MangaMain'
 
-import News from './components/page info/News'
-import Recommendations from './components/page info/Recommendations'
+import News from './components/infos/News'
+import Recommendations from './components/infos/Recommendations'
 import { PrivateRoute } from './components/PrivateRoute'
 import { UserProfile } from './components/UserProfile'
 
+import MangAnimeAppBar from './components/header/MangAnimeAppBar'
 const AppConsumer = () => {
   return (
     <Router>
       <ErrorBoundary FallbackComponent={ErrorFallback}></ErrorBoundary>
+      <MangAnimeAppBar />
       <Routes>
         <Route path={ROUTE_HOME} element={<MangAnime />} />
         <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
