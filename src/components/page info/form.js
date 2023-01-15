@@ -1,11 +1,11 @@
 import { Button, Rating, TextField } from '@mui/material'
 
-function FormInfo() {
+function Form() {
   return (
     <>
       <form>
         <p>Leave a comment</p>
-        <Rating name="rating" defaultValue={1} precision={0.5} />
+        <Rating name="rating" defaultValue={1} precision={0.5} required />
         <TextField
           id="outlined-basic"
           label="Title"
@@ -28,4 +28,4 @@ function FormInfo() {
   )
 }
 
-export default FormInfo
+export default Form

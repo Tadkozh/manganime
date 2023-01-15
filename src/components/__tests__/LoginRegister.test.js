@@ -2,44 +2,19 @@ import { faker } from '@faker-js/faker'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { DONE } from '../../commons/constants'
 import { auth } from '../../firebase-config'
-import { useUserData } from '../../hooks/useUserData'
 import { render } from '../../test/test-utils'
 import { LoginRegister } from '../LoginRegister'
 
-jest.mock('../../firebase-config', () => {
-  return {
-    initializeApp: jest.fn(),
-    auth: jest.fn(),
-    getFirestore: jest.fn(),
-  }
-})
-
-jest.mock('firebase/auth', () => {
-  return {
-    signInWithEmailAndPassword: jest.fn(),
-    createUserWithEmailAndPassword: jest.fn(),
-    onAuthStateChanged: jest.fn(),
-  }
-})
-
-jest.mock('../../hooks/useUserData', () => ({ useUserData: jest.fn() }))
+jest.mock('../header/MangAnimeAppBar')
 
 describe('LoginRegister component', () => {
-  test('Quand les champs sont correctement renseigné, on appelle la promise signInWithEmailAndPassword', async () => {
-    useUserData.mockReturnValue({
-      data: null,
-      status: DONE,
-      error: null,
-      setError: jest.fn(),
-      setData: jest.fn(),
-      execute: jest.fn(),
-    })
+  const user = userEvent.setup()
 
-    const user = userEvent.setup()
+  test('Quand les champs sont correctement renseigné, on appelle la promise signInWithEmailAndPassword', async () => {
     render(<LoginRegister />)
 
     const inputEmail = await screen.findByRole('textbox', {
@@ -67,16 +42,6 @@ describe('LoginRegister component', () => {
     )
   })
   test('Quand les champs sont correctement renseigné, on appelle la promise createUserWithEmailAndPassword', async () => {
-    useUserData.mockReturnValue({
-      data: null,
-      status: DONE,
-      error: null,
-      setError: jest.fn(),
-      setData: jest.fn(),
-      execute: jest.fn(),
-    })
-
-    const user = userEvent.setup()
     render(<LoginRegister />)
 
     const inputEmail = await screen.findByRole('textbox', {
@@ -98,18 +63,13 @@ describe('LoginRegister component', () => {
     await user.type(inputPassword, password)
     await user.click(submitCreateButton)
 
-    expect(createUserWithEmailAndPassword).toHaveBeenLastCalledWith(auth, email, password)
+    expect(createUserWithEmailAndPassword).toHaveBeenLastCalledWith(
+      auth,
+      email,
+      password,
+    )
   })
   test(`Quand on clique sur le lien 'créer un compte', le header et le texte du boutton change`, async () => {
-    useUserData.mockReturnValue({
-      data: null,
-      status: DONE,
-      error: null,
-      setError: jest.fn(),
-      setData: jest.fn(),
-      execute: jest.fn(),
-    })
-
     const user = userEvent.setup()
     render(<LoginRegister />)
 

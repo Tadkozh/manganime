@@ -1,5 +1,5 @@
-import { MangAnimeAppBar } from './MangAnimeAppBar'
 import TopDetails from './TopDetails'
+import MangAnimeAppBar from './header/MangAnimeAppBar'
 
 const MangAnime = () => {
   return (

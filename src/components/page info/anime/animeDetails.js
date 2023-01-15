@@ -1,7 +1,7 @@
-function MiscellaneousInfos({ getInfo }) {
+function AnimeDetails({ getInfo }) {
   const unknown = 'unknown'
 
-  const miscellaneousInfos = [
+  const details = [
     {
       label: 'Type',
       data:
@@ -87,9 +87,8 @@ function MiscellaneousInfos({ getInfo }) {
 
   return (
     <>
-      <div className="miscellaneousInfos">
-        {/* <p>Caractéristiques:</p> */}
-        {miscellaneousInfos.map((data, index) => {
+      <div className="details">
+        {details.map((data, index) => {
           return (
             <div key={index}>
               <div className="label">
@@ -106,4 +105,4 @@ function MiscellaneousInfos({ getInfo }) {
   )
 }
 
-export default MiscellaneousInfos
+export default AnimeDetails

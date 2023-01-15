@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 import { Button, Rating, Typography } from '@mui/material'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
-// import StarRoundedIcon from '@mui/icons-material/StarRounded'
 
-function FavIcon({ getInfo }) {
+function FavoriteIcon({ getInfo }) {
   const [isFav, setIsFav] = useState(false)
 
   return (
@@ -19,7 +18,7 @@ function FavIcon({ getInfo }) {
   )
 }
 
-function InfoHeader({ getInfo }) {
+function Presentation({ getInfo }) {
   const [rankBtnValue, setRankBtnValue] = useState(false)
 
   return (
@@ -29,7 +28,7 @@ function InfoHeader({ getInfo }) {
           <h2>{getInfo.data.title_english ?? getInfo.data.titles[0].title}</h2>
           <p className="japaneseTitle">{getInfo.data.title_japanese}</p>
           <p>Rank: {getInfo.data.rank}</p>
-          <FavIcon getInfo={getInfo} />
+          <FavoriteIcon getInfo={getInfo} />
         </div>
 
         <img
@@ -96,4 +95,4 @@ function InfoHeader({ getInfo }) {
   )
 }
 
-export default InfoHeader
+export default Presentation

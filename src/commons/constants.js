@@ -1,45 +1,25 @@
-const BAD_USE_CONTEXT = 'ne peut pas être utilisé sans'
-const ENV_DEV = 'development'
-const AUTH_USER_NOT_FOUND = 'auth/user-not-found'
-const AUTH_WRONG_PASSWORD = 'auth/wrong-password'
-const AUTH_TOO_MANY_REQUEST = 'auth/too-many-requests'
-const AUTH_USER_ALREADY_EXIST = 'auth/credential-already-in-use'
-const AUTH_EMAIL_EXISTS = 'auth/email-already-in-use'
-const IDLE = 'idle'
-const FETCHING = 'fetching'
-const DONE = 'done'
-const FAIL = 'fail'
-const SIGN_IN = 'signIn'
-const SIGN_UP = 'signUp'
-const USER_COLLECTION = 'users'
-const LIGHT = 'light'
-const DARK = 'dark'
-const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
-const ROUTE_HOME = '/'
-const ROUTE_LOGIN_REGISTER = '/login'
-const ROUTE_PROFILE = '/profile'
-const ROUTE_404 = '*'
-
-export {
-  BAD_USE_CONTEXT,
-  ENV_DEV,
-  AUTH_USER_NOT_FOUND,
-  AUTH_WRONG_PASSWORD,
-  AUTH_TOO_MANY_REQUEST,
-  AUTH_USER_ALREADY_EXIST,
-  AUTH_EMAIL_EXISTS,
-  IDLE,
-  FETCHING,
-  DONE,
-  FAIL,
-  SIGN_IN,
-  SIGN_UP,
-  USER_COLLECTION,
-  LIGHT,
-  DARK,
-  THEME_COLOR_LOCAL_STORAGE,
-  ROUTE_HOME,
-  ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE,
-  ROUTE_404,
-}
+export const BAD_USE_CONTEXT = 'ne peut pas être utilisé sans'
+export const ENV_DEV = 'development'
+export const AUTH_USER_NOT_FOUND = 'auth/user-not-found'
+export const AUTH_WRONG_PASSWORD = 'auth/wrong-password'
+export const AUTH_TOO_MANY_REQUEST = 'auth/too-many-requests'
+export const AUTH_USER_ALREADY_EXIST = 'auth/credential-already-in-use'
+export const AUTH_EMAIL_EXISTS = 'auth/email-already-in-use'
+export const IDLE = 'idle'
+export const FETCHING = 'fetching'
+export const DONE = 'done'
+export const FAIL = 'fail'
+export const SIGN_IN = 'signIn'
+export const SIGN_UP = 'signUp'
+export const USER_COLLECTION = 'users'
+export const LIGHT = 'light'
+export const DARK = 'dark'
+export const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
+export const ROUTE_HOME = '/'
+export const ROUTE_LOGIN_REGISTER = '/login'
+export const ROUTE_PROFILE = '/profile'
+export const ROUTE_TOP_ANIME = '/collection/anime/top'
+export const ROUTE_TOP_MANGA = '/collection/manga/top'
+export const ROUTE_ALL_ANIME = '/collection/anime/search'
+export const ROUTE_ALL_MANGA = '/collection/manga/search'
+export const ROUTE_404 = '*'

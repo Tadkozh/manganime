@@ -8,7 +8,7 @@ import './search.css'
 // Components
 import SearchBar from './searchBar'
 
-function SearchAnime() {
+function AnimeSearch() {
   const [getAnime, setGetAnime] = useState()
   const [inputValue, setInputValue] = useState('')
   const [letter, setLetter] = useState('')
@@ -70,7 +70,7 @@ function SearchAnime() {
               return (
                 <div className="item" key={index}>
                   <Link
-                    to={`/infosManga/main/${data.mal_id}/${
+                    to={`/collection/anime/search/main/${data.mal_id}/${
                       data.title_english ?? data.titles[0].title
                     }`}
                   >
@@ -107,4 +107,4 @@ function SearchAnime() {
   )
 }
 
-export default SearchAnime
+export default AnimeSearch
