@@ -22,7 +22,6 @@ import MangaMainInfo from './components/page info/manga/mangaMainInfo'
 
 import News from './components/page info/News'
 import Recommendations from './components/page info/Recommendations'
-
 import { PrivateRoute } from './components/PrivateRoute'
 import { UserProfile } from './components/UserProfile'
 
@@ -54,7 +53,7 @@ const AppConsumer = () => {
           />
 
           <Route
-            path="/collection/anime/search/recommendations/:id/:title"
+            path="/infosManga/recommendations/:id/:title"
             element={<Recommendations />}
           />
         </Route>
