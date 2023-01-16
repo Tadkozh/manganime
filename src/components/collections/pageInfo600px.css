@@ -1,0 +1,36 @@
+@media (min-width: 600px) {
+  .info {
+    align-items: flex-start;
+  }
+
+  .infoRow1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'infoHeader synopsisWrapper'
+      'miscellaneousInfos miscellaneousInfos';
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+  }
+  .infoHeader {
+    grid-area: infoHeader;
+  }
+  .synopsisWrapper {
+    grid-area: synopsisWrapper;
+    margin: 0;
+  }
+  .synopsis {
+    max-height: 400px;
+  }
+  /* .synopsis.active {
+    max-height: 100%;
+  } */
+  .miscellaneousInfos {
+    grid-area: miscellaneousInfos;
+  }
+
+  /* .synopsisWrapper button {
+    display: none;
+  } */
+}

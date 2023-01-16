@@ -1,0 +1,7 @@
+.datagrid {
+  max-width: 1920px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 350px);
+  justify-content: center;
+  gap: 30px;
+}

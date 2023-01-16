@@ -1,0 +1,35 @@
+{
+  "user": {
+    "uid": "rfwerwerewfewf",
+    "token": "fweoiryhfewokirfyu3209",
+    "email": "example@gmail.com",
+    "picture": "picture.jpeg",
+    "name": "user",
+    "favorite_anime": [],
+    "favorite_manga": [],
+    "anime_opinion": [
+      {
+        "anime_id": "190",
+        "rate": "5",
+        "comments": [
+          {
+            "create_at": "1995-12-17T03:24:00",
+            "message": "J'écris un message"
+          }
+        ]
+      }
+    ],
+    "manga_opinion": [
+      {
+        "manga_id": "190",
+        "rate": "5",
+        "comments": [
+          {
+            "create_at": "1995-12-17T03:24:00",
+            "message": "J'écris un message"
+          }
+        ]
+      }
+    ]
+  }
+}
