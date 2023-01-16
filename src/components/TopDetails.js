@@ -7,18 +7,51 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import '../styles/top-css.css'
 
+const rankReducer = (state, action) => {
+  switch (action.type) {
+    case 'Next':
+      return { minRank: state.minRank + 1, maxRank: state.maxRank + 1 }
+    case 'Prev':
+      return { minRank: state.minRank - 1, maxRank: state.maxRank - 1 }
+    default:
+      return { minRank: 0, maxRank: 4 }
+  }
+}
+
 const TopDetails = ({ name }) => {
   const { topDatas } = useGetTopDatas(name)
+  console.log(topDatas)
+  const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
+  // const newArray = topDatas.filter((data) => data.rank <= 4)
+  // console.log(newArray)
+
+  // const [maxRank, setmaxRank] = React.useState(4)
+  // const [minRank, setminRank] = React.useState(0)
+  const [rank, dispatch] = React.useReducer(rankReducer, {
+    minRank: 0,
+    maxRank: 4,
+  })
+
+  React.useEffect(() => {
+    setFilteredTopDatas(
+      topDatas.filter(
+        (data) => data.rank >= rank.minRank && data.rank <= rank.maxRank,
+      ),
+    )
+  }, [rank.maxRank, rank.minRank, topDatas])
+  console.log(filteredTopDatas)
 
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas.length
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    dispatch({ type: 'Next' })
   }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
+    dispatch({ type: 'Prev' })
   }
 
   return (
@@ -27,7 +60,7 @@ const TopDetails = ({ name }) => {
         <MobileStepper
           sx={{
             position: 'absolute',
-            top: '55%',
+            top: '40%',
             width: '100%',
             backgroundColor: 'inherit',
             '.MuiMobileStepper-dots': {
@@ -69,7 +102,8 @@ const TopDetails = ({ name }) => {
           }
         />
         <h2>Top {name}</h2>
-        <TopView datas={topDatas} />
+        {/* <TopView datas={topDatas} /> */}
+        <TopView datas={filteredTopDatas} />
       </article>
     </>
   )

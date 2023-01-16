@@ -17,19 +17,6 @@ const TopView = ({ datas }) => {
     index: null,
   })
 
-  // const theme = useTheme();
-  // const [activeStep, setActiveStep] = React.useState(0)
-  // const maxSteps = datas.length
-  // console.log(maxSteps)
-
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  // }
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  // }
-
   return (
     <ul className="datagrid top-article--box">
       {datas.map((data, index) => {
