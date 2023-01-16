@@ -4,11 +4,6 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
-// import MobileStepper from '@mui/material/MobileStepper'
-// import Button from '@mui/material/Button'
-// import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-// import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import '../styles/common-css.css'
 import '../styles/top-css.css'
 
 const TopView = ({ datas }) => {

@@ -20,13 +20,9 @@ const rankReducer = (state, action) => {
 
 const TopDetails = ({ name }) => {
   const { topDatas } = useGetTopDatas(name)
-  console.log(topDatas)
+  const [activeStep, setActiveStep] = React.useState(0)
+  const maxSteps = topDatas.length
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
-  // const newArray = topDatas.filter((data) => data.rank <= 4)
-  // console.log(newArray)
-
-  // const [maxRank, setmaxRank] = React.useState(4)
-  // const [minRank, setminRank] = React.useState(0)
   const [rank, dispatch] = React.useReducer(rankReducer, {
     minRank: 0,
     maxRank: 4,
@@ -35,14 +31,10 @@ const TopDetails = ({ name }) => {
   React.useEffect(() => {
     setFilteredTopDatas(
       topDatas.filter(
-        (data) => data.rank >= rank.minRank && data.rank <= rank.maxRank,
+        (data) => data.rank > rank.minRank && data.rank <= rank.maxRank,
       ),
     )
   }, [rank.maxRank, rank.minRank, topDatas])
-  console.log(filteredTopDatas)
-
-  const [activeStep, setActiveStep] = React.useState(0)
-  const maxSteps = topDatas.length
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -60,7 +52,7 @@ const TopDetails = ({ name }) => {
         <MobileStepper
           sx={{
             position: 'absolute',
-            top: '40%',
+            top: '15em',
             width: '100%',
             backgroundColor: 'inherit',
             '.MuiMobileStepper-dots': {
@@ -72,10 +64,9 @@ const TopDetails = ({ name }) => {
           position="static"
           nextButton={
             <Button
-              // hover
               sx={{
                 zIndex: 1,
-                color: '#fff',
+                color: 'rgb(68,68,68)',
                 '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
               }}
               size="small"
@@ -90,7 +81,7 @@ const TopDetails = ({ name }) => {
               className="top-article--arrow"
               sx={{
                 zIndex: 1,
-                color: '#fff',
+                color: 'rgb(68,68,68)',
                 '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
               }}
               size="small"
@@ -102,7 +93,6 @@ const TopDetails = ({ name }) => {
           }
         />
         <h2>Top {name}</h2>
-        {/* <TopView datas={topDatas} /> */}
         <TopView datas={filteredTopDatas} />
       </article>
     </>
