@@ -12,9 +12,11 @@ import { ErrorFallback } from './components/ErrorFallBack'
 import { LoginRegister } from './components/LoginRegister'
 import { MangAnime } from './components/MangAnime'
 
-import AnimeSearch from './components/search/AnimeSearch'
-import Collection from './components/search/Collection'
-import MangaSearch from './components/search/MangaSearch'
+import Collection from './components/collections/search/Collection'
+import AnimeSearch from './components/collections/search/AnimeSearch'
+import MangaSearch from './components/collections/search/MangaSearch'
+import AnimeTop from './components/collections/top/AnimeTop'
+import MangaTop from './components/collections/top/MangaTop'
 
 import AnimeMain from './components/collections/anime/AnimeMain'
 import MangaMain from './components/collections/manga/MangaMain'
@@ -37,6 +39,8 @@ const AppConsumer = () => {
         <Route path="/collection" element={<Collection />}>
           <Route path="/collection/anime/search" element={<AnimeSearch />} />
           <Route path="/collection/manga/search" element={<MangaSearch />} />
+          <Route path="/collection/anime/top" element={<AnimeTop />} />
+          <Route path="/collection/manga/top" element={<MangaTop />} />
 
           <Route
             path="/collection/anime/search/main/:id/:title"
@@ -46,8 +50,6 @@ const AppConsumer = () => {
             path="/collection/manga/search/main/:id/:title"
             element={<MangaMain />}
           />
-          {/* <Route path="/collection/anime/top/main/:id/:title" element={<A />} />
-          <Route path="/collection/manga/top/main/:id/:title" element={<A />} /> */}
 
           <Route
             path="/collection/anime/search/news/:id/:title"

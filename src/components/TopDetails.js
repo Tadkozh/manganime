@@ -12,7 +12,6 @@ const TopDetails = ({ name }) => {
 
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas.length
-  console.log(maxSteps)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)

@@ -24,9 +24,9 @@ function AnimeSearch() {
   const typeUrl = type !== '' ? `&type=${type}` : ''
   const statusUrl = status !== '' ? `&status=${status}` : ''
   const ratingsUrl = rating !== '' ? `&rating=${rating}` : ''
-  const hentaisUrl = hentai ? `&sfw` : ''
+  const hentaiUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingsUrl}${hentaisUrl}&page=${page}`
+  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingsUrl}${hentaiUrl}&page=${page}`
 
   useEffect(() => {
     fetch(link)

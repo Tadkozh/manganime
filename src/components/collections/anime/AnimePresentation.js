@@ -18,7 +18,7 @@ function FavoriteIcon({ getInfo }) {
   )
 }
 
-function Presentation({ getInfo }) {
+function AnimePresentation({ getInfo }) {
   const [rankBtnValue, setRankBtnValue] = useState(false)
 
   return (
@@ -95,4 +95,4 @@ function Presentation({ getInfo }) {
   )
 }
 
-export default Presentation
+export default AnimePresentation

@@ -1,25 +1,19 @@
 import { useParams, Link } from 'react-router-dom'
 
-function NavBarInfo({ collectionType }) {
+function NavBarInfo() {
   let { id, title } = useParams()
 
   return (
     <>
       <ul className="subMenu">
         <li>
-          <Link to={`/collection/${collectionType}/search/main/${id}/${title}`}>
-            Infos
-          </Link>
+          <Link to={`/collection/anime/search/main/${id}/${title}`}>Infos</Link>
         </li>
         <li>
-          <Link to={`/collection/${collectionType}/search/news/${id}/${title}`}>
-            News
-          </Link>
+          <Link to={`/collection/anime/search/news/${id}/${title}`}>News</Link>
         </li>
         <li>
-          <Link
-            to={`/collection/${collectionType}/search/recommendations/${id}/${title}`}
-          >
+          <Link to={`/collection/anime/search/recommendations/${id}/${title}`}>
             Recommendations
           </Link>
         </li>

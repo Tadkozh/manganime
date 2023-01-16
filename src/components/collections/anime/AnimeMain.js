@@ -17,7 +17,7 @@ import Story from '../Story'
 import Form from '../Form'
 import Reviews from '../Reviews'
 
-function AnimeMainInfo() {
+function AnimeMain() {
   let { id } = useParams()
 
   const collectionType = 'anime' // collectionType : anime, manga
@@ -65,4 +65,4 @@ function AnimeMainInfo() {
   )
 }
 
-export default AnimeMainInfo
+export default AnimeMain

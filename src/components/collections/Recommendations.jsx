@@ -50,7 +50,7 @@ const Recommendations = () => {
 
   return (
     <>
-      <NavBarInfo collectionType={collectionType} />
+      <NavBarInfo colecType={collectionType} />
       <h2>{`People who like ${title} also enjoy`}</h2>
       <p>{directives}</p>
       <div className="datagrid">
