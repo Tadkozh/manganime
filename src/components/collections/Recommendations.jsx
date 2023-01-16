@@ -2,7 +2,9 @@ import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import '../../styles/common-css.css'
-import Button from '@mui/material/Button'
+import { Button, 
+  // Typography
+ } from '..'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -51,6 +53,10 @@ const Recommendations = () => {
   return (
     <>
       <NavBarInfo colecType={collectionType} />
+
+      {/* <Typography variant="h2" component="h2">{`People who like ${title} also enjoy`}</Typography>
+      <Typography>{directives}</Typography> */}
+
       <h2>{`People who like ${title} also enjoy`}</h2>
       <p>{directives}</p>
       <div className="datagrid">

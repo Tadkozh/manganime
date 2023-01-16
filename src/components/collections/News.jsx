@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
+// import { Typography } from '..'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -51,6 +52,9 @@ const News = () => {
   return (
     <>
       <NavBarInfo />
+      {/* <Typography variant="h2" component="h2">News about {title}</Typography>
+      <Typography>{directives}</Typography> */}
+
       <h2>News about {title}</h2>
       <p>{directives}</p>
       {news
