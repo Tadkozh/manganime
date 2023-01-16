@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import '../../styles/common-css.css'
@@ -27,7 +27,7 @@ const Recommendations = () => {
   //     .catch((error) => error)
   // }
 
-  const getDataFromApi = () => {
+  const getDataFromApi = useCallback(() => {
     axios
       .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
       .then((response) => {
@@ -35,11 +35,11 @@ const Recommendations = () => {
         setAnimeRecom(response.data.data)
       })
       .catch((error) => error)
-  }
+  }, [id])
 
   useEffect(() => {
     getDataFromApi()
-  }, [])
+  }, [getDataFromApi])
 
   let directives = ''
   if (animeRecom.length === 0) {
