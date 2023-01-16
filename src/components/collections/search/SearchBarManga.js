@@ -46,8 +46,8 @@ const HideHentai = styled(Switch)(({ theme }) => ({
   },
 }))
 
-function SearchBar({
-  getAnime,
+function SearchBarManga({
+  getManga,
   inputValue,
   setInputValue,
   setLetter,
@@ -57,8 +57,6 @@ function SearchBar({
   setType,
   status,
   setStatus,
-  rating,
-  setRating,
   hentai,
   setHentai,
   setPage,
@@ -111,24 +109,28 @@ function SearchBar({
     setScoreMin('')
     setType('')
     setStatus('')
-    setRating('')
     setHentai(true)
     setPage(1)
   }
 
   return (
     <div className="settingsBar">
-      <p>{getAnime.pagination.items.total} results</p>
-      {select('Type', 'typeInput', type, setType, selectValues.type)}
+      <p>{getManga.pagination.items.total} results</p>
+      {select('Type', 'typeInput', type, setType, selectValues.manga.type)}
       {select(
         'score (min)',
         'scoreMinInput',
         scoreMin,
         setScoreMin,
-        selectValues.scoreMin,
+        selectValues.manga.scoreMin,
       )}
-      {select('Status', 'statusInput', status, setStatus, selectValues.status)}
-      {select('Rating', 'ratingInput', rating, setRating, selectValues.rating)}
+      {select(
+        'Status',
+        'statusInput',
+        status,
+        setStatus,
+        selectValues.manga.status,
+      )}
       <FormControlLabel
         control={<HideHentai checked={hentai} />}
         label="Hide Hentai"
@@ -158,4 +160,4 @@ function SearchBar({
   )
 }
 
-export default SearchBar
+export default SearchBarManga

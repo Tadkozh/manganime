@@ -6,8 +6,8 @@ import { ReactComponent as LogoIconDark } from '../../assets/images/logo_dark.sv
 import { ReactComponent as LogoIconLight } from '../../assets/images/logo_light.svg'
 import {
   LIGHT,
-  ROUTE_ALL_ANIME,
-  ROUTE_ALL_MANGA,
+  ROUTE_SEARCH_ANIME,
+  ROUTE_SEARCH_MANGA,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
@@ -20,8 +20,13 @@ import { useStorageColorTheme } from '../../hooks/storageColorTheme'
 import MUISwitchMode from '../../MUISwitchMode'
 import {
   HOME,
-  ALL_ANIME,
-  ALL_MANGA,
+  HOME_CHILDREN,
+  SEARCH_ANIME,
+  SEARCH_MANGA,
+  SEARCH_ANIME_CHILDREN,
+  SEARCH_MANGA_CHILDREN,
+  TOP_ANIME_CHILDREN,
+  TOP_MANGA_CHILDREN,
   LOG_IN,
   LOG_OUT,
   PROFILE,
@@ -44,7 +49,14 @@ import {
   Typography,
 } from '..'
 
-const pages = [HOME, TOP_ANIME, TOP_MANGA, ALL_ANIME, ALL_MANGA]
+const pages = [HOME, TOP_ANIME, TOP_MANGA, SEARCH_ANIME, SEARCH_MANGA]
+const pagesChildren = [
+  HOME_CHILDREN,
+  TOP_ANIME_CHILDREN,
+  TOP_MANGA_CHILDREN,
+  SEARCH_ANIME_CHILDREN,
+  SEARCH_MANGA_CHILDREN,
+]
 const settings = [PROFILE, LOG_OUT, LOG_IN]
 
 const getPropsTypo = {
@@ -137,11 +149,11 @@ const handleMenuOption = (option, navigate) => {
       case TOP_MANGA:
         navigate(ROUTE_TOP_MANGA)
         break
-      case ALL_ANIME:
-        navigate(ROUTE_ALL_ANIME)
+      case SEARCH_ANIME:
+        navigate(ROUTE_SEARCH_ANIME)
         break
-      case ALL_MANGA:
-        navigate(ROUTE_ALL_MANGA)
+      case SEARCH_MANGA:
+        navigate(ROUTE_SEARCH_MANGA)
         break
       default:
         throw new Error('Option dans le menu app bar non défini')
@@ -192,9 +204,17 @@ const AppBarMenu = ({ navigate }) => {
           display: { xs: 'block', md: 'none' },
         }}
       >
-        {pages.map((page) => (
-          <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-            <Typography textAlign="center">{page}</Typography>
+        {pages.map((page, index) => (
+          <MenuItem key={index} onClick={() => handleCloseNavMenu(page)}>
+            <Typography
+              sx={{
+                display: 'flex',
+                gap: '5px',
+              }}
+              textAlign="center"
+            >
+              {pagesChildren[index]}
+            </Typography>
           </MenuItem>
         ))}
       </Menu>
@@ -220,20 +240,33 @@ const AppBarMenu = ({ navigate }) => {
           textDecoration: 'none',
         }}
       ></Typography>
-      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        {pages.map((page) => (
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+          flexGrow: 1,
+        }}
+      >
+        {pages.map((page, index) => (
           <Button
-            key={page}
+            key={index}
             onClick={() => handleCloseNavMenu(page)}
-            sx={{ my: 2, color: 'white', display: 'block' }}
+            sx={{
+              display: 'flex',
+              gap: '5px',
+              color: '#fff',
+              my: 2,
+              boxShadow: '0 0 5px -3px',
+              margin: '0 5px',
+            }}
           >
-            {page}
+            {pagesChildren[index]}
           </Button>
         ))}
       </Box>
     </>
   )
 }
+
 const handleAuthOption = (option, navigate, logout) => {
   if (typeof option !== 'object') {
     switch (option) {
