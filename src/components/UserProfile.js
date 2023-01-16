@@ -9,15 +9,15 @@ const UserProfile = () => {
   return (
     <Grid container spacing={1} sx={{ my: 2, py: 2, justifyContent: 'center' }}>
       <SideBarUserInfo />
-      <MainUserInfo />
+      <MainUserInfo user={data.user}/>
     </Grid>
   )
 }
-const MainUserInfo = () => {
+const MainUserInfo = ({user}) => {
   return (
     <Grid item xs md sx={{ m: 1 }}>
       <Container>
-        <Typography variant="h6">Bios</Typography>
+        <Typography variant="h6">Bios,welcome {user}</Typography>
         <Typography variant="body1">No biography yet. Write it now.</Typography>
       </Container>
       <Typography variant="h6">Statistic</Typography>
