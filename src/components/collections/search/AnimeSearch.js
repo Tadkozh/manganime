@@ -6,9 +6,9 @@ import { Pagination, Rating } from '@mui/material'
 import './search.css'
 
 // Components
-import SearchBar from './searchBar'
+import SearchBar from './SearchBar'
 
-function SearchAnime() {
+function AnimeSearch() {
   const [getAnime, setGetAnime] = useState()
   const [inputValue, setInputValue] = useState('')
   const [letter, setLetter] = useState('')
@@ -24,9 +24,9 @@ function SearchAnime() {
   const typeUrl = type !== '' ? `&type=${type}` : ''
   const statusUrl = status !== '' ? `&status=${status}` : ''
   const ratingsUrl = rating !== '' ? `&rating=${rating}` : ''
-  const hentaisUrl = hentai ? `&sfw` : ''
+  const hentaiUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingsUrl}${hentaisUrl}&page=${page}`
+  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingsUrl}${hentaiUrl}&page=${page}`
 
   useEffect(() => {
     fetch(link)
@@ -70,7 +70,7 @@ function SearchAnime() {
               return (
                 <div className="item" key={index}>
                   <Link
-                    to={`/infosManga/main/${data.mal_id}/${
+                    to={`/collection/anime/search/main/${data.mal_id}/${
                       data.title_english ?? data.titles[0].title
                     }`}
                   >
@@ -107,4 +107,4 @@ function SearchAnime() {
   )
 }
 
-export default SearchAnime
+export default AnimeSearch

@@ -1,33 +1,29 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 // CSS Files
-import './pageInfo.css'
-import './pageInfo450px.css'
-import './pageInfo600px.css'
-import './pageInfo800px.css'
-import './pageInfo1024px.css'
-
-// Libraries
-// import axios from 'axios'
+import '../pageInfo.css'
+import '../pageInfo450px.css'
+import '../pageInfo600px.css'
+import '../pageInfo800px.css'
+import '../pageInfo1024px.css'
 
 // Components
-import InfoHeader from './infoHeader'
-import Synopsis from './synopsis'
-import MiscellaneousInfos from './miscellaneousInfos'
-import BackgroundStory from './backgroundStory'
-import FormInfo from './formInfo'
-import Reviews from './reviews'
+import NavBarInfo from '../NavBarInfo'
+import AnimePresentation from './AnimePresentation'
+import Synopsis from '../Synopsis'
+import AnimeDetails from './AnimeDetails'
+import Story from '../Story'
+import Form from '../Form'
+import Reviews from '../Reviews'
 
-function PageInfo() {
+function AnimeMain() {
   let { id } = useParams()
+
+  const collectionType = 'anime' // collectionType : anime, manga
 
   const linkInfo = `https://api.jikan.moe/v4/anime/${id}/full`
   const [getInfo, setGetInfo] = useState(null)
-
-  //   useEffect(() => {
-  //     axios.get(linkInfo).then((data) => setGetInfo(data))
-  //   }, [linkInfo])
 
   useEffect(() => {
     fetch(linkInfo)
@@ -37,12 +33,13 @@ function PageInfo() {
 
   return (
     <>
+      <NavBarInfo collectionType={collectionType} />
       <div className="infoWrapper">
         {getInfo?.data ? (
           <>
             <div className="info">
               <div className="infoRow1">
-                <InfoHeader getInfo={getInfo} />
+                <AnimePresentation getInfo={getInfo} />
                 <Synopsis getInfo={getInfo} />
 
                 {/* {getInfo?.data?.trailer?.embed_url ? (
@@ -55,22 +52,17 @@ function PageInfo() {
                   <p>No trailer was found.</p>
                 )} */}
 
-                <MiscellaneousInfos getInfo={getInfo} />
+                <AnimeDetails getInfo={getInfo} />
               </div>
-
-              <BackgroundStory getInfo={getInfo} />
-
-              <FormInfo />
-
+              <Story getInfo={getInfo} />
+              <Form />
               <Reviews id={id} />
             </div>
           </>
         ) : null}
       </div>
-      {/* <NewsById id={id} />
-      <RecommendationById id={id} /> */}
     </>
   )
 }
 
-export default PageInfo
+export default AnimeMain

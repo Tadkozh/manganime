@@ -1,21 +1,39 @@
 import { useTheme } from '@mui/material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
-import avatarProfile from '../assets/images/avatar_2.gif'
-import { ReactComponent as LogoIconDark } from '../assets/images/logo_dark.svg'
-import { ReactComponent as LogoIconLight } from '../assets/images/logo_light.svg'
+import avatarProfile from '../../assets/images/avatar_2.gif'
+import { ReactComponent as LogoIconDark } from '../../assets/images/logo_dark.svg'
+import { ReactComponent as LogoIconLight } from '../../assets/images/logo_light.svg'
 import {
   LIGHT,
+  ROUTE_SEARCH_ANIME,
+  ROUTE_SEARCH_MANGA,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_PROFILE
-} from '../commons/constants'
-import { useAuth } from '../context/AuthContext'
-import { ColorModeContext } from '../context/ColorModeContext'
-import { useStorageColorTheme } from '../hooks/storageColorTheme'
-import MUISwitchMode from '../MUISwitchMode'
-import { LOG_IN, LOG_OUT, PROFILE } from '../utils/constants'
-import { getImageName } from '../utils/helper'
+  ROUTE_PROFILE,
+  ROUTE_TOP_ANIME,
+  ROUTE_TOP_MANGA,
+} from '../../commons/constants'
+import { useAuth } from '../../context/AuthContext'
+import { ColorModeContext } from '../../context/ColorModeContext'
+import { useStorageColorTheme } from '../../hooks/storageColorTheme'
+import MUISwitchMode from '../../MUISwitchMode'
+import {
+  HOME,
+  HOME_CHILDREN,
+  SEARCH_ANIME,
+  SEARCH_MANGA,
+  SEARCH_ANIME_CHILDREN,
+  SEARCH_MANGA_CHILDREN,
+  TOP_ANIME_CHILDREN,
+  TOP_MANGA_CHILDREN,
+  LOG_IN,
+  LOG_OUT,
+  PROFILE,
+  TOP_ANIME,
+  TOP_MANGA,
+} from '../../utils/constants'
+import { getImageName } from '../../utils/helper'
 import {
   AppBar,
   Avatar,
@@ -28,13 +46,20 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography
-} from './index'
+  Typography,
+} from '..'
 
-const pages = ['News', 'Recommandations', 'Production', 'Product']
+const pages = [HOME, TOP_ANIME, TOP_MANGA, SEARCH_ANIME, SEARCH_MANGA]
+const pagesChildren = [
+  HOME_CHILDREN,
+  TOP_ANIME_CHILDREN,
+  TOP_MANGA_CHILDREN,
+  SEARCH_ANIME_CHILDREN,
+  SEARCH_MANGA_CHILDREN,
+]
 const settings = [PROFILE, LOG_OUT, LOG_IN]
 
-const getPropsLogo = {
+const getPropsTypo = {
   mr: 1,
   my: 1,
   fontFamily: 'monospace',
@@ -45,9 +70,11 @@ const getPropsLogo = {
 }
 
 const MangAnimeAppBar = () => {
+  const navigate = useNavigate()
   const theme = useTheme()
   const colorMode = React.useContext(ColorModeContext)
   const mode = theme.palette.mode
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -58,45 +85,91 @@ const MangAnimeAppBar = () => {
             checked={mode === LIGHT ? false : true}
             sx={{ mr: 4 }}
           />
-          <AppBarLogo display={{ xs: 'none', md: 'flex' }} variant="body1" />
-          <AppBarMenu />
-          <AppBarProfile />
+          <AppBarLogo
+            display={{ xs: 'none', md: 'flex' }}
+            variant="body1"
+            navigate={navigate}
+          />
+          <AppBarMenu navigate={navigate} />
+          <AppBarProfile navigate={navigate} />
         </Toolbar>
       </Container>
     </AppBar>
   )
 }
 
-const AppBarLogo = ({ variant, display, flexGrow = 0.4 }) => {
+const AppBarLogo = ({
+  variant,
+  display,
+  flexGrow = 0.4,
+  arialabel = 'desktop',
+  navigate,
+}) => {
   const { getColor } = useStorageColorTheme()
+  const handleCLick = () => {
+    navigate(ROUTE_HOME)
+  }
+  const props = {
+    role: 'img',
+    'aria-label': `Logo MangAnime ${arialabel}`,
+    onClick: handleCLick,
+  }
   const Logo = getColor() === LIGHT ? <LogoIconLight /> : <LogoIconDark />
+
   return (
     <Typography
       variant={variant}
       noWrap
       component="a"
-      href="/"
       sx={{
-        ...getPropsLogo,
+        ...getPropsTypo,
         display: display,
         flexGrow: flexGrow,
         letterSpacing: '.3rem',
         fontWeight: 700,
         textDecoration: 'none',
+        '&:hover': { cursor: 'pointer' },
       }}
+      {...props}
     >
       {Logo}
     </Typography>
   )
 }
 
-const AppBarMenu = () => {
+const handleMenuOption = (option, navigate) => {
+  if (typeof option !== 'object') {
+    switch (option) {
+      case HOME:
+        navigate(ROUTE_HOME)
+        break
+      case TOP_ANIME:
+        navigate(ROUTE_TOP_ANIME)
+        break
+      case TOP_MANGA:
+        navigate(ROUTE_TOP_MANGA)
+        break
+      case SEARCH_ANIME:
+        navigate(ROUTE_SEARCH_ANIME)
+        break
+      case SEARCH_MANGA:
+        navigate(ROUTE_SEARCH_MANGA)
+        break
+      default:
+        throw new Error('Option dans le menu app bar non défini')
+    }
+  }
+}
+
+const AppBarMenu = ({ navigate }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(false)
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (option) => {
     setAnchorElNav(null)
+    handleMenuOption(option, navigate)
   }
 
   return (
@@ -131,9 +204,17 @@ const AppBarMenu = () => {
           display: { xs: 'block', md: 'none' },
         }}
       >
-        {pages.map((page) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
-            <Typography textAlign="center">{page}</Typography>
+        {pages.map((page, index) => (
+          <MenuItem key={index} onClick={() => handleCloseNavMenu(page)}>
+            <Typography
+              sx={{
+                display: 'flex',
+                gap: '5px',
+              }}
+              textAlign="center"
+            >
+              {pagesChildren[index]}
+            </Typography>
           </MenuItem>
         ))}
       </Menu>
@@ -142,6 +223,8 @@ const AppBarMenu = () => {
         display={{ xs: 'flex', md: 'none' }}
         variant="h5"
         flexGrow={0.75}
+        arialabel={'mobile'}
+        navigate={navigate}
       />
       <Typography
         variant={'h5'}
@@ -149,7 +232,7 @@ const AppBarMenu = () => {
         component="a"
         href="/"
         sx={{
-          ...getPropsLogo,
+          ...getPropsTypo,
           display: { xs: 'flex', md: 'none' },
           flexGrow: 1.25,
           letterSpacing: '.9rem',
@@ -157,24 +240,54 @@ const AppBarMenu = () => {
           textDecoration: 'none',
         }}
       ></Typography>
-      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        {pages.map((page) => (
+      <Box
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+          flexGrow: 1,
+        }}
+      >
+        {pages.map((page, index) => (
           <Button
-            key={page}
-            onClick={handleCloseNavMenu}
-            sx={{ my: 2, color: 'white', display: 'block' }}
+            key={index}
+            onClick={() => handleCloseNavMenu(page)}
+            sx={{
+              display: 'flex',
+              gap: '5px',
+              color: '#fff',
+              my: 2,
+              boxShadow: '0 0 5px -3px',
+              margin: '0 5px',
+            }}
           >
-            {page}
+            {pagesChildren[index]}
           </Button>
         ))}
       </Box>
     </>
   )
 }
-const AppBarProfile = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState(false)
-  const navigate = useNavigate()
+
+const handleAuthOption = (option, navigate, logout) => {
+  if (typeof option !== 'object') {
+    switch (option) {
+      case LOG_IN:
+        navigate(ROUTE_LOGIN_REGISTER)
+        break
+      case LOG_OUT:
+        logout()
+        navigate(ROUTE_HOME)
+        break
+      case PROFILE:
+        navigate(ROUTE_PROFILE)
+        break
+      default:
+        throw new Error('option dans le menu app bar non défini')
+    }
+  }
+}
+const AppBarProfile = ({ navigate }) => {
   const { logout } = useAuth()
+  const [anchorElUser, setAnchorElUser] = React.useState(false)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
@@ -182,27 +295,9 @@ const AppBarProfile = () => {
 
   const handleCloseUserMenu = (option) => {
     setAnchorElUser(null)
-    handleAuthOption(option)
+    handleAuthOption(option, navigate, logout)
   }
 
-  const handleAuthOption = (option) => {
-    if (typeof option !== 'object') {
-      switch (option) {
-        case LOG_IN:
-          navigate(ROUTE_LOGIN_REGISTER)
-          break
-        case LOG_OUT:
-          logout()
-          navigate(ROUTE_HOME)
-          break
-        case PROFILE:
-          navigate(ROUTE_PROFILE)
-          break
-        default:
-          throw new Error('option dans le menu app bar non défini')
-      }
-    }
-  }
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
@@ -236,5 +331,4 @@ const AppBarProfile = () => {
   )
 }
 
-export { MangAnimeAppBar }
-
+export default MangAnimeAppBar

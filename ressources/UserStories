@@ -14,11 +14,19 @@ Users Stories
   - les recommandations(RecommendationsById)
   - (des citations issues de cet Anime/Manga (deuxième API))
     (Réfléchir à une manière de présenter l'ensemble de ces données, peut-être via un menu ou un sous menu : problème d'erreur 429 (Too Many Requests))
+ 
+ Login
+- En tant qu'utilisateur, je dois pouvoir créer un compte avec un mail et un pwd, puis me connecter avec
+- En tant qu'utilisateur connecté, je dois pouvoir me déconnecter aussi
 
-- En tant qu'utilisateur connecté, je dois pouvoir mettre un Anime/Manga en favoris (depuis la page des informations de cet Anime/Manga - icône coeur)
-- En tant qu'utilisateur connecté, je dois pouvoir noter un Anime/Manga - 5 étoiles (depuis la page des informations de cet Anime/Manga)
-- En tant qu'utilisateur connecté, je dois pouvoir écrire un avis ou commentaire sur un Anime/Manga (depuis la page des informations de cet Anime/Manga : FormInfo)
+En tant qu'utilisateur connecté, depuis la page des informations d'un Anime/Manga :
+- je dois pouvoir mettre un Anime/Manga en favoris (depuis la page des informations de cet Anime/Manga - icône coeur)
+- je dois pouvoir noter un Anime/Manga - 5 étoiles (depuis la page des informations de cet Anime/Manga)
+- je dois pouvoir écrire un avis ou commentaire sur un Anime/Manga (depuis la page des informations de cet Anime/Manga : FormInfo)
 
-- En tant qu'utilisateur connecté, je dois pouvoir voir tous les Anime/Manga que j'ai mis en favoris (depuis ma page profil)
-- En tant qu'utilisateur connecté, je dois pouvoir voir tous mes avis (depuis ma page profil)
-- En tant qu'utilisateur connecté, je dois pouvoir retourner aux info de l'Anime/Manga en cliquant sur un favori ou un avis (depuis ma page profil)
+En tant qu'utilisateur connecté, depuis ma page profil :
+- je dois pouvoir choisir une image d'avatar
+- je dois pouvoir voir tous les Anime/Manga que j'ai mis en favoris (depuis ma page profil)
+- je dois pouvoir voir tous les Anime/Manga que j'ai mis en favoris (depuis ma page profil)
+- je dois pouvoir voir tous mes avis (depuis ma page profil)
+- je dois pouvoir retourner aux info de l'Anime/Manga en cliquant sur un favori ou un avis (depuis ma page profil)
