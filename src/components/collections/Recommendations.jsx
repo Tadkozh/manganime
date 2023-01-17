@@ -60,7 +60,7 @@ const Recommendations = () => {
   // }, [id])
 
   let directives = ''
-  if (animeRecom.length === 0) {
+  if (animeRecom?.length === 0) {
     directives = `No recommendation about ${title}`
   } else {
     directives =

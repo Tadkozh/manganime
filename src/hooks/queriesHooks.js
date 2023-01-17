@@ -2,21 +2,21 @@ import { useQuery } from 'react-query'
 import { clientApi } from '../utils/clientApi'
 
 const useInfos = (type, id) => {
-  const data = useClientApi(type, id, 'full')
+  const { data } = useClientApi(type, id, 'full')
   return data
 }
 
 const useNews = (type, id) => {
-  const data = useClientApi(type, id, 'news')
-  return data
+  const { data, status } = useClientApi(type, id, 'news')
+  return { data, status }
 }
 
 const useReviews = (type, id) => {
-  const data = useClientApi(type, id, 'reviews')
+  const { data } = useClientApi(type, id, 'reviews')
   return data
 }
 const useRecommendation = (type, id) => {
-  const data = useClientApi(type, id, 'recommendations')
+  const { data } = useClientApi(type, id, 'recommendations')
   return data
 }
 
@@ -41,11 +41,11 @@ const useTopOtaku = (type, limit) => {
 }
 
 const useClientApi = (type, id, endpoint) => {
-  const { data } = useQuery({
+  const { data, status } = useQuery({
     queryKey: `${type}/${id}/${endpoint}`,
     queryFn: () => clientApi(`${type}/${id}/${endpoint}`),
   })
-  return data?.data
+  return { data: data?.data, status }
 }
 
 export {
