@@ -18,8 +18,9 @@ import MangaSearch from './components/collections/search/MangaSearch'
 import AnimeTop from './components/collections/top/AnimeTop'
 import MangaTop from './components/collections/top/MangaTop'
 
-import AnimeMain from './components/collections/anime/AnimeMain'
-import MangaMain from './components/collections/manga/MangaMain'
+// import AnimeMain from './components/collections/AnimeMain'
+// import MangaMain from './components/collections/MangaMain'
+import Main from './components/collections/Main'
 
 import News from './components/collections/News'
 import Recommendations from './components/collections/Recommendations'
@@ -37,35 +38,23 @@ const AppConsumer = () => {
         <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
 
         <Route path="/collection" element={<Collection />}>
-          <Route path="/collection/:type/search" element={<AnimeSearch />} />
+          <Route path="/collection/anime/search" element={<AnimeSearch />} />
           <Route path="/collection/manga/search" element={<MangaSearch />} />
           <Route path="/collection/anime/top" element={<AnimeTop />} />
           <Route path="/collection/manga/top" element={<MangaTop />} />
 
           <Route
-            path="/collection/anime/search/main/:id/:title"
-            element={<AnimeMain />}
-          />
-          <Route
-            path="/collection/manga/search/main/:id/:title"
-            element={<MangaMain />}
+            path="/collection/:collectionType/search/main/:id/:title"
+            element={<Main />}
           />
 
           <Route
-            path="/collection/anime/search/news/:id/:title"
-            element={<News />}
-          />
-          <Route
-            path="/collection/manga/search/news/:id/:title"
+            path="/collection/:collectionType/search/news/:id/:title"
             element={<News />}
           />
 
           <Route
-            path="/collection/anime/search/recommendations/:id/:title"
-            element={<Recommendations />}
-          />
-          <Route
-            path="/collection/manga/search/recommendations/:id/:title"
+            path="/collection/:collectionType/search/recommendations/:id/:title"
             element={<Recommendations />}
           />
         </Route>

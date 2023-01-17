@@ -1,14 +1,13 @@
 import { Rating } from '@mui/material'
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
-function Reviews({ id }) {
-  const link = `https://api.jikan.moe/v4/anime/${id}/reviews`
+function Reviews() {
+  let { collectionType, id } = useParams()
+
+  const link = `https://api.jikan.moe/v4/${collectionType}/${id}/reviews`
 
   const [getReviews, setGetReviews] = useState(null)
-
-  //   useEffect(() => {
-  //     axios.get(linkInfo).then((data) => setGetInfo(data))
-  //   }, [linkInfo])
 
   useEffect(() => {
     fetch(link)

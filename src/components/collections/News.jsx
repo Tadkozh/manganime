@@ -9,7 +9,7 @@ import { useNews } from '../../hooks/queriesHooks'
 import NavBarInfo from './NavBarInfo'
 
 const News = () => {
-  let { id, title } = useParams()
+  let { collectionType, id, title } = useParams()
 
   const [news, setNews] = useState([])
 
@@ -19,7 +19,7 @@ const News = () => {
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
   // const id = 1 // id : 1, 190 : No news Manga
-  const collectionType = 'anime' // collectionType : anime, manga => le récupérer en useParams via le link dans NavBarInfo
+  // const collectionType = 'anime' // collectionType : anime, manga => le récupérer en useParams via le link dans NavBarInfo
 
   // const clientApi = (endpoint = null, collectionType = {}) => {
   //   return axios
