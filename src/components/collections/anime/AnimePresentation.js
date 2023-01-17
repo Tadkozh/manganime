@@ -23,7 +23,7 @@ function AnimePresentation({ getInfo }) {
 
   return (
     <>
-      <div className="infoHeader">
+      <div className="presentation">
         <div className="titles">
           <h2>{getInfo.data.title_english ?? getInfo.data.titles[0].title}</h2>
           <p className="japaneseTitle">{getInfo.data.title_japanese}</p>

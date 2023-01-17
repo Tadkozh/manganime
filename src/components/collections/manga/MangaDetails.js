@@ -20,7 +20,7 @@ function MangaDetails({ getInfo }) {
     },
     {
       label: 'Published from',
-      data: `${
+      data: getInfo.data.published.prop.from?.year ? `${
         getInfo.data.published.prop.from?.day < 10
           ? `0${getInfo.data.published.prop.from?.day}`
           : getInfo.data.published.prop.from?.day
@@ -28,7 +28,8 @@ function MangaDetails({ getInfo }) {
         getInfo.data.published.prop.from?.month < 10
           ? `0${getInfo.data.published.prop.from?.month}`
           : getInfo.data.published.prop.from?.month
-      }/${getInfo.data.published.prop.from?.year}`,
+      }/${getInfo.data.published.prop.from?.year}`
+      : unknown
     },
     {
       label: 'Published to',
@@ -66,11 +67,11 @@ function MangaDetails({ getInfo }) {
     },
     {
       label: 'Rank',
-      data: getInfo.data?.rank ?? unknown,
+      data: (getInfo.data?.rank && getInfo.data?.rank !== 0 ? getInfo.data?.rank : unknown),
     },
     {
       label: 'Popularity',
-      data: getInfo.data?.popularity ?? unknown,
+      data: (getInfo.data?.popularity && getInfo.data?.popularity !== 0 ? getInfo.data?.popularity : unknown),
     },
     {
       label: 'Demographics',

@@ -6,7 +6,7 @@ import { Pagination, Rating } from '@mui/material'
 import './search.css'
 
 // Components
-import SearchBarManga from './SearchBarManga'
+import SearchBar from './SearchBar'
 
 function MangaSearch() {
   const [getManga, setGetManga] = useState()
@@ -15,6 +15,8 @@ function MangaSearch() {
   const [scoreMin, setScoreMin] = useState('')
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
+  const [orderBy, setOrderBy] = useState('')
+  const [sort, setSort] = useState('')
   const [hentai, setHentai] = useState(true)
   const [page, setPage] = useState(1)
 
@@ -22,9 +24,11 @@ function MangaSearch() {
   const scoreMinUrl = scoreMin !== '' ? `&min_score=${scoreMin}` : ''
   const typeUrl = type !== '' ? `&type=${type}` : ''
   const statusUrl = status !== '' ? `&status=${status}` : ''
+  const orderByUrl = orderBy !== '' ? `&order_by=${orderBy}` : ''
+  const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
   const hentaisUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/manga${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${hentaisUrl}&page=${page}`
+  const link = `https://api.jikan.moe/v4/manga${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${page}`
 
   useEffect(() => {
     fetch(link)
@@ -44,7 +48,8 @@ function MangaSearch() {
               color="primary"
             />
 
-            <SearchBarManga
+            <SearchBar
+              collectionType="manga"
               getManga={getManga}
               inputValue={inputValue}
               setLetter={setLetter}
@@ -55,6 +60,10 @@ function MangaSearch() {
               setType={setType}
               status={status}
               setStatus={setStatus}
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+              sort={sort}
+              setSort={setSort}
               hentai={hentai}
               setHentai={setHentai}
               setPage={setPage}

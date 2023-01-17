@@ -16,6 +16,8 @@ function AnimeSearch() {
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
   const [rating, setRating] = useState('')
+  const [orderBy, setOrderBy] = useState('')
+  const [sort, setSort] = useState('')
   const [hentai, setHentai] = useState(true)
   const [page, setPage] = useState(1)
 
@@ -23,10 +25,13 @@ function AnimeSearch() {
   const scoreMinUrl = scoreMin !== '' ? `&min_score=${scoreMin}` : ''
   const typeUrl = type !== '' ? `&type=${type}` : ''
   const statusUrl = status !== '' ? `&status=${status}` : ''
-  const ratingsUrl = rating !== '' ? `&rating=${rating}` : ''
+  const ratingUrl = rating !== '' ? `&rating=${rating}` : ''
+  const orderByUrl = orderBy !== '' ? `&order_by=${orderBy}` : ''
+  const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
   const hentaiUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingsUrl}${hentaiUrl}&page=${page}`
+  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hentaiUrl}&page=${page}`
+console.log("link: " + link)
 
   useEffect(() => {
     fetch(link)
@@ -47,6 +52,7 @@ function AnimeSearch() {
             />
 
             <SearchBar
+              collectionType="anime"
               getAnime={getAnime}
               inputValue={inputValue}
               setLetter={setLetter}
@@ -59,6 +65,10 @@ function AnimeSearch() {
               setStatus={setStatus}
               rating={rating}
               setRating={setRating}
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+              sort={sort}
+              setSort={setSort}
               hentai={hentai}
               setHentai={setHentai}
               setPage={setPage}

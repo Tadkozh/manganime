@@ -38,7 +38,6 @@ import {
   AppBar,
   Avatar,
   Box,
-  Button,
   Container,
   IconButton,
   Menu,
@@ -48,6 +47,8 @@ import {
   Tooltip,
   Typography,
 } from '..'
+
+import { palettes } from '../../theme'
 
 const pages = [HOME, TOP_ANIME, TOP_MANGA, SEARCH_ANIME, SEARCH_MANGA]
 const pagesChildren = [
@@ -247,20 +248,30 @@ const AppBarMenu = ({ navigate }) => {
         }}
       >
         {pages.map((page, index) => (
-          <Button
+          <Box
             key={index}
             onClick={() => handleCloseNavMenu(page)}
             sx={{
               display: 'flex',
+              alignItems: "center",
               gap: '5px',
               color: '#fff',
               my: 2,
+              fontSize: "0.9rem",
+              // fontWeight: "500",
+              textTransform: "uppercase",
+              padding: "6px 8px",
               boxShadow: '0 0 5px -3px',
               margin: '0 5px',
+              transition: "0.25s",
+              cursor: "pointer",
+              '&:hover': {
+                backgroundColor: "#262626"
+              },
             }}
           >
             {pagesChildren[index]}
-          </Button>
+          </Box>
         ))}
       </Box>
     </>
