@@ -23,8 +23,8 @@ const darkPalette = {
 }
 
 const palettes = {
-  dark: darkPalette,
   light: lightPalette,
+  dark: darkPalette,
 }
 
 const getDesignTokens = (mode) => ({

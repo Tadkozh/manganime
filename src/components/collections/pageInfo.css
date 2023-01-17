@@ -19,24 +19,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: rgb(8, 133, 182); */
   padding: 10px;
 }
 .info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: skyblue; */
   padding: 10px;
   border-radius: 10px;
 }
 
-.infoHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.infoHeaderAndSynopsis {
+.presentation {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +171,7 @@ form > div {
 }
 .review {
   margin-bottom: 20px;
-  background-color: aliceblue;
+  background-color: lightgreen;
   padding: 10px;
   border-radius: 10px;
 }
