@@ -1,37 +1,26 @@
-import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
+import { useInfos } from '../../hooks/queriesHooks'
 import { useNews } from '../../hooks/queriesHooks'
 // import { Typography } from '..'
 
 // Components
 import NavBarInfo from './NavBarInfo'
 
-import { APP_API_URL } from '../../commons/constants'
-
 const News = () => {
-  let { collectionType, id, title } = useParams()
+  let { collectionType, id } = useParams()
 
-  const [news, setNews] = useState([])
+  const { data: news, status } = useNews(collectionType, id)
+  console.log('news', news)
+  console.log('status', status)
 
-  const endpoint = 'news'
-
-  const getDataFromApi = useCallback(() => {
-    axios
-      .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
-      .then((response) => {
-        setNews(response.data.data)
-      })
-      .catch((error) => error)
-  }, [id])
-
-  useEffect(() => {
-    getDataFromApi()
-  }, [getDataFromApi])
+  const titlehook = useInfos(collectionType, id)
+  console.log('titlehook', titlehook)
+  const title = titlehook?.title
+  console.log('title', title)
 
   let directives = ''
-  if (news.length === 0) {
+  if (news?.length === 0) {
     directives = `No news about this ${collectionType}`
   } else {
     directives = `Click on a title to learn more`

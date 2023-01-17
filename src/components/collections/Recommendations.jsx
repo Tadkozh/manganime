@@ -1,39 +1,29 @@
-import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import axios from 'axios'
 import '../../styles/recommendations.css'
 import {
   Button,
   // Typography
 } from '..'
+import { useInfos } from '../../hooks/queriesHooks'
 import { useRecommendation } from '../../hooks/queriesHooks'
-import { APP_API_URL } from '../../commons/constants'
 
 // Components
 import NavBarInfo from './NavBarInfo'
 
 const Recommendations = () => {
-  let { collectionType, id, title } = useParams()
+  let { collectionType, id } = useParams()
 
-  const [animeRecom, setAnimeRecom] = useState([])
-
-  const endpoint = 'recommendations'
-
-  const getDataFromApi = useCallback(() => {
-    axios
-      .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
-      .then((response) => {
-        setAnimeRecom(response.data.data)
-      })
-      .catch((error) => error)
-  }, [id])
-
-  useEffect(() => {
-    getDataFromApi()
-  }, [getDataFromApi])
+  const { data: animeRecom, status } = useRecommendation(collectionType, id)
+  console.log('animeRecom', animeRecom)
+  console.log('status', status)
+  
+  const titlehook = useInfos(collectionType, id)
+  console.log('titlehook', titlehook)
+  const title = titlehook?.title
+  console.log('title', title)
 
   let directives = ''
-  if (animeRecom.length === 0) {
+  if (animeRecom?.length === 0) {
     directives = `No recommendation about ${title}`
   } else {
     directives =
