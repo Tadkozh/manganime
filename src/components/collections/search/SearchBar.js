@@ -48,11 +48,20 @@ const HideHentai = styled(Switch)(({ theme }) => ({
   },
 }))
 
-function SelectSearch({title, name, getter, setter, defaultValue, selectValues}) {
+function SelectSearch({
+  title,
+  name,
+  getter,
+  setter,
+  defaultValue,
+  selectValues,
+}) {
   return (
     <>
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel sx={{color: "rgba(0, 0, 0, 0.65)"}} id={name}>{title}</InputLabel>
+        <InputLabel sx={{ color: 'rgba(0, 0, 0, 0.65)' }} id={name}>
+          {title}
+        </InputLabel>
         <Select
           labelId={name}
           id={name}
@@ -76,7 +85,7 @@ function SelectSearch({title, name, getter, setter, defaultValue, selectValues})
   )
 }
 
-function InputSearch({title, name, placeholder, getter, setter}) {
+function InputSearch({ title, name, placeholder, getter, setter }) {
   return (
     <TextField
       variant="filled"
@@ -128,32 +137,112 @@ function SearchBar({
 
   return (
     <div className="settingsBar">
-      <p>{collectionType === 'anime' ? getAnime.pagination.items.total : getManga.pagination.items.total} results</p>
-      <SelectSearch title={"Type"} name={"typeInput"} getter={type} setter={setType} defaultValue='All' selectValues={collectionType === 'anime' ? selectValues.anime.type : selectValues.manga.type} />
-      <SelectSearch title="score min" name="scoreMinInput" getter={scoreMin} setter={setScoreMin} defaultValue='0' selectValues={collectionType === 'anime' ? selectValues.anime.scoreMin : selectValues.manga.scoreMin} />
-      <SelectSearch title="Status" name="statusInput" getter={status} setter={setStatus} defaultValue='All' selectValues={collectionType === 'anime' ? selectValues.anime.status : selectValues.manga.status} />
-      {collectionType === 'anime' ? <SelectSearch title="Rating" name="ratingInput" getter={rating} setter={setRating} defaultValue='All' selectValues={selectValues.anime.rating} /> : null}
-      <SelectSearch title="Order by" name="orderByInput" getter={orderBy} setter={setOrderBy} defaultValue='ID' selectValues={collectionType === 'anime' ? selectValues.anime.order_by : selectValues.manga.order_by} />
-      <SelectSearch title="Sort" name="sortInput" getter={sort} setter={setSort} defaultValue='Ascending' selectValues={collectionType === 'anime' ? selectValues.anime.sort : selectValues.manga.sort} />
-     
+      <p>
+        {collectionType === 'anime'
+          ? getAnime.pagination.items.total
+          : getManga.pagination.items.total}{' '}
+        results
+      </p>
+      <SelectSearch
+        title={'Type'}
+        name={'typeInput'}
+        getter={type}
+        setter={setType}
+        defaultValue="All"
+        selectValues={
+          collectionType === 'anime'
+            ? selectValues.anime.type
+            : selectValues.manga.type
+        }
+      />
+      <SelectSearch
+        title="score min"
+        name="scoreMinInput"
+        getter={scoreMin}
+        setter={setScoreMin}
+        defaultValue="0"
+        selectValues={
+          collectionType === 'anime'
+            ? selectValues.anime.scoreMin
+            : selectValues.manga.scoreMin
+        }
+      />
+      <SelectSearch
+        title="Status"
+        name="statusInput"
+        getter={status}
+        setter={setStatus}
+        defaultValue="All"
+        selectValues={
+          collectionType === 'anime'
+            ? selectValues.anime.status
+            : selectValues.manga.status
+        }
+      />
+      {collectionType === 'anime' ? (
+        <SelectSearch
+          title="Rating"
+          name="ratingInput"
+          getter={rating}
+          setter={setRating}
+          defaultValue="All"
+          selectValues={selectValues.anime.rating}
+        />
+      ) : null}
+      <SelectSearch
+        title="Order by"
+        name="orderByInput"
+        getter={orderBy}
+        setter={setOrderBy}
+        defaultValue="ID"
+        selectValues={
+          collectionType === 'anime'
+            ? selectValues.anime.order_by
+            : selectValues.manga.order_by
+        }
+      />
+      <SelectSearch
+        title="Sort"
+        name="sortInput"
+        getter={sort}
+        setter={setSort}
+        defaultValue="Ascending"
+        selectValues={
+          collectionType === 'anime'
+            ? selectValues.anime.sort
+            : selectValues.manga.sort
+        }
+      />
+
       <FormControlLabel
         control={<HideHentai checked={hentai} />}
         label="Hide Hentai"
         onChange={() => setHentai(!hentai)}
       />
 
-<div className="inputSearch">
-<InputSearch title="Search" name="searchInput" placeholder="Write here..." getter={inputValue} setter={setInputValue} />
+      <div className="inputSearch">
+        <InputSearch
+          title="Search"
+          name="searchInput"
+          placeholder="Write here..."
+          getter={inputValue}
+          setter={setInputValue}
+        />
         <Button
           variant="contained"
-          sx={{gap: "5px", fontWeight:"bold"}}
+          sx={{ gap: '5px', fontWeight: 'bold' }}
           size="small"
           onClick={() => setLetter(inputValue)}
         >
           {SEARCH}
         </Button>
 
-        <Button variant="contained" sx={{gap: "5px", backgroundColor: "red", fontWeight:"bold"}} size="small" onClick={resetFilters}>
+        <Button
+          variant="contained"
+          sx={{ gap: '5px', backgroundColor: 'red', fontWeight: 'bold' }}
+          size="small"
+          onClick={resetFilters}
+        >
           {RESET_FILTERS}
         </Button>
       </div>

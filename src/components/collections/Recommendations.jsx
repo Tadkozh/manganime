@@ -11,7 +11,7 @@ import { Button,
 import NavBarInfo from './NavBarInfo'
 
 const Recommendations = () => {
-  let { id, title } = useParams()
+  let { collectionType, id, title } = useParams()
 
   const [animeRecom, setAnimeRecom] = useState([])
 
@@ -21,7 +21,7 @@ const Recommendations = () => {
   const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
   // const id = 1 // id : 1, 100, 190
-  const collectionType = 'anime' // collectionType : anime, manga
+  // const collectionType = 'anime' // collectionType : anime, manga
 
   // const clientApi = (endpoint = null, collectionType = {}) => {
   //   return axios
