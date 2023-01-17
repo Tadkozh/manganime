@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
-import '../../styles/common-css.css'
+import '../../styles/recommandations.css'
 import { Button, 
   // Typography
  } from '..'
@@ -74,7 +74,8 @@ const Recommendations = () => {
 
       <h2>{`People who like ${title} also enjoy`}</h2>
       <p>{directives}</p>
-      <div className="datagrid">
+      
+      <div className='datagrid'>
         {animeRecom
           ? animeRecom.map((data, index) => {
               if (index < 10) {
