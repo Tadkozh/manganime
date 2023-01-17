@@ -1,10 +1,11 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
-import '../../styles/common-css.css'
+import '../../styles/recommandations.css'
 import { Button, 
   // Typography
  } from '..'
+ import { useRecommendation } from '../../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -43,11 +44,25 @@ const Recommendations = () => {
     getDataFromApi()
   }, [getDataFromApi])
 
+  // const getDataFromApi = () => {
+  //   axios
+  //     .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
+  //     .then((response) => {
+  //       console.log(response.data.data)
+  //       setAnimeRecom(response.data.data)
+  //     })
+  //     .catch((error) => error)
+  // }
+
+  // useEffect(() => {
+  //   getDataFromApi()
+  // }, [id])
+
   let directives = ''
   if (animeRecom.length === 0) {
     directives = `No recommendation about ${title}`
   } else {
-    directives = ''
+    directives = 'Click on Read More to see the article on MyAnimeList | Click on the image to see the card'
   }
 
   return (
@@ -59,7 +74,8 @@ const Recommendations = () => {
 
       <h2>{`People who like ${title} also enjoy`}</h2>
       <p>{directives}</p>
-      <div className="datagrid">
+      
+      <div className='datagrid'>
         {animeRecom
           ? animeRecom.map((data, index) => {
               if (index < 10) {
