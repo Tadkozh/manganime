@@ -9,7 +9,6 @@ import '../styles/top-css.css'
 
 
 const TopView = ({ datas, isHomePage = false }) => {
-  console.log(datas)
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,
     index: null,
