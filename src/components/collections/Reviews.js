@@ -2,10 +2,12 @@ import { Rating } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { APP_API_URL } from '../../commons/constants'
+
 function Reviews() {
   let { collectionType, id } = useParams()
 
-  const link = `https://api.jikan.moe/v4/${collectionType}/${id}/reviews`
+  const link = `${APP_API_URL}/${collectionType}/${id}/reviews`
 
   const [getReviews, setGetReviews] = useState(null)
 

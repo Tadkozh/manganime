@@ -4,8 +4,8 @@ import {
   Button,
   // Typography
 } from '..'
-import { useRecommendation } from '../../hooks/queriesHooks'
 import { useInfos } from '../../hooks/queriesHooks'
+import { useRecommendation } from '../../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -16,7 +16,7 @@ const Recommendations = () => {
   const { data: animeRecom, status } = useRecommendation(collectionType, id)
   console.log('animeRecom', animeRecom)
   console.log('status', status)
-
+  
   const titlehook = useInfos(collectionType, id)
   console.log('titlehook', titlehook)
   const title = titlehook?.title

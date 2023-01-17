@@ -9,7 +9,7 @@ import {
   TextField,
   Button,
 } from '@mui/material'
-
+import { Search, Refresh } from '@mui/icons-material'
 import { SEARCH, RESET_FILTERS } from '../../../utils/constants'
 
 // Arrays
@@ -222,7 +222,7 @@ function SearchBar({
 
       <div className="inputSearch">
         <InputSearch
-          title="Search"
+          title={SEARCH}
           name="searchInput"
           placeholder="Write here..."
           getter={inputValue}
@@ -234,7 +234,7 @@ function SearchBar({
           size="small"
           onClick={() => setLetter(inputValue)}
         >
-          {SEARCH}
+          <Search /> {SEARCH}
         </Button>
 
         <Button
@@ -243,7 +243,7 @@ function SearchBar({
           size="small"
           onClick={resetFilters}
         >
-          {RESET_FILTERS}
+          <Refresh /> {RESET_FILTERS}
         </Button>
       </div>
     </div>

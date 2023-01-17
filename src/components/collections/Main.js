@@ -9,19 +9,17 @@ import './pageInfoQueries.css'
 import NavBarInfo from './NavBarInfo'
 import Presentation from './Presentation'
 import Synopsis from './Synopsis'
-import Details from './details'
+import Details from './Details'
 import Story from './Story'
 import Form from './Form'
 import Reviews from './Reviews'
 
+import { APP_API_URL } from '../../commons/constants'
+
 function Main() {
   let { collectionType, id } = useParams()
-  console.log('collectionType: ' + collectionType)
-  console.log('id: ' + id)
 
-  // const collectionType = 'anime' // collectionType : anime, manga
-
-  const linkInfo = `https://api.jikan.moe/v4/${collectionType}/${id}/full`
+  const linkInfo = `${APP_API_URL}/${collectionType}/${id}/full`
   const [getInfo, setGetInfo] = useState(null)
 
   useEffect(() => {
@@ -38,10 +36,7 @@ function Main() {
           <>
             <div className="info">
               <div className="header">
-                <Presentation
-                  getInfo={getInfo}
-                  collectionType={collectionType}
-                />
+                <Presentation getInfo={getInfo} />
                 <Synopsis getInfo={getInfo} />
 
                 {/* {getInfo?.data?.trailer?.embed_url ? (
@@ -54,7 +49,7 @@ function Main() {
                   <p>No trailer was found.</p>
                 )} */}
 
-                <Details getInfo={getInfo} collectionType={collectionType} />
+                <Details getInfo={getInfo} />
               </div>
               <Story getInfo={getInfo} />
               <Form />

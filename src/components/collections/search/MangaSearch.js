@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '@mui/material'
 
+import { APP_API_URL } from '../../../commons/constants'
+
 // CSS Files
 import './search.css'
 
@@ -30,7 +32,7 @@ function MangaSearch() {
   const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
   const hentaisUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${page}`
+  const link = `${APP_API_URL}/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${page}`
 
   useEffect(() => {
     fetch(link)
