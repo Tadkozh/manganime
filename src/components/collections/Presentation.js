@@ -18,12 +18,12 @@ function FavoriteIcon({ getInfo }) {
   )
 }
 
-function MangaPresentation({ getInfo }) {
+function Presentation({ getInfo, collectionType }) {
   const [rankBtnValue, setRankBtnValue] = useState(false)
 
   return (
     <>
-      <div className="infoHeader">
+      <div className="presentation">
         <div className="titles">
           <h2>{getInfo.data.title_english ?? getInfo.data.titles[0].title}</h2>
           <p className="japaneseTitle">{getInfo.data.title_japanese}</p>
@@ -36,6 +36,20 @@ function MangaPresentation({ getInfo }) {
           alt="infos"
           className="mainImg"
         />
+        {collectionType === 'anime' && getInfo.data.streaming[0]?.name ? (
+          <>
+            <a href="#trailer">WATCH TRAILER</a>
+            <Button
+              href={getInfo.data.streaming[0].url}
+              variant="contained"
+              size="small"
+            >
+              WATCH STREAMING
+              <br />
+              On {getInfo.data.streaming[0].name}
+            </Button>
+          </>
+        ) : null}
 
         <div className="rating">
           <div>
@@ -83,4 +97,4 @@ function MangaPresentation({ getInfo }) {
   )
 }
 
-export default MangaPresentation
+export default Presentation

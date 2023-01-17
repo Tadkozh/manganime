@@ -9,6 +9,8 @@ import './search.css'
 import SearchBar from './SearchBar'
 
 function AnimeSearch() {
+  const collectionType = 'anime'
+
   const [getAnime, setGetAnime] = useState()
   const [inputValue, setInputValue] = useState('')
   const [letter, setLetter] = useState('')
@@ -30,8 +32,8 @@ function AnimeSearch() {
   const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
   const hentaiUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/anime${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hentaiUrl}&page=${page}`
-console.log("link: " + link)
+  const link = `https://api.jikan.moe/v4/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hentaiUrl}&page=${page}`
+  console.log('link: ' + link)
 
   useEffect(() => {
     fetch(link)
@@ -48,11 +50,10 @@ console.log("link: " + link)
               onChange={(e, p) => setPage(p)}
               className="pagination"
               count={getAnime?.pagination?.last_visible_page}
-              color="primary"
             />
 
             <SearchBar
-              collectionType="anime"
+              collectionType={collectionType}
               getAnime={getAnime}
               inputValue={inputValue}
               setLetter={setLetter}
@@ -80,9 +81,9 @@ console.log("link: " + link)
               return (
                 <div className="item" key={index}>
                   <Link
-                    to={`/collection/anime/search/main/${data.mal_id}/${
-                      data.title_english ?? data.titles[0].title
-                    }`}
+                    to={`/collection/${collectionType}/search/main/${
+                      data.mal_id
+                    }/${data.title_english ?? data.titles[0].title}`}
                   >
                     <div className="imgWrapper">
                       <img
@@ -108,7 +109,6 @@ console.log("link: " + link)
               onChange={(e, p) => setPage(p)}
               className="pagination"
               count={getAnime.pagination.last_visible_page}
-              color="primary"
             />
           </div>
         </>

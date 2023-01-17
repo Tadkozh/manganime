@@ -14,9 +14,7 @@ const selectValues = {
       { value: 'start_date', children: 'Start date' },
       { value: 'end_date', children: 'End date' },
     ],
-    sort: [
-      { value: 'desc', children: 'Descending' },
-    ],
+    sort: [{ value: 'desc', children: 'Descending' }],
     type: [
       { value: 'tv', children: 'Serie' },
       { value: 'movie', children: 'Movie' },
@@ -65,9 +63,7 @@ const selectValues = {
       { value: 'start_date', children: 'Start date' },
       { value: 'end_date', children: 'End date' },
     ],
-    sort: [
-      { value: 'desc', children: 'Descending' },
-    ],
+    sort: [{ value: 'desc', children: 'Descending' }],
     type: [
       { value: 'manga', children: 'Manga' },
       { value: 'novel', children: 'Novel' },
