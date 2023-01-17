@@ -37,7 +37,7 @@ const AppConsumer = () => {
         <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
 
         <Route path="/collection" element={<Collection />}>
-          <Route path="/collection/anime/search" element={<AnimeSearch />} />
+          <Route path="/collection/:type/search" element={<AnimeSearch />} />
           <Route path="/collection/manga/search" element={<MangaSearch />} />
           <Route path="/collection/anime/top" element={<AnimeTop />} />
           <Route path="/collection/manga/top" element={<MangaTop />} />
