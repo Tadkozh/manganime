@@ -28,6 +28,7 @@ const TopView = ({ datas, isHomePage = false }) => {
                 padding: '1em 0',
                 boxShadow: 'inherit',
                 backgroundImage: 'inherit',
+                backgroundColor: 'inherit',
               }}
             >
               <CardActionArea
