@@ -9,6 +9,8 @@ import './search.css'
 import SearchBar from './SearchBar'
 
 function MangaSearch() {
+  const collectionType = 'manga'
+
   const [getManga, setGetManga] = useState()
   const [inputValue, setInputValue] = useState('')
   const [letter, setLetter] = useState('')
@@ -28,7 +30,7 @@ function MangaSearch() {
   const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
   const hentaisUrl = hentai ? `&sfw` : ''
 
-  const link = `https://api.jikan.moe/v4/manga${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${page}`
+  const link = `https://api.jikan.moe/v4/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${page}`
 
   useEffect(() => {
     fetch(link)
@@ -45,11 +47,10 @@ function MangaSearch() {
               onChange={(e, p) => setPage(p)}
               className="pagination"
               count={getManga?.pagination?.last_visible_page}
-              color="primary"
             />
 
             <SearchBar
-              collectionType="manga"
+              collectionType={collectionType}
               getManga={getManga}
               inputValue={inputValue}
               setLetter={setLetter}
@@ -75,9 +76,9 @@ function MangaSearch() {
               return (
                 <div className="item" key={index}>
                   <Link
-                    to={`/collection/manga/search/main/${data.mal_id}/${
-                      data.title_english ?? data.titles[0].title
-                    }`}
+                    to={`/collection/${collectionType}/search/main/${
+                      data.mal_id
+                    }/${data.title_english ?? data.titles[0].title}`}
                   >
                     <div className="imgWrapper">
                       <img
@@ -103,7 +104,6 @@ function MangaSearch() {
               onChange={(e, p) => setPage(p)}
               className="pagination"
               count={getManga.pagination.last_visible_page}
-              color="primary"
             />
           </div>
         </>
