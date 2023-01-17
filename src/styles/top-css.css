@@ -6,17 +6,22 @@
   position: relative;
 }
 
-.top-article--box {
+.top-article__box {
   height: 502px;
   margin-top: 1em;
   overflow: hidden;
   display: grid;
   grid-template-columns: repeat(auto-fill, 350px);
   justify-items: center;
+  justify-content: center;
   gap: 30px;
 }
 
-.top-article--box-item-media {
+.top-article__box--noheight {
+  height: inherit
+}
+
+.top-article__box__item__media-effect {
   position: absolute;
   background-color: rgba(68, 68, 68, 0.4);
   width: 100%;

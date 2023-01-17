@@ -1,5 +1,6 @@
 import React from 'react'
 import useGetTopDatas from '../hooks/getTopDatas'
+import {useTopOtaku} from '../hooks/queriesHooks'
 import TopView from './TopView'
 import MobileStepper from '@mui/material/MobileStepper'
 import Button from '@mui/material/Button'
@@ -18,8 +19,10 @@ const rankReducer = (state, action) => {
   }
 }
 
-const TopDetails = ({ name }) => {
+const TopDetails = ({ name, isHomePage = false }) => {
   const { topDatas } = useGetTopDatas(name)
+  // const topDatas  = useTopOtaku('anime')
+  // console.log(useTopOtaku(name));
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas.length
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
@@ -48,7 +51,8 @@ const TopDetails = ({ name }) => {
 
   return (
     <>
-      <article className=" top-article">
+      <article className={isHomePage ? "top-article" : null}>
+    { isHomePage ? 
         <MobileStepper
           sx={{
             position: 'absolute',
@@ -78,7 +82,6 @@ const TopDetails = ({ name }) => {
           }
           backButton={
             <Button
-              className="top-article--arrow"
               sx={{
                 zIndex: 1,
                 color: 'rgb(68,68,68)',
@@ -91,9 +94,9 @@ const TopDetails = ({ name }) => {
               <KeyboardArrowLeft />
             </Button>
           }
-        />
+        />:null}
         <h2>Top {name}</h2>
-        <TopView datas={filteredTopDatas} />
+        <TopView isHomePage={isHomePage ? true : false} datas={isHomePage ? filteredTopDatas : topDatas} />
       </article>
     </>
   )
