@@ -1,6 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { AccordionBasic } from './AccordionBasic'
 import { useNews } from '../../hooks/queriesHooks'
 import { useInfos } from '../../hooks/queriesHooks'
@@ -11,7 +9,7 @@ import NavBarInfo from './NavBarInfo'
 
 const News = () => {
   let { collectionType, id } = useParams()
-  // const collectionType = 'anime' // collectionType : anime, manga => le récupérer en useParams via le link dans NavBarInfo
+  //const collectionType = 'anime' // collectionType : anime, manga => le récupérer en useParams via le link dans NavBarInfo
 
   const { data: news, status } = useNews(collectionType, id)
   console.log('news', news)

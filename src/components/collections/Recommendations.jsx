@@ -1,63 +1,26 @@
-import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import axios from 'axios'
 import '../../styles/recommendations.css'
 import {
   Button,
   // Typography
 } from '..'
 import { useRecommendation } from '../../hooks/queriesHooks'
+import { useInfos } from '../../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
 
 const Recommendations = () => {
-  let { collectionType, id, title } = useParams()
+  let { collectionType, id } = useParams()
 
-  const [animeRecom, setAnimeRecom] = useState([])
+  const { data: animeRecom, status } = useRecommendation(collectionType, id)
+  console.log('animeRecom', animeRecom)
+  console.log('status', status)
 
-  // https://api.jikan.moe/v4/anime/${id}/recommendations
-  //https://api.jikan.moe/v4/manga/{id}/recommendations
-
-  const APP_API_URL = 'https://api.jikan.moe/v4'
-  const endpoint = 'recommendations'
-  // const id = 1 // id : 1, 100, 190
-  // const collectionType = 'anime' // collectionType : anime, manga
-
-  // const clientApi = (endpoint = null, collectionType = {}) => {
-  //   return axios
-  //     .get(${url}/${collectionType}/${endpoint})
-  //     .then((data) => data)
-  //     .catch((error) => error)
-  // }
-
-  const getDataFromApi = useCallback(() => {
-    axios
-      .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
-      .then((response) => {
-        console.log(response.data.data)
-        setAnimeRecom(response.data.data)
-      })
-      .catch((error) => error)
-  }, [id])
-
-  useEffect(() => {
-    getDataFromApi()
-  }, [getDataFromApi])
-
-  // const getDataFromApi = () => {
-  //   axios
-  //     .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
-  //     .then((response) => {
-  //       console.log(response.data.data)
-  //       setAnimeRecom(response.data.data)
-  //     })
-  //     .catch((error) => error)
-  // }
-
-  // useEffect(() => {
-  //   getDataFromApi()
-  // }, [id])
+  const titlehook = useInfos(collectionType, id)
+  console.log('titlehook', titlehook)
+  const title = titlehook?.title
+  console.log('title', title)
 
   let directives = ''
   if (animeRecom?.length === 0) {

@@ -11,12 +11,13 @@ const useNews = (type, id) => {
   return { data, status }
 }
 
+const useRecommendation = (type, id) => {
+  const { data, status } = useClientApi(type, id, 'recommendations')
+  return { data, status }
+}
+
 const useReviews = (type, id) => {
   const { data } = useClientApi(type, id, 'reviews')
-  return data
-}
-const useRecommendation = (type, id) => {
-  const { data } = useClientApi(type, id, 'recommendations')
   return data
 }
 
