@@ -12,14 +12,14 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { useTheme } from '@mui/material'
 
-import '../styles/top-css.css'
+// import '../styles/top-css.css'
 
 const rankReducer = (state, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case 'Next':
-      return { minRank: state.minRank + 1, maxRank: state.maxRank + 1 }
+      return { minRank: state?.minRank + 1, maxRank: state?.maxRank + 1 }
     case 'Prev':
-      return { minRank: state.minRank - 1, maxRank: state.maxRank - 1 }
+      return { minRank: state?.minRank - 1, maxRank: state?.maxRank - 1 }
     default:
       return { minRank: 0, maxRank: 4 }
   }
@@ -27,8 +27,9 @@ const rankReducer = (state, action) => {
 
 const TopDetails = ({ name, isHomePage = false }) => {
   const { topDatas } = useGetTopDatas(name)
-  // const topDatas  = useTopOtaku('anime')
-  // console.log(useTopOtaku(name));
+  // const topDatas = useTopOtaku(name)
+  // console.log(topDatas)
+  // console.log(useTopOtaku('anime'))
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas.length
@@ -37,7 +38,7 @@ const TopDetails = ({ name, isHomePage = false }) => {
     maxRank: 4,
   })
   const theme = useTheme()
-  const sxContainerHomePage = {
+  const sxTopContainerHomePage = {
     maxWidth: '1600px',
     position: 'relative',
     m: '2em 0',
@@ -49,11 +50,11 @@ const TopDetails = ({ name, isHomePage = false }) => {
 
   React.useEffect(() => {
     setFilteredTopDatas(
-      topDatas.filter(
-        (data) => data.rank > rank.minRank && data.rank <= rank.maxRank,
+      topDatas?.filter(
+        (data) => data?.rank > rank?.minRank && data?.rank <= rank?.maxRank,
       ),
     )
-  }, [rank.maxRank, rank.minRank, topDatas])
+  }, [rank?.maxRank, rank?.minRank, topDatas])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -67,11 +68,10 @@ const TopDetails = ({ name, isHomePage = false }) => {
 
   return (
     <>
-      {/* <article className={isHomePage ? "top-article" : null}> */}
       <Container
         component="article"
         disableGutters
-        sx={isHomePage ? sxContainerHomePage : null}
+        sx={isHomePage ? sxTopContainerHomePage : null}
         maxWidth={!isHomePage ? false : 'lg'}
       >
         {isHomePage ? (
@@ -96,7 +96,7 @@ const TopDetails = ({ name, isHomePage = false }) => {
                   ':hover': { bgcolor: 'rgba(68,68,68,0.5)' },
                 }}
                 size="small"
-                onClick={filteredTopDatas.length === 4 ? handleNext : null}
+                onClick={filteredTopDatas?.length === 4 ? handleNext : null}
                 disabled={activeStep === maxSteps - 1}
               >
                 <KeyboardArrowRight />
@@ -132,7 +132,6 @@ const TopDetails = ({ name, isHomePage = false }) => {
           isHomePage={isHomePage ? true : false}
           datas={isHomePage ? filteredTopDatas : topDatas}
         />
-        {/* </article> */}
       </Container>
     </>
   )

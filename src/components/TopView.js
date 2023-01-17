@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
-import '../styles/top-css.css'
+
+// import '../styles/top-css.css'
 
 const TopView = ({ datas, isHomePage = false }) => {
   const [showOverlay, setShowOverlay] = React.useState({
@@ -13,24 +17,38 @@ const TopView = ({ datas, isHomePage = false }) => {
     index: null,
   })
 
+  const sxTopBox = {
+    height: isHomePage ? '502px' : 'inherit',
+    marginTop: '1em',
+    overflow: 'hidden',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, 350px)',
+    justifyItems: 'center',
+    justifyContent: 'center',
+    gap: '30px',
+  }
+
   return (
-    <ul
-      className={
-        isHomePage
-          ? 'top-article__box'
-          : 'top-article__box--noheight top-article__box'
-      }
-    >
+    <Box component="ul" sx={sxTopBox}>
       {datas.map((data, index) => {
         return (
-          <li key={index} title={`${data?.genres[0]?.type}-list`}>
+          <Paper
+            key={index}
+            title={`${data?.genres[0]?.type}-list`}
+            component="li"
+            sx={{
+              backgroundImage: 'inherit',
+              bgcolor: 'inherit',
+              boxShadow: 'inherit',
+            }}
+          >
             <Card
               sx={{
                 maxWidth: '16em',
                 p: '1em 0',
-                boxShadow: 'inherit',
                 backgroundImage: 'inherit',
                 bgcolor: 'inherit',
+                boxShadow: 'inherit',
               }}
             >
               <CardActionArea
@@ -58,7 +76,20 @@ const TopView = ({ datas, isHomePage = false }) => {
                       data?.title_english ?? data?.title
                     }`}
                   >
-                    <div className="top-article__box__item__media-effect" />
+                    {/* <div className="top-article__box__item__media-effect" /> */}
+                    <Box
+                      component="div"
+                      sx={{
+                        position: 'absolute',
+                        bgcolor: 'rgba(68, 68, 68, 0.4)',
+                        width: '100%',
+                        height: '100%',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: '1',
+                      }}
+                    />
                   </Link>
                 )}
               </CardActionArea>
@@ -75,10 +106,10 @@ const TopView = ({ datas, isHomePage = false }) => {
                 </Typography>
               </CardContent>
             </Card>
-          </li>
+          </Paper>
         )
       })}
-    </ul>
+    </Box>
   )
 }
 
