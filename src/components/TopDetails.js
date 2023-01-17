@@ -70,7 +70,7 @@ const TopDetails = ({ name }) => {
                 '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
               }}
               size="small"
-              onClick={handleNext}
+              onClick={filteredTopDatas.length === 4 ? handleNext : null}
               disabled={activeStep === maxSteps - 1}
             >
               <KeyboardArrowRight />
