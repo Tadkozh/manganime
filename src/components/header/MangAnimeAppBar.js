@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material'
+import { HomeRounded, Whatshot, Search } from '@mui/icons-material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
 import avatarProfile from '../../assets/images/avatar_2.gif'
@@ -19,17 +20,12 @@ import { ColorModeContext } from '../../context/ColorModeContext'
 import { useStorageColorTheme } from '../../hooks/storageColorTheme'
 import MUISwitchMode from '../../MUISwitchMode'
 import {
-  HOME,
-  HOME_CHILDREN,
-  SEARCH_ANIME,
-  SEARCH_MANGA,
-  SEARCH_ANIME_CHILDREN,
-  SEARCH_MANGA_CHILDREN,
-  TOP_ANIME_CHILDREN,
-  TOP_MANGA_CHILDREN,
   LOG_IN,
   LOG_OUT,
   PROFILE,
+  HOME,
+  SEARCH_ANIME,
+  SEARCH_MANGA,
   TOP_ANIME,
   TOP_MANGA,
 } from '../../utils/constants'
@@ -49,6 +45,32 @@ import {
 } from '..'
 
 import { palettes } from '../../theme'
+
+const HOME_CHILDREN = (
+  <>
+    <HomeRounded /> {HOME}
+  </>
+)
+const TOP_ANIME_CHILDREN = (
+  <>
+    <Whatshot sx={{ color: 'yellow' }} /> {TOP_ANIME}
+  </>
+)
+const SEARCH_ANIME_CHILDREN = (
+  <>
+    <Search /> {SEARCH_ANIME}
+  </>
+)
+const TOP_MANGA_CHILDREN = (
+  <>
+    <Whatshot sx={{ color: 'yellow' }} /> {TOP_MANGA}
+  </>
+)
+const SEARCH_MANGA_CHILDREN = (
+  <>
+    <Search /> {SEARCH_MANGA}
+  </>
+)
 
 const pages = [HOME, TOP_ANIME, TOP_MANGA, SEARCH_ANIME, SEARCH_MANGA]
 const pagesChildren = [
@@ -253,20 +275,20 @@ const AppBarMenu = ({ navigate }) => {
             onClick={() => handleCloseNavMenu(page)}
             sx={{
               display: 'flex',
-              alignItems: "center",
+              alignItems: 'center',
               gap: '5px',
               color: '#fff',
               my: 2,
-              fontSize: "0.9rem",
+              fontSize: '0.9rem',
               // fontWeight: "500",
-              textTransform: "uppercase",
-              padding: "6px 8px",
+              textTransform: 'uppercase',
+              padding: '6px 8px',
               boxShadow: '0 0 5px -3px',
               margin: '0 5px',
-              transition: "0.25s",
-              cursor: "pointer",
+              transition: '0.25s',
+              cursor: 'pointer',
               '&:hover': {
-                backgroundColor: "#262626"
+                backgroundColor: '#262626',
               },
             }}
           >

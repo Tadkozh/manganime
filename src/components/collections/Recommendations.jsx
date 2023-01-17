@@ -7,6 +7,7 @@ import {
   // Typography
 } from '..'
 import { useRecommendation } from '../../hooks/queriesHooks'
+import { APP_API_URL } from '../../commons/constants'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -16,26 +17,12 @@ const Recommendations = () => {
 
   const [animeRecom, setAnimeRecom] = useState([])
 
-  // https://api.jikan.moe/v4/anime/${id}/recommendations
-  //https://api.jikan.moe/v4/manga/{id}/recommendations
-
-  const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'recommendations'
-  // const id = 1 // id : 1, 100, 190
-  // const collectionType = 'anime' // collectionType : anime, manga
-
-  // const clientApi = (endpoint = null, collectionType = {}) => {
-  //   return axios
-  //     .get(${url}/${collectionType}/${endpoint})
-  //     .then((data) => data)
-  //     .catch((error) => error)
-  // }
 
   const getDataFromApi = useCallback(() => {
     axios
       .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
       .then((response) => {
-        console.log(response.data.data)
         setAnimeRecom(response.data.data)
       })
       .catch((error) => error)
@@ -44,20 +31,6 @@ const Recommendations = () => {
   useEffect(() => {
     getDataFromApi()
   }, [getDataFromApi])
-
-  // const getDataFromApi = () => {
-  //   axios
-  //     .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
-  //     .then((response) => {
-  //       console.log(response.data.data)
-  //       setAnimeRecom(response.data.data)
-  //     })
-  //     .catch((error) => error)
-  // }
-
-  // useEffect(() => {
-  //   getDataFromApi()
-  // }, [id])
 
   let directives = ''
   if (animeRecom.length === 0) {

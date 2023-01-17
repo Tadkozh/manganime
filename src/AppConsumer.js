@@ -18,8 +18,6 @@ import MangaSearch from './components/collections/search/MangaSearch'
 import AnimeTop from './components/collections/top/AnimeTop'
 import MangaTop from './components/collections/top/MangaTop'
 
-// import AnimeMain from './components/collections/AnimeMain'
-// import MangaMain from './components/collections/MangaMain'
 import Main from './components/collections/Main'
 
 import News from './components/collections/News'
@@ -47,12 +45,10 @@ const AppConsumer = () => {
             path="/collection/:collectionType/search/main/:id/:title"
             element={<Main />}
           />
-
           <Route
             path="/collection/:collectionType/search/news/:id/:title"
             element={<News />}
           />
-
           <Route
             path="/collection/:collectionType/search/recommendations/:id/:title"
             element={<Recommendations />}

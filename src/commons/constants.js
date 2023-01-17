@@ -1,3 +1,4 @@
+export const APP_API_URL = 'https://api.jikan.moe/v4'
 export const BAD_USE_CONTEXT = 'ne peut pas être utilisé sans'
 export const ENV_DEV = 'development'
 export const AUTH_USER_NOT_FOUND = 'auth/user-not-found'
@@ -22,6 +23,5 @@ export const ROUTE_TOP_ANIME = '/collection/anime/top'
 export const ROUTE_TOP_MANGA = '/collection/manga/top'
 export const ROUTE_SEARCH_ANIME = '/collection/anime/search'
 export const ROUTE_SEARCH_MANGA = '/collection/manga/search'
-// export const ROUTE_SEARCH_MANGA = `collection/${type}/search`
 export const ROUTE_404 = '*'
 export const JIKAN_API = process.env.REACT_APP_JIKAN_API

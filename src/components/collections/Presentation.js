@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Button, Rating, Typography } from '@mui/material'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
+import { useParams } from 'react-router-dom'
 
 function FavoriteIcon({ getInfo }) {
   const [isFav, setIsFav] = useState(false)
@@ -18,7 +19,9 @@ function FavoriteIcon({ getInfo }) {
   )
 }
 
-function Presentation({ getInfo, collectionType }) {
+function Presentation({ getInfo }) {
+  let { collectionType } = useParams()
+
   const [rankBtnValue, setRankBtnValue] = useState(false)
 
   return (

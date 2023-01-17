@@ -8,32 +8,19 @@ import { useNews } from '../../hooks/queriesHooks'
 // Components
 import NavBarInfo from './NavBarInfo'
 
+import { APP_API_URL } from '../../commons/constants'
+
 const News = () => {
   let { collectionType, id, title } = useParams()
 
   const [news, setNews] = useState([])
 
-  //https://api.jikan.moe/v4/anime/${id}/news
-  //https://api.jikan.moe/v4/manga/${id}/news
-
-  const APP_API_URL = 'https://api.jikan.moe/v4'
   const endpoint = 'news'
-  // const id = 1 // id : 1, 190 : No news Manga
-  // const collectionType = 'anime' // collectionType : anime, manga => le récupérer en useParams via le link dans NavBarInfo
-
-  // const clientApi = (endpoint = null, collectionType = {}) => {
-  //   return axios
-  //     .get(${url}/${collectionType}/${endpoint})
-  //     .then((data) => data)
-  //     .catch((error) => error)
-  // }
 
   const getDataFromApi = useCallback(() => {
     axios
       .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
       .then((response) => {
-        console.log(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
-        console.log(response.data.data)
         setNews(response.data.data)
       })
       .catch((error) => error)
