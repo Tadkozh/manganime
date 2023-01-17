@@ -9,8 +9,6 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
 
-// import '../styles/top-css.css'
-
 const TopView = ({ datas, isHomePage = false }) => {
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,

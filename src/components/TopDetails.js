@@ -12,8 +12,6 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import { useTheme } from '@mui/material'
 
-// import '../styles/top-css.css'
-
 const rankReducer = (state, action) => {
   switch (action?.type) {
     case 'Next':
