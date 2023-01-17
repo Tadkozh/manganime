@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
 import '../styles/top-css.css'
 
-
 const TopView = ({ datas, isHomePage = false }) => {
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,
@@ -15,20 +14,23 @@ const TopView = ({ datas, isHomePage = false }) => {
   })
 
   return (
-    <ul className={isHomePage ? "top-article__box" : "top-article__box--noheight top-article__box"}>
+    <ul
+      className={
+        isHomePage
+          ? 'top-article__box'
+          : 'top-article__box--noheight top-article__box'
+      }
+    >
       {datas.map((data, index) => {
         return (
-          <li
-            key={index}
-            title={`${data?.genres[0]?.type}-list`}
-          >
+          <li key={index} title={`${data?.genres[0]?.type}-list`}>
             <Card
               sx={{
                 maxWidth: '16em',
-                padding: '1em 0',
+                p: '1em 0',
                 boxShadow: 'inherit',
                 backgroundImage: 'inherit',
-                backgroundColor: 'inherit',
+                bgcolor: 'inherit',
               }}
             >
               <CardActionArea
@@ -49,19 +51,25 @@ const TopView = ({ datas, isHomePage = false }) => {
                   alt={data?.title_english ?? data?.title}
                 />
                 {showOverlay.status && showOverlay.index === index && (
-                  <Link 
-                    to={`/collection/${data?.type === 'manga' ? 'manga' : 'anime'}/search/main/${data?.mal_id}/${
+                  <Link
+                    to={`/collection/${
+                      data?.type === 'manga' ? 'manga' : 'anime'
+                    }/search/main/${data?.mal_id}/${
                       data?.title_english ?? data?.title
-                    }`}>
-                  <div className="top-article__box__item__media-effect" />
+                    }`}
+                  >
+                    <div className="top-article__box__item__media-effect" />
                   </Link>
                 )}
               </CardActionArea>
-              <CardContent sx={{ padding: 0 }}>
+              <CardContent sx={{ p: 0 }}>
                 <Typography
-                  gutterBottom
                   component="h5"
-                  sx={{ textTransform: 'uppercase' }}
+                  sx={{
+                    textTransform: 'uppercase',
+                    fontWeight: 'bold',
+                    marginTop: '0.2em',
+                  }}
                 >
                   {data?.title_english ?? data?.title}
                 </Typography>
