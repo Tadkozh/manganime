@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
 import '../styles/top-css.css'
+
 
 const TopView = ({ datas, isHomePage = false }) => {
   const [showOverlay, setShowOverlay] = React.useState({
@@ -18,7 +20,7 @@ const TopView = ({ datas, isHomePage = false }) => {
         return (
           <li
             key={index}
-            title={`${data.genres[0].type}-list`}
+            title={`${data?.genres[0]?.type}-list`}
           >
             <Card
               sx={{
@@ -42,11 +44,16 @@ const TopView = ({ datas, isHomePage = false }) => {
                   component="img"
                   height="400"
                   sx={{ objectFit: 'inherit', transition: 'all 0.2s ease' }}
-                  image={data.images.jpg.image_url}
-                  alt={data.title}
+                  image={data?.images?.jpg?.image_url}
+                  alt={data?.title_english ?? data?.title}
                 />
                 {showOverlay.status && showOverlay.index === index && (
+                  <Link 
+                    to={`/collection/${data?.type === 'manga' ? 'manga' : 'anime'}/search/main/${data?.mal_id}/${
+                      data?.title_english ?? data?.title
+                    }`}>
                   <div className="top-article__box__item__media-effect" />
+                  </Link>
                 )}
               </CardActionArea>
               <CardContent sx={{ padding: 0 }}>
@@ -55,7 +62,7 @@ const TopView = ({ datas, isHomePage = false }) => {
                   component="h5"
                   sx={{ textTransform: 'uppercase' }}
                 >
-                  {data.title}
+                  {data?.title_english ?? data?.title}
                 </Typography>
               </CardContent>
             </Card>
