@@ -5,6 +5,7 @@ import '../../styles/common-css.css'
 import { Button, 
   // Typography
  } from '..'
+ import { useRecommendation } from '../../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -42,6 +43,20 @@ const Recommendations = () => {
   useEffect(() => {
     getDataFromApi()
   }, [getDataFromApi])
+
+  // const getDataFromApi = () => {
+  //   axios
+  //     .get(`${APP_API_URL}/${collectionType}/${id}/${endpoint}`)
+  //     .then((response) => {
+  //       console.log(response.data.data)
+  //       setAnimeRecom(response.data.data)
+  //     })
+  //     .catch((error) => error)
+  // }
+
+  // useEffect(() => {
+  //   getDataFromApi()
+  // }, [id])
 
   let directives = ''
   if (animeRecom.length === 0) {
