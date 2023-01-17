@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
-import '../../styles/recommandations.css'
-import { Button, 
+import '../../styles/recommendations.css'
+import {
+  Button,
   // Typography
- } from '..'
- import { useRecommendation } from '../../hooks/queriesHooks'
+} from '..'
+import { useRecommendation } from '../../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
@@ -62,7 +63,8 @@ const Recommendations = () => {
   if (animeRecom.length === 0) {
     directives = `No recommendation about ${title}`
   } else {
-    directives = 'Click on Read More to see the article on MyAnimeList | Click on the image to see the card'
+    directives =
+      'Click on Read More to see the article on MyAnimeList | Click on the image to see the card'
   }
 
   return (
@@ -74,8 +76,8 @@ const Recommendations = () => {
 
       <h2>{`People who like ${title} also enjoy`}</h2>
       <p>{directives}</p>
-      
-      <div className='datagrid'>
+
+      <div className="datagrid">
         {animeRecom
           ? animeRecom.map((data, index) => {
               if (index < 10) {
