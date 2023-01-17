@@ -62,7 +62,7 @@ const Recommendations = () => {
   if (animeRecom.length === 0) {
     directives = `No recommendation about ${title}`
   } else {
-    directives = ''
+    directives = 'Click on Read More to see the article on MyAnimeList | Click on the image to see the card'
   }
 
   return (
