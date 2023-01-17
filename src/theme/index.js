@@ -4,6 +4,9 @@ import { DARK, LIGHT } from '../commons/constants'
 const lightPalette = {
   mode: LIGHT,
   primary: red,
+  background: {
+    content: '#f44336',
+  },
   text: {
     primary: grey[900],
     secondary: grey[800],
@@ -15,6 +18,7 @@ const darkPalette = {
   background: {
     default: '#262626',
     paper: '#262626',
+    content: '#262626',
   },
   text: {
     primary: '#fff',
