@@ -16,7 +16,6 @@ const selectValues = {
     ],
     sort: [
       { value: 'desc', children: 'Descending' },
-      { value: 'asc', children: 'Ascending' },
     ],
     type: [
       { value: 'tv', children: 'Serie' },
@@ -68,7 +67,6 @@ const selectValues = {
     ],
     sort: [
       { value: 'desc', children: 'Descending' },
-      { value: 'asc', children: 'Ascending' },
     ],
     type: [
       { value: 'manga', children: 'Manga' },

@@ -3,16 +3,13 @@ import { useParams } from 'react-router-dom'
 
 // CSS Files
 import '../pageInfo.css'
-import '../pageInfo450px.css'
-import '../pageInfo600px.css'
-import '../pageInfo800px.css'
-import '../pageInfo1024px.css'
+import '../pageInfoQueries.css'
 
 // Components
 import NavBarInfo from '../NavBarInfo'
 import AnimePresentation from './AnimePresentation'
 import Synopsis from '../Synopsis'
-import AnimeDetails from './AnimeDetails'
+import Details from '../details'
 import Story from '../Story'
 import Form from '../Form'
 import Reviews from '../Reviews'
@@ -38,7 +35,7 @@ function AnimeMain() {
         {getInfo?.data ? (
           <>
             <div className="info">
-              <div className="infoRow1">
+              <div className="header">
                 <AnimePresentation getInfo={getInfo} />
                 <Synopsis getInfo={getInfo} />
 
@@ -52,7 +49,7 @@ function AnimeMain() {
                   <p>No trailer was found.</p>
                 )} */}
 
-                <AnimeDetails getInfo={getInfo} />
+                <Details getInfo={getInfo} collectionType="anime" />
               </div>
               <Story getInfo={getInfo} />
               <Form />

@@ -10,6 +10,8 @@ import {
   Button,
 } from '@mui/material'
 
+import { SEARCH, RESET_FILTERS } from '../../../utils/constants'
+
 // Arrays
 import selectValues from './selectValues'
 
@@ -46,8 +48,52 @@ const HideHentai = styled(Switch)(({ theme }) => ({
   },
 }))
 
+function SelectSearch({title, name, getter, setter, defaultValue, selectValues}) {
+  return (
+    <>
+      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel sx={{color: "rgba(0, 0, 0, 0.65)"}} id={name}>{title}</InputLabel>
+        <Select
+          labelId={name}
+          id={name}
+          value={getter}
+          label="Age"
+          onChange={(e) => setter(e.target.value)}
+        >
+          <MenuItem value="">
+            <em>{defaultValue}</em>
+          </MenuItem>
+          {selectValues.map((data, index) => {
+            return (
+              <MenuItem key={index} value={data.value}>
+                {data.children}
+              </MenuItem>
+            )
+          })}
+        </Select>
+      </FormControl>
+    </>
+  )
+}
+
+function InputSearch({title, name, placeholder, getter, setter}) {
+  return (
+    <TextField
+      variant="filled"
+      size="small"
+      label={title}
+      placeholder={placeholder}
+      value={getter}
+      id={name}
+      onChange={(e) => setter(e.target.value)}
+    />
+  )
+}
+
 function SearchBar({
+  collectionType,
   getAnime,
+  getManga,
   inputValue,
   setInputValue,
   setLetter,
@@ -59,52 +105,14 @@ function SearchBar({
   setStatus,
   rating,
   setRating,
+  orderBy,
+  setOrderBy,
+  sort,
+  setSort,
   hentai,
   setHentai,
   setPage,
 }) {
-  function select(title, name, getter, setter, selectValues) {
-    return (
-      <>
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id={name}>{title}</InputLabel>
-          <Select
-            labelId={name}
-            id={name}
-            value={getter}
-            label="Age"
-            onChange={(e) => setter(e.target.value)}
-          >
-            <MenuItem value="">
-              <em>All</em>
-            </MenuItem>
-            {selectValues.map((data, index) => {
-              return (
-                <MenuItem key={index} value={data.value}>
-                  {data.children}
-                </MenuItem>
-              )
-            })}
-          </Select>
-        </FormControl>
-      </>
-    )
-  }
-
-  function inputSearch(title, name, placeholder, getter, setter) {
-    return (
-      <TextField
-        variant="filled"
-        size="small"
-        label={title}
-        placeholder={placeholder}
-        value={getter}
-        id={name}
-        onChange={(e) => setter(e.target.value)}
-      />
-    )
-  }
-
   function resetFilters() {
     setInputValue('')
     setLetter('')
@@ -112,58 +120,41 @@ function SearchBar({
     setType('')
     setStatus('')
     setRating('')
+    setOrderBy('')
+    setSort('')
     setHentai(true)
     setPage(1)
   }
 
   return (
     <div className="settingsBar">
-      <p>{getAnime.pagination.items.total} results</p>
-      {select('Type', 'typeInput', type, setType, selectValues.anime.type)}
-      {select(
-        'score (min)',
-        'scoreMinInput',
-        scoreMin,
-        setScoreMin,
-        selectValues.anime.scoreMin,
-      )}
-      {select(
-        'Status',
-        'statusInput',
-        status,
-        setStatus,
-        selectValues.anime.status,
-      )}
-      {select(
-        'Rating',
-        'ratingInput',
-        rating,
-        setRating,
-        selectValues.anime.rating,
-      )}
+      <p>{collectionType === 'anime' ? getAnime.pagination.items.total : getManga.pagination.items.total} results</p>
+      <SelectSearch title={"Type"} name={"typeInput"} getter={type} setter={setType} defaultValue='All' selectValues={collectionType === 'anime' ? selectValues.anime.type : selectValues.manga.type} />
+      <SelectSearch title="score min" name="scoreMinInput" getter={scoreMin} setter={setScoreMin} defaultValue='0' selectValues={collectionType === 'anime' ? selectValues.anime.scoreMin : selectValues.manga.scoreMin} />
+      <SelectSearch title="Status" name="statusInput" getter={status} setter={setStatus} defaultValue='All' selectValues={collectionType === 'anime' ? selectValues.anime.status : selectValues.manga.status} />
+      {collectionType === 'anime' ? <SelectSearch title="Rating" name="ratingInput" getter={rating} setter={setRating} defaultValue='All' selectValues={selectValues.anime.rating} /> : null}
+      <SelectSearch title="Order by" name="orderByInput" getter={orderBy} setter={setOrderBy} defaultValue='ID' selectValues={collectionType === 'anime' ? selectValues.anime.order_by : selectValues.manga.order_by} />
+      <SelectSearch title="Sort" name="sortInput" getter={sort} setter={setSort} defaultValue='Ascending' selectValues={collectionType === 'anime' ? selectValues.anime.sort : selectValues.manga.sort} />
+     
       <FormControlLabel
         control={<HideHentai checked={hentai} />}
         label="Hide Hentai"
         onChange={() => setHentai(!hentai)}
       />
-      <div className="inputSearch">
-        {inputSearch(
-          'Search',
-          'searchInput',
-          'Write here...',
-          inputValue,
-          setInputValue,
-        )}
+
+<div className="inputSearch">
+<InputSearch title="Search" name="searchInput" placeholder="Write here..." getter={inputValue} setter={setInputValue} />
         <Button
           variant="contained"
+          sx={{gap: "5px", fontWeight:"bold"}}
           size="small"
           onClick={() => setLetter(inputValue)}
         >
-          Search
+          {SEARCH}
         </Button>
 
-        <Button variant="contained" size="small" onClick={resetFilters}>
-          Reset filters
+        <Button variant="contained" sx={{gap: "5px", backgroundColor: "red", fontWeight:"bold"}} size="small" onClick={resetFilters}>
+          {RESET_FILTERS}
         </Button>
       </div>
     </div>

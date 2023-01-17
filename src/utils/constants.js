@@ -1,4 +1,4 @@
-import { HomeRounded, Search, Whatshot } from '@mui/icons-material'
+import { HomeRounded, Search, Refresh, Whatshot } from '@mui/icons-material'
 
 export const EMAIL_REQUIRED = "L'email est obligatoire"
 export const EMAIL_NOT_VALID = "L'email n'est pas valide"
@@ -21,26 +21,34 @@ export const TOP_MANGA = 'Top Mangas'
 export const SEARCH_MANGA = 'Search Mangas'
 export const HOME_CHILDREN = (
   <>
-    <HomeRounded /> Home
+    <HomeRounded /> {HOME}
   </>
 )
 export const TOP_ANIME_CHILDREN = (
   <>
-    <Whatshot sx={{ color: 'yellow' }} /> Top Animes
+    <Whatshot sx={{ color: 'yellow' }} /> {TOP_ANIME}
   </>
 )
 export const SEARCH_ANIME_CHILDREN = (
   <>
-    <Search /> Search Animes
+    <Search /> {SEARCH_ANIME}
   </>
 )
 export const TOP_MANGA_CHILDREN = (
   <>
-    <Whatshot sx={{ color: 'yellow' }} /> Top Mangas
+    <Whatshot sx={{ color: 'yellow' }} /> {TOP_MANGA}
   </>
 )
 export const SEARCH_MANGA_CHILDREN = (
   <>
-    <Search /> Search Mangas
+    <Search /> {SEARCH_MANGA}
   </>
 )
+export const SEARCH = 
+<>
+  <Search /> Search
+</>
+export const RESET_FILTERS =
+<>
+  <Refresh /> Reset filters
+</>

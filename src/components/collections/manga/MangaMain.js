@@ -3,16 +3,13 @@ import { useParams } from 'react-router-dom'
 
 // CSS Files
 import '../pageInfo.css'
-import '../pageInfo450px.css'
-import '../pageInfo600px.css'
-import '../pageInfo800px.css'
-import '../pageInfo1024px.css'
+import '../pageInfoQueries.css'
 
 // Components
 import NavBarInfo from '../NavBarInfo'
 import MangaPresentation from './MangaPresentation'
 import Synopsis from '../Synopsis'
-import MangaDetails from './MangaDetails'
+import Details from '../details'
 import Story from '../Story'
 import Form from '../Form'
 import Reviews from '../Reviews'
@@ -38,10 +35,10 @@ function MangaMain() {
         {getInfo?.data ? (
           <>
             <div className="info">
-              <div className="infoRow1">
+              <div className="header">
                 <MangaPresentation getInfo={getInfo} />
                 <Synopsis getInfo={getInfo} />
-                <MangaDetails getInfo={getInfo} />
+                <Details getInfo={getInfo} collectionType="manga" />
               </div>
               <Story getInfo={getInfo} />
               <Form />
