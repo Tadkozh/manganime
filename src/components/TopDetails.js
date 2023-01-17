@@ -1,5 +1,6 @@
 import React from 'react'
 import useGetTopDatas from '../hooks/getTopDatas'
+import {useTopOtaku} from '../hooks/queriesHooks'
 import TopView from './TopView'
 import MobileStepper from '@mui/material/MobileStepper'
 import Button from '@mui/material/Button'
@@ -18,15 +19,13 @@ const rankReducer = (state, action) => {
   }
 }
 
-const TopDetails = ({ name }) => {
+const TopDetails = ({ name, isHomePage = false }) => {
   const { topDatas } = useGetTopDatas(name)
-  console.log(topDatas)
+  // const topDatas  = useTopOtaku('anime')
+  // console.log(useTopOtaku(name));
+  const [activeStep, setActiveStep] = React.useState(0)
+  const maxSteps = topDatas.length
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
-  // const newArray = topDatas.filter((data) => data.rank <= 4)
-  // console.log(newArray)
-
-  // const [maxRank, setmaxRank] = React.useState(4)
-  // const [minRank, setminRank] = React.useState(0)
   const [rank, dispatch] = React.useReducer(rankReducer, {
     minRank: 0,
     maxRank: 4,
@@ -35,14 +34,10 @@ const TopDetails = ({ name }) => {
   React.useEffect(() => {
     setFilteredTopDatas(
       topDatas.filter(
-        (data) => data.rank >= rank.minRank && data.rank <= rank.maxRank,
+        (data) => data.rank > rank.minRank && data.rank <= rank.maxRank,
       ),
     )
   }, [rank.maxRank, rank.minRank, topDatas])
-  console.log(filteredTopDatas)
-
-  const [activeStep, setActiveStep] = React.useState(0)
-  const maxSteps = topDatas.length
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -56,11 +51,12 @@ const TopDetails = ({ name }) => {
 
   return (
     <>
-      <article className=" top-article">
+      <article className={isHomePage ? "top-article" : null}>
+    { isHomePage ? 
         <MobileStepper
           sx={{
             position: 'absolute',
-            top: '40%',
+            top: '15em',
             width: '100%',
             backgroundColor: 'inherit',
             '.MuiMobileStepper-dots': {
@@ -72,14 +68,13 @@ const TopDetails = ({ name }) => {
           position="static"
           nextButton={
             <Button
-              // hover
               sx={{
                 zIndex: 1,
-                color: '#fff',
+                color: 'rgb(68,68,68)',
                 '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
               }}
               size="small"
-              onClick={handleNext}
+              onClick={filteredTopDatas.length === 4 ? handleNext : null}
               disabled={activeStep === maxSteps - 1}
             >
               <KeyboardArrowRight />
@@ -87,10 +82,9 @@ const TopDetails = ({ name }) => {
           }
           backButton={
             <Button
-              className="top-article--arrow"
               sx={{
                 zIndex: 1,
-                color: '#fff',
+                color: 'rgb(68,68,68)',
                 '&:hover': { backgroundColor: 'rgba(68,68,68,0.5)' },
               }}
               size="small"
@@ -100,10 +94,9 @@ const TopDetails = ({ name }) => {
               <KeyboardArrowLeft />
             </Button>
           }
-        />
+        />:null}
         <h2>Top {name}</h2>
-        {/* <TopView datas={topDatas} /> */}
-        <TopView datas={filteredTopDatas} />
+        <TopView isHomePage={isHomePage ? true : false} datas={isHomePage ? filteredTopDatas : topDatas} />
       </article>
     </>
   )

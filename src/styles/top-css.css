@@ -1,24 +1,28 @@
 /***** Top View *****/
 
 .top-article {
+  max-width: 1600px;
   margin: 2em 0;
   position: relative;
 }
 
-.top-article--box {
+.top-article__box {
+  height: 502px;
   margin-top: 1em;
-}
-
-.top-article--box-item {
-  list-style: none;
-  display: flex;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 350px);
+  justify-items: center;
   justify-content: center;
+  gap: 30px;
 }
 
-.top-article--box-item-media {
+.top-article__box--noheight {
+  height: inherit
+}
+
+.top-article__box__item__media-effect {
   position: absolute;
-  /* background: black;
-  opacity: 0.5; */
   background-color: rgba(68, 68, 68, 0.4);
   width: 100%;
   height: 100%;
@@ -28,8 +32,4 @@
   z-index: 1;
 }
 
-/***** Top Details *****/
 
-.MuiMobileStepper-dots {
-  display: none;
-}
