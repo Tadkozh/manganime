@@ -4,8 +4,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {
   ROUTE_404,
   ROUTE_HOME,
+  ROUTE_INFOS,
   ROUTE_LOGIN_REGISTER,
+  ROUTE_NEWS,
   ROUTE_PROFILE,
+  ROUTE_RECOMMENDATIONS,
+  ROUTE_SEARCH_ANIME,
+  ROUTE_SEARCH_MANGA,
+  ROUTE_TOP_ANIME,
+  ROUTE_TOP_MANGA,
 } from './commons/constants'
 import { Error404 } from './components/Error404'
 import { ErrorFallback } from './components/ErrorFallBack'
@@ -35,8 +42,8 @@ const AppConsumer = () => {
         <Route path={ROUTE_HOME} element={<MangAnime />} />
         <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
 
-        <Route path="/collection" element={<Collection />}>
-          <Route path="/collection/anime/search" element={<AnimeSearch />} />
+        {/* <Route path="/collection" element={<Collection />}> */}
+        {/* <Route path="/collection/anime/search" element={<AnimeSearch />} />
           <Route path="/collection/manga/search" element={<MangaSearch />} />
           <Route path="/collection/anime/top" element={<AnimeTop />} />
           <Route path="/collection/manga/top" element={<MangaTop />} />
@@ -52,8 +59,17 @@ const AppConsumer = () => {
           <Route
             path="/collection/:collectionType/search/recommendations/:id/:title"
             element={<Recommendations />}
-          />
-        </Route>
+          /> */}
+        {/* </Route> */}
+
+        <Route path={ROUTE_SEARCH_ANIME} element={<AnimeSearch />} />
+        <Route path={ROUTE_SEARCH_MANGA} element={<MangaSearch />} />
+        <Route path={ROUTE_TOP_ANIME} element={<AnimeTop />} />
+        <Route path={ROUTE_TOP_MANGA} element={<MangaTop />} />
+
+        <Route path={ROUTE_INFOS} element={<Main />} />
+        <Route path={ROUTE_NEWS} element={<News />} />
+        <Route path={ROUTE_RECOMMENDATIONS} element={<Recommendations />} />
 
         <Route path={ROUTE_404} element={<Error404 />} />
         <Route path="/" element={<PrivateRoute />}>
