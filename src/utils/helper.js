@@ -88,4 +88,9 @@ const getRandomNumber = () => {
   return Math.round(Math.random() * (max - min) + min)
 }
 
-export { validateForm, errorAuth, getImageName, getRandomNumber }
+const getUrl = (type, route, option = []) => {
+  const optionUrl = option?.map((item) => `/${item}`).join('')
+  return `/${type}/${route}${optionUrl}`
+}
+
+export { validateForm, errorAuth, getImageName, getRandomNumber, getUrl }
