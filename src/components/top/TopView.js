@@ -70,14 +70,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                   alt={data?.title_english ?? data?.title}
                 />
                 {showOverlay.status && showOverlay.index === index && (
-                  <Link
-                    // to={`/collection/${
-                    //   data?.type === 'manga' ? 'manga' : 'anime'
-                    // }/search/main/${data?.mal_id}/${
-                    //   data?.title_english ?? data?.title
-                    // }`}
-                    to={getUrl(type, INFOS, [data?.mal_id])}
-                  >
+                  <Link to={getUrl(type, INFOS, [data?.mal_id])}>
                     <Box
                       component="div"
                       sx={{
