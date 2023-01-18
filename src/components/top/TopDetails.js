@@ -130,6 +130,7 @@ const TopDetails = ({ name, isHomePage = false }) => {
         <TopView
           isHomePage={isHomePage ? true : false}
           datas={isHomePage ? filteredTopDatas : topDatas}
+          type={name}
         />
         {/* </article> */}
       </Container>
