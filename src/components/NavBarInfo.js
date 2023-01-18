@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
-import { INFOS, NEWS, RECOMMENDATIONS } from '../../commons/constants'
-import { getUrl } from '../../utils/helper'
+import { INFOS, NEWS, RECOMMENDATIONS } from '../commons/constants'
+import { getUrl } from '../utils/helper'
 
 function NavBarInfo() {
   let { type, id } = useParams()

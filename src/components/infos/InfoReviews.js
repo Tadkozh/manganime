@@ -1,9 +1,8 @@
-import { Rating } from '@mui/material'
+import { Rating } from '../ui'
 import { useParams } from 'react-router-dom'
 import { useReviews } from '../../hooks/queriesHooks'
 
-
-function Reviews() {
+function InfoReviews() {
   let { type, id } = useParams()
   const reviews = useReviews(type, id)
 
@@ -41,4 +40,4 @@ function Reviews() {
   )
 }
 
-export default Reviews
+export default InfoReviews

@@ -1,4 +1,4 @@
-function Story({ background }) {
+function InfoStory({ background }) {
   return (
     <>
       {background ? (
@@ -11,4 +11,4 @@ function Story({ background }) {
   )
 }
 
-export default Story
+export default InfoStory

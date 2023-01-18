@@ -1,16 +1,16 @@
 import { useParams, Link } from 'react-router-dom'
-import '../../styles/recommendations.css'
+import '../styles/recommendations.css'
 import {
   Button,
   // Typography
-} from '..'
-import { useInfos } from '../../hooks/queriesHooks'
-import { useRecommendation } from '../../hooks/queriesHooks'
+} from './ui'
+import { useInfos } from '../hooks/queriesHooks'
+import { useRecommendation } from '../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
-import { getUrl } from '../../utils/helper'
-import { INFOS } from '../../commons/constants'
+import { getUrl } from '../utils/helper'
+import { INFOS } from '../commons/constants'
 
 const Recommendations = () => {
   let { type, id } = useParams()

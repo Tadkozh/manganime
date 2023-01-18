@@ -1,11 +1,9 @@
 import { useState } from 'react'
-
-import { Button, Rating, Typography } from '@mui/material'
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import { useParams } from 'react-router-dom'
 import { ANIME } from '../../commons/constants'
+import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
-function Presentation({ info }) {
+function InfoPresentation({ info }) {
   let { type } = useParams()
 
   const [rank, setRank] = useState(false)
@@ -118,4 +116,4 @@ const PersonalRate = ({ rank, changeRank }) => {
   )
 }
 
-export default Presentation
+export default InfoPresentation

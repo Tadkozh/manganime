@@ -1,19 +1,17 @@
-import { Card, Divider, Grid } from '@mui/material'
-import { Box, Container } from '@mui/system'
-import profilePicture from '../assets/images/avatar_1.jpg'
-import { useAuth } from '../context/AuthContext'
-import { Button, Typography } from './index'
+import profilePicture from '../../assets/images/avatar_1.jpg'
+import { useAuth } from '../../context/AuthContext'
+import { Box, Button, Card, Container, Divider, Grid, Typography } from '../ui'
 
-const UserProfile = () => {
+const ProfileUser = () => {
   const { data } = useAuth()
   return (
     <Grid container spacing={1} sx={{ my: 2, py: 2, justifyContent: 'center' }}>
       <SideBarUserInfo />
-      <MainUserInfo user={data.user}/>
+      <MainUserInfo user={data.user} />
     </Grid>
   )
 }
-const MainUserInfo = ({user}) => {
+const MainUserInfo = ({ user }) => {
   return (
     <Grid item xs md sx={{ m: 1 }}>
       <Container>
@@ -98,4 +96,4 @@ const Stat = ({ name, number }) => {
   )
 }
 
-export { UserProfile }
+export { ProfileUser }

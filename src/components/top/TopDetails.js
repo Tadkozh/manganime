@@ -1,18 +1,17 @@
 import React from 'react'
 import TopView from './TopView'
-
-import useGetTopDatas from '../hooks/getTopDatas'
-import { useTopOtaku } from '../hooks/queriesHooks'
-
-import { Container } from '@mui/material'
-import MobileStepper from '@mui/material/MobileStepper'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import useGetTopDatas from '../../hooks/getTopDatas'
+import { useTopOtaku } from '../../hooks/queriesHooks'
 import { useTheme } from '@mui/material'
-
-import '../styles/top-css.css'
+import {
+  Button,
+  Container,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  MobileStepper,
+  Typography,
+} from '../ui'
+import '../../styles/top-css.css'
 
 const rankReducer = (state, action) => {
   switch (action.type) {

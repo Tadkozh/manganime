@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Pagination, Rating } from '@mui/material'
-import { getUrl } from '../../../utils/helper'
+import { Pagination, Rating } from '../ui'
+import { getUrl } from '../../utils/helper'
 
-import { APP_API_URL, INFOS } from '../../../commons/constants'
+import { APP_API_URL, INFOS } from '../../commons/constants'
 
 // CSS Files
 import './search.css'
@@ -11,7 +11,7 @@ import './search.css'
 // Components
 import SearchBar from './SearchBar'
 
-function AnimeSearch() {
+function SearchAnime() {
   const type = 'anime'
 
   const [query, setQuery] = useState({
@@ -108,4 +108,4 @@ function AnimeSearch() {
   )
 }
 
-export default AnimeSearch
+export default SearchAnime

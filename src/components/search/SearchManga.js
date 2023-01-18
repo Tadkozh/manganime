@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '@mui/material'
 
-import { APP_API_URL, INFOS } from '../../../commons/constants'
+import { APP_API_URL, INFOS } from '../../commons/constants'
 
 // CSS Files
 import './search.css'
 
 // Components
 import SearchBar from './SearchBar'
-import { getUrl } from '../../../utils/helper'
+import { getUrl } from '../../utils/helper'
 
-function MangaSearch() {
+function SearchManga() {
   const type = 'manga'
 
   const [query, setQuery] = useState({
@@ -105,4 +105,4 @@ function MangaSearch() {
   )
 }
 
-export default MangaSearch
+export default SearchManga
