@@ -1,27 +1,17 @@
 import { Rating } from '@mui/material'
-import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { useReviews } from '../../hooks/queriesHooks'
 
-import { APP_API_URL } from '../../commons/constants'
 
 function Reviews() {
-  let { collectionType, id } = useParams()
-
-  const link = `${APP_API_URL}/${collectionType}/${id}/reviews`
-
-  const [getReviews, setGetReviews] = useState(null)
-
-  useEffect(() => {
-    fetch(link)
-      .then((res) => res.json())
-      .then((data) => setGetReviews(data))
-  }, [link])
+  let { type, id } = useParams()
+  const reviews = useReviews(type, id)
 
   return (
     <>
-      {getReviews?.data ? (
+      {reviews ? (
         <div className="reviews">
-          {getReviews.data.map((data, index) => {
+          {reviews.map((data, index) => {
             return (
               <div className="review" key={index}>
                 <div className="header">
