@@ -1,6 +1,5 @@
 import React from 'react'
 import TopView from './TopView'
-import useGetTopDatas from '../../hooks/getTopDatas'
 import { useTopOtaku } from '../../hooks/queriesHooks'
 import { useTheme } from '@mui/material'
 import {
@@ -24,13 +23,10 @@ const rankReducer = (state, action) => {
 }
 
 const TopDetails = ({ type, isHomePage = false }) => {
-  const { topDatas } = useGetTopDatas(type)
-  // const topDatas = useTopOtaku(type)
-  // console.log(topDatas)
-  // console.log(useTopOtaku('anime'))
+  const topDatas = useTopOtaku(type)
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
   const [activeStep, setActiveStep] = React.useState(0)
-  const maxSteps = topDatas.length
+  const maxSteps = topDatas?.length
   const [rank, dispatch] = React.useReducer(rankReducer, {
     minRank: 0,
     maxRank: 4,
@@ -84,7 +80,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
               },
             }}
             variant="dots"
-            steps={maxSteps}
+            steps={maxSteps ?? 0}
             position="static"
             nextButton={
               <Button
@@ -126,11 +122,13 @@ const TopDetails = ({ type, isHomePage = false }) => {
         >
           Top {type}
         </Typography>
-        <TopView
-          isHomePage={isHomePage ? true : false}
-          datas={isHomePage ? filteredTopDatas : topDatas}
-          type={type}
-        />
+        {topDatas ? (
+          <TopView
+            isHomePage={isHomePage ? true : false}
+            datas={isHomePage ? filteredTopDatas : topDatas}
+            type={type}
+          />
+        ) : null}
       </Container>
     </>
   )

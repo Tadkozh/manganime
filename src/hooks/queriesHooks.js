@@ -33,10 +33,12 @@ const useSearch = (type, search, page = 1, options = {}) => {
   })
   return data
 }
-const useTopOtaku = (type, limit) => {
+
+const useTopOtaku = (type, limit = '') => {
+  const newLimit = limit === '' ? '' : `?limit=${limit}`
   const { data } = useQuery({
-    queryKey: `${type}?limit=${limit}}`,
-    queryFn: () => clientApi(`${type}?limit=${limit}}`),
+    queryKey: `top/${type}${newLimit}}`,
+    queryFn: () => clientApi(`top/${type}${newLimit}`),
   })
   return data?.data
 }
