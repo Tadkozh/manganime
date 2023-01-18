@@ -52,7 +52,7 @@ function SelectSearch({
   title,
   name,
   getter,
-  setter,
+  handleChange,
   defaultValue,
   selectValues,
 }) {
@@ -62,13 +62,7 @@ function SelectSearch({
         <InputLabel sx={{ color: 'rgba(0, 0, 0, 0.65)' }} id={name}>
           {title}
         </InputLabel>
-        <Select
-          labelId={name}
-          id={name}
-          value={getter}
-          label="Age"
-          onChange={(e) => setter(e.target.value)}
-        >
+        <Select labelId={name} id={name} value={getter} onChange={handleChange}>
           <MenuItem value="">
             <em>{defaultValue}</em>
           </MenuItem>
@@ -85,7 +79,7 @@ function SelectSearch({
   )
 }
 
-function InputSearch({ title, name, placeholder, getter, setter }) {
+function InputSearch({ title, name, placeholder, getter, handleChange }) {
   return (
     <TextField
       variant="filled"
@@ -94,60 +88,36 @@ function InputSearch({ title, name, placeholder, getter, setter }) {
       placeholder={placeholder}
       value={getter}
       id={name}
-      onChange={(e) => setter(e.target.value)}
+      onChange={handleChange}
     />
   )
 }
 
-function SearchBar({
-  collectionType,
-  getAnime,
-  getManga,
-  inputValue,
-  setInputValue,
-  setLetter,
-  scoreMin,
-  setScoreMin,
-  type,
-  setType,
-  status,
-  setStatus,
-  rating,
-  setRating,
-  orderBy,
-  setOrderBy,
-  sort,
-  setSort,
-  hentai,
-  setHentai,
-  setPage,
-}) {
+function SearchBar({ collectionType, query, setQuery }) {
   function resetFilters() {
-    setInputValue('')
-    setLetter('')
-    setScoreMin('')
-    setType('')
-    setStatus('')
-    setRating('')
-    setOrderBy('')
-    setSort('')
-    setHentai(true)
-    setPage(1)
+    setQuery({
+      ...query,
+      inputValue: '',
+      letter: '',
+      scoreMin: '',
+      type: '',
+      status: '',
+      rating: '',
+      orderBy: '',
+      sort: '',
+      hideHentai: true,
+      page: 1,
+    })
   }
 
   return (
     <div className="settingsBar">
-      <p>
-        {collectionType === 'anime'
-          ? getAnime.pagination.items.total
-          : getManga.pagination.items.total}{' '}
-        results
-      </p>
+      <p>{query?.getData.pagination.items.total} results</p>
       <SelectSearch
         title={'Type'}
         name={'typeInput'}
-        getter={type}
-        setter={setType}
+        getter={query.type}
+        handleChange={(e) => setQuery({ ...query, type: e.target.value })}
         defaultValue="All"
         selectValues={
           collectionType === 'anime'
@@ -158,8 +128,8 @@ function SearchBar({
       <SelectSearch
         title="score min"
         name="scoreMinInput"
-        getter={scoreMin}
-        setter={setScoreMin}
+        getter={query.scoreMin}
+        handleChange={(e) => setQuery({ ...query, scoreMin: e.target.value })}
         defaultValue="0"
         selectValues={
           collectionType === 'anime'
@@ -170,8 +140,8 @@ function SearchBar({
       <SelectSearch
         title="Status"
         name="statusInput"
-        getter={status}
-        setter={setStatus}
+        getter={query.status}
+        handleChange={(e) => setQuery({ ...query, status: e.target.value })}
         defaultValue="All"
         selectValues={
           collectionType === 'anime'
@@ -183,8 +153,8 @@ function SearchBar({
         <SelectSearch
           title="Rating"
           name="ratingInput"
-          getter={rating}
-          setter={setRating}
+          getter={query.rating}
+          handleChange={(e) => setQuery({ ...query, rating: e.target.value })}
           defaultValue="All"
           selectValues={selectValues.anime.rating}
         />
@@ -192,8 +162,8 @@ function SearchBar({
       <SelectSearch
         title="Order by"
         name="orderByInput"
-        getter={orderBy}
-        setter={setOrderBy}
+        getter={query.orderBy}
+        handleChange={(e) => setQuery({ ...query, orderBy: e.target.value })}
         defaultValue="ID"
         selectValues={
           collectionType === 'anime'
@@ -204,8 +174,8 @@ function SearchBar({
       <SelectSearch
         title="Sort"
         name="sortInput"
-        getter={sort}
-        setter={setSort}
+        getter={query.sort}
+        handleChange={(e) => setQuery({ ...query, sort: e.target.value })}
         defaultValue="Ascending"
         selectValues={
           collectionType === 'anime'
@@ -215,9 +185,14 @@ function SearchBar({
       />
 
       <FormControlLabel
-        control={<HideHentai checked={hentai} />}
+        control={<HideHentai checked={query.hideHentai} />}
         label="Hide Hentai"
-        onChange={() => setHentai(!hentai)}
+        onChange={() =>
+          setQuery({
+            ...query,
+            hideHentai: !query.hideHentai,
+          })
+        }
       />
 
       <div className="inputSearch">
@@ -225,14 +200,17 @@ function SearchBar({
           title={SEARCH}
           name="searchInput"
           placeholder="Write here..."
-          getter={inputValue}
-          setter={setInputValue}
+          getter={query.inputValue}
+          handleChange={(e) =>
+            setQuery({ ...query, inputValue: e.target.value })
+          }
         />
+
         <Button
           variant="contained"
           sx={{ gap: '5px', fontWeight: 'bold' }}
           size="small"
-          onClick={() => setLetter(inputValue)}
+          onClick={() => setQuery({ ...query, letter: query.inputValue })}
         >
           <Search /> {SEARCH}
         </Button>

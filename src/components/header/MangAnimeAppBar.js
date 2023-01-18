@@ -283,6 +283,7 @@ const AppBarMenu = ({ navigate }) => {
               // fontWeight: "500",
               textTransform: 'uppercase',
               padding: '6px 8px',
+              borderRadius: '5px',
               boxShadow: '0 0 5px -3px',
               margin: '0 5px',
               transition: '0.25s',

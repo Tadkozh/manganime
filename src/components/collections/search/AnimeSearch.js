@@ -13,72 +13,59 @@ import SearchBar from './SearchBar'
 function AnimeSearch() {
   const collectionType = 'anime'
 
-  const [getAnime, setGetAnime] = useState()
-  const [inputValue, setInputValue] = useState('')
-  const [letter, setLetter] = useState('')
-  const [scoreMin, setScoreMin] = useState('')
-  const [type, setType] = useState('')
-  const [status, setStatus] = useState('')
-  const [rating, setRating] = useState('')
-  const [orderBy, setOrderBy] = useState('')
-  const [sort, setSort] = useState('')
-  const [hentai, setHentai] = useState(true)
-  const [page, setPage] = useState(1)
+  const [query, setQuery] = useState({
+    getData: null,
+    inputValue: '',
+    letter: '',
+    scoreMin: '',
+    type: '',
+    status: '',
+    rating: '',
+    orderBy: '',
+    sort: '',
+    hideHentai: true,
+    page: 1,
+  })
 
-  const letterUrl = letter !== '' ? `?letter=${letter}` : '?'
-  const scoreMinUrl = scoreMin !== '' ? `&min_score=${scoreMin}` : ''
-  const typeUrl = type !== '' ? `&type=${type}` : ''
-  const statusUrl = status !== '' ? `&status=${status}` : ''
-  const ratingUrl = rating !== '' ? `&rating=${rating}` : ''
-  const orderByUrl = orderBy !== '' ? `&order_by=${orderBy}` : ''
-  const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
-  const hentaiUrl = hentai ? `&sfw` : ''
+  const letterUrl = query?.letter !== '' ? `?letter=${query?.letter}` : '?'
+  const scoreMinUrl =
+    query?.scoreMin !== '' ? `&min_score=${query?.scoreMin}` : ''
+  const typeUrl = query?.type !== '' ? `&type=${query?.type}` : ''
+  const statusUrl = query?.status !== '' ? `&status=${query?.status}` : ''
+  const ratingUrl = query?.rating !== '' ? `&rating=${query?.rating}` : ''
+  const orderByUrl = query?.orderBy !== '' ? `&order_by=${query?.orderBy}` : ''
+  const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=asc`
+  const hentaiUrl = query?.hideHentai ? `&sfw` : ''
 
-  const link = `${APP_API_URL}/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hentaiUrl}&page=${page}`
+  const link = `${APP_API_URL}/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hentaiUrl}&page=${query?.page}`
 
   useEffect(() => {
     fetch(link)
       .then((res) => res.json())
-      .then((data) => setGetAnime(data))
+      .then((data) => setQuery({ ...query, getData: data }))
   }, [link])
 
   return (
     <>
-      {getAnime?.data ? (
+      {query?.getData?.data ? (
         <>
           <div className="search">
             <Pagination
-              onChange={(e, p) => setPage(p)}
+              onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={getAnime?.pagination?.last_visible_page}
+              count={query?.getData?.pagination?.last_visible_page}
             />
 
             <SearchBar
               collectionType={collectionType}
-              getAnime={getAnime}
-              inputValue={inputValue}
-              setLetter={setLetter}
-              setInputValue={setInputValue}
-              scoreMin={scoreMin}
-              setScoreMin={setScoreMin}
-              type={type}
-              setType={setType}
-              status={status}
-              setStatus={setStatus}
-              rating={rating}
-              setRating={setRating}
-              orderBy={orderBy}
-              setOrderBy={setOrderBy}
-              sort={sort}
-              setSort={setSort}
-              hentai={hentai}
-              setHentai={setHentai}
-              setPage={setPage}
+              getData={query?.getData}
+              query={query}
+              setQuery={setQuery}
             />
           </div>
 
           <div className="searchData">
-            {getAnime.data.map((data, index) => {
+            {query?.getData.data.map((data, index) => {
               return (
                 <div className="item" key={index}>
                   <Link
@@ -107,9 +94,9 @@ function AnimeSearch() {
 
           <div className="paginationBottom">
             <Pagination
-              onChange={(e, p) => setPage(p)}
+              onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={getAnime.pagination.last_visible_page}
+              count={query?.getData.pagination.last_visible_page}
             />
           </div>
         </>

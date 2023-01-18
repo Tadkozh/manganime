@@ -18,4 +18,5 @@ const clientApi = async (endpoint) => {
       }
     })
 }
+
 export { clientApi }

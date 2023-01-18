@@ -13,68 +13,57 @@ import SearchBar from './SearchBar'
 function MangaSearch() {
   const collectionType = 'manga'
 
-  const [getManga, setGetManga] = useState()
-  const [inputValue, setInputValue] = useState('')
-  const [letter, setLetter] = useState('')
-  const [scoreMin, setScoreMin] = useState('')
-  const [type, setType] = useState('')
-  const [status, setStatus] = useState('')
-  const [orderBy, setOrderBy] = useState('')
-  const [sort, setSort] = useState('')
-  const [hentai, setHentai] = useState(true)
-  const [page, setPage] = useState(1)
+  const [query, setQuery] = useState({
+    getData: null,
+    inputValue: '',
+    letter: '',
+    scoreMin: '',
+    type: '',
+    status: '',
+    orderBy: '',
+    sort: '',
+    hideHentai: true,
+    page: 1,
+  })
 
-  const letterUrl = letter !== '' ? `?letter=${letter}` : '?'
-  const scoreMinUrl = scoreMin !== '' ? `&min_score=${scoreMin}` : ''
-  const typeUrl = type !== '' ? `&type=${type}` : ''
-  const statusUrl = status !== '' ? `&status=${status}` : ''
-  const orderByUrl = orderBy !== '' ? `&order_by=${orderBy}` : ''
-  const sortUrl = sort !== '' ? `&sort=${sort}` : `&sort=asc`
-  const hentaisUrl = hentai ? `&sfw` : ''
+  const letterUrl = query?.letter !== '' ? `?letter=${query?.letter}` : '?'
+  const scoreMinUrl =
+    query?.scoreMin !== '' ? `&min_score=${query?.scoreMin}` : ''
+  const typeUrl = query?.type !== '' ? `&type=${query?.type}` : ''
+  const statusUrl = query?.status !== '' ? `&status=${query?.status}` : ''
+  const orderByUrl = query?.orderBy !== '' ? `&order_by=${query?.orderBy}` : ''
+  const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=asc`
+  const hentaisUrl = query?.hideHentai ? `&sfw` : ''
 
-  const link = `${APP_API_URL}/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${page}`
+  const link = `${APP_API_URL}/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${query?.page}`
 
   useEffect(() => {
     fetch(link)
       .then((res) => res.json())
-      .then((data) => setGetManga(data))
+      .then((data) => setQuery({ ...query, getData: data }))
   }, [link])
 
   return (
     <>
-      {getManga?.data ? (
+      {query?.getData?.data ? (
         <>
           <div className="search">
             <Pagination
-              onChange={(e, p) => setPage(p)}
+              onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={getManga?.pagination?.last_visible_page}
+              count={query?.getData?.pagination?.last_visible_page}
             />
 
             <SearchBar
               collectionType={collectionType}
-              getManga={getManga}
-              inputValue={inputValue}
-              setLetter={setLetter}
-              setInputValue={setInputValue}
-              scoreMin={scoreMin}
-              setScoreMin={setScoreMin}
-              type={type}
-              setType={setType}
-              status={status}
-              setStatus={setStatus}
-              orderBy={orderBy}
-              setOrderBy={setOrderBy}
-              sort={sort}
-              setSort={setSort}
-              hentai={hentai}
-              setHentai={setHentai}
-              setPage={setPage}
+              getData={query?.getData}
+              query={query}
+              setQuery={setQuery}
             />
           </div>
 
           <div className="searchData">
-            {getManga.data.map((data, index) => {
+            {query?.getData.data.map((data, index) => {
               return (
                 <div className="item" key={index}>
                   <Link
@@ -103,9 +92,9 @@ function MangaSearch() {
 
           <div className="paginationBottom">
             <Pagination
-              onChange={(e, p) => setPage(p)}
+              onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={getManga.pagination.last_visible_page}
+              count={query?.getData.pagination.last_visible_page}
             />
           </div>
         </>

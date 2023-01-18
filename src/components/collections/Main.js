@@ -30,7 +30,7 @@ function Main() {
 
   return (
     <>
-      <NavBarInfo collectionType={collectionType} />
+      <NavBarInfo />
       <div className="infoWrapper">
         {getInfo?.data ? (
           <>
