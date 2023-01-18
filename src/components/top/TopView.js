@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { INFOS } from '../../commons/constants'
 import '../../styles/top-css.css'
+import { getUrl } from '../../utils/helper'
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '../ui'
 
-const TopView = ({ datas, isHomePage = false }) => {
+const TopView = ({ datas, isHomePage = false, type }) => {
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,
     index: null,
@@ -48,11 +50,12 @@ const TopView = ({ datas, isHomePage = false }) => {
                 />
                 {showOverlay.status && showOverlay.index === index && (
                   <Link
-                    to={`/collection/${
-                      data?.type === 'manga' ? 'manga' : 'anime'
-                    }/search/main/${data?.mal_id}/${
-                      data?.title_english ?? data?.title
-                    }`}
+                    // to={`/collection/${
+                    //   data?.type === 'manga' ? 'manga' : 'anime'
+                    // }/search/main/${data?.mal_id}/${
+                    //   data?.title_english ?? data?.title
+                    // }`}
+                    to={getUrl(type, INFOS, [data?.mal_id])}
                   >
                     <div className="top-article__box__item__media-effect" />
                   </Link>
