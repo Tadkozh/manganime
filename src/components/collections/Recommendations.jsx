@@ -9,15 +9,17 @@ import { useRecommendation } from '../../hooks/queriesHooks'
 
 // Components
 import NavBarInfo from './NavBarInfo'
+import { getUrl } from '../../utils/helper'
+import { INFOS } from '../../commons/constants'
 
 const Recommendations = () => {
-  let { collectionType, id } = useParams()
+  let { type, id } = useParams()
 
-  const { data: animeRecom, status } = useRecommendation(collectionType, id)
+  const { data: animeRecom, status } = useRecommendation(type, id)
   console.log('animeRecom', animeRecom)
   console.log('status', status)
-  
-  const titlehook = useInfos(collectionType, id)
+
+  const titlehook = useInfos(type, id)
   console.log('titlehook', titlehook)
   const title = titlehook?.title
   console.log('title', title)
@@ -32,7 +34,7 @@ const Recommendations = () => {
 
   return (
     <>
-      <NavBarInfo colecType={collectionType} />
+      <NavBarInfo />
 
       {/* <Typography variant="h2" component="h2">{`People who like ${title} also enjoy`}</Typography>
       <Typography>{directives}</Typography> */}
@@ -48,7 +50,8 @@ const Recommendations = () => {
                   <div key={index}>
                     <p>{data.entry.title}</p>
                     <Link
-                      to={`/collection/${collectionType}/search/main/${data.entry.mal_id}/${data.entry.title}`}
+                      // to={`/collection/${collectionType}/search/main/${data.entry.mal_id}/${data.entry.title}`}
+                      to={getUrl(type, INFOS, [data.entry.mal_id])}
                     >
                       <img src={data.entry.images.jpg.image_url} alt="" />
                     </Link>
