@@ -25,3 +25,5 @@ export const ROUTE_SEARCH_ANIME = '/collection/anime/search'
 export const ROUTE_SEARCH_MANGA = '/collection/manga/search'
 export const ROUTE_404 = '*'
 export const JIKAN_API = process.env.REACT_APP_JIKAN_API
+export const ANIME = 'anime'
+export const MANGA = 'manga'
