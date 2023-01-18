@@ -1,9 +1,10 @@
+import { ANIME } from '../../commons/constants'
 import TopDetails from './TopDetails'
 
 function TopAnime() {
   return (
     <>
-      <TopDetails name={'anime'} />
+      <TopDetails name={ANIME} />
     </>
   )
 }
