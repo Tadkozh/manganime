@@ -40,36 +40,13 @@ const AppConsumer = () => {
       <Routes>
         <Route path={ROUTE_HOME} element={<MangAnime />} />
         <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
-
-        {/* <Route path="/collection" element={<Collection />}> */}
-        {/* <Route path="/collection/anime/search" element={<AnimeSearch />} />
-          <Route path="/collection/manga/search" element={<MangaSearch />} />
-          <Route path="/collection/anime/top" element={<AnimeTop />} />
-          <Route path="/collection/manga/top" element={<MangaTop />} />
-
-          <Route
-            path="/collection/:collectionType/search/main/:id/:title"
-            element={<Main />}
-          />
-          <Route
-            path="/collection/:collectionType/search/news/:id/:title"
-            element={<News />}
-          />
-          <Route
-            path="/collection/:collectionType/search/recommendations/:id/:title"
-            element={<Recommendations />}
-          /> */}
-        {/* </Route> */}
-
         <Route path={ROUTE_SEARCH_ANIME} element={<SearchAnime />} />
         <Route path={ROUTE_SEARCH_MANGA} element={<SearchManga />} />
         <Route path={ROUTE_TOP_ANIME} element={<TopAnime />} />
         <Route path={ROUTE_TOP_MANGA} element={<TopManga />} />
-
         <Route path={ROUTE_INFOS} element={<Infos />} />
         <Route path={ROUTE_NEWS} element={<News />} />
         <Route path={ROUTE_RECOMMENDATIONS} element={<Recommendations />} />
-
         <Route path={ROUTE_404} element={<Error404 />} />
         <Route path="/" element={<PrivateRoute />}>
           <Route path={ROUTE_PROFILE} element={<ProfileUser />} />
