@@ -49,10 +49,7 @@ const Recommendations = () => {
                 return (
                   <div key={index}>
                     <p>{data.entry.title}</p>
-                    <Link
-                      // to={`/collection/${collectionType}/search/main/${data.entry.mal_id}/${data.entry.title}`}
-                      to={getUrl(type, INFOS, [data.entry.mal_id])}
-                    >
+                    <Link to={getUrl(type, INFOS, [data.entry.mal_id])}>
                       <img src={data.entry.images.jpg.image_url} alt="" />
                     </Link>
                     <p>
