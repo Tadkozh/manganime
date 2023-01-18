@@ -9,31 +9,13 @@ function NavBarInfo() {
     <>
       <ul className="subMenu">
         <li>
-          <Link
-            // to={`/collection/${collectionType}/search/main/${id}/${title}`}
-            // to={`/${type}/${INFOS}/${id}`}
-            to={getUrl(type, INFOS, [id])}
-          >
-            Infos
-          </Link>
+          <Link to={getUrl(type, INFOS, [id])}>Infos</Link>
         </li>
         <li>
-          <Link
-            // to={`/collection/${collectionType}/search/news/${id}/${title}`}
-            // to={`/${type}/${NEWS}/${id}/${title}`}
-            to={getUrl(type, NEWS, [id])}
-          >
-            News
-          </Link>
+          <Link to={getUrl(type, NEWS, [id])}>News</Link>
         </li>
         <li>
-          <Link
-            // to={`/collection/${collectionType}/search/recommendations/${id}/${title}`}
-            // to={`/${type}/${RECOMMENDATIONS}/${id}/${title}`}
-            to={getUrl(type, RECOMMENDATIONS, [id])}
-          >
-            Recommendations
-          </Link>
+          <Link to={getUrl(type, RECOMMENDATIONS, [id])}>Recommendations</Link>
         </li>
       </ul>
     </>

@@ -67,12 +67,7 @@ function SearchManga() {
             {query?.getData.data.map((data, index) => {
               return (
                 <div className="item" key={index}>
-                  <Link
-                    // to={`/collection/${collectionType}/search/main/${
-                    //   data.mal_id
-                    // }/${data.title_english ?? data.titles[0].title}`}
-                    to={getUrl(type, INFOS, [data.mal_id])}
-                  >
+                  <Link to={getUrl(type, INFOS, [data.mal_id])}>
                     <div className="imgWrapper">
                       <img
                         src={data.images.jpg.image_url}
