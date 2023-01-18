@@ -11,7 +11,6 @@ import {
   MobileStepper,
   Typography,
 } from '../ui'
-import '../../styles/top-css.css'
 
 const rankReducer = (state, action) => {
   switch (action?.type) {
