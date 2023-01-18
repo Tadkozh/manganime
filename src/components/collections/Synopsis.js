@@ -1,4 +1,4 @@
-function Synopsis({ getInfo }) {
+function Synopsis({ synopsis }) {
   // const [readSynopsis, setReadSynopsis] = useState(false)
 
   return (
@@ -11,7 +11,7 @@ function Synopsis({ getInfo }) {
           //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
           // }
         >
-          <p>{getInfo.data.synopsis}</p>
+          <p>{synopsis}</p>
         </div>
         {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
         {readSynopsis ? 'Read less' : 'Read more'}

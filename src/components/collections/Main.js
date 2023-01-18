@@ -9,35 +9,26 @@ import './pageInfoQueries.css'
 import NavBarInfo from './NavBarInfo'
 import Presentation from './Presentation'
 import Synopsis from './Synopsis'
-import Details from './Details'
+import Details from '../collections/details'
 import Story from './Story'
 import Form from './Form'
 import Reviews from './Reviews'
-
-import { APP_API_URL } from '../../commons/constants'
+import { useInfos } from '../../hooks/queriesHooks'
 
 function Main() {
   let { collectionType, id } = useParams()
-
-  const linkInfo = `${APP_API_URL}/${collectionType}/${id}/full`
-  const [getInfo, setGetInfo] = useState(null)
-
-  useEffect(() => {
-    fetch(linkInfo)
-      .then((res) => res.json())
-      .then((data) => setGetInfo(data))
-  }, [linkInfo])
+  const info = useInfos(collectionType, id)
 
   return (
     <>
       <NavBarInfo />
       <div className="infoWrapper">
-        {getInfo?.data ? (
+        {info ? (
           <>
             <div className="info">
               <div className="header">
-                <Presentation getInfo={getInfo} />
-                <Synopsis getInfo={getInfo} />
+                <Presentation info={info} />
+                <Synopsis synopsis={info.synopsis} />
 
                 {/* {getInfo?.data?.trailer?.embed_url ? (
                   <embed
@@ -49,9 +40,9 @@ function Main() {
                   <p>No trailer was found.</p>
                 )} */}
 
-                <Details getInfo={getInfo} />
+                <Details info={info} />
               </div>
-              <Story getInfo={getInfo} />
+              <Story background={info.background} />
               <Form />
               <Reviews />
             </div>

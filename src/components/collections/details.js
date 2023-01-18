@@ -1,75 +1,74 @@
 import { useParams } from 'react-router-dom'
+import { ANIME, MANGA } from '../../commons/constants'
 
-function Details({ getInfo }) {
+function Details({ info }) {
   let { collectionType } = useParams()
 
   const unknown = 'unknown'
 
-  const isAnime = collectionType === 'anime'
-  const isManga = collectionType === 'manga'
+  const isAnime = collectionType === ANIME
+  const isManga = collectionType === MANGA
 
-  const typeData = getInfo?.data?.type
-  const genresData = getInfo?.data?.genres[0]?.name
-  const themesData = getInfo?.data?.themes[0]?.name
-  const ratingData = getInfo?.data?.rating
-  const rankData = getInfo?.data?.rank
-  const popularityData = getInfo?.data?.popularity
-  const membersData = getInfo?.data?.members
-  const statusData = getInfo?.data?.status
-  const airedFromYearData = getInfo?.data?.aired?.prop?.from?.year
+  const typeData = info?.type
+  const genresData = info?.genres[0]?.name
+  const themesData = info?.themes[0]?.name
+  const ratingData = info?.rating
+  const rankData = info?.rank
+  const popularityData = info?.popularity
+  const membersData = info?.members
+  const statusData = info?.status
+  const airedFromYearData = info?.aired?.prop?.from?.year
   const airedFromData = `${
-    getInfo?.data?.aired?.prop?.from?.day < 10
-      ? `0${getInfo?.data?.aired?.prop?.from?.day}`
-      : getInfo?.data?.aired?.prop?.from?.day
+    info?.aired?.prop?.from?.day < 10
+      ? `0${info?.aired?.prop?.from?.day}`
+      : info?.aired?.prop?.from?.day
   }/${
-    getInfo?.data?.aired?.prop?.from?.month < 10
-      ? `0${getInfo?.data?.aired?.prop?.from?.month}`
-      : getInfo?.data?.aired?.prop?.from?.month
-  }/${getInfo?.data?.aired?.prop?.from?.year}`
+    info?.aired?.prop?.from?.month < 10
+      ? `0${info?.aired?.prop?.from?.month}`
+      : info?.aired?.prop?.from?.month
+  }/${info?.aired?.prop?.from?.year}`
 
-  const airedToYearData = getInfo?.data?.aired?.prop?.to?.year
+  const airedToYearData = info?.aired?.prop?.to?.year
   const airedToData = `${
-    getInfo?.data?.aired?.prop?.to?.day < 10
-      ? `0${getInfo?.data?.aired?.prop?.to?.day}`
-      : getInfo?.data?.aired?.prop?.to.day
+    info?.aired?.prop?.to?.day < 10
+      ? `0${info?.aired?.prop?.to?.day}`
+      : info?.aired?.prop?.to.day
   }/${
-    getInfo?.data?.aired?.prop?.to?.month < 10
-      ? `0${getInfo?.data?.aired?.prop?.to?.month}`
-      : getInfo?.data?.aired?.prop?.to?.month
-  }/${getInfo?.data?.aired?.prop?.to?.year}`
-  const publishedFromYearData = getInfo?.data?.published?.prop?.from?.year
+    info?.aired?.prop?.to?.month < 10
+      ? `0${info?.aired?.prop?.to?.month}`
+      : info?.aired?.prop?.to?.month
+  }/${info?.aired?.prop?.to?.year}`
+  const publishedFromYearData = info?.published?.prop?.from?.year
   const publishedFromData = `${
-    getInfo?.data?.published?.prop?.from?.day < 10
-      ? `0${getInfo?.data?.published?.prop?.from?.day}`
-      : getInfo?.data?.published?.prop?.from?.day
+    info?.published?.prop?.from?.day < 10
+      ? `0${info?.published?.prop?.from?.day}`
+      : info?.published?.prop?.from?.day
   }/${
-    getInfo?.data?.published?.prop?.from?.month < 10
-      ? `0${getInfo?.data?.published?.prop?.from?.month}`
-      : getInfo?.data?.published?.prop?.from?.month
-  }/${getInfo?.data?.published?.prop?.from?.year}`
-  const publishedToYearData = getInfo?.data?.published?.prop?.to?.year
+    info?.published?.prop?.from?.month < 10
+      ? `0${info?.published?.prop?.from?.month}`
+      : info?.published?.prop?.from?.month
+  }/${info?.published?.prop?.from?.year}`
+  const publishedToYearData = info?.published?.prop?.to?.year
   const publishedToData = `${
-    getInfo?.data?.published?.prop?.to?.day < 10
-      ? `0${getInfo?.data?.published?.prop?.to?.day}`
-      : getInfo?.data?.published?.prop?.to?.day
+    info?.published?.prop?.to?.day < 10
+      ? `0${info?.published?.prop?.to?.day}`
+      : info?.published?.prop?.to?.day
   }/${
-    getInfo?.data?.published?.prop?.to.month < 10
-      ? `0${getInfo?.data?.published?.prop?.to?.month}`
-      : getInfo?.data?.published?.prop?.to?.month
-  }/${getInfo?.data?.published?.prop?.to?.year}`
-  const episodesData = getInfo?.data?.episodes
-  const volumesData = getInfo?.data?.volumes
-  const chaptersData = getInfo?.data?.chapters
-  const durationData = getInfo?.data?.duration
-  const studiosData = isAnime ? getInfo?.data?.studios[0]?.name : null
-  const producersData = isAnime ? getInfo?.data?.producers[0]?.name : null
-  const licensorsData = isAnime ? getInfo?.data?.licensors[0]?.name : null
-  const authorsData = isManga ? getInfo?.data?.authors[0]?.name : null
-  const serializationsData = isManga
-    ? getInfo.data?.serializations[0]?.name
-    : null
-  const demographicsData = getInfo?.data?.demographics[0]?.name
-  const sourceData = getInfo?.data?.source
+    info?.published?.prop?.to.month < 10
+      ? `0${info?.published?.prop?.to?.month}`
+      : info?.published?.prop?.to?.month
+  }/${info?.published?.prop?.to?.year}`
+  const episodesData = info?.episodes
+  const volumesData = info?.volumes
+  const chaptersData = info?.chapters
+  const durationData = info?.duration
+  const studiosData = isAnime ? info?.studios[0]?.name : null
+  const producersData = isAnime ? info?.producers[0]?.name : null
+  const licensorsData = isAnime ? info?.licensors[0]?.name : null
+  const authorsData = isManga ? info?.authors[0]?.name : null
+  const serializationsData = isManga ? info?.serializations[0]?.name : null
+  const demographicsData = info?.demographics[0]?.name
+  const sourceData = info?.source
 
   const details = [
     {
