@@ -2,7 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { INFOS } from '../../commons/constants'
 import { getUrl } from '../../utils/helper'
-import { Box, Card, CardActionArea, CardContent, CardMedia, Paper, Typography } from '../ui'
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Paper,
+  Typography,
+} from '../ui'
 
 const TopView = ({ datas, isHomePage = false, type }) => {
   const [showOverlay, setShowOverlay] = React.useState({
@@ -70,7 +78,6 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                     // }`}
                     to={getUrl(type, INFOS, [data?.mal_id])}
                   >
-                    {/* <div className="top-article__box__item__media-effect" /> */}
                     <Box
                       component="div"
                       sx={{

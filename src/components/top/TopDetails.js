@@ -23,9 +23,9 @@ const rankReducer = (state, action) => {
   }
 }
 
-const TopDetails = ({ name, isHomePage = false }) => {
-  const { topDatas } = useGetTopDatas(name)
-  // const topDatas = useTopOtaku(name)
+const TopDetails = ({ type, isHomePage = false }) => {
+  const { topDatas } = useGetTopDatas(type)
+  // const topDatas = useTopOtaku(type)
   // console.log(topDatas)
   // console.log(useTopOtaku('anime'))
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
@@ -124,12 +124,12 @@ const TopDetails = ({ name, isHomePage = false }) => {
             marginLeft: '1em',
           }}
         >
-          Top {name}
+          Top {type}
         </Typography>
         <TopView
           isHomePage={isHomePage ? true : false}
           datas={isHomePage ? filteredTopDatas : topDatas}
-          type={name}
+          type={type}
         />
       </Container>
     </>
