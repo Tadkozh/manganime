@@ -17,7 +17,6 @@ import {
 import { useAuth } from '../context/AuthContext'
 import { ColorModeContext } from '../context/ColorModeContext'
 import { useStorageColorTheme } from '../hooks/storageColorTheme'
-import MUISwitchMode from '../MUISwitchMode'
 import {
   HOME,
   LOG_IN,
@@ -39,6 +38,7 @@ import {
   Menu,
   MenuIcon,
   MenuItem,
+  MUISwitchMode,
   Search,
   Toolbar,
   Tooltip,

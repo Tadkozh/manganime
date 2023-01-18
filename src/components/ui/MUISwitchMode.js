@@ -1,4 +1,4 @@
-import { Switch, styled } from '@mui/material'
+import { Switch, styled } from './index'
 
 const MUISwitchMode = styled(Switch)(({ theme, mode }) => ({
   width: 60,
