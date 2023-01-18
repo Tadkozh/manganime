@@ -16,8 +16,8 @@ import Reviews from './Reviews'
 import { useInfos } from '../../hooks/queriesHooks'
 
 function Main() {
-  let { collectionType, id } = useParams()
-  const info = useInfos(collectionType, id)
+  let { type, id } = useParams()
+  const info = useInfos(type, id)
 
   return (
     <>
