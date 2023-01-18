@@ -1,4 +1,4 @@
-import TopDetails from './TopDetails'
+import TopDetails from './top/TopDetails'
 
 const MangAnime = () => {
   return (

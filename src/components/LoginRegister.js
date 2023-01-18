@@ -16,7 +16,7 @@ import {
   Paper,
   TextField,
   Typography,
-} from '.'
+} from './ui'
 import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { getRandomNumber } from '../utils/helper'

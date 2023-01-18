@@ -1,0 +1,201 @@
+.animeNavBar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  background-color: beige;
+  padding: 10px;
+}
+
+.subMenu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: rgb(75, 75, 75);
+  padding: 10px;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.presentation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titles {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.favIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.favIcon p {
+  font-size: 0.75rem;
+}
+.star {
+  color: grey;
+  font-size: 100px;
+  width: 100px;
+  cursor: pointer;
+}
+.star.fav {
+  color: red;
+}
+
+.mainImg {
+  max-width: 200px;
+  max-height: 300px;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  text-align: center;
+  margin: 5px auto;
+}
+
+embed {
+  margin: 10px auto;
+}
+
+.synopsisWrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  text-align: justify;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 12px -5px #000;
+  margin: 20px auto;
+}
+.synopsis {
+  overflow-y: auto;
+  max-height: 200px;
+  padding-right: 10px;
+}
+/* .synopsis.active {
+  max-height: auto;
+} */
+.synopsisWrapper button {
+  background-color: rgb(89, 192, 232);
+  color: #fff;
+  box-shadow: 0 0 12px -5px #000;
+  margin: 10px;
+}
+
+.details {
+  width: 100%;
+  min-width: 300px;
+  max-height: 400px;
+  background-color: rgba(128, 128, 128, 0.5);
+  padding: 5px 10px;
+  margin: 20px auto;
+  overflow-y: scroll;
+}
+.details > div {
+  display: flex;
+  margin: 2px auto;
+}
+.details .label {
+  width: 50%;
+  background-color: rgba(128, 128, 128, 0.5);
+  padding: 5px 10px;
+}
+.details .data {
+  width: 50%;
+  background-color: rgba(128, 128, 128, 0.75);
+  padding: 5px;
+}
+
+.story {
+  width: 100%;
+  padding: 10px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 15px -10px #000;
+}
+.story p {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  /* background-color: rgb(102, 181, 212); */
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+form > div {
+  width: 100%;
+}
+
+.news {
+  width: 100%;
+  height: 200px;
+  border: solid;
+  margin: 20px auto;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(240, 248, 255, 0.5);
+  padding: 5px;
+}
+.review {
+  margin-bottom: 20px;
+  background-color: lightgreen;
+  padding: 10px;
+  border-radius: 10px;
+}
+.review .header {
+  min-height: 75px;
+  margin-bottom: 10px;
+}
+.review .userImage {
+  max-width: 75px;
+  min-height: 50px;
+  max-height: 75px;
+  border: solid 1px;
+  margin-right: 10px;
+  float: left;
+}
+.review .username {
+  font-weight: bold;
+}
+.review .text {
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 0 5px;
+  box-shadow: 0 0 8px -5px;
+}
