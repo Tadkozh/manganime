@@ -3,8 +3,26 @@ import { useState } from 'react'
 import { Button, Rating, Typography } from '@mui/material'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import { useParams } from 'react-router-dom'
+import { ANIME } from '../../commons/constants'
 
-function FavoriteIcon({ getInfo }) {
+function Presentation({ info }) {
+  let { type } = useParams()
+
+  const [rank, setRank] = useState(false)
+
+  return (
+    <>
+      <div className="presentation">
+        <PresentationTitle info={info} />
+        <img src={info.images.jpg.image_url} alt="infos" className="mainImg" />
+        {type === ANIME ? <Trailer streaming={info.streaming} /> : null}
+        <RateInfos info={info} rank={rank} changeRank={setRank} />
+      </div>
+    </>
+  )
+}
+
+function FavoriteIcon({ favorites }) {
   const [isFav, setIsFav] = useState(false)
 
   return (
@@ -14,89 +32,89 @@ function FavoriteIcon({ getInfo }) {
         onClick={() => setIsFav(!isFav)}
         className={isFav ? 'star fav' : 'star notFav'}
       />
-      <p>{isFav ? getInfo.data.favorites + 1 : getInfo.data.favorites}</p>
+      <p>{isFav ? favorites + 1 : favorites}</p>
     </div>
   )
 }
 
-function Presentation({ getInfo }) {
-  let { collectionType } = useParams()
-
-  const [rankBtnValue, setRankBtnValue] = useState(false)
-
+const PresentationTitle = ({ info }) => {
+  return (
+    <div className="titles">
+      <h2>{info.title_english ?? info.titles[0].title}</h2>
+      <p className="japaneseTitle">{info.title_japanese}</p>
+      <p>Rank: {info.rank}</p>
+      <FavoriteIcon info={info.favorites} />
+    </div>
+  )
+}
+const Trailer = ({ streaming }) => {
   return (
     <>
-      <div className="presentation">
-        <div className="titles">
-          <h2>{getInfo.data.title_english ?? getInfo.data.titles[0].title}</h2>
-          <p className="japaneseTitle">{getInfo.data.title_japanese}</p>
-          <p>Rank: {getInfo.data.rank}</p>
-          <FavoriteIcon getInfo={getInfo} />
-        </div>
-
-        <img
-          src={getInfo.data.images.jpg.image_url}
-          alt="infos"
-          className="mainImg"
-        />
-        {collectionType === 'anime' && getInfo.data.streaming[0]?.name ? (
-          <>
-            <a href="#trailer">WATCH TRAILER</a>
-            <Button
-              href={getInfo.data.streaming[0].url}
-              variant="contained"
-              size="small"
-            >
-              WATCH STREAMING
-              <br />
-              On {getInfo.data.streaming[0].name}
-            </Button>
-          </>
-        ) : null}
-
-        <div className="rating">
-          <div>
-            <Typography component="legend">Global score:</Typography>
-            <Rating
-              name="rating"
-              defaultValue={getInfo.data.score / 2}
-              precision={0.1}
-              readOnly
-            />
-            <p>
-              <small>
-                (
-                {getInfo?.data?.scored_by
-                  ? rankBtnValue
-                    ? `On ${getInfo.data.scored_by + 1} notes`
-                    : `On ${getInfo.data.scored_by} notes`
-                  : 'No notes yet'}
-                )
-              </small>
-            </p>
-          </div>
-          <div>
-            <Typography component="legend">Your score:</Typography>
-            <Rating
-              name="rating"
-              defaultValue={null}
-              precision={0.5}
-              readOnly={rankBtnValue ? true : false}
-            />
-            <div>
-              <Button
-                variant="contained"
-                size="small"
-                color={rankBtnValue ? 'error' : 'success'}
-                onClick={() => setRankBtnValue(!rankBtnValue)}
-              >
-                {rankBtnValue ? 'Annuler la note' : 'Valider la note'}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <a href="#trailer">WATCH TRAILER</a>
+      <Button href={streaming[0].url} variant="contained" size="small">
+        WATCH STREAMING
+        <br />
+        On {streaming[0].name}
+      </Button>
     </>
+  )
+}
+
+const RateInfos = ({ info, rank, changeRank }) => {
+  return (
+    <div className="rating">
+      <GlobalRate info={info} rank={rank} />
+      <PersonalRate rank={rank} changeRank={changeRank} />
+    </div>
+  )
+}
+
+const GlobalRate = ({ info, rank }) => {
+  return (
+    <div>
+      <Typography component="legend">Global score:</Typography>
+      <Rating
+        name="rating"
+        defaultValue={info.score / 2}
+        precision={0.1}
+        readOnly
+      />
+      <p>
+        <small>
+          (
+          {info?.scored_by
+            ? rank
+              ? `On ${info.scored_by + 1} notes`
+              : `On ${info.scored_by} notes`
+            : 'No notes yet'}
+          )
+        </small>
+      </p>
+    </div>
+  )
+}
+
+const PersonalRate = ({ rank, changeRank }) => {
+  return (
+    <div>
+      <Typography component="legend">Your score:</Typography>
+      <Rating
+        name="rating"
+        defaultValue={null}
+        precision={0.5}
+        readOnly={rank ? true : false}
+      />
+      <div>
+        <Button
+          variant="contained"
+          size="small"
+          color={rank ? 'error' : 'success'}
+          onClick={() => changeRank(!rank)}
+        >
+          {rank ? 'Annuler la note' : 'Valider la note'}
+        </Button>
+      </div>
+    </div>
   )
 }
 
