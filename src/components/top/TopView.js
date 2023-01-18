@@ -31,7 +31,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
 
   return (
     <Box component="ul" sx={sxTopBox}>
-      {datas.map((data, index) => {
+      {datas?.map((data, index) => {
         return (
           <Paper
             key={index}
