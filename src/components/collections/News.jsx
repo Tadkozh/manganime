@@ -8,20 +8,20 @@ import { useNews } from '../../hooks/queriesHooks'
 import NavBarInfo from './NavBarInfo'
 
 const News = () => {
-  let { collectionType, id } = useParams()
+  let { type, id } = useParams()
 
-  const { data: news, status } = useNews(collectionType, id)
+  const { data: news, status } = useNews(type, id)
   console.log('news', news)
   console.log('status', status)
 
-  const titlehook = useInfos(collectionType, id)
+  const titlehook = useInfos(type, id)
   console.log('titlehook', titlehook)
   const title = titlehook?.title
   console.log('title', title)
 
   let directives = ''
   if (news?.length === 0) {
-    directives = `No news about this ${collectionType}`
+    directives = `No news about this ${type}`
   } else {
     directives = `Click on a title to learn more`
   }
