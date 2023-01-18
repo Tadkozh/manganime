@@ -48,16 +48,16 @@ const PresentationTitle = ({ info }) => {
   )
 }
 const Trailer = ({ streaming }) => {
-  return (
+  return streaming[0] ? (
     <>
       <a href="#trailer">WATCH TRAILER</a>
-      <Button href={streaming[0].url} variant="contained" size="small">
+      <Button href={streaming[0]?.url} variant="contained" size="small">
         WATCH STREAMING
         <br />
-        On {streaming[0].name}
+        On {streaming[0]?.name}
       </Button>
     </>
-  )
+  ) : null
 }
 
 const RateInfos = ({ info, rank, changeRank }) => {
