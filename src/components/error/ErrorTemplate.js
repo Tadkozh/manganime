@@ -1,8 +1,7 @@
-import { Box } from '@mui/system'
 import { Link, redirect } from 'react-router-dom'
-import { Button, Container, Typography } from '.'
-import { getImageName } from '../utils/helper'
-import '../styles/image.css'
+import { Button, Container, Typography, Box } from '../ui'
+import { getImageName } from '../../utils/helper'
+import '../../styles/image.css'
 
 const getProps = {
   height: '100vh',

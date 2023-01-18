@@ -1,19 +1,20 @@
+import { RESET_FILTERS, SEARCH } from '../../utils/constants'
 import {
-  styled,
-  Select,
-  Switch,
+  Button,
   FormControl,
   FormControlLabel,
   InputLabel,
   MenuItem,
+  Refresh,
+  Search,
+  Select,
+  styled,
+  Switch,
   TextField,
-  Button,
-} from '@mui/material'
-import { Search, Refresh } from '@mui/icons-material'
-import { SEARCH, RESET_FILTERS } from '../../../utils/constants'
+} from '../ui'
 
 // Arrays
-import selectValues from './selectValues'
+import { searchValues as selectValues } from './searchValues'
 
 const HideHentai = styled(Switch)(({ theme }) => ({
   padding: 8,

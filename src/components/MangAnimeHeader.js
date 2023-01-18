@@ -1,50 +1,50 @@
 import { useTheme } from '@mui/material'
-import { HomeRounded, Whatshot, Search } from '@mui/icons-material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
-import avatarProfile from '../../assets/images/avatar_2.gif'
-import { ReactComponent as LogoIconDark } from '../../assets/images/logo_dark.svg'
-import { ReactComponent as LogoIconLight } from '../../assets/images/logo_light.svg'
+import avatarProfile from '../assets/images/avatar_2.gif'
+import { ReactComponent as LogoIconDark } from '../assets/images/logo_dark.svg'
+import { ReactComponent as LogoIconLight } from '../assets/images/logo_light.svg'
 import {
   LIGHT,
-  ROUTE_SEARCH_ANIME,
-  ROUTE_SEARCH_MANGA,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
+  ROUTE_SEARCH_ANIME,
+  ROUTE_SEARCH_MANGA,
   ROUTE_TOP_ANIME,
   ROUTE_TOP_MANGA,
-} from '../../commons/constants'
-import { useAuth } from '../../context/AuthContext'
-import { ColorModeContext } from '../../context/ColorModeContext'
-import { useStorageColorTheme } from '../../hooks/storageColorTheme'
-import MUISwitchMode from '../../MUISwitchMode'
+} from '../commons/constants'
+import { useAuth } from '../context/AuthContext'
+import { ColorModeContext } from '../context/ColorModeContext'
+import { useStorageColorTheme } from '../hooks/storageColorTheme'
+import MUISwitchMode from '../MUISwitchMode'
 import {
+  HOME,
   LOG_IN,
   LOG_OUT,
   PROFILE,
-  HOME,
   SEARCH_ANIME,
   SEARCH_MANGA,
   TOP_ANIME,
   TOP_MANGA,
-} from '../../utils/constants'
-import { getImageName } from '../../utils/helper'
+} from '../utils/constants'
+import { getImageName } from '../utils/helper'
 import {
   AppBar,
   Avatar,
   Box,
   Container,
+  HomeRounded,
   IconButton,
   Menu,
   MenuIcon,
   MenuItem,
+  Search,
   Toolbar,
   Tooltip,
   Typography,
-} from '..'
-
-import { palettes } from '../../theme'
+  Whatshot,
+} from './ui'
 
 const HOME_CHILDREN = (
   <>
@@ -92,7 +92,7 @@ const getPropsTypo = {
   textDecoration: 'none',
 }
 
-const MangAnimeAppBar = () => {
+const MangAnimeHeader = () => {
   const navigate = useNavigate()
   const theme = useTheme()
   const colorMode = React.useContext(ColorModeContext)
@@ -365,4 +365,4 @@ const AppBarProfile = ({ navigate }) => {
   )
 }
 
-export default MangAnimeAppBar
+export default MangAnimeHeader

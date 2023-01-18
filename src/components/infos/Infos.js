@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 // CSS Files
-import './pageInfo.css'
-import './pageInfoQueries.css'
+import './infos.css'
+import './infosQueries.css'
 
 // Components
-import NavBarInfo from './NavBarInfo'
-import Presentation from './Presentation'
-import Synopsis from './Synopsis'
-import Details from '../collections/details'
-import Story from './Story'
-import Form from './Form'
-import Reviews from './Reviews'
 import { useInfos } from '../../hooks/queriesHooks'
+import NavBarInfo from '../NavBarInfo'
+import InfoDetails from './InfoDetails'
+import InfoForm from './InfoForm'
+import InfoPresentation from './InfoPresentation'
+import InfoReviews from './InfoReviews'
+import InfoStory from './InfoStory'
+import InfoSynopsis from './InfoSynopsis'
 
-function Main() {
+function Infos() {
   let { type, id } = useParams()
   const info = useInfos(type, id)
 
@@ -27,8 +26,8 @@ function Main() {
           <>
             <div className="info">
               <div className="header">
-                <Presentation info={info} />
-                <Synopsis synopsis={info.synopsis} />
+                <InfoPresentation info={info} />
+                <InfoSynopsis synopsis={info.synopsis} />
 
                 {/* {getInfo?.data?.trailer?.embed_url ? (
                   <embed
@@ -40,11 +39,11 @@ function Main() {
                   <p>No trailer was found.</p>
                 )} */}
 
-                <Details info={info} />
+                <InfoDetails info={info} />
               </div>
-              <Story background={info.background} />
-              <Form />
-              <Reviews />
+              <InfoStory background={info.background} />
+              <InfoForm />
+              <InfoReviews />
             </div>
           </>
         ) : null}
@@ -53,4 +52,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Infos

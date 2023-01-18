@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { ANIME, MANGA } from '../../commons/constants'
 
-function Details({ info }) {
+function InfoDetails({ info }) {
   let { collectionType } = useParams()
 
   const unknown = 'unknown'
@@ -212,4 +212,4 @@ function Details({ info }) {
   )
 }
 
-export default Details
+export default InfoDetails

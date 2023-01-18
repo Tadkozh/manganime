@@ -1,6 +1,6 @@
-import TopDetails from '../../TopDetails'
+import TopDetails from './TopDetails'
 
-function AnimeTop() {
+function TopAnime() {
   return (
     <>
       <TopDetails name={'anime'} />
@@ -8,4 +8,4 @@ function AnimeTop() {
   )
 }
 
-export default AnimeTop
+export default TopAnime

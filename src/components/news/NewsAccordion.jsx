@@ -7,9 +7,9 @@ import {
   Item,
   Button,
   Typography,
-} from '..'
+} from '../ui'
 
-export const AccordionBasic = ({ data }) => {
+export const NewsAccordion = ({ data }) => {
   return (
     <Accordion>
       <AccordionSummary

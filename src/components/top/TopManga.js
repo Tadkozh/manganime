@@ -1,6 +1,6 @@
-import TopDetails from '../../TopDetails'
+import TopDetails from './TopDetails'
 
-function MangaTop() {
+function TopManga() {
   return (
     <>
       <TopDetails name={'manga'} />
@@ -8,4 +8,4 @@ function MangaTop() {
   )
 }
 
-export default MangaTop
+export default TopManga

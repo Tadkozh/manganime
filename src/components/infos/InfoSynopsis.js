@@ -1,4 +1,4 @@
-function Synopsis({ synopsis }) {
+function InfoSynopsis({ synopsis }) {
   // const [readSynopsis, setReadSynopsis] = useState(false)
 
   return (
@@ -21,4 +21,4 @@ function Synopsis({ synopsis }) {
   )
 }
 
-export default Synopsis
+export default InfoSynopsis

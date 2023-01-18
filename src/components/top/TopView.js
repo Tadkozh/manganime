@@ -1,11 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { CardActionArea } from '@mui/material'
-import '../styles/top-css.css'
+import '../../styles/top-css.css'
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '../ui'
 
 const TopView = ({ datas, isHomePage = false }) => {
   const [showOverlay, setShowOverlay] = React.useState({

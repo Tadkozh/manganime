@@ -1,6 +1,6 @@
-import { Button, Rating, TextField } from '@mui/material'
+import { Button, Rating, TextField } from '../ui'
 
-function Form() {
+function InfoForm() {
   return (
     <>
       <form>
@@ -28,4 +28,4 @@ function Form() {
   )
 }
 
-export default Form
+export default InfoForm

@@ -1,4 +1,4 @@
-const selectValues = {
+const searchValues = {
   anime: {
     order_by: [
       { value: 'title', children: 'Title' },
@@ -94,4 +94,4 @@ const selectValues = {
   },
 }
 
-export default selectValues
+export { searchValues }

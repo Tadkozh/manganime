@@ -1,11 +1,9 @@
 import { useParams } from 'react-router-dom'
-import { AccordionBasic } from './AccordionBasic'
-import { useInfos } from '../../hooks/queriesHooks'
-import { useNews } from '../../hooks/queriesHooks'
-// import { Typography } from '..'
+import { useInfos, useNews } from '../../hooks/queriesHooks'
+import { NewsAccordion } from './NewsAccordion'
 
 // Components
-import NavBarInfo from './NavBarInfo'
+import NavBarInfo from '../NavBarInfo'
 
 const News = () => {
   let { type, id } = useParams()
@@ -39,7 +37,7 @@ const News = () => {
             if (index < 10) {
               return (
                 <div key={index}>
-                  <AccordionBasic data={data} />
+                  <NewsAccordion data={data} />
                 </div>
               )
             }
