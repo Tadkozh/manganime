@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '@mui/material'
 
-import { APP_API_URL } from '../../../commons/constants'
+import { APP_API_URL, INFOS } from '../../../commons/constants'
 
 // CSS Files
 import './search.css'
 
 // Components
 import SearchBar from './SearchBar'
+import { getUrl } from '../../../utils/helper'
 
 function MangaSearch() {
-  const collectionType = 'manga'
+  const type = 'manga'
 
   const [query, setQuery] = useState({
     getData: null,
@@ -35,7 +36,7 @@ function MangaSearch() {
   const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=asc`
   const hentaisUrl = query?.hideHentai ? `&sfw` : ''
 
-  const link = `${APP_API_URL}/${collectionType}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${query?.page}`
+  const link = `${APP_API_URL}/${type}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hentaisUrl}&page=${query?.page}`
 
   useEffect(() => {
     fetch(link)
@@ -55,7 +56,7 @@ function MangaSearch() {
             />
 
             <SearchBar
-              collectionType={collectionType}
+              collectionType={type}
               getData={query?.getData}
               query={query}
               setQuery={setQuery}
@@ -67,9 +68,10 @@ function MangaSearch() {
               return (
                 <div className="item" key={index}>
                   <Link
-                    to={`/collection/${collectionType}/search/main/${
-                      data.mal_id
-                    }/${data.title_english ?? data.titles[0].title}`}
+                    // to={`/collection/${collectionType}/search/main/${
+                    //   data.mal_id
+                    // }/${data.title_english ?? data.titles[0].title}`}
+                    to={getUrl(type, INFOS, [data.mal_id])}
                   >
                     <div className="imgWrapper">
                       <img
