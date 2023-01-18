@@ -1,10 +1,10 @@
-function Story({ getInfo }) {
+function Story({ background }) {
   return (
     <>
-      {getInfo.data.background ? (
+      {background ? (
         <div className="story">
           <h4>About this artwork:</h4>
-          <p>{getInfo.data.background}</p>
+          <p>{background}</p>
         </div>
       ) : null}
     </>
