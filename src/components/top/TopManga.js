@@ -4,7 +4,7 @@ import TopDetails from './TopDetails'
 function TopManga() {
   return (
     <>
-      <TopDetails name={MANGA} />
+      <TopDetails type={MANGA} />
     </>
   )
 }
