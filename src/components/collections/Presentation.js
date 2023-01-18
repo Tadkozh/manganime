@@ -43,7 +43,7 @@ const PresentationTitle = ({ info }) => {
       <h2>{info.title_english ?? info.titles[0].title}</h2>
       <p className="japaneseTitle">{info.title_japanese}</p>
       <p>Rank: {info.rank}</p>
-      <FavoriteIcon info={info.favorites} />
+      <FavoriteIcon favorites={info.favorites} />
     </div>
   )
 }
