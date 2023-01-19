@@ -1,14 +1,15 @@
+import { FAIL, IDLE, LOADING, SUCCESS } from '../commons/constants'
+
 import React from 'react'
-import { DONE, FAIL, FETCHING, IDLE } from '../commons/constants'
 import { errorAuth } from '../utils/helper'
 import { useCleanupError } from './cleanupError'
 
 const userReducer = (state, action) => {
   switch (action.type) {
-    case FETCHING:
-      return { status: FETCHING, data: null }
-    case DONE:
-      return { status: DONE, data: action.payload }
+    case LOADING:
+      return { status: LOADING, data: null }
+    case SUCCESS:
+      return { status: SUCCESS, data: action.payload }
     case FAIL:
       return { status: FAIL, data: null }
     default:
@@ -24,11 +25,11 @@ const useUserData = () => {
 
   const execute = React.useCallback(
     (promise) => {
-      dispatch({ type: FETCHING })
+      dispatch({ type: LOADING })
 
       promise
         .then((data) => {
-          dispatch({ type: DONE, payload: data })
+          dispatch({ type: SUCCESS, payload: data })
         })
         .catch((error) => {
           setError(errorAuth(error))
@@ -39,7 +40,7 @@ const useUserData = () => {
   )
 
   const setData = React.useCallback((data) => {
-    dispatch({ type: DONE, payload: data })
+    dispatch({ type: SUCCESS, payload: data })
   }, [])
 
   const { data, status } = state

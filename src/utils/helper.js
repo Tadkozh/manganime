@@ -92,5 +92,15 @@ const getUrl = (type, route, option = []) => {
   const optionUrl = option?.map((item) => `/${item}`).join('')
   return `/${type}/${route}${optionUrl}`
 }
+const capFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
-export { validateForm, errorAuth, getImageName, getRandomNumber, getUrl }
+export {
+  validateForm,
+  errorAuth,
+  getImageName,
+  getRandomNumber,
+  getUrl,
+  capFirstLetter,
+}

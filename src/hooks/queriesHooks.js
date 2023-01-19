@@ -2,8 +2,8 @@ import { useQuery } from 'react-query'
 import { clientApi } from '../utils/clientApi'
 
 const useInfos = (type, id) => {
-  const { data } = useClientApi(type, id, 'full')
-  return data
+  const { data, status } = useClientApi(type, id, 'full')
+  return { data, status }
 }
 
 const useNews = (type, id) => {

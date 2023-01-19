@@ -3,14 +3,14 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from 'firebase/auth'
 import React from 'react'
 import {
   BAD_USE_CONTEXT,
-  DONE,
-  FETCHING,
-  SIGN_IN
+  LOADING,
+  SIGN_IN,
+  SUCCESS,
 } from '../commons/constants'
 import { createUser, getUserByUid } from '../database/operations'
 import { auth } from '../firebase-config'
@@ -76,7 +76,7 @@ const AuthProviders = ({ children }) => {
     [data, error, status, logout, preValidate],
   )
 
-  if (status === FETCHING) {
+  if (status === LOADING) {
     return (
       <Backdrop open={true}>
         <CircularProgress />
@@ -85,7 +85,7 @@ const AuthProviders = ({ children }) => {
   }
   return (
     <AuthContext.Provider value={values}>
-      {status === DONE && children}
+      {status === SUCCESS && children}
     </AuthContext.Provider>
   )
 }
@@ -99,4 +99,3 @@ const useAuth = () => {
 }
 
 export { AuthProviders, useAuth }
-
