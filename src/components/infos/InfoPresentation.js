@@ -5,7 +5,6 @@ import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
 function InfoPresentation({ info }) {
   let { type } = useParams()
-
   const [rank, setRank] = useState(false)
 
   return (
@@ -17,6 +16,17 @@ function InfoPresentation({ info }) {
         <RateInfos info={info} rank={rank} changeRank={setRank} />
       </div>
     </>
+  )
+}
+
+function PresentationTitle({ info }) {
+  return (
+    <div className="titles">
+      <h2>{info.title_english ?? info.titles[0].title}</h2>
+      <p className="japaneseTitle">{info.title_japanese}</p>
+      <p>Rank: {info.rank}</p>
+      <FavoriteIcon favorites={info.favorites} />
+    </div>
   )
 }
 
@@ -35,17 +45,7 @@ function FavoriteIcon({ favorites }) {
   )
 }
 
-const PresentationTitle = ({ info }) => {
-  return (
-    <div className="titles">
-      <h2>{info.title_english ?? info.titles[0].title}</h2>
-      <p className="japaneseTitle">{info.title_japanese}</p>
-      <p>Rank: {info.rank}</p>
-      <FavoriteIcon favorites={info.favorites} />
-    </div>
-  )
-}
-const Trailer = ({ streaming }) => {
+function Trailer({ streaming }) {
   return streaming[0] ? (
     <>
       <a href="#trailer">WATCH TRAILER</a>
@@ -58,7 +58,7 @@ const Trailer = ({ streaming }) => {
   ) : null
 }
 
-const RateInfos = ({ info, rank, changeRank }) => {
+function RateInfos({ info, rank, changeRank }) {
   return (
     <div className="rating">
       <GlobalRate info={info} rank={rank} />
@@ -67,7 +67,7 @@ const RateInfos = ({ info, rank, changeRank }) => {
   )
 }
 
-const GlobalRate = ({ info, rank }) => {
+function GlobalRate({ info, rank }) {
   return (
     <div>
       <Typography component="legend">Global score:</Typography>
@@ -92,7 +92,7 @@ const GlobalRate = ({ info, rank }) => {
   )
 }
 
-const PersonalRate = ({ rank, changeRank }) => {
+function PersonalRate({ rank, changeRank }) {
   return (
     <div>
       <Typography component="legend">Your score:</Typography>

@@ -94,7 +94,7 @@ function InputSearch({ title, name, placeholder, getter, handleChange }) {
   )
 }
 
-function SearchBar({ collectionType, query, setQuery }) {
+function SearchBar({ collectionType, data, query, setQuery }) {
   function resetFilters() {
     setQuery({
       ...query,
@@ -113,7 +113,7 @@ function SearchBar({ collectionType, query, setQuery }) {
 
   return (
     <div className="settingsBar">
-      <p>{query?.getData.pagination.items.total} results</p>
+      <p>{data?.pagination.items.total} results</p>
       <SelectSearch
         title={'Type'}
         name={'typeInput'}
@@ -132,11 +132,7 @@ function SearchBar({ collectionType, query, setQuery }) {
         getter={query.scoreMin}
         handleChange={(e) => setQuery({ ...query, scoreMin: e.target.value })}
         defaultValue="0"
-        selectValues={
-          collectionType === 'anime'
-            ? selectValues.anime.scoreMin
-            : selectValues.manga.scoreMin
-        }
+        selectValues={selectValues.scoreMin}
       />
       <SelectSearch
         title="Status"
@@ -178,11 +174,7 @@ function SearchBar({ collectionType, query, setQuery }) {
         getter={query.sort}
         handleChange={(e) => setQuery({ ...query, sort: e.target.value })}
         defaultValue="Ascending"
-        selectValues={
-          collectionType === 'anime'
-            ? selectValues.anime.sort
-            : selectValues.manga.sort
-        }
+        selectValues={selectValues.sort}
       />
 
       <FormControlLabel

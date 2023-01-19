@@ -10,6 +10,7 @@ import './search.css'
 
 // Components
 import SearchBar from './SearchBar'
+import { useSearch } from '../../hooks/queriesHooks'
 
 function SearchAnime() {
   const type = 'anime'
@@ -36,37 +37,40 @@ function SearchAnime() {
   const ratingUrl = query?.rating !== '' ? `&rating=${query?.rating}` : ''
   const orderByUrl = query?.orderBy !== '' ? `&order_by=${query?.orderBy}` : ''
   const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=asc`
-  const hentaiUrl = query?.hideHentai ? `&sfw` : ''
+  const hideHentaiUrl = query?.hideHentai ? `&sfw` : ''
 
-  const link = `${APP_API_URL}/${type}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hentaiUrl}&page=${query?.page}`
+  // const link = `${APP_API_URL}/${type}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}&page=${query?.page}`
+  // console.log('link: ' + link)
+  const options = `${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}`
+  const data = useSearch(type, options, query.page)
 
-  useEffect(() => {
-    fetch(link)
-      .then((res) => res.json())
-      .then((data) => setQuery({ ...query, getData: data }))
-  }, [link])
+  // useEffect(() => {
+  //   fetch(link)
+  //     .then((res) => res.json())
+  //     .then((data) => setQuery({ ...query, getData: data }))
+  // }, [link])
 
   return (
     <>
-      {query?.getData?.data ? (
+      {data?.data ? (
         <>
           <div className="search">
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={query?.getData?.pagination?.last_visible_page}
+              count={data?.pagination?.last_visible_page}
             />
 
             <SearchBar
               collectionType={type}
-              getData={query?.getData}
+              data={data}
               query={query}
               setQuery={setQuery}
             />
           </div>
 
           <div className="searchData">
-            {query?.getData.data.map((data, index) => {
+            {data?.data.map((data, index) => {
               return (
                 <div className="item" key={index}>
                   <Link to={getUrl(type, INFOS, [data.mal_id])}>
@@ -93,7 +97,7 @@ function SearchAnime() {
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={query?.getData.pagination.last_visible_page}
+              count={data?.pagination.last_visible_page}
             />
           </div>
         </>

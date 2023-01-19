@@ -185,6 +185,7 @@ const handleMenuOption = (option, navigate) => {
 }
 
 const AppBarMenu = ({ navigate }) => {
+  const theme = useTheme()
   const [anchorElNav, setAnchorElNav] = React.useState(false)
 
   const handleOpenNavMenu = (event) => {
@@ -289,7 +290,7 @@ const AppBarMenu = ({ navigate }) => {
               transition: '0.25s',
               cursor: 'pointer',
               '&:hover': {
-                backgroundColor: '#262626',
+                backgroundColor: theme.palette.text.secondary,
               },
             }}
           >
