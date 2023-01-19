@@ -7,27 +7,30 @@ import {
   Item,
   Button,
   Typography,
+  Paper,
 } from '../ui'
 
 export const NewsAccordion = ({ data }) => {
   return (
     <Accordion>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-        sx={{
-          background: 'silver',
-        }}
-      >
-        <Typography
+      <Paper elevation={24}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
           sx={{
-            fontWeight: 'bold',
+            background: 'silver',
           }}
         >
-          {data.title}
-        </Typography>
-      </AccordionSummary>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}
+          >
+            {data.title}
+          </Typography>
+        </AccordionSummary>
+      </Paper>
       <AccordionDetails>
         <Stack
           direction="row"
