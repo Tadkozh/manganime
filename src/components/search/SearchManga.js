@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '@mui/material'
-
-import { APP_API_URL, INFOS } from '../../commons/constants'
+import { INFOS } from '../../commons/constants'
 
 // CSS Files
 import './search.css'
@@ -52,7 +51,7 @@ function SearchManga() {
             />
 
             <SearchBar
-              collectionType={type}
+              type={type}
               data={data}
               query={query}
               setQuery={setQuery}

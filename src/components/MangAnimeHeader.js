@@ -1,3 +1,4 @@
+import { Translate } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
@@ -94,20 +95,11 @@ const getPropsTypo = {
 
 const MangAnimeHeader = () => {
   const navigate = useNavigate()
-  const theme = useTheme()
-  const colorMode = React.useContext(ColorModeContext)
-  const mode = theme.palette.mode
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky" sx={{ top: '0' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <MUISwitchMode
-            mode={mode}
-            onClick={colorMode.toggleColorMode}
-            checked={mode === LIGHT ? false : true}
-            sx={{ mr: 4 }}
-          />
           <AppBarLogo
             display={{ xs: 'none', md: 'flex' }}
             variant="body1"
@@ -186,6 +178,8 @@ const handleMenuOption = (option, navigate) => {
 
 const AppBarMenu = ({ navigate }) => {
   const theme = useTheme()
+  const colorMode = React.useContext(ColorModeContext)
+  const mode = theme.palette.mode
   const [anchorElNav, setAnchorElNav] = React.useState(false)
 
   const handleOpenNavMenu = (event) => {
@@ -241,6 +235,16 @@ const AppBarMenu = ({ navigate }) => {
             </Typography>
           </MenuItem>
         ))}
+        <MUISwitchMode
+          mode={mode}
+          onClick={colorMode.toggleColorMode}
+          checked={mode === LIGHT ? false : true}
+          sx={{
+            position: 'relative',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+        />
       </Menu>
 
       <AppBarLogo
@@ -268,6 +272,8 @@ const AppBarMenu = ({ navigate }) => {
         sx={{
           display: { xs: 'none', md: 'flex' },
           flexGrow: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {pages.map((page, index) => (
@@ -297,6 +303,11 @@ const AppBarMenu = ({ navigate }) => {
             {pagesChildren[index]}
           </Box>
         ))}
+        <MUISwitchMode
+          mode={mode}
+          onClick={colorMode.toggleColorMode}
+          checked={mode === LIGHT ? false : true}
+        />
       </Box>
     </>
   )
@@ -320,6 +331,7 @@ const handleAuthOption = (option, navigate, logout) => {
     }
   }
 }
+
 const AppBarProfile = ({ navigate }) => {
   const { logout } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState(false)

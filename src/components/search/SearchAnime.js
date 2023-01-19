@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '../ui'
 import { getUrl } from '../../utils/helper'
-
-import { APP_API_URL, INFOS } from '../../commons/constants'
+import { INFOS } from '../../commons/constants'
 
 // CSS Files
 import './search.css'
@@ -39,16 +38,8 @@ function SearchAnime() {
   const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=asc`
   const hideHentaiUrl = query?.hideHentai ? `&sfw` : ''
 
-  // const link = `${APP_API_URL}/${type}${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}&page=${query?.page}`
-  // console.log('link: ' + link)
   const options = `${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}`
   const data = useSearch(type, options, query.page)
-
-  // useEffect(() => {
-  //   fetch(link)
-  //     .then((res) => res.json())
-  //     .then((data) => setQuery({ ...query, getData: data }))
-  // }, [link])
 
   return (
     <>
@@ -62,7 +53,7 @@ function SearchAnime() {
             />
 
             <SearchBar
-              collectionType={type}
+              type={type}
               data={data}
               query={query}
               setQuery={setQuery}

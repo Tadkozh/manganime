@@ -94,7 +94,7 @@ function InputSearch({ title, name, placeholder, getter, handleChange }) {
   )
 }
 
-function SearchBar({ collectionType, data, query, setQuery }) {
+function SearchBar({ type, data, query, setQuery }) {
   function resetFilters() {
     setQuery({
       ...query,
@@ -121,9 +121,7 @@ function SearchBar({ collectionType, data, query, setQuery }) {
         handleChange={(e) => setQuery({ ...query, type: e.target.value })}
         defaultValue="All"
         selectValues={
-          collectionType === 'anime'
-            ? selectValues.anime.type
-            : selectValues.manga.type
+          type === 'anime' ? selectValues.anime.type : selectValues.manga.type
         }
       />
       <SelectSearch
@@ -141,12 +139,12 @@ function SearchBar({ collectionType, data, query, setQuery }) {
         handleChange={(e) => setQuery({ ...query, status: e.target.value })}
         defaultValue="All"
         selectValues={
-          collectionType === 'anime'
+          type === 'anime'
             ? selectValues.anime.status
             : selectValues.manga.status
         }
       />
-      {collectionType === 'anime' ? (
+      {type === 'anime' ? (
         <SelectSearch
           title="Rating"
           name="ratingInput"
@@ -163,7 +161,7 @@ function SearchBar({ collectionType, data, query, setQuery }) {
         handleChange={(e) => setQuery({ ...query, orderBy: e.target.value })}
         defaultValue="ID"
         selectValues={
-          collectionType === 'anime'
+          type === 'anime'
             ? selectValues.anime.order_by
             : selectValues.manga.order_by
         }

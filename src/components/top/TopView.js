@@ -96,7 +96,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                     marginTop: '0.2em',
                   }}
                 >
-                  {data?.title_english ?? data?.titles[0].title}
+                  {data?.title_english ?? data?.title}
                 </Typography>
               </CardContent>
             </Card>
