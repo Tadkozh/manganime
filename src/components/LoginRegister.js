@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { Navigate } from 'react-router-dom'
+import { LOADING, SIGN_IN, SIGN_UP, SUCCESS } from '../commons/constants'
+import { useAuth } from '../context/AuthContext'
+import { getRandomNumber } from '../utils/helper'
 import {
   Alert,
   Avatar,
@@ -17,9 +20,6 @@ import {
   TextField,
   Typography,
 } from './ui'
-import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
-import { useAuth } from '../context/AuthContext'
-import { getRandomNumber } from '../utils/helper'
 
 const TextFieldCustom = ({
   name = '',
@@ -84,7 +84,7 @@ const LoginRegister = ({ signup = true }) => {
     setCreate(true)
   }
 
-  if (data !== null && status === DONE) {
+  if (data !== null && status === SUCCESS) {
     return <Navigate to="/profile" />
   }
 
@@ -155,7 +155,7 @@ const FormLogin = ({ preValidate, create, status }) => {
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {status === FETCHING ? (
+      {status === LOADING ? (
         <Backdrop
           open={true}
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

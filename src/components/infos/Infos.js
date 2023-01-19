@@ -16,7 +16,7 @@ import InfoSynopsis from './InfoSynopsis'
 
 function Infos() {
   let { type, id } = useParams()
-  const info = useInfos(type, id)
+  const { data: info } = useInfos(type, id)
 
   return (
     <>
