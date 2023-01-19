@@ -1,6 +1,14 @@
 import { useParams, Link } from 'react-router-dom'
 import '../styles/recommendations.css'
-import { Button, Typography, Box } from './ui'
+import {
+  Button,
+  Typography,
+  Box,
+  Card,
+  CardMedia,
+  // CardHeader,
+  CardContent,
+} from './ui'
 import { useInfos } from '../hooks/queriesHooks'
 import { useRecommendation } from '../hooks/queriesHooks'
 import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
@@ -66,7 +74,7 @@ const Recommendations = () => {
                   if (index < 10) {
                     return (
                       <div key={index}>
-                        <p>{data.entry.title}</p>
+                        {/* <p>{data.entry.title}</p>
                         <Link to={getUrl(type, INFOS, [data.entry.mal_id])}>
                           <img src={data.entry.images.jpg.image_url} alt="" />
                         </Link>
@@ -79,13 +87,47 @@ const Recommendations = () => {
                           >
                             Read more
                           </Button>
-                        </p>
+                        </p> */}
+
+                        <Card sx={{ maxWidth: 225 }}>
+                          {/* <CardHeader title={data.entry.title} /> */}
+                          <Link to={getUrl(type, INFOS, [data.entry.mal_id])}>
+                            <CardMedia
+                              height={335}
+                              component="img"
+                              image={data.entry.images.jpg.image_url}
+                              alt={data.entry.title}
+                            />
+                          </Link>
+                          <CardContent sx={{ height: 140 }}>
+                            <Typography
+                              variant="h6"
+                              component="h3"
+                              sx={{ height: 64 }}
+                            >
+                              {data.entry.title}
+                            </Typography>
+                            <Box
+                              sx={{ display: 'flex', justifyContent: 'center' }}
+                            >
+                              <Button
+                                sx={{ margin: 'auto 5px' }}
+                                variant="contained"
+                                href={data.entry.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Read more
+                              </Button>
+                            </Box>
+                          </CardContent>
+                        </Card>
                       </div>
                     )
                   }
                   return null
                 })
-              : 'loading...'}
+              : 'loading, please wait...'}
           </div>
         </Box>
       </main>

@@ -21,9 +21,9 @@ const News = () => {
 
   let directives = ''
   if (news?.length === 0) {
-    directives = `No news about this ${type}`
+    directives = `No news about this ${type} currently`
   } else {
-    directives = `Click on a title to learn more`
+    directives = `Click on a news title to learn more`
   }
 
   return (
@@ -50,7 +50,7 @@ const News = () => {
                 }
                 return null
               })
-            : 'loading...'}
+            : 'loading, please wait...'}
         </Box>
       </main>
     </>

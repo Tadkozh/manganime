@@ -30,6 +30,7 @@ import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
 import Checkbox from '@mui/material/Checkbox'
 import CircleIcon from '@mui/icons-material/Circle'
@@ -75,6 +76,7 @@ export {
   CardActions,
   CardContent,
   CardMedia,
+  CardHeader,
   Checkbox,
   CircleIcon,
   CircularProgress,
