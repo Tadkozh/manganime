@@ -15,8 +15,8 @@ import { INFOS } from '../commons/constants'
 const Recommendations = () => {
   let { type, id } = useParams()
 
-  const { data: animeRecom, status } = useRecommendation(type, id)
-  console.log('animeRecom', animeRecom)
+  const { data: recommendations, status } = useRecommendation(type, id)
+  console.log('recommendations', recommendations)
   console.log('status', status)
 
   const titlehook = useInfos(type, id)
@@ -25,7 +25,7 @@ const Recommendations = () => {
   console.log('title', title)
 
   let directives = ''
-  if (animeRecom?.length === 0) {
+  if (recommendations?.length === 0) {
     directives = `No recommendation about ${title}`
   } else {
     directives =
@@ -43,8 +43,8 @@ const Recommendations = () => {
       <p>{directives}</p>
 
       <div className="datagrid">
-        {animeRecom
-          ? animeRecom.map((data, index) => {
+        {recommendations
+          ? recommendations.map((data, index) => {
               if (index < 10) {
                 return (
                   <div key={index}>
