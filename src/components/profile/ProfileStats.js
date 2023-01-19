@@ -26,7 +26,7 @@ const ProfileStats = ({ stats, type }) => {
         <Stat
           name={'Total Entries'}
           number={totalStats}
-          props={{ mx: -1, my: 1 }}
+          props={{ mx: -2, my: 3 }}
         />
       </Container>
     </Box>
@@ -40,4 +40,3 @@ const sumOfStats = (stats) => {
 }
 
 export { ProfileStats }
-
