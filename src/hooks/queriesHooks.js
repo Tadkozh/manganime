@@ -30,6 +30,7 @@ const useSearch = (type, search, page = 1, options = {}) => {
   const { data } = useQuery({
     queryKey: `${type}${search}${queryString}&page=${page}`,
     queryFn: () => clientApi(`${type}${search}${queryString}&page=${page}`),
+    staleTime: Infinity,
   })
   return data
 }
@@ -39,6 +40,7 @@ const useTopOtaku = (type, limit = '') => {
   const { data } = useQuery({
     queryKey: `top/${type}${newLimit}}`,
     queryFn: () => clientApi(`top/${type}${newLimit}`),
+    staleTime: Infinity,
   })
   return data?.data
 }
@@ -47,6 +49,7 @@ const useClientApi = (type, id, endpoint) => {
   const { data, status } = useQuery({
     queryKey: `${type}/${id}/${endpoint}`,
     queryFn: () => clientApi(`${type}/${id}/${endpoint}`),
+    staleTime: Infinity,
   })
   return { data: data?.data, status }
 }
