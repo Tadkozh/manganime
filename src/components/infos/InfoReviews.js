@@ -10,7 +10,7 @@ function InfoReviews() {
     <>
       {reviews ? (
         <div className="reviews">
-          {reviews.map((data, index) => {
+          {reviews?.data?.map((data, index) => {
             return (
               <div className="review" key={index}>
                 <div className="header">

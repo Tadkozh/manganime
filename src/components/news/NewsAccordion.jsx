@@ -43,7 +43,7 @@ export const NewsAccordion = ({ data }) => {
             <img src={data.images.jpg.image_url} alt="" target="_blank" />
           </Item>
           <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
-            <span>Excerpt: {data.excerpt}</span>
+            <span>{data.excerpt}</span>
             <p>
               <Button
                 variant="contained"

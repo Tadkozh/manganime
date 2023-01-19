@@ -18,18 +18,13 @@ const useRecommendation = (type, id) => {
 
 const useReviews = (type, id) => {
   const { data } = useClientApi(type, id, 'reviews')
-  return data
+  return { data }
 }
 
-const useSearch = (type, search, page = 1, options = {}) => {
-  let queryString = Object.keys(options)
-    .map((key) => {
-      return `${options[key]}`
-    })
-    .join('')
+const useSearch = (type, options, page = 1) => {
   const { data } = useQuery({
-    queryKey: `${type}${search}${queryString}&page=${page}`,
-    queryFn: () => clientApi(`${type}${search}${queryString}&page=${page}`),
+    queryKey: `${type}${options}&page=${page}`,
+    queryFn: () => clientApi(`${type}${options}&page=${page}`),
     staleTime: Infinity,
   })
   return data

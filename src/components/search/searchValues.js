@@ -1,4 +1,6 @@
 const searchValues = {
+  scoreMin: [],
+  sort: [{ value: 'desc', children: 'Descending' }],
   anime: {
     order_by: [
       { value: 'title', children: 'Title' },
@@ -14,7 +16,6 @@ const searchValues = {
       { value: 'start_date', children: 'Start date' },
       { value: 'end_date', children: 'End date' },
     ],
-    sort: [{ value: 'desc', children: 'Descending' }],
     type: [
       { value: 'tv', children: 'Serie' },
       { value: 'movie', children: 'Movie' },
@@ -22,17 +23,6 @@ const searchValues = {
       { value: 'special', children: 'Special' },
       { value: 'ona', children: 'ONA' },
       { value: 'music', children: 'Music' },
-    ],
-    scoreMin: [
-      { value: '1', children: '1' },
-      { value: '2', children: '2' },
-      { value: '3', children: '3' },
-      { value: '4', children: '4' },
-      { value: '5', children: '5' },
-      { value: '6', children: '6' },
-      { value: '7', children: '7' },
-      { value: '8', children: '8' },
-      { value: '9', children: '9' },
     ],
     status: [
       { value: 'airing', children: 'Airing' },
@@ -63,7 +53,6 @@ const searchValues = {
       { value: 'start_date', children: 'Start date' },
       { value: 'end_date', children: 'End date' },
     ],
-    sort: [{ value: 'desc', children: 'Descending' }],
     type: [
       { value: 'manga', children: 'Manga' },
       { value: 'novel', children: 'Novel' },
@@ -73,17 +62,6 @@ const searchValues = {
       { value: 'manhwa', children: 'Manhwa' },
       { value: 'manhua', children: 'Manhua' },
     ],
-    scoreMin: [
-      { value: '1', children: '1' },
-      { value: '2', children: '2' },
-      { value: '3', children: '3' },
-      { value: '4', children: '4' },
-      { value: '5', children: '5' },
-      { value: '6', children: '6' },
-      { value: '7', children: '7' },
-      { value: '8', children: '8' },
-      { value: '9', children: '9' },
-    ],
     status: [
       { value: 'publishing', children: 'Publishing' },
       { value: 'complete', children: 'Complete' },
@@ -92,6 +70,11 @@ const searchValues = {
       { value: 'upcoming', children: 'Upcoming' },
     ],
   },
+}
+
+const notes = 9
+for (let i = 1; i <= notes; i++) {
+  searchValues.scoreMin.push({ value: i, children: i })
 }
 
 export { searchValues }
