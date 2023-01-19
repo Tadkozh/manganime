@@ -152,8 +152,12 @@ const ProfileListButtons = () => {
         justifyContent: 'center',
       }}
     >
-      <Button>AnimeList</Button>
-      <Button>MangaList</Button>
+      <Button variant="contained" color="primary">
+        AnimeList
+      </Button>
+      <Button variant="outlined" color="primary">
+        MangaList
+      </Button>
     </CardActions>
   )
 }
@@ -234,4 +238,3 @@ const Statistics = () => {
 }
 
 export { ProfileUser }
-
