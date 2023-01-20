@@ -20,6 +20,8 @@ import NavBarInfo from './NavBarInfo'
 import { getUrl } from '../utils/helper'
 import { INFOS } from '../commons/constants'
 
+import NavBarInfoTabs from './NavBarInfoTabs'
+
 const Recommendations = () => {
   let { type, id } = useParams()
 
@@ -55,10 +57,11 @@ const Recommendations = () => {
 
   return (
     <>
-      <NavBarInfo />
+      {/* <NavBarInfo /> */}
+      <NavBarInfoTabs />
 
-      <main style={{ padding: '10px' }}>
-        <Box sx={{ padding: '10px' }}>
+      <main style={{ padding: 5 }}>
+        <Box sx={{ padding: 5 }}>
           <Typography variant="h4" component="h2">
             People who like <i>{title}</i> also enjoy
           </Typography>
