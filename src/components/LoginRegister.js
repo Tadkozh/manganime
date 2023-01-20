@@ -6,11 +6,9 @@ import { getRandomNumber } from '../utils/helper'
 import {
   Alert,
   Avatar,
-  Backdrop,
   Box,
   Button,
   Checkbox,
-  CircularProgress,
   CssBaseline,
   DialogContent,
   FormControlLabel,
@@ -19,6 +17,7 @@ import {
   Paper,
   TextField,
   Typography,
+  LoadingScreen,
 } from './ui'
 
 const TextFieldCustom = ({
@@ -155,14 +154,7 @@ const FormLogin = ({ preValidate, create, status }) => {
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {status === LOADING ? (
-        <Backdrop
-          open={true}
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        >
-          <CircularProgress />
-        </Backdrop>
-      ) : null}
+      {status === LOADING ? <LoadingScreen /> : null}
       <TextFieldCustom
         label="adresse email"
         name="email"
