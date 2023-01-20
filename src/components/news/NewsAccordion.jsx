@@ -20,6 +20,7 @@ export const NewsAccordion = ({ data }) => {
           id="panel1a-header"
           sx={{
             background: 'silver',
+            borderRadius: '10px',
           }}
         >
           <Typography
@@ -43,7 +44,9 @@ export const NewsAccordion = ({ data }) => {
             <img src={data.images.jpg.image_url} alt="" target="_blank" />
           </Item>
           <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
-            <span>{data.excerpt}</span>
+            <Typography sx={{ marginBottom: 5, paddingTop: 3 }}>
+              {data.excerpt}
+            </Typography>
             <p>
               <Button
                 variant="contained"
