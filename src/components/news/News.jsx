@@ -6,6 +6,7 @@ import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
 
 // Components
 import NavBarInfo from '../NavBarInfo'
+import NavBarInfoTabs from '../NavBarInfoTabs'
 
 const News = () => {
   let { type, id } = useParams()
@@ -28,14 +29,16 @@ const News = () => {
 
   return (
     <>
-      <NavBarInfo />
+      {/* <NavBarInfo /> */}
+
+      <NavBarInfoTabs />
       <main style={{ padding: '10px' }}>
         <Box sx={{ padding: '10px' }}>
           <Typography variant="h4" component="h2">
-            News about {title}
+            Some news about <i>{title}</i>
           </Typography>
 
-          <Typography>
+          <Typography sx={{ marginBottom: 5 }}>
             <ArrowRightSharpIcon />
             {directives}
           </Typography>

@@ -14,13 +14,16 @@ import InfoReviews from './InfoReviews'
 import InfoStory from './InfoStory'
 import InfoSynopsis from './InfoSynopsis'
 
+import NavBarInfoTabs from '../NavBarInfoTabs'
+
 function Infos() {
   let { type, id } = useParams()
   const { data: info } = useInfos(type, id)
 
   return (
     <>
-      <NavBarInfo />
+      {/* <NavBarInfo /> */}
+      <NavBarInfoTabs />
       <div className="infoWrapper">
         {info ? (
           <>
