@@ -51,6 +51,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MobileStepper from '@mui/material/MobileStepper'
 import Paper from '@mui/material/Paper'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
@@ -112,6 +114,8 @@ export {
   Rating,
   red,
   Refresh,
+  Tab,
+  Tabs,
   TextField,
   Toolbar,
   Tooltip,
