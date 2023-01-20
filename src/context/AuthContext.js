@@ -1,4 +1,3 @@
-import { Backdrop, CircularProgress } from '@mui/material'
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -12,6 +11,7 @@ import {
   SIGN_IN,
   SUCCESS,
 } from '../commons/constants'
+import { LoadingScreen } from '../components/ui'
 import { createUser, getUserByUid } from '../database/operations'
 import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
@@ -77,11 +77,7 @@ const AuthProviders = ({ children }) => {
   )
 
   if (status === LOADING) {
-    return (
-      <Backdrop open={true}>
-        <CircularProgress />
-      </Backdrop>
-    )
+    return <LoadingScreen />
   }
   return (
     <AuthContext.Provider value={values}>
