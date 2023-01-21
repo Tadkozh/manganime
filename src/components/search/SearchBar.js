@@ -113,7 +113,11 @@ function SearchBar({ type, data, query, setQuery }) {
 
   return (
     <div className="settingsBar">
-      <p>{data?.pagination.items.total} results</p>
+      <p>
+        {data?.pagination?.items?.total
+          ? `${data?.pagination?.items?.total} results`
+          : 'Loading...'}
+      </p>
       <SelectSearch
         title={'Type'}
         name={'typeInput'}
@@ -171,7 +175,7 @@ function SearchBar({ type, data, query, setQuery }) {
         name="sortInput"
         getter={query.sort}
         handleChange={(e) => setQuery({ ...query, sort: e.target.value })}
-        defaultValue="Ascending"
+        defaultValue="Descending"
         selectValues={selectValues.sort}
       />
 
