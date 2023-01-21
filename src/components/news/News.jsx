@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
 import { useInfos, useNews } from '../../hooks/queriesHooks'
-import { Typography, Box, ArrowRightSharp } from '../ui'
-import { NewsAccordion } from './NewsAccordion'
+import { ArrowRightSharp, Box, Typography } from '../ui'
 
 // Components
 import NavBarInfoTabs from '../NavBarInfoTabs'
+import { NewsAccordion } from './NewsAccordion'
 
 const News = () => {
   let { type, id } = useParams()
