@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import '../styles/recommendations.css'
 import {
+  ArrowRightSharp,
   Button,
   Typography,
   Box,
@@ -11,9 +12,6 @@ import {
 } from './ui'
 import { useInfos } from '../hooks/queriesHooks'
 import { useRecommendation } from '../hooks/queriesHooks'
-import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
-// import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-// import EastIcon from '@mui/icons-material/East'
 
 // Components
 import NavBarInfoTabs from './NavBarInfoTabs'
@@ -44,22 +42,20 @@ const Recommendations = () => {
         <Typography
           sx={{
             display: 'flex',
-            flexDirection: 'row',
             alignItem: 'center',
           }}
         >
-          <ArrowRightSharpIcon />
+          <ArrowRightSharp />
           Click on Read More to see the article on MyAnimeList
         </Typography>
         <Typography
           sx={{
             marginBottom: 5,
             display: 'flex',
-            flexDirection: 'row',
             alignItem: 'center',
           }}
         >
-          <ArrowRightSharpIcon />
+          <ArrowRightSharp />
           Click on the image to see the card
         </Typography>
       </>

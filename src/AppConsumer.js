@@ -28,6 +28,8 @@ import SearchManga from './components/search/SearchManga'
 import TopAnime from './components/top/TopAnime'
 import TopManga from './components/top/TopManga'
 
+import BasicModal from './components/Modal'
+
 import MangAnimeHeader from './components/MangAnimeHeader'
 const AppConsumer = () => {
   return (
@@ -35,6 +37,9 @@ const AppConsumer = () => {
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <MangAnimeHeader />
         <Routes>
+          {/* route provisoire */}
+          <Route path="/modal" element={<BasicModal />} />
+
           <Route path={ROUTE_HOME} element={<MangAnime />} />
           <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
           <Route path={ROUTE_SEARCH_ANIME} element={<SearchAnime />} />

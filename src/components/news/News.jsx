@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom'
 import { useInfos, useNews } from '../../hooks/queriesHooks'
 import { Typography, Box, ArrowRightSharp } from '../ui'
 import { NewsAccordion } from './NewsAccordion'
-// import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
 
 // Components
 import NavBarInfoTabs from '../NavBarInfoTabs'
@@ -38,7 +37,6 @@ const News = () => {
           sx={{
             marginBottom: 5,
             display: 'flex',
-            flexDirection: 'row',
             alignItem: 'center',
           }}
         >
