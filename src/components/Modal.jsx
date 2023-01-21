@@ -8,6 +8,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 import { Link } from 'react-router-dom'
 import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
+// import { LoginRegister } from './LoginRegister'
 
 const style = {
   position: 'absolute',
@@ -55,6 +56,7 @@ export default function BasicModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please login or create an account to access this feature
           </Typography>
+          {/* <LoginRegister /> */}
           <Box
             sx={{
               display: 'flex',
