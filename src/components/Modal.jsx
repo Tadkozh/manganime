@@ -1,10 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import CancelIcon from '@mui/icons-material/Cancel'
+import { Box, Button, Cancel, Modal, Typography } from './ui'
 
 import { Link } from 'react-router-dom'
 import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
@@ -47,7 +43,7 @@ export default function BasicModal() {
           >
             <Button onClick={handleClose}>
               Close
-              <CancelIcon />
+              <Cancel />
             </Button>
           </Box>
           <Typography id="modal-modal-title" variant="h6" component="h2">
