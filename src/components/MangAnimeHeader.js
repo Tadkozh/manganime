@@ -1,4 +1,3 @@
-import { Translate } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'

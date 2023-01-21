@@ -1,6 +1,6 @@
 const searchValues = {
   scoreMin: [],
-  sort: [{ value: 'desc', children: 'Descending' }],
+  sort: [{ value: 'asc', children: 'Ascending' }],
   anime: {
     order_by: [
       { value: 'title', children: 'Title' },

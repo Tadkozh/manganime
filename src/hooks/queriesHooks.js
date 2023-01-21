@@ -6,6 +6,11 @@ const useInfos = (type, id) => {
   return { data, status }
 }
 
+const useGalery = (type, id) => {
+  const { data, status } = useClientApi(type, id, 'pictures')
+  return { data, status }
+}
+
 const useNews = (type, id) => {
   const { data, status } = useClientApi(type, id, 'news')
   return { data, status }
@@ -51,6 +56,7 @@ const useClientApi = (type, id, endpoint) => {
 
 export {
   useInfos,
+  useGalery,
   useNews,
   useSearch,
   useTopOtaku,
