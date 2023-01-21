@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '@mui/material'
 import { INFOS } from '../../commons/constants'
@@ -14,8 +14,8 @@ import { useSearch } from '../../hooks/queriesHooks'
 function SearchManga() {
   const type = 'manga'
 
+  const [getData, setGetData] = useState()
   const [query, setQuery] = useState({
-    getData: null,
     inputValue: '',
     letter: '',
     scoreMin: '',
@@ -33,21 +33,37 @@ function SearchManga() {
   const typeUrl = query?.type !== '' ? `&type=${query?.type}` : ''
   const statusUrl = query?.status !== '' ? `&status=${query?.status}` : ''
   const orderByUrl = query?.orderBy !== '' ? `&order_by=${query?.orderBy}` : ''
-  const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=asc`
+  const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=desc`
   const hideHentaiUrl = query?.hideHentai ? `&sfw` : ''
 
-  const options = `${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}`
+  const options = useMemo(() => {
+    return `${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}`
+  }, [
+    hideHentaiUrl,
+    letterUrl,
+    orderByUrl,
+    scoreMinUrl,
+    sortUrl,
+    statusUrl,
+    typeUrl,
+  ])
   const data = useSearch(type, options, query.page)
+
+  useMemo(() => {
+    if (data) {
+      setGetData(data)
+    }
+  }, [data])
 
   return (
     <>
-      {data?.data ? (
+      {getData?.data ? (
         <>
           <div className="search">
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={data?.pagination?.last_visible_page}
+              count={getData?.pagination?.last_visible_page}
             />
 
             <SearchBar
@@ -59,7 +75,7 @@ function SearchManga() {
           </div>
 
           <div className="searchData">
-            {data?.data.map((data, index) => {
+            {getData?.data.map((data, index) => {
               return (
                 <div className="item" key={index}>
                   <Link to={getUrl(type, INFOS, [data.mal_id])}>
@@ -86,7 +102,7 @@ function SearchManga() {
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={data?.pagination.last_visible_page}
+              count={getData?.pagination.last_visible_page}
             />
           </div>
         </>

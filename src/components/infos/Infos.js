@@ -6,15 +6,13 @@ import './infosQueries.css'
 
 // Components
 import { useInfos } from '../../hooks/queriesHooks'
-import NavBarInfo from '../NavBarInfo'
+import NavBarInfoTabs from '../NavBarInfoTabs'
 import InfoDetails from './InfoDetails'
 import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
 import InfoReviews from './InfoReviews'
 import InfoStory from './InfoStory'
 import InfoSynopsis from './InfoSynopsis'
-
-import NavBarInfoTabs from '../NavBarInfoTabs'
 
 function Infos() {
   let { type, id } = useParams()
