@@ -29,7 +29,6 @@ function PresentationTitle({ info }) {
     <div className="titles">
       <h2>{info.title_english ?? info.titles[0].title}</h2>
       <p className="japaneseTitle">{info.title_japanese}</p>
-      <p>Rank: {info.rank}</p>
       <FavoriteIcon favorites={info.favorites} />
     </div>
   )

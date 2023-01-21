@@ -20,7 +20,6 @@ function Infos() {
 
   return (
     <>
-      {/* <NavBarInfo /> */}
       <NavBarInfoTabs />
       <div className="infoWrapper">
         {info ? (
