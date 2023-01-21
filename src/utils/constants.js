@@ -8,6 +8,7 @@ export const WRONG_PASSWORD = 'Mot de passe incorrect'
 export const TOO_MANY_REQUEST = 'Trop de tentative de connexion, compte bloqué'
 export const EMAIL_EXIST = "L'email est déjà utilisé"
 export const USER_EXSIT = "L'utilisateur existe déjà"
+export const USER_SIGN_IN_AGAIN = 'Need to be sign in again'
 export const ERROR_UNKNOWN = 'Erreur inatendu'
 export const LOG_OUT = 'Déconnexion'
 export const LOG_IN = 'Se connecter'
