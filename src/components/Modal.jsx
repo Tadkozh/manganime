@@ -1,8 +1,10 @@
 import * as React from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
+import CancelIcon from '@mui/icons-material/Cancel'
 
 import { Link } from 'react-router-dom'
 import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
@@ -20,7 +22,7 @@ const style = {
 }
 
 export default function BasicModal() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
@@ -34,6 +36,19 @@ export default function BasicModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <Box
+            textAlign="right"
+            sx={{
+              display: 'flex',
+              justifyContent: 'right',
+              alignItem: 'center',
+            }}
+          >
+            <Button onClick={handleClose}>
+              Close
+              <CancelIcon />
+            </Button>
+          </Box>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             For subscribers only
           </Typography>
@@ -50,9 +65,15 @@ export default function BasicModal() {
               variant="contained"
               sx={{
                 marginTop: 5,
+                textDecoration: 'none',
               }}
             >
-              <Link to={ROUTE_LOGIN_REGISTER}>Login | Create an account</Link>
+              <Link
+                to={ROUTE_LOGIN_REGISTER}
+                style={{ textDecoration: 'none' }}
+              >
+                Login | Create an account
+              </Link>
             </Button>
           </Box>
         </Box>
