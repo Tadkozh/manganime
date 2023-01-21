@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useState } from 'react'
 import { Box, Button, Cancel, Modal, Typography } from './ui'
 
 import { Link } from 'react-router-dom'
@@ -18,16 +17,13 @@ const style = {
   p: 4,
 }
 
-export default function BasicModal() {
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+export default function Modale(props) {
+  const handleClose = () => props.handleCloseModal()
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
-        open={open}
+        open={props.open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
