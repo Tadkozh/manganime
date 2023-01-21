@@ -19,10 +19,10 @@ const createUser = (data) => {
     email: data.email,
     picture: data?.picture ?? '',
     name: data?.name ?? 'user',
-    favorite_anime: data?.favorite_anime,
-    favorite_manga: data?.favorite_manga,
-    anime_opinion: [],
-    manga_opinion: [],
+    favorite_anime: data?.favorite_anime ?? [],
+    favorite_manga: data?.favorite_manga ?? [],
+    anime_opinion: data?.anime_opinion ?? [],
+    manga_opinion: data?.manga_opinion ?? [],
   }
   addUser(user)
 }
