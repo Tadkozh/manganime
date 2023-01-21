@@ -1,5 +1,6 @@
 import {
   AUTH_EMAIL_EXISTS,
+  AUTH_REQUIRE_RECENT_LOGIN,
   AUTH_TOO_MANY_REQUEST,
   AUTH_USER_ALREADY_EXIST,
   AUTH_USER_NOT_FOUND,
@@ -15,10 +16,11 @@ import {
   TOO_MANY_REQUEST,
   USER_EXSIT,
   USER_NOT_FOUND,
+  USER_SIGN_IN_AGAIN,
   WRONG_PASSWORD,
 } from './constants'
 
-const validateForm = (email, password) => {
+const validateForm = (email, password, isProfile = false) => {
   const expression =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const rex = new RegExp(expression, 'g')
@@ -33,15 +35,17 @@ const validateForm = (email, password) => {
     error.status = 400
     return error
   }
-  if (!password) {
-    const error = new Error(PASSWORD_REQUIRED)
-    error.status = 400
-    return error
-  }
-  if (password.length < 6) {
-    const error = new Error(PASSWORD_REQUIREMENT)
-    error.status = 400
-    return error
+  if (!isProfile || (isProfile && password)) {
+    if (!password) {
+      const error = new Error(PASSWORD_REQUIRED)
+      error.status = 400
+      return error
+    }
+    if (password.length < 6) {
+      const error = new Error(PASSWORD_REQUIREMENT)
+      error.status = 400
+      return error
+    }
   }
   return null
 }
@@ -63,6 +67,9 @@ const errorAuth = (error) => {
       break
     case AUTH_EMAIL_EXISTS:
       message = EMAIL_EXIST
+      break
+    case AUTH_REQUIRE_RECENT_LOGIN:
+      message = USER_SIGN_IN_AGAIN
       break
     default:
       message = error.code

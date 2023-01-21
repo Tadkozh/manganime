@@ -8,7 +8,7 @@ const ProfileUser = () => {
   return (
     <Grid container sx={{ p: 2, justifyContent: 'center' }}>
       <ProfileSideBar />
-      <ProfileMainContainer user={data.name} />
+      <ProfileMainContainer user={data} />
     </Grid>
   )
 }

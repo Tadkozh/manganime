@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 
 const PrivateRoute = () => {
   const { data } = useAuth()
   if (!data) {
-    return <Navigate to="/" />
+    return <Navigate to={ROUTE_LOGIN_REGISTER} />
   }
   return <Outlet />
 }

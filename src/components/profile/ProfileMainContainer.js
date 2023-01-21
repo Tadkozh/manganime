@@ -1,3 +1,4 @@
+import React from 'react'
 import { ANIME, LOADING, MANGA, SUCCESS } from '../../commons/constants'
 import { useInfos } from '../../hooks/queriesHooks'
 import { getImageName } from '../../utils/helper'
@@ -5,6 +6,7 @@ import { PosterImageSkeleton } from '../skeletons/PosterImageSkeleton'
 import {
   blue,
   Box,
+  Button,
   Card,
   Divider,
   green,
@@ -15,7 +17,9 @@ import {
   Typography,
   yellow,
 } from '../ui'
+import { ProfileEdit } from './ProfileEdit'
 import { ProfileStats } from './ProfileStats'
+import { useAuth } from '../../context/AuthContext'
 
 const stats = [
   {
@@ -45,10 +49,12 @@ const stats = [
   },
 ]
 
-const lastAnime = [41467, 376, 11061]
-const lastManga = [2, 7, 21]
-
 const ProfileMainContainer = ({ user }) => {
+  const [editProfile, setEditProfile] = React.useState(false)
+
+  const handleChangeProfile = () => {
+    setEditProfile(!editProfile)
+  }
   return (
     <Grid item xs={10} md={8} sx={{ p: 1 }}>
       <Paper
@@ -62,13 +68,27 @@ const ProfileMainContainer = ({ user }) => {
         xs={7}
         elevation={5}
       >
-        <Typography variant="h4" sx={{ my: 2, alignSelf: 'flex-start' }}>
-          Bios, welcome {user}
-        </Typography>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="h4">Bios, welcome {user.name}</Typography>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleChangeProfile}
+          >
+            Change Profile
+          </Button>
+        </Box>
         <Typography variant="body1" sx={{ my: 1, alignSelf: 'flex-start' }}>
           No biography yet. Write it now.
         </Typography>
-        <ProfileMainContent />
+        {!editProfile ? <ProfileEdit user={user} /> : <ProfileMainContent />}
       </Paper>
     </Grid>
   )
@@ -94,7 +114,11 @@ const ProfileMainStatistics = () => {
   )
 }
 const ProfileMainType = ({ name }) => {
-  const lastList = name === ANIME ? lastAnime : lastManga
+  const { data: user } = useAuth()
+  const lastList =
+    name === ANIME
+      ? getLastFavorites(user.favorite_anime)
+      : getLastFavorites(user.favorite_manga)
   return (
     <>
       <Stats stats={stats} type={name} />
@@ -102,6 +126,10 @@ const ProfileMainType = ({ name }) => {
     </>
   )
 }
+const getLastFavorites = (array) => {
+  return array.slice(array.length - 3)
+}
+
 const Stats = ({ stats, type }) => {
   return (
     <Grid item xs={12} md={6}>
