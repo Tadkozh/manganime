@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { ANIME } from '../../commons/constants'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
+import InfoGalery from './InfoGalery'
+
 function InfoPresentation({ info }) {
   let { type } = useParams()
   const [rank, setRank] = useState(false)
@@ -11,7 +13,10 @@ function InfoPresentation({ info }) {
     <>
       <div className="presentation">
         <PresentationTitle info={info} />
-        <img src={info.images.jpg.image_url} alt="infos" className="mainImg" />
+        <InfoGalery
+          mainImage={info.images.jpg.image_url}
+          mainLargeImage={info.images.jpg.large_image_url}
+        />
         {type === ANIME ? <Trailer streaming={info.streaming} /> : null}
         <RateInfos info={info} rank={rank} changeRank={setRank} />
       </div>
@@ -108,7 +113,7 @@ function PersonalRate({ rank, changeRank }) {
           color={rank ? 'error' : 'success'}
           onClick={() => changeRank(!rank)}
         >
-          {rank ? 'Annuler la note' : 'Valider la note'}
+          {rank ? 'Cancel the note' : 'Submit the note'}
         </Button>
       </div>
     </div>
