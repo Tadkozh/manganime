@@ -7,7 +7,7 @@ const ProfileEdit = ({ user }) => {
   const [email, setEmail] = React.useState(user.email)
   const [password, setPassword] = React.useState('')
   const [username, setUsername] = React.useState(user.name)
-  const { preValidate, error, status } = useAuth()
+  const { preValidate, error } = useAuth()
 
   const handdleSubmit = (event) => {
     event.preventDefault()
