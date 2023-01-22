@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ANIME } from '../../commons/constants'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
+import { useAuth } from '../../context/AuthContext'
 
 import InfoGalery from './InfoGalery'
 import Modale from './../Modal'
@@ -102,10 +103,18 @@ function PersonalRate({ rank, changeRank }) {
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
+  const authUser = useAuth()
+
   const handleClick = () => {
     // changeRank(!rank)
-
-    handleOpenModal()
+    console.log('authUser', authUser)
+    console.log('authUser.data', authUser.data)
+    console.log('useAuth', useAuth)
+    if (authUser.data === null) {
+      handleOpenModal()
+    } else {
+      changeRank(!rank)
+    }
   }
 
   return (
