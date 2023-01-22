@@ -1,11 +1,11 @@
-import Carousel from './carousel/Carousel'
+import CarouselBox from './carousel/CarouselBox'
 import TopDetails from './top/TopDetails'
 import { ANIME, MANGA } from '../commons/constants'
 
 const MangAnime = () => {
   return (
     <>
-      <Carousel></Carousel>
+      <CarouselBox></CarouselBox>
       <TopDetails isHomePage type={ANIME} />
       <TopDetails isHomePage type={MANGA} />
     </>

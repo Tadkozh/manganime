@@ -114,6 +114,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
         ) : null}
         <Typography
           variant="h4"
+          component="h2"
           sx={{
             fontWeight: 'bold',
             textTransform: 'uppercase',
