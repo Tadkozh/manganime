@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { Navigate } from 'react-router-dom'
+import { LOADING, SIGN_IN, SIGN_UP, SUCCESS } from '../commons/constants'
+import { useAuth } from '../context/AuthContext'
+import { getRandomNumber } from '../utils/helper'
 import {
   Alert,
   Avatar,
-  Backdrop,
   Box,
   Button,
   Checkbox,
-  CircularProgress,
   CssBaseline,
   DialogContent,
   FormControlLabel,
@@ -16,10 +17,8 @@ import {
   Paper,
   TextField,
   Typography,
-} from '.'
-import { DONE, FETCHING, SIGN_IN, SIGN_UP } from '../commons/constants'
-import { useAuth } from '../context/AuthContext'
-import { getRandomNumber } from '../utils/helper'
+  LoadingScreen,
+} from './ui'
 
 const TextFieldCustom = ({
   name = '',
@@ -84,7 +83,7 @@ const LoginRegister = ({ signup = true }) => {
     setCreate(true)
   }
 
-  if (data !== null && status === DONE) {
+  if (data !== null && status === SUCCESS) {
     return <Navigate to="/profile" />
   }
 
@@ -155,14 +154,7 @@ const FormLogin = ({ preValidate, create, status }) => {
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {status === FETCHING ? (
-        <Backdrop
-          open={true}
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        >
-          <CircularProgress />
-        </Backdrop>
-      ) : null}
+      {status === LOADING ? <LoadingScreen /> : null}
       <TextFieldCustom
         label="adresse email"
         name="email"

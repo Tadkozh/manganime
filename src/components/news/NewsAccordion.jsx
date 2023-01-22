@@ -1,0 +1,65 @@
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  ExpandMoreIcon,
+  Stack,
+  Item,
+  Button,
+  Typography,
+  Paper,
+} from '../ui'
+
+export const NewsAccordion = ({ data }) => {
+  return (
+    <Accordion>
+      <Paper elevation={24}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          sx={{
+            background: 'silver',
+            borderRadius: '10px',
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}
+          >
+            {data.title}
+          </Typography>
+        </AccordionSummary>
+      </Paper>
+      <AccordionDetails>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          flexWrap="wrap"
+          spacing={2}
+        >
+          <Item sx={{ width: 300, textAlign: 'center' }}>
+            <img src={data.images.jpg.image_url} alt="" target="_blank" />
+          </Item>
+          <Item sx={{ maxWidth: 300, textAlign: 'center' }}>
+            <Typography sx={{ marginBottom: 5, paddingTop: 3 }}>
+              {data.excerpt}
+            </Typography>
+            <p>
+              <Button
+                variant="contained"
+                href={data.forum_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                See article
+              </Button>
+            </p>
+          </Item>
+        </Stack>
+      </AccordionDetails>
+    </Accordion>
+  )
+}

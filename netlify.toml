@@ -1,0 +1,4 @@
+[[redirects]]
+from = "/*"
+to = '/index.hml'
+status = 200

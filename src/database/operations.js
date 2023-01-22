@@ -1,23 +1,12 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from 'firebase/firestore'
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { USER_COLLECTION } from '../commons/constants'
 import { db } from '../firebase-config'
 
 const getUserByUid = async (uid) => {
   try {
-    const q = query(collection(db, USER_COLLECTION), where('uid', '==', uid))
-    const querySnapshot = await getDocs(q)
-
-    let user = null
-    querySnapshot.forEach((doc) => {
-      user = doc.data()
-    })
+    const docRef = doc(collection(db, USER_COLLECTION), uid)
+    const docSnap = await getDoc(docRef)
+    const user = docSnap.data()
     return user
   } catch (e) {
     throw new Error('addUser operation fail')
@@ -27,14 +16,13 @@ const getUserByUid = async (uid) => {
 const createUser = (data) => {
   const user = {
     uid: data.uid,
-    token: data.accessToken,
     email: data.email,
     picture: data?.picture ?? '',
     name: data?.name ?? 'user',
     favorite_anime: data?.favorite_anime ?? [],
     favorite_manga: data?.favorite_manga ?? [],
-    anime_opinion: [],
-    manga_opinion: [],
+    anime_opinion: data?.anime_opinion ?? [],
+    manga_opinion: data?.manga_opinion ?? [],
   }
   addUser(user)
 }
@@ -42,11 +30,9 @@ const createUser = (data) => {
 // todo : modifier pour la fusion (update)
 const addUser = async (user) => {
   try {
-    const docUser = doc(collection(db, USER_COLLECTION))
+    const docUser = doc(collection(db, USER_COLLECTION), user.uid)
 
     await setDoc(docUser, {
-      uid: user.uid,
-      token: user.token,
       email: user.email,
       picture: user.picture,
       name: user.name,
@@ -56,7 +42,7 @@ const addUser = async (user) => {
       manga_opinion: user.manga_opinion,
     })
   } catch (e) {
-    throw new Error('addUser operation fail')
+    throw new Error(`addUser operation fail ${e}`)
   }
 }
 

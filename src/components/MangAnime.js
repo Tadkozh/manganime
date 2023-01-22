@@ -1,10 +1,11 @@
-import TopDetails from './TopDetails'
+import TopDetails from './top/TopDetails'
+import { ANIME, MANGA } from '../commons/constants'
 
 const MangAnime = () => {
   return (
     <>
-      <TopDetails name={'anime'} />
-      <TopDetails name={'manga'} />
+      <TopDetails isHomePage type={ANIME} />
+      <TopDetails isHomePage type={MANGA} />
     </>
   )
 }

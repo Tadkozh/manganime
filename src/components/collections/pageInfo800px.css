@@ -1,5 +1,0 @@
-@media (min-width: 800px) {
-  .miscellaneousInfos {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
