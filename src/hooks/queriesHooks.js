@@ -45,6 +45,17 @@ const useTopOtaku = (type, limit = '') => {
   return data?.data
 }
 
+const useWatch = (type, options = '', limit = '') => {
+  const newOptions = options === '' ? '' : `/${options}`
+  const newLimit = limit === '' ? '' : `?limit=${limit}`
+  const { data } = useQuery({
+    queryKey: `watch/${type}${newOptions}${newLimit}`,
+    queryFn: () => clientApi(`watch/${type}${newOptions}${newLimit}`),
+    stateTime: Infinity,
+  })
+  return data?.data
+}
+
 const useClientApi = (type, id, endpoint) => {
   const { data, status } = useQuery({
     queryKey: `${type}/${id}/${endpoint}`,
@@ -60,6 +71,7 @@ export {
   useNews,
   useSearch,
   useTopOtaku,
+  useWatch,
   useRecommendation,
   useReviews,
 }
