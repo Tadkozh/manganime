@@ -18,11 +18,12 @@ import {
 } from '@mui/material'
 
 import {
+  ArrowRightSharp,
+  Cancel,
   HomeRounded,
   Refresh,
   Search,
   Whatshot,
-  ArrowRightSharp,
 } from '@mui/icons-material'
 import { default as Item, default as Stack } from '@mui/material/Stack'
 import { blue, green, grey, red, yellow } from '@mui/material/colors'
@@ -56,6 +57,7 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MobileStepper from '@mui/material/MobileStepper'
+import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
@@ -81,6 +83,7 @@ export {
   Backdrop,
   Box,
   Button,
+  Cancel,
   Card,
   CardActionArea,
   CardActions,
@@ -112,6 +115,7 @@ export {
   MenuIcon,
   MenuItem,
   MobileStepper,
+  Modal,
   MUISwitchMode,
   Pagination,
   Paper,

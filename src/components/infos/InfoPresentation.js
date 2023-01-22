@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ANIME } from '../../commons/constants'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
+import { useAuth } from '../../context/AuthContext'
 
 import InfoGalery from './InfoGalery'
+import Modale from './../Modal'
 
 function InfoPresentation({ info }) {
   let { type } = useParams()
@@ -97,6 +99,24 @@ function GlobalRate({ info, rank }) {
 }
 
 function PersonalRate({ rank, changeRank }) {
+  const [open, setOpen] = useState(false)
+  const handleOpenModal = () => setOpen(true)
+  const handleCloseModal = () => setOpen(false)
+
+  const authUser = useAuth()
+
+  const handleClick = () => {
+    // changeRank(!rank)
+    console.log('authUser', authUser)
+    console.log('authUser.data', authUser.data)
+    console.log('useAuth', useAuth)
+    if (authUser.data === null) {
+      handleOpenModal()
+    } else {
+      changeRank(!rank)
+    }
+  }
+
   return (
     <div>
       <Typography component="legend">Your score:</Typography>
@@ -111,10 +131,18 @@ function PersonalRate({ rank, changeRank }) {
           variant="contained"
           size="small"
           color={rank ? 'error' : 'success'}
-          onClick={() => changeRank(!rank)}
+          // onClick={() => changeRank(!rank)}
+          onClick={handleClick}
         >
           {rank ? 'Cancel the note' : 'Submit the note'}
         </Button>
+        {open && (
+          <Modale
+            open={open}
+            handleOpenModal={handleOpenModal}
+            handleCloseModal={handleCloseModal}
+          />
+        )}
       </div>
     </div>
   )

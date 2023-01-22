@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Box, Button, Cancel, Modal, Typography } from './ui'
 
-import { Link } from 'react-router-dom'
-import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
-// import { LoginRegister } from './LoginRegister'
+// import { Link } from 'react-router-dom'
+// import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
+import { LoginRegister } from './LoginRegister'
 
 const style = {
   position: 'absolute',
@@ -17,13 +17,16 @@ const style = {
   p: 4,
 }
 
-export default function Modale(props) {
-  const handleClose = () => props.handleCloseModal()
+export default function ModaleOri() {
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   return (
     <div>
+      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
-        open={props.open}
+        open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -48,8 +51,8 @@ export default function Modale(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please login or create an account to access this feature
           </Typography>
-          {/* <LoginRegister /> */}
-          <Box
+          <LoginRegister />
+          {/* <Box
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -69,7 +72,7 @@ export default function Modale(props) {
                 Login | Create an account
               </Link>
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       </Modal>
     </div>

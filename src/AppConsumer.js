@@ -28,7 +28,7 @@ import SearchManga from './components/search/SearchManga'
 import TopAnime from './components/top/TopAnime'
 import TopManga from './components/top/TopManga'
 
-import BasicModal from './components/Modal'
+import ModalOri from './components/ModalOri'
 
 import MangAnimeHeader from './components/MangAnimeHeader'
 const AppConsumer = () => {
@@ -38,7 +38,7 @@ const AppConsumer = () => {
         <MangAnimeHeader />
         <Routes>
           {/* route provisoire */}
-          <Route path="/modal" element={<BasicModal />} />
+          <Route path="/modal" element={<ModalOri />} />
 
           <Route path={ROUTE_HOME} element={<MangAnime />} />
           <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
