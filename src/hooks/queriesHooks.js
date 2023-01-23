@@ -45,6 +45,9 @@ const useTopOtaku = (type, limit = '') => {
   return data?.data
 }
 
+// exemple avec Top
+// a la place de client api = > await graphQLClient.request(TOP_REQUEST, { type:type })
+
 const useClientApi = (type, id, endpoint) => {
   const { data, status } = useQuery({
     queryKey: `${type}/${id}/${endpoint}`,
