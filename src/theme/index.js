@@ -6,6 +6,7 @@ const lightPalette = {
   primary: red,
   background: {
     content: '#f44336',
+    topIcon: '#EDA41B',
   },
   text: {
     primary: grey[900],
@@ -19,6 +20,7 @@ const darkPalette = {
     default: '#262626',
     paper: '#262626',
     content: '#262626',
+    topIcon: '#EDA41B',
   },
   text: {
     primary: '#fff',

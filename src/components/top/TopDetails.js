@@ -93,7 +93,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
                 onClick={filteredTopDatas?.length === 4 ? handleNext : null}
                 disabled={activeStep === maxSteps - 1}
               >
-                <KeyboardArrowRight />
+                <KeyboardArrowRight sx={{ fontSize: '4em' }} />
               </Button>
             }
             backButton={
@@ -107,7 +107,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
                 onClick={handleBack}
                 disabled={activeStep === 0}
               >
-                <KeyboardArrowLeft />
+                <KeyboardArrowLeft sx={{ fontSize: '4em' }} />
               </Button>
             }
           />
@@ -118,6 +118,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             marginLeft: '1em',
+            textShadow: `${theme.palette.background.topIcon} 1px 0 0`,
           }}
         >
           Top {type}
