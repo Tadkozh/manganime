@@ -11,12 +11,16 @@ import {
   Paper,
   Typography,
 } from '../ui'
+import { useTheme } from '@mui/material'
 
 const TopView = ({ datas, isHomePage = false, type }) => {
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,
     index: null,
   })
+
+  const theme = useTheme()
+  console.log(theme)
 
   const sxTopBox = {
     height: isHomePage ? '502px' : 'inherit',
@@ -41,8 +45,32 @@ const TopView = ({ datas, isHomePage = false, type }) => {
               backgroundImage: 'inherit',
               bgcolor: 'inherit',
               boxShadow: 'inherit',
+              position: 'relative',
             }}
           >
+            {' '}
+            <Typography
+              component="p"
+              sx={{
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
+                marginTop: '0.2em',
+                position: 'absolute',
+                top: 0,
+                zIndex: '2',
+                left: '-1em',
+                height: '3em',
+                width: '3em',
+                borderRadius: '50%',
+                m: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                bgcolor: theme.palette.background.topIcon,
+              }}
+            >
+              #{data?.rank}
+            </Typography>
             <Card
               sx={{
                 maxWidth: '16em',
@@ -62,6 +90,29 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                   setShowOverlay({ status: false, index: null })
                 }}
               >
+                {/* <CardContent sx={{ p: 0 }}>
+                  <Typography
+                    component="p"
+                    sx={{
+                      textTransform: 'uppercase',
+                      fontWeight: 'bold',
+                      marginTop: '0.2em',
+                      position: 'absolute',
+                      top: '-1em',
+                      zIndex: '1',
+                      left: '-1em',
+                      background: 'white',
+                      height: '2em',
+                      width: '2em',
+                      borderRadius: '50%',
+                      m: 0,
+                      display: 'grid',
+                      alignContent: 'center',
+                    }}
+                  >
+                    #{data?.rank}
+                  </Typography>
+                </CardContent> */}
                 <CardMedia
                   component="img"
                   height="400"
