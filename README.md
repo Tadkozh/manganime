@@ -3,10 +3,11 @@
 **Outils utilisés :**
 
 - Notion
+- Figma
 - Trello
-- Git-
-- Github
+- Git / Github
 - VSCode
+- Chat GPT
 - npm
 
 **Libraries :**
