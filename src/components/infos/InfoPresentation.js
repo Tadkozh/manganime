@@ -103,6 +103,9 @@ function PersonalRate({ rank, changeRank }) {
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
+  const [value, setValue] = useState(0)
+  console.log(value)
+
   const authUser = useAuth()
 
   const handleClick = () => {
@@ -125,6 +128,10 @@ function PersonalRate({ rank, changeRank }) {
         defaultValue={null}
         precision={0.5}
         readOnly={rank ? true : false}
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue)
+        }}
       />
       <div>
         <Button
