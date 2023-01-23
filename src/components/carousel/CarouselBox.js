@@ -20,7 +20,7 @@ const CarouselBox = () => {
         m: '1em 0 0 0',
       }}
     >
-      <Carousel sx={{ maxHeight: '70vh' }}>
+      <Carousel sx={{ }}>
         {recentEpisodes?.map((watchItem, index) => (
           <WatchItemCarousel type={watchItem} key={index}></WatchItemCarousel>
         ))}

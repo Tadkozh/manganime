@@ -12,8 +12,19 @@ const WatchItemCarousel = ({ type, options = '', limit = '' }) => {
 
   return (
     <>
+      <CardMedia
+        component="img"
+        image={type?.entry?.images?.jpg?.large_image_url}
+        title={type?.entry?.title}
+        sx={{ width: '430px', height: '600px' }}
+      />
+      {/* <img
+        src={type?.entry?.images?.jpg?.large_image_url}
+        alt={type?.entry?.title}
+        style={{ width: '430px', height: '600px' }}
+      /> */}
       {/* <Box sx={{ display: 'flex', gap: '1em' }}> */}
-      <Typography
+      {/* <Typography
         variant="h4"
         sx={{
           fontWeight: 'bold',
@@ -31,7 +42,7 @@ const WatchItemCarousel = ({ type, options = '', limit = '' }) => {
           title={type?.entry?.title}
           sx={{ width: '100%', height: 'auto' }}
         />
-      </Card>
+      </Card> */}
       {/* </Box> */}
     </>
   )
