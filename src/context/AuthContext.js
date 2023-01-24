@@ -147,6 +147,7 @@ const AuthProviders = ({ children }) => {
   )
 
   const values = React.useMemo(
+
     () => ({ data, error, status, logout, preValidate, getUid }),
     [data, error, status, logout, preValidate],
   )
