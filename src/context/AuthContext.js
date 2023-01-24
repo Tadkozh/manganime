@@ -24,6 +24,11 @@ import { errorAuth, validateForm } from '../utils/helper'
 
 const AuthContext = React.createContext()
 
+const getUserUid = () => {
+  console.log(auth.currentUser)
+  return auth.currentUser
+}
+
 const storeNewUser = (data) => {
   if (data != null) {
     createUser(data.user)
@@ -141,7 +146,7 @@ const AuthProviders = ({ children }) => {
   )
 
   const values = React.useMemo(
-    () => ({ data, error, status, logout, preValidate }),
+    () => ({ data, error, status, logout, preValidate, getUserUid }),
     [data, error, status, logout, preValidate],
   )
 

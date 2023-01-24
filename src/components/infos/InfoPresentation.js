@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ANIME } from '../../commons/constants'
+import { ANIME, ID } from '../../commons/constants'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 import { useAuth } from '../../context/AuthContext'
 
@@ -68,7 +68,7 @@ function RateInfos({ info, rank, changeRank }) {
   return (
     <div className="rating">
       <GlobalRate info={info} rank={rank} />
-      <PersonalRate rank={rank} changeRank={changeRank} />
+      <PersonalRate info={info} rank={rank} changeRank={changeRank} />
     </div>
   )
 }
@@ -98,7 +98,7 @@ function GlobalRate({ info, rank }) {
   )
 }
 
-function PersonalRate({ rank, changeRank }) {
+function PersonalRate({ info, rank, changeRank }) {
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
@@ -106,17 +106,34 @@ function PersonalRate({ rank, changeRank }) {
   const [value, setValue] = useState(0)
   console.log(value)
 
-  const authUser = useAuth()
+  const { data: authUser, getUserUid } = useAuth()
 
   const handleClick = () => {
     // changeRank(!rank)
     console.log('authUser', authUser)
-    console.log('authUser.data', authUser.data)
-    console.log('useAuth', useAuth)
-    if (authUser.data === null) {
+    if (authUser === null) {
       handleOpenModal()
     } else {
       changeRank(!rank)
+
+      const newUser = authUser
+
+      const isAnimeId = newUser.anime_opinion.some(
+        (opinion) => opinion.anime_id === info.mal_id,
+      )
+      if (isAnimeId) {
+        newUser.anime_opinion.map((opinion) => {
+          if (opinion.anime_id === info.mal_id) {
+            opinion.rate = value
+          }
+        })
+      } else {
+        const ratedb = { rate: value, anime_id: info.mal_id }
+        newUser.anime_opinion.push(ratedb)
+      }
+      const truc = getUserUid()
+      console.log('newUser', newUser)
+      console.log('info', info)
     }
   }
 

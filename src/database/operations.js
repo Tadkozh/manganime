@@ -13,15 +13,30 @@ const getUserByUid = async (uid) => {
   }
 }
 
+const favoriteAnime = [467, 13601, 150, 202]
+const favoriteManga = [84559, 899]
+const animeOpinion = [
+  {
+    anime_id: '43',
+    rate: '7.5',
+    comments: [
+      {
+        create_at: new Date().toISOString(),
+        message: 'ceci est un test',
+      },
+    ],
+  },
+]
+
 const createUser = (data) => {
   const user = {
     uid: data.uid,
     email: data.email,
     picture: data?.picture ?? '',
     name: data?.name ?? 'user',
-    favorite_anime: data?.favorite_anime ?? [],
-    favorite_manga: data?.favorite_manga ?? [],
-    anime_opinion: data?.anime_opinion ?? [],
+    favorite_anime: data?.favorite_anime ?? [], // favoriteAnime
+    favorite_manga: data?.favorite_manga ?? [], // favoriteManga
+    anime_opinion: data?.anime_opinion ?? [], // animeOpinion
     manga_opinion: data?.manga_opinion ?? [],
   }
   addUser(user)
