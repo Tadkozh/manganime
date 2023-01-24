@@ -107,6 +107,7 @@ function PersonalRate({ info, rank, changeRank }) {
   console.log(value)
 
   const { data: authUser, getUserUid } = useAuth()
+  let { type } = useParams()
 
   const handleClick = () => {
     // changeRank(!rank)
@@ -117,23 +118,29 @@ function PersonalRate({ info, rank, changeRank }) {
       changeRank(!rank)
 
       const newUser = authUser
+      const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
+      const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
+      console.log('type pour opinion', type)
+      console.log('type_opinion', type_opinion)
 
-      const isAnimeId = newUser.anime_opinion.some(
+      const isAnimeId = newUser[type_opinion].some(
         (opinion) => opinion.anime_id === info.mal_id,
       )
       if (isAnimeId) {
-        newUser.anime_opinion.map((opinion) => {
+        newUser[type_opinion].map((opinion) => {
           if (opinion.anime_id === info.mal_id) {
             opinion.rate = value
           }
         })
       } else {
-        const ratedb = { rate: value, anime_id: info.mal_id }
-        newUser.anime_opinion.push(ratedb)
+        const ratedb = { rate: value, [type_id]: info.mal_id }
+        console.log('ratedb', ratedb)
+        newUser[type_opinion].push(ratedb)
       }
       const truc = getUserUid()
       console.log('newUser', newUser)
       console.log('info', info)
+      console.log('type', type)
     }
   }
 
