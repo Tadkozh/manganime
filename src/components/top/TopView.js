@@ -13,14 +13,13 @@ import {
 } from '../ui'
 import { useTheme } from '@mui/material'
 
-const TopView = ({ datas, isHomePage = false, type }) => {
+const TopView = ({ datas, isHomePage = false, type, rank }) => {
   const [showOverlay, setShowOverlay] = React.useState({
     status: false,
     index: null,
   })
 
   const theme = useTheme()
-  // console.log(theme)
 
   const sxTopBox = {
     height: isHomePage ? '502px' : 'inherit',
@@ -33,13 +32,22 @@ const TopView = ({ datas, isHomePage = false, type }) => {
     gap: '30px',
   }
 
+  const sxTopLiTitle = {
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    marginTop: '0.2em',
+    overflow: isHomePage ? 'hidden' : 'inherit',
+    whiteSpace: isHomePage ? 'nowrap' : 'inherit',
+    textOverflow: isHomePage ? 'ellipsis' : 'inherit',
+  }
+
   return (
     <Box component="ul" sx={sxTopBox}>
-      {datas?.Page.media.map((data, index) => {
+      {datas.map((data, index) => {
         return (
           <Paper
             key={index}
-            // title={`${data?.genres[0]?.type}-list`}
+            title={`${type.toLowerCase()}-list`}
             component="li"
             sx={{
               backgroundImage: 'inherit',
@@ -55,7 +63,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                 fontWeight: 'bold',
                 marginTop: '0.2em',
                 position: 'absolute',
-                top: 0,
+                top: '0.4em',
                 zIndex: '2',
                 left: '-1em',
                 height: '3em',
@@ -66,9 +74,10 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 bgcolor: theme.palette.background.topIcon,
+                boxShadow: `inset 0 0 10px ${theme.palette.background.topIcon}, 0 0 9px 3px ${theme.palette.background.topIcon}`,
               }}
             >
-              {/* #{data?.rank} */}
+              #{rank + index}
             </Typography>
             <Card
               sx={{
@@ -89,34 +98,10 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                   setShowOverlay({ status: false, index: null })
                 }}
               >
-                {/* <CardContent sx={{ p: 0 }}>
-                  <Typography
-                    component="p"
-                    sx={{
-                      textTransform: 'uppercase',
-                      fontWeight: 'bold',
-                      marginTop: '0.2em',
-                      position: 'absolute',
-                      top: '-1em',
-                      zIndex: '1',
-                      left: '-1em',
-                      background: 'white',
-                      height: '2em',
-                      width: '2em',
-                      borderRadius: '50%',
-                      m: 0,
-                      display: 'grid',
-                      alignContent: 'center',
-                    }}
-                  >
-                    #{data?.rank}
-                  </Typography>
-                </CardContent> */}
                 <CardMedia
                   component="img"
                   height="400"
                   sx={{ objectFit: 'inherit', transition: 'all 0.2s ease' }}
-                  // image={data?.images?.jpg?.image_url}
                   image={data.coverImage.extraLarge}
                   alt={data?.title_english ?? data?.title}
                 />
@@ -139,15 +124,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                 )}
               </CardActionArea>
               <CardContent sx={{ p: 0 }}>
-                <Typography
-                  component="h5"
-                  sx={{
-                    textTransform: 'uppercase',
-                    fontWeight: 'bold',
-                    marginTop: '0.2em',
-                  }}
-                >
-                  {/* {data?.title_english ?? data?.title} */}
+                <Typography component="h5" sx={sxTopLiTitle}>
                   {data.title.romaji}
                 </Typography>
               </CardContent>

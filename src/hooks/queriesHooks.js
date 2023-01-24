@@ -50,11 +50,14 @@ const useFavorites = (type, listFavorites = []) => {
   return { data: data?.Page.media, status }
 }
 
-const useTop = (type) => {
+const useTop = (type, perPage = 12) => {
   const { data } = useQuery({
     queryKey: `top/${type}`,
     queryFn: async () =>
-      await graphQLClient.request(TOP_REQUEST, { type: type }),
+      await graphQLClient.request(TOP_REQUEST, {
+        type: type,
+        perPage: perPage,
+      }),
     staleTime: Infinity,
   })
   return data
