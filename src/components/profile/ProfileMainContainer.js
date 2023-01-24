@@ -1,8 +1,9 @@
 import React from 'react'
 import { ANIME, LOADING, MANGA, SUCCESS } from '../../commons/constants'
-import { useInfos } from '../../hooks/queriesHooks'
+import { useAuth } from '../../context/AuthContext'
+import { useFavorites } from '../../hooks/queriesHooks'
 import { getImageName } from '../../utils/helper'
-import { PosterImageSkeleton } from '../skeletons/PosterImageSkeleton'
+import { ProfileLastUpdateSkeleton } from '../skeletons/ProfileLastUpdateSkeleton'
 import {
   blue,
   Box,
@@ -19,7 +20,6 @@ import {
 } from '../ui'
 import { ProfileEdit } from './ProfileEdit'
 import { ProfileStats } from './ProfileStats'
-import { useAuth } from '../../context/AuthContext'
 
 const stats = [
   {
@@ -88,7 +88,7 @@ const ProfileMainContainer = ({ user }) => {
         <Typography variant="body1" sx={{ my: 1, alignSelf: 'flex-start' }}>
           No biography yet. Write it now.
         </Typography>
-        {!editProfile ? <ProfileEdit user={user} /> : <ProfileMainContent />}
+        {editProfile ? <ProfileEdit user={user} /> : <ProfileMainContent />}
       </Paper>
     </Grid>
   )
@@ -139,29 +139,24 @@ const Stats = ({ stats, type }) => {
 }
 
 const LastUpdate = ({ type, lastest }) => {
-  return (
-    <Grid item xs={12} md={6}>
-      <Typography variant="h6">Last {type} Updates</Typography>
-      <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
-        {lastest.map((item, key) => (
-          <ImageLastUpdate type={type} id={item} key={key + type} />
-        ))}
-      </Card>
-    </Grid>
-  )
-}
-
-const ImageLastUpdate = ({ type, id }) => {
-  const { data, status } = useInfos(type, id)
-
+  const { data: items, status } = useFavorites(type, lastest)
   if (status === LOADING) {
-    return <PosterImageSkeleton />
+    return <ProfileLastUpdateSkeleton />
   }
-
   if (status === SUCCESS) {
-    return <PosterImage data={data} />
+    return (
+      <Grid item xs={12} md={6}>
+        <Typography variant="h6">Last {type} Updates</Typography>
+        <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
+          {items.map((item, key) => (
+            <PosterImage data={item} key={key} />
+          ))}
+        </Card>
+      </Grid>
+    )
   }
 }
+
 const PosterImage = ({ data }) => {
   return (
     <Box
@@ -173,12 +168,12 @@ const PosterImage = ({ data }) => {
       }}
     >
       <img
-        src={`${data?.images.jpg.image_url}`}
-        alt={data ? getImageName(data?.images.jpg.image_url) : 'image latest'}
+        src={data.coverImage.medium}
+        alt={getImageName(data.coverImage.medium)}
         height={'75px'}
       />
       <Typography variant="body1" sx={{ m: 1 }}>
-        {data?.title}
+        {data?.title.romaji}
       </Typography>
     </Box>
   )
