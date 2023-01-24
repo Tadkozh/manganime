@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { ANIME, ID } from '../../commons/constants'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 import { useAuth } from '../../context/AuthContext'
+import { updateUser } from '../../database/operations'
 
 import InfoGalery from './InfoGalery'
 import Modale from './../Modal'
@@ -106,7 +107,7 @@ function PersonalRate({ info, rank, changeRank }) {
   const [value, setValue] = useState(0)
   console.log(value)
 
-  const { data: authUser, getUserUid } = useAuth()
+  const { data: authUser, getUid } = useAuth()
   let { type } = useParams()
 
   const handleClick = () => {
@@ -117,11 +118,9 @@ function PersonalRate({ info, rank, changeRank }) {
     } else {
       changeRank(!rank)
 
-      const newUser = authUser
+      const newUser = structuredClone(authUser)
       const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
       const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
-      console.log('type pour opinion', type)
-      console.log('type_opinion', type_opinion)
 
       const isAnimeId = newUser[type_opinion].some(
         (opinion) => opinion.anime_id === info.mal_id,
@@ -134,13 +133,12 @@ function PersonalRate({ info, rank, changeRank }) {
         })
       } else {
         const ratedb = { rate: value, [type_id]: info.mal_id }
-        console.log('ratedb', ratedb)
         newUser[type_opinion].push(ratedb)
       }
-      const truc = getUserUid()
+      const userId = getUid()
       console.log('newUser', newUser)
-      console.log('info', info)
-      console.log('type', type)
+
+      updateUser(userId, newUser)
     }
   }
 
