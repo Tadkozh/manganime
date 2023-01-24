@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query'
-import { clientApi } from '../utils/clientApi'
+import { TOP_REQUEST } from '../graphql/top'
+import { clientApi, graphQLClient } from '../utils/clientApi'
 
 const useInfos = (type, id) => {
   const { data, status } = useClientApi(type, id, 'full')
@@ -35,18 +36,17 @@ const useSearch = (type, options, page = 1) => {
   return data
 }
 
-const useTopOtaku = (type, limit = '') => {
-  const newLimit = limit === '' ? '' : `?limit=${limit}`
-  const { data } = useQuery({
-    queryKey: `top/${type}${newLimit}}`,
-    queryFn: () => clientApi(`top/${type}${newLimit}`),
-    staleTime: Infinity,
-  })
-  return data?.data
-}
-
 // exemple avec Top
 // a la place de client api = > await graphQLClient.request(TOP_REQUEST, { type:type })
+const useTop = (type) => {
+  const { data } = useQuery({
+    queryKey: `top/${type}`,
+    queryFn: async () =>
+      await graphQLClient.request(TOP_REQUEST, { type: type }),
+    staleTime: 6000,
+  })
+  return data
+}
 
 const useClientApi = (type, id, endpoint) => {
   const { data, status } = useQuery({
@@ -62,7 +62,7 @@ export {
   useGalery,
   useNews,
   useSearch,
-  useTopOtaku,
+  useTop,
   useRecommendation,
   useReviews,
 }
