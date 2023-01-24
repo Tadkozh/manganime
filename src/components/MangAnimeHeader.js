@@ -99,9 +99,10 @@ const MangAnimeHeader = () => {
   const navigate = useNavigate()
 
   const authUser = useAuth()
-  authUser.data !== null
-    ? (settings = settingsConnected)
-    : (settings = settingsNotConnected)
+  // authUser.data !== null
+  //   ? (settings = settingsConnected)
+  //   : (settings = settingsNotConnected)
+  settings = authUser.data !== null ? settingsConnected : settingsNotConnected
 
   return (
     <AppBar position="sticky" sx={{ top: '0' }}>

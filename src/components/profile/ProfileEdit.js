@@ -1,4 +1,4 @@
-import { Alert, Box, Button, TextField } from '@mui/material'
+import { Alert, Box, Button, TextField } from '../ui'
 import React from 'react'
 import { SIGN_UPDATE } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
@@ -11,7 +11,6 @@ const ProfileEdit = ({ user }) => {
 
   const handdleSubmit = (event) => {
     event.preventDefault()
-    console.log('edit profile')
     preValidate(email, password, SIGN_UPDATE, true)
   }
 
@@ -20,7 +19,6 @@ const ProfileEdit = ({ user }) => {
   }
   const handleChangeEmail = (e) => {
     setEmail(e.target.value)
-    console.log('email', e.target.value)
   }
   const handleChangePassword = (e) => {
     setPassword(e.target.value)

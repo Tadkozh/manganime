@@ -30,6 +30,7 @@ const addUser = async (uid, user) => {
     throw new Error(`${addUser.name} error:${error.message}`)
   }
 }
+
 const updateUser = async (uid, user) => {
   const docUser = getDocUser(uid)
   const userToUpdate = getUser(user)
