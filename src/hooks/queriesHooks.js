@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query'
+import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
 import { TOP_REQUEST } from '../graphql/top'
 import { clientApi, graphQLClient } from '../utils/clientApi'
 
@@ -36,14 +37,25 @@ const useSearch = (type, options, page = 1) => {
   return data
 }
 
-// exemple avec Top
-// a la place de client api = > await graphQLClient.request(TOP_REQUEST, { type:type })
+const useFavorites = (type, listFavorites = []) => {
+  const { data, status } = useQuery({
+    queryKey: `favorites/${type}/${listFavorites.join('')}`,
+    queryFn: async () =>
+      await graphQLClient.request(FAVORITES_LIST_REQUEST, {
+        ids: listFavorites,
+        type: type,
+      }),
+    staleTime: Infinity,
+  })
+  return { data: data?.Page.media, status }
+}
+
 const useTop = (type) => {
   const { data } = useQuery({
     queryKey: `top/${type}`,
     queryFn: async () =>
       await graphQLClient.request(TOP_REQUEST, { type: type }),
-    staleTime: 6000,
+    staleTime: Infinity,
   })
   return data
 }
@@ -58,6 +70,7 @@ const useClientApi = (type, id, endpoint) => {
 }
 
 export {
+  useFavorites,
   useInfos,
   useGalery,
   useNews,
