@@ -20,7 +20,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
   })
 
   const theme = useTheme()
-  console.log(theme)
+  // console.log(theme)
 
   const sxTopBox = {
     height: isHomePage ? '502px' : 'inherit',
@@ -35,11 +35,11 @@ const TopView = ({ datas, isHomePage = false, type }) => {
 
   return (
     <Box component="ul" sx={sxTopBox}>
-      {datas?.map((data, index) => {
+      {datas?.Page.media.map((data, index) => {
         return (
           <Paper
             key={index}
-            title={`${data?.genres[0]?.type}-list`}
+            // title={`${data?.genres[0]?.type}-list`}
             component="li"
             sx={{
               backgroundImage: 'inherit',
@@ -48,7 +48,6 @@ const TopView = ({ datas, isHomePage = false, type }) => {
               position: 'relative',
             }}
           >
-            {' '}
             <Typography
               component="p"
               sx={{
@@ -69,7 +68,7 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                 bgcolor: theme.palette.background.topIcon,
               }}
             >
-              #{data?.rank}
+              {/* #{data?.rank} */}
             </Typography>
             <Card
               sx={{
@@ -117,7 +116,8 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                   component="img"
                   height="400"
                   sx={{ objectFit: 'inherit', transition: 'all 0.2s ease' }}
-                  image={data?.images?.jpg?.image_url}
+                  // image={data?.images?.jpg?.image_url}
+                  image={data.coverImage.extraLarge}
                   alt={data?.title_english ?? data?.title}
                 />
                 {showOverlay.status && showOverlay.index === index && (
@@ -147,7 +147,8 @@ const TopView = ({ datas, isHomePage = false, type }) => {
                     marginTop: '0.2em',
                   }}
                 >
-                  {data?.title_english ?? data?.title}
+                  {/* {data?.title_english ?? data?.title} */}
+                  {data.title.romaji}
                 </Typography>
               </CardContent>
             </Card>
