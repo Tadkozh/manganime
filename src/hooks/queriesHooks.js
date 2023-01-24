@@ -38,11 +38,14 @@ const useSearch = (type, options, page = 1) => {
 
 // exemple avec Top
 // a la place de client api = > await graphQLClient.request(TOP_REQUEST, { type:type })
-const useTop = (type) => {
+const useTop = (type, perPage = 12) => {
   const { data } = useQuery({
     queryKey: `top/${type}`,
     queryFn: async () =>
-      await graphQLClient.request(TOP_REQUEST, { type: type }),
+      await graphQLClient.request(TOP_REQUEST, {
+        type: type,
+        perPage: perPage,
+      }),
     staleTime: 6000,
   })
   return data
