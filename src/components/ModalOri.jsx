@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { Box, Button, Cancel, Modal, Typography } from './ui'
 
-// import { Link } from 'react-router-dom'
-// import { ROUTE_LOGIN_REGISTER } from '../commons/constants'
-import { LoginRegister } from './LoginRegister'
+import { FormLogin } from './LoginRegister'
 
 const style = {
   position: 'absolute',
@@ -51,7 +49,7 @@ export default function ModaleOri() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please login or create an account to access this feature
           </Typography>
-          <LoginRegister />
+          <FormLogin />
           {/* <Box
             sx={{
               display: 'flex',
