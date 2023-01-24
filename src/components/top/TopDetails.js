@@ -1,6 +1,7 @@
 import React from 'react'
 import TopView from './TopView'
-import { useTopOtaku } from '../../hooks/queriesHooks'
+// import { useTopOtaku } from '../../hooks/queriesHooks'
+import { useTop } from '../../hooks/queriesHooks'
 import { useTheme } from '@mui/material'
 import {
   Button,
@@ -11,26 +12,28 @@ import {
   Typography,
 } from '../ui'
 
-const rankReducer = (state, action) => {
-  switch (action?.type) {
-    case 'Next':
-      return { minRank: state?.minRank + 1, maxRank: state?.maxRank + 1 }
-    case 'Prev':
-      return { minRank: state?.minRank - 1, maxRank: state?.maxRank - 1 }
-    default:
-      return { minRank: 0, maxRank: 4 }
-  }
-}
+// const rankReducer = (state, action) => {
+//   switch (action?.type) {
+//     case 'Next':
+//       return { minRank: state?.minRank + 1, maxRank: state?.maxRank + 1 }
+//     case 'Prev':
+//       return { minRank: state?.minRank - 1, maxRank: state?.maxRank - 1 }
+//     default:
+//       return { minRank: 0, maxRank: 4 }
+//   }
+// }
 
 const TopDetails = ({ type, isHomePage = false }) => {
-  const topDatas = useTopOtaku(type)
-  const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
+  // const topDatas = useTopOtaku(type)
+  const topDatas = useTop(type)
+  console.log(topDatas)
+  // const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas?.length
-  const [rank, dispatch] = React.useReducer(rankReducer, {
-    minRank: 0,
-    maxRank: 4,
-  })
+  // const [rank, dispatch] = React.useReducer(rankReducer, {
+  //   minRank: 0,
+  //   maxRank: 4,
+  // })
   const theme = useTheme()
   const sxTopContainerHomePage = {
     maxWidth: '1600px',
@@ -42,22 +45,22 @@ const TopDetails = ({ type, isHomePage = false }) => {
       '0px 2px 4px 2px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
   }
 
-  React.useEffect(() => {
-    setFilteredTopDatas(
-      topDatas?.filter(
-        (data) => data?.rank > rank?.minRank && data?.rank <= rank?.maxRank,
-      ),
-    )
-  }, [rank?.maxRank, rank?.minRank, topDatas])
+  // React.useEffect(() => {
+  //   setFilteredTopDatas(
+  //     topDatas?.filter(
+  //       (data) => data?.rank > rank?.minRank && data?.rank <= rank?.maxRank,
+  //     ),
+  //   )
+  // }, [rank?.maxRank, rank?.minRank, topDatas])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    dispatch({ type: 'Next' })
+    // dispatch({ type: 'Next' })
   }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
-    dispatch({ type: 'Prev' })
+    // dispatch({ type: 'Prev' })
   }
 
   return (
@@ -90,7 +93,8 @@ const TopDetails = ({ type, isHomePage = false }) => {
                   ':hover': { bgcolor: 'rgba(68,68,68,0.5)' },
                 }}
                 size="small"
-                onClick={filteredTopDatas?.length === 4 ? handleNext : null}
+                // onClick={filteredTopDatas?.length === 4 ? handleNext : null}
+                onClick={handleNext}
                 disabled={activeStep === maxSteps - 1}
               >
                 <KeyboardArrowRight sx={{ fontSize: '4em' }} />
@@ -126,7 +130,8 @@ const TopDetails = ({ type, isHomePage = false }) => {
         {topDatas ? (
           <TopView
             isHomePage={isHomePage ? true : false}
-            datas={isHomePage ? filteredTopDatas : topDatas}
+            // datas={isHomePage ? filteredTopDatas : topDatas}
+            datas={topDatas}
             type={type}
           />
         ) : null}

@@ -17,26 +17,26 @@ import {
   SUCCESS,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
-import { createUser, getUserByUid } from '../database/operations'
+import { addUser, getUserById } from '../database/operations'
 import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
 import { errorAuth, validateForm } from '../utils/helper'
 
 const AuthContext = React.createContext()
 
-const getUserUid = () => {
-  console.log(auth.currentUser)
-  return auth.currentUser
+const getUid = () => {
+  return auth.currentUser.uid
 }
 
 const storeNewUser = (data) => {
   if (data != null) {
-    createUser(data.user)
+    const uid = getUid()
+    addUser(uid, data.user)
   }
 }
 
 const getUserConnect = async (currentUser) => {
-  const user = await getUserByUid(currentUser.uid)
+  const user = await getUserById(currentUser.uid)
   return user
 }
 const AuthProviders = ({ children }) => {
@@ -54,6 +54,7 @@ const AuthProviders = ({ children }) => {
       })
       return unsubscribe
     }
+
   }, [data, execute, setData])
 
   const register = React.useCallback(
@@ -146,7 +147,8 @@ const AuthProviders = ({ children }) => {
   )
 
   const values = React.useMemo(
-    () => ({ data, error, status, logout, preValidate, getUserUid }),
+
+    () => ({ data, error, status, logout, preValidate, getUid }),
     [data, error, status, logout, preValidate],
   )
 

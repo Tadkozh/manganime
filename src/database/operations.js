@@ -1,15 +1,33 @@
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore'
 import { USER_COLLECTION } from '../commons/constants'
 import { db } from '../firebase-config'
 
-const getUserByUid = async (uid) => {
+const getDocUser = (uid) => doc(collection(db, USER_COLLECTION), uid)
+
+const getUser = (data) => ({
+  email: data.email,
+  picture: data?.picture ?? '',
+  name: data?.name ?? 'user',
+  favorite_anime: data?.favorite_anime ?? [],
+  favorite_manga: data?.favorite_manga ?? [],
+  anime_opinion: data?.anime_opinion ?? [],
+  manga_opinion: data?.manga_opinion ?? [],
+})
+
+const addUser = async (uid, user) => {
+  const docUser = getDocUser(uid)
+  const userToAdd = getUser(user)
   try {
-    const docRef = doc(collection(db, USER_COLLECTION), uid)
-    const docSnap = await getDoc(docRef)
-    const user = docSnap.data()
-    return user
-  } catch (e) {
-    throw new Error('addUser operation fail')
+    await setDoc(docUser, userToAdd)
+  } catch (error) {
+    throw new Error(`${addUser.name} error:${error.message}`)
   }
 }
 
@@ -38,27 +56,34 @@ const createUser = (data) => {
     favorite_manga: data?.favorite_manga ?? [], // favoriteManga
     anime_opinion: data?.anime_opinion ?? [], // animeOpinion
     manga_opinion: data?.manga_opinion ?? [],
-  }
-  addUser(user)
-}
 
-// todo : modifier pour la fusion (update)
-const addUser = async (user) => {
+const updateUser = async (uid, user) => {
+  const docUser = getDocUser(uid)
+  const userToUpdate = getUser(user)
   try {
-    const docUser = doc(collection(db, USER_COLLECTION), user.uid)
-
-    await setDoc(docUser, {
-      email: user.email,
-      picture: user.picture,
-      name: user.name,
-      favorite_anime: user.favorite_anime,
-      favorite_manga: user.favorite_manga,
-      anime_opinion: user.anime_opinion,
-      manga_opinion: user.manga_opinion,
-    })
-  } catch (e) {
-    throw new Error(`addUser operation fail ${e}`)
+    await updateDoc(docUser, userToUpdate)
+  } catch (error) {
+    throw new Error(`${updateUser.name} error:${error.message}`)
+  }
+}
+const deleteUser = async (uid) => {
+  const docUser = getDocUser(uid)
+  try {
+    await deleteDoc(docUser)
+  } catch (error) {
+    throw new Error(`${deleteUser.name} error:${error.message}`)
   }
 }
 
-export { getUserByUid, createUser }
+const getUserById = async (uid) => {
+  const docUser = getDocUser(uid)
+  try {
+    const docSnap = await getDoc(docUser)
+    const user = docSnap.data()
+    return user
+  } catch (error) {
+    throw new Error(`${getUserById.name} error:${error.message}`)
+  }
+}
+
+export { addUser, updateUser, deleteUser, getUserById }

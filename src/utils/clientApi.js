@@ -23,7 +23,7 @@ const clientApi = async (endpoint) => {
 const graphQLClient = new GraphQLClient(ANIME_LIST_API, {
   headers: {
     'Content-Type': 'application/json',
-    Accept: 'application/json',
+    'Accept': 'application/json',
   },
 })
 
