@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { JIKAN_API } from '../commons/constants'
+import { GraphQLClient } from 'graphql-request'
+import { ANIME_LIST_API, JIKAN_API } from '../commons/constants'
 
 const clientApi = async (endpoint) => {
   console.log('REQUEST', `${JIKAN_API}/${endpoint}`)
@@ -19,4 +20,11 @@ const clientApi = async (endpoint) => {
     })
 }
 
-export { clientApi }
+const graphQLClient = new GraphQLClient(ANIME_LIST_API, {
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+})
+
+export { clientApi, graphQLClient }

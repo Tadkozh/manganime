@@ -1,6 +1,6 @@
 import React from 'react'
 import TopView from './TopView'
-import { useTopOtaku } from '../../hooks/queriesHooks'
+import { useTop } from '../../hooks/queriesHooks'
 import { useTheme } from '@mui/material'
 import {
   Button,
@@ -23,7 +23,8 @@ const rankReducer = (state, action) => {
 }
 
 const TopDetails = ({ type, isHomePage = false }) => {
-  const topDatas = useTopOtaku(type)
+  const topDatas = useTop(type)
+  console.log(topDatas)
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas?.length
@@ -43,11 +44,11 @@ const TopDetails = ({ type, isHomePage = false }) => {
   }
 
   React.useEffect(() => {
-    setFilteredTopDatas(
-      topDatas?.filter(
-        (data) => data?.rank > rank?.minRank && data?.rank <= rank?.maxRank,
-      ),
-    )
+    if (topDatas) {
+      setFilteredTopDatas(
+        topDatas?.Page?.media?.slice(rank?.minRank, rank?.maxRank),
+      )
+    }
   }, [rank?.maxRank, rank?.minRank, topDatas])
 
   const handleNext = () => {
@@ -93,7 +94,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
                 onClick={filteredTopDatas?.length === 4 ? handleNext : null}
                 disabled={activeStep === maxSteps - 1}
               >
-                <KeyboardArrowRight />
+                <KeyboardArrowRight sx={{ fontSize: '4em' }} />
               </Button>
             }
             backButton={
@@ -107,7 +108,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
                 onClick={handleBack}
                 disabled={activeStep === 0}
               >
-                <KeyboardArrowLeft />
+                <KeyboardArrowLeft sx={{ fontSize: '4em' }} />
               </Button>
             }
           />
@@ -119,6 +120,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             marginLeft: '1em',
+            textShadow: `${theme.palette.background.topIcon} 1px 0 0`,
           }}
         >
           Top {type}
@@ -126,8 +128,9 @@ const TopDetails = ({ type, isHomePage = false }) => {
         {topDatas ? (
           <TopView
             isHomePage={isHomePage ? true : false}
-            datas={isHomePage ? filteredTopDatas : topDatas}
+            datas={isHomePage ? filteredTopDatas : topDatas?.Page?.media}
             type={type}
+            rank={rank.minRank + 1}
           />
         ) : null}
       </Container>

@@ -134,7 +134,7 @@ const LoginRegister = ({ signup = true }) => {
     </>
   )
 }
-const FormLogin = ({ preValidate, create, status }) => {
+export const FormLogin = ({ preValidate, create, status }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   // eslint-disable-next-line no-unused-vars

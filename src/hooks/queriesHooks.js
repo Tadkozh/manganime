@@ -1,5 +1,7 @@
 import { useQuery } from 'react-query'
-import { clientApi } from '../utils/clientApi'
+import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
+import { TOP_REQUEST } from '../graphql/top'
+import { clientApi, graphQLClient } from '../utils/clientApi'
 
 const useInfos = (type, id) => {
   const { data, status } = useClientApi(type, id, 'full')
@@ -35,26 +37,33 @@ const useSearch = (type, options, page = 1) => {
   return data
 }
 
-const useTopOtaku = (type, limit = '') => {
-  const newLimit = limit === '' ? '' : `?limit=${limit}`
-  const { data } = useQuery({
-    queryKey: `top/${type}${newLimit}}`,
-    queryFn: () => clientApi(`top/${type}${newLimit}`),
+const useFavorites = (type, listFavorites = []) => {
+  const { data, status } = useQuery({
+    queryKey: `favorites/${type}/${listFavorites.join('')}`,
+    queryFn: async () =>
+      await graphQLClient.request(FAVORITES_LIST_REQUEST, {
+        ids: listFavorites,
+        type: type,
+      }),
     staleTime: Infinity,
   })
-  return data?.data
+  return { data: data?.Page.media, status }
 }
 
-const useWatch = (type, options = '', limit = '') => {
-  const newOptions = options === '' ? '' : `/${options}`
-  const newLimit = limit === '' ? '' : `?limit=${limit}`
+const useTop = (type, perPage = 12) => {
   const { data } = useQuery({
-    queryKey: `watch/${type}${newOptions}${newLimit}`,
-    queryFn: () => clientApi(`watch/${type}${newOptions}${newLimit}`),
-    stateTime: Infinity,
+    queryKey: `top/${type}`,
+    queryFn: async () =>
+      await graphQLClient.request(TOP_REQUEST, {
+        type: type,
+        perPage: perPage,
+      }),
+    staleTime: Infinity,
   })
-  return data?.data
+  return data
 }
+
+
 
 const useClientApi = (type, id, endpoint) => {
   const { data, status } = useQuery({
@@ -66,12 +75,12 @@ const useClientApi = (type, id, endpoint) => {
 }
 
 export {
+  useFavorites,
   useInfos,
   useGalery,
   useNews,
   useSearch,
-  useTopOtaku,
-  useWatch,
+  useTop,
   useRecommendation,
   useReviews,
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ANIME } from '../../commons/constants'
+import { ANIME, ID } from '../../commons/constants'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 import { useAuth } from '../../context/AuthContext'
 
@@ -68,7 +68,7 @@ function RateInfos({ info, rank, changeRank }) {
   return (
     <div className="rating">
       <GlobalRate info={info} rank={rank} />
-      <PersonalRate rank={rank} changeRank={changeRank} />
+      <PersonalRate info={info} rank={rank} changeRank={changeRank} />
     </div>
   )
 }
@@ -98,22 +98,49 @@ function GlobalRate({ info, rank }) {
   )
 }
 
-function PersonalRate({ rank, changeRank }) {
+function PersonalRate({ info, rank, changeRank }) {
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
-  const authUser = useAuth()
+  const [value, setValue] = useState(0)
+  console.log(value)
+
+  const { data: authUser, getUserUid } = useAuth()
+  let { type } = useParams()
 
   const handleClick = () => {
     // changeRank(!rank)
     console.log('authUser', authUser)
-    console.log('authUser.data', authUser.data)
-    console.log('useAuth', useAuth)
-    if (authUser.data === null) {
+    if (authUser === null) {
       handleOpenModal()
     } else {
       changeRank(!rank)
+
+      const newUser = authUser
+      const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
+      const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
+      console.log('type pour opinion', type)
+      console.log('type_opinion', type_opinion)
+
+      const isAnimeId = newUser[type_opinion].some(
+        (opinion) => opinion.anime_id === info.mal_id,
+      )
+      if (isAnimeId) {
+        newUser[type_opinion].map((opinion) => {
+          if (opinion.anime_id === info.mal_id) {
+            opinion.rate = value
+          }
+        })
+      } else {
+        const ratedb = { rate: value, [type_id]: info.mal_id }
+        console.log('ratedb', ratedb)
+        newUser[type_opinion].push(ratedb)
+      }
+      const truc = getUserUid()
+      console.log('newUser', newUser)
+      console.log('info', info)
+      console.log('type', type)
     }
   }
 
@@ -125,6 +152,10 @@ function PersonalRate({ rank, changeRank }) {
         defaultValue={null}
         precision={0.5}
         readOnly={rank ? true : false}
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue)
+        }}
       />
       <div>
         <Button

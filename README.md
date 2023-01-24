@@ -1,5 +1,10 @@
 # Projet React Mastery - Anime | Manga
 
+**API :**
+
+- Jikan API (REST)
+- AniList Api (GraphQL)
+
 **Outils utilisés :**
 
 - Notion
