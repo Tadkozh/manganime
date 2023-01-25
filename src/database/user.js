@@ -8,7 +8,7 @@ const updateProfileUser = (user, userCurrent) => {
   newUser.name = user.name
   return newUser
 }
-const updateRanking = (type, info, value, user) => {
+const updateRating = (type, info, rating, user) => {
   const newUser = structuredClone(user)
   const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
   const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
@@ -19,11 +19,11 @@ const updateRanking = (type, info, value, user) => {
   if (isAnimeId) {
     newUser[type_opinion].foreach((opinion) => {
       if (opinion.anime_id === info.mal_id) {
-        opinion.rate = value
+        opinion.rate = rating
       }
     })
   } else {
-    const ratedb = { rate: value, [type_id]: info.mal_id }
+    const ratedb = { rate: rating, [type_id]: info.mal_id }
     newUser[type_opinion].push(ratedb)
   }
   updateUserCurrent(newUser)
@@ -48,7 +48,7 @@ const getUser = async (currentUser) => {
 export {
   updateProfileUser,
   updateUserCurrent,
-  updateRanking,
+  updateRating,
   getUser,
   storeUser,
 }

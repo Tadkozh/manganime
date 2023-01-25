@@ -4,7 +4,7 @@ import { ANIME } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
-import { updateRanking } from '../../database/user'
+import { updateRating } from '../../database/user'
 import Modale from './../Modal'
 import InfoGalery from './InfoGalery'
 
@@ -115,7 +115,7 @@ function PersonalRate({ info, rank, changeRank }) {
       handleOpenModal()
     } else {
       changeRank(!rank)
-      updateRanking(type, info, value, authUser)
+      updateRating(type, info, value, authUser)
     }
   }
 
