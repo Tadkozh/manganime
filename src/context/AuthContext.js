@@ -15,14 +15,13 @@ import {
   SUCCESS,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
-import { getUserById } from '../database/operations'
 import {
-  getUser,
+  getUserbyUid,
   storeUser,
   updateProfileUser,
   updateUserCurrent,
 } from '../database/user'
-import { auth, getUid } from '../firebase-config'
+import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
 import {
   errorAuth,
@@ -40,7 +39,7 @@ const AuthProviders = ({ children }) => {
     if (!data) {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
-          execute(getUser(currentUser))
+          execute(getUserbyUid())
         } else {
           setData(null)
         }
@@ -85,7 +84,7 @@ const AuthProviders = ({ children }) => {
       await Promise.all(promises)
         .then(async () => {
           await updateUserCurrent(user)
-          execute(getUserById(getUid()))
+          execute(getUserbyUid())
         })
         .catch((err) => {
           if (err.code === AUTH_REQUIRE_RECENT_LOGIN) {
@@ -141,9 +140,9 @@ const AuthProviders = ({ children }) => {
       logout,
       validationSign,
       validationProfile,
-      getUid,
+      execute,
     }),
-    [data, error, status, logout, validationSign, validationProfile],
+    [data, error, status, execute, logout, validationSign, validationProfile],
   )
 
   if (status === LOADING) {
