@@ -15,6 +15,7 @@ import {
   Skeleton,
   Switch,
   styled,
+  TextareaAutosize,
 } from '@mui/material'
 
 import {
@@ -133,6 +134,7 @@ export {
   Tab,
   Tabs,
   TextField,
+  TextareaAutosize,
   Toolbar,
   Tooltip,
   Typography,

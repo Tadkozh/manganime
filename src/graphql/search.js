@@ -6,9 +6,9 @@ export const SEARCH_REQUEST = gql`
     $perPage: Int
     $score: Int
     $popularity: Int
-    $status: MediaStatus
+    $status: [MediaStatus]
     $format: MediaFormat
-    $sort: MediaSort
+    $sort: [MediaSort]
     $search: String
   ) {
     Page(page: $page, perPage: $perPage) {

@@ -2,6 +2,7 @@
   "user": {
     "email": "example@gmail.com",
     "picture": "picture.jpeg",
+    "bio": "I'm a test for a bio",
     "name": "user",
     "favorite_anime": [],
     "favorite_manga": [],
