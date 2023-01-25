@@ -13,7 +13,7 @@ const getDocUser = (uid) => doc(collection(db, USER_COLLECTION), uid)
 
 const getUser = (data) => ({
   email: data.email,
-  bios: data?.bios ?? '',
+  bio: data?.bio ?? '',
   picture: data?.picture ?? '',
   name: data?.name ?? 'user',
   favorite_anime: data?.favorite_anime ?? [],
