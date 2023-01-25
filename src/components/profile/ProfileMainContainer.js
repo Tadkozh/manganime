@@ -13,11 +13,13 @@ import {
   green,
   grey,
   Grid,
+  Link,
   Paper,
   red,
   Typography,
   yellow,
 } from '../ui'
+import { ProfileBioForm } from './ProfileBioForm'
 import { ProfileEdit } from './ProfileEdit'
 import { ProfileStats } from './ProfileStats'
 
@@ -51,9 +53,16 @@ const stats = [
 
 const ProfileMainContainer = ({ user }) => {
   const [editProfile, setEditProfile] = React.useState(false)
+  const [isDisplayBioForm, setIsDisplayBioForm] = React.useState(false)
 
   const handleChangeProfile = () => {
     setEditProfile(!editProfile)
+  }
+  const openFormBio = () => {
+    setIsDisplayBioForm(true)
+  }
+  const closeFormBio = () => {
+    setIsDisplayBioForm(false)
   }
   return (
     <Grid item xs={10} md={8} sx={{ p: 1 }}>
@@ -76,7 +85,7 @@ const ProfileMainContainer = ({ user }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Typography variant="h4">Bios, welcome {user.name}</Typography>
+          <Typography variant="h4">Welcome {user.name}</Typography>
           <Button
             variant="outlined"
             color="primary"
@@ -85,12 +94,31 @@ const ProfileMainContainer = ({ user }) => {
             Change Profile
           </Button>
         </Box>
-        <Typography variant="body1" sx={{ my: 1, alignSelf: 'flex-start' }}>
-          No biography yet. Write it now.
-        </Typography>
+        {isDisplayBioForm ? (
+          <ProfileBioForm closeBio={closeFormBio} user={user} />
+        ) : (
+          <ProfileBio bio={user.bio} openFormBio={openFormBio} />
+        )}
         {editProfile ? <ProfileEdit user={user} /> : <ProfileMainContent />}
       </Paper>
     </Grid>
+  )
+}
+const ProfileBio = ({ bio, openFormBio }) => {
+  return !bio ? (
+    <Typography variant="body1" sx={{ my: 1, alignSelf: 'flex-start' }}>
+      No biography yet.
+      <Link sx={{ cursor: 'pointer' }} onClick={() => openFormBio()}>
+        Write it now.
+      </Link>
+    </Typography>
+  ) : (
+    <Typography variant="body1" sx={{ my: 1, alignSelf: 'flex-start' }}>
+      {bio}
+      <Link sx={{ cursor: 'pointer', ml: 1 }} onClick={() => openFormBio()}>
+        Change Bio
+      </Link>
+    </Typography>
   )
 }
 
@@ -127,7 +155,10 @@ const ProfileMainType = ({ name }) => {
   )
 }
 const getLastFavorites = (array) => {
-  return array.slice(array.length - 3)
+  if (array.length > 3) {
+    return array.slice(array.length - 3)
+  }
+  return array
 }
 
 const Stats = ({ stats, type }) => {
@@ -147,11 +178,23 @@ const LastUpdate = ({ type, lastest }) => {
     return (
       <Grid item xs={12} md={6}>
         <Typography variant="h6">Last {type} Updates</Typography>
-        <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
-          {items.map((item, key) => (
-            <PosterImage data={item} key={key} />
-          ))}
-        </Card>
+
+        {items.length === 0 ? (
+          <>
+            <Typography variant="body1" sx={{ m: 1 }}>
+              No favourites.
+            </Typography>
+            <Typography variant="body1" sx={{ m: 1 }}>
+              Add favourites to see them here.
+            </Typography>
+          </>
+        ) : (
+          items.map((item, key) => (
+            <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
+              <PosterImage data={item} key={key} />
+            </Card>
+          ))
+        )}
       </Grid>
     )
   }

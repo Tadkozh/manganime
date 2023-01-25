@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ANIME, ID } from '../../commons/constants'
-import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
+import { ANIME } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
-import { updateUser } from '../../database/operations'
+import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
-import InfoGalery from './InfoGalery'
+import { updateRating } from '../../database/user'
+import { updateFavorite } from '../../database/user'
 import Modale from './../Modal'
+import InfoGalery from './InfoGalery'
 
 function InfoPresentation({ info }) {
   let { type } = useParams()
@@ -32,21 +33,45 @@ function PresentationTitle({ info }) {
     <div className="titles">
       <h2>{info.title_english ?? info.titles[0].title}</h2>
       <p className="japaneseTitle">{info.title_japanese}</p>
-      <FavoriteIcon favorites={info.favorites} />
+      <FavoriteIcon info={info} favorites={info.favorites} />
     </div>
   )
 }
 
-function FavoriteIcon({ favorites }) {
+function FavoriteIcon({ info, favorites }) {
   const [isFav, setIsFav] = useState(false)
+
+  const [open, setOpen] = useState(false)
+  const handleOpenModal = () => setOpen(true)
+  const handleCloseModal = () => setOpen(false)
+
+  const { data: authUser } = useAuth()
+  let { type } = useParams()
+
+  const handleClickFav = () => {
+    if (authUser === null) {
+      handleOpenModal()
+    } else {
+      setIsFav(!isFav)
+      updateFavorite(type, info, authUser)
+    }
+  }
 
   return (
     <div className="favIcon">
       <FavoriteRoundedIcon
         fontSize="large"
-        onClick={() => setIsFav(!isFav)}
+        // onClick={() => setIsFav(!isFav)}
+        onClick={handleClickFav}
         className={isFav ? 'star fav' : 'star notFav'}
       />
+      {open && (
+        <Modale
+          open={open}
+          handleOpenModal={handleOpenModal}
+          handleCloseModal={handleCloseModal}
+        />
+      )}
       <p>{isFav ? favorites + 1 : favorites}</p>
     </div>
   )
@@ -104,41 +129,17 @@ function PersonalRate({ info, rank, changeRank }) {
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
-  const [value, setValue] = useState(0)
-  console.log(value)
+  const [nbStar, setNbStar] = useState(0)
 
-  const { data: authUser, getUid } = useAuth()
+  const { data: authUser } = useAuth()
   let { type } = useParams()
 
-  const handleClick = () => {
-    // changeRank(!rank)
-    console.log('authUser', authUser)
+  const handleClickRate = () => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       changeRank(!rank)
-
-      const newUser = structuredClone(authUser)
-      const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
-      const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
-
-      const isAnimeId = newUser[type_opinion].some(
-        (opinion) => opinion.anime_id === info.mal_id,
-      )
-      if (isAnimeId) {
-        newUser[type_opinion].map((opinion) => {
-          if (opinion.anime_id === info.mal_id) {
-            opinion.rate = value
-          }
-        })
-      } else {
-        const ratedb = { rate: value, [type_id]: info.mal_id }
-        newUser[type_opinion].push(ratedb)
-      }
-      const userId = getUid()
-      console.log('newUser', newUser)
-
-      updateUser(userId, newUser)
+      updateRating(type, info, nbStar, authUser)
     }
   }
 
@@ -150,9 +151,9 @@ function PersonalRate({ info, rank, changeRank }) {
         defaultValue={null}
         precision={0.5}
         readOnly={rank ? true : false}
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue)
+        value={nbStar}
+        onChange={(event, newNbStar) => {
+          setNbStar(newNbStar)
         }}
       />
       <div>
@@ -160,10 +161,9 @@ function PersonalRate({ info, rank, changeRank }) {
           variant="contained"
           size="small"
           color={rank ? 'error' : 'success'}
-          // onClick={() => changeRank(!rank)}
-          onClick={handleClick}
+          onClick={handleClickRate}
         >
-          {rank ? 'Cancel the note' : 'Submit the note'}
+          {rank ? 'Cancel' : 'Submit your note'}
         </Button>
         {open && (
           <Modale
