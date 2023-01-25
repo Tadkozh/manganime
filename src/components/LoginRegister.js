@@ -73,7 +73,7 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const { preValidate, error, data, status } = useAuth()
+  const { validationSign, error, data, status } = useAuth()
   const [imageRandom] = React.useState(getRandomNumber())
 
   const handleSignUp = () => {
@@ -109,7 +109,7 @@ const LoginRegister = ({ signup = true }) => {
             </Typography>
             <DialogContent>
               <FormLogin
-                preValidate={preValidate}
+                validationSign={validationSign}
                 create={create}
                 status={status}
               />
@@ -134,7 +134,7 @@ const LoginRegister = ({ signup = true }) => {
     </>
   )
 }
-export const FormLogin = ({ preValidate, create, status }) => {
+export const FormLogin = ({ validationSign, create, status }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   // eslint-disable-next-line no-unused-vars
@@ -148,8 +148,8 @@ export const FormLogin = ({ preValidate, create, status }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     create
-      ? preValidate(email, password, SIGN_IN)
-      : preValidate(email, password, SIGN_UP)
+      ? validationSign(email, password, SIGN_IN)
+      : validationSign(email, password, SIGN_UP)
   }
 
   return (
