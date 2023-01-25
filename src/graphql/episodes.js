@@ -9,10 +9,6 @@ export const EPISODE_REQUEST = gql`
           romaji
         }
         bannerImage
-        coverImage {
-          extraLarge
-          medium
-        }
         streamingEpisodes {
           title
           thumbnail
