@@ -46,7 +46,7 @@ const updateUserCurrent = async (newUser) => {
   await updateUser(newUser)
 }
 
-const getUserbyId = async () => {
+const getUserbyUid = async () => {
   const user = await getUserById()
   return user
 }
@@ -56,6 +56,6 @@ export {
   updateProfileUser,
   updateUserCurrent,
   updateRating,
-  getUserbyId,
+  getUserbyUid,
   storeUser,
 }
