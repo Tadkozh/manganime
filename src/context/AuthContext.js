@@ -15,8 +15,14 @@ import {
   SUCCESS,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
-import { addUser, getUserById, updateUser } from '../database/operations'
-import { auth } from '../firebase-config'
+import { getUserById } from '../database/operations'
+import {
+  getUser,
+  storeUser,
+  updateProfileUser,
+  updateUserCurrent,
+} from '../database/user'
+import { auth, getUid } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
 import {
   errorAuth,
@@ -26,25 +32,6 @@ import {
 
 const AuthContext = React.createContext()
 
-const getUid = () => {
-  return auth.currentUser.uid
-}
-
-const storeNewUser = (data) => {
-  if (data != null) {
-    const uid = getUid()
-    addUser(uid, data.user)
-  }
-}
-const updateCurrentUser = async (newUser) => {
-  const uid = getUid()
-  await updateUser(uid, newUser)
-}
-
-const getUserConnect = async (currentUser) => {
-  const user = await getUserById(currentUser.uid)
-  return user
-}
 const AuthProviders = ({ children }) => {
   const { data, status, error, setError, setData, execute } = useUserData()
 
@@ -53,7 +40,7 @@ const AuthProviders = ({ children }) => {
     if (!data) {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
-          execute(getUserConnect(currentUser))
+          execute(getUser(currentUser))
         } else {
           setData(null)
         }
@@ -69,7 +56,7 @@ const AuthProviders = ({ children }) => {
         email,
         password,
       ).catch((err) => setError(errorAuth(err)))
-      storeNewUser(user)
+      storeUser(user)
     },
     [setError],
   )
@@ -97,8 +84,8 @@ const AuthProviders = ({ children }) => {
       )
       await Promise.all(promises)
         .then(async () => {
-          await updateCurrentUser(user)
-          execute(getUserById())
+          await updateUserCurrent(user)
+          execute(getUserById(getUid()))
         })
         .catch((err) => {
           if (err.code === AUTH_REQUIRE_RECENT_LOGIN) {
@@ -128,10 +115,7 @@ const AuthProviders = ({ children }) => {
         setError(errorForm)
         return
       }
-      const newUser = structuredClone(userCurrent)
-      newUser.email = userToUpdate.email
-      newUser.password = userToUpdate.password
-      newUser.name = userToUpdate.username
+      const newUser = updateProfileUser(userToUpdate, userCurrent)
       updateUserAuth(newUser)
     },
     [setError, updateUserAuth],
