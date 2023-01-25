@@ -155,7 +155,10 @@ const ProfileMainType = ({ name }) => {
   )
 }
 const getLastFavorites = (array) => {
-  return array.slice(array.length - 3)
+  if (array.length > 3) {
+    return array.slice(array.length - 3)
+  }
+  return array
 }
 
 const Stats = ({ stats, type }) => {
