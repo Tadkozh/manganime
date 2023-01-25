@@ -147,11 +147,23 @@ const LastUpdate = ({ type, lastest }) => {
     return (
       <Grid item xs={12} md={6}>
         <Typography variant="h6">Last {type} Updates</Typography>
-        <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
-          {items.map((item, key) => (
-            <PosterImage data={item} key={key} />
-          ))}
-        </Card>
+
+        {items.length === 0 ? (
+          <>
+            <Typography variant="body1" sx={{ m: 1 }}>
+              No favourites.
+            </Typography>
+            <Typography variant="body1" sx={{ m: 1 }}>
+              Add favourites to see them here.
+            </Typography>
+          </>
+        ) : (
+          items.map((item, key) => (
+            <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
+              <PosterImage data={item} key={key} />
+            </Card>
+          ))
+        )}
       </Grid>
     )
   }
