@@ -37,7 +37,7 @@ const validationSignForm = (email, password) => {
 const validationProfileForm = (newUser) => {
   const errorEmail = validationEmail(newUser.email)
   const errorPassword = validationPassword(newUser.password, true)
-  const errorUsername = validationUsername(newUser.username)
+  const errorUsername = validationUsername(newUser.name)
   if (errorEmail) {
     return errorEmail
   }
@@ -52,14 +52,10 @@ const validationProfileForm = (newUser) => {
 
 const validationUsername = (username) => {
   if (username === '') {
-    const error = new Error(USERNAME_REQUIRED)
-    error.status = 400
-    return error
+    return errorGenerator(USERNAME_REQUIRED)
   }
   if (username.length < 3) {
-    const error = new Error(USERNAME_TOO_SHORT)
-    error.status = 400
-    return error
+    return errorGenerator(USERNAME_TOO_SHORT)
   }
   return null
 }
@@ -69,14 +65,10 @@ const validationEmail = (email) => {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const rex = new RegExp(expression, 'g')
   if (!email) {
-    const error = new Error(EMAIL_REQUIRED)
-    error.status = 400
-    return error
+    return errorGenerator(EMAIL_REQUIRED)
   }
   if (!rex.test(email)) {
-    const error = new Error(EMAIL_NOT_VALID)
-    error.status = 400
-    return error
+    return errorGenerator(EMAIL_NOT_VALID)
   }
   return null
 }
@@ -84,17 +76,18 @@ const validationEmail = (email) => {
 const validationPassword = (password, isProfile = false) => {
   if (!isProfile || (isProfile && password)) {
     if (!password) {
-      const error = new Error(PASSWORD_REQUIRED)
-      error.status = 400
-      return error
+      return errorGenerator(PASSWORD_REQUIRED)
     }
     if (password.length < 6) {
-      const error = new Error(PASSWORD_REQUIREMENT)
-      error.status = 400
-      return error
+      return errorGenerator(PASSWORD_REQUIREMENT)
     }
   }
   return null
+}
+const errorGenerator = (message, status = 400) => {
+  const error = new Error(message)
+  error.status = status
+  return error
 }
 
 const errorAuth = (error) => {
