@@ -2,16 +2,21 @@ import { gql } from 'graphql-request'
 
 export const SEARCH_REQUEST = gql`
   query SearchMangAnime(
-    $page: Int
-    $perPage: Int
+    $search: String
+    $format: MediaFormat
+    $status: [MediaStatus]
     $score: Int
     $popularity: Int
-    $status: [MediaStatus]
-    $format: MediaFormat
     $sort: [MediaSort]
-    $search: String
+    $page: Int
+    $perPage: Int
   ) {
     Page(page: $page, perPage: $perPage) {
+      pageInfo {
+        currentPage
+        lastPage
+        total
+      }
       media(
         averageScore_greater: $score
         popularity_greater: $popularity
@@ -22,12 +27,22 @@ export const SEARCH_REQUEST = gql`
       ) {
         id
         title {
+          english
           romaji
+          native
         }
         coverImage {
-          extraLarge
+          large
+          medium
         }
         genres
+
+        format
+        status
+
+        averageScore
+
+        isAdult
       }
     }
   }

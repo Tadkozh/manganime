@@ -16,7 +16,10 @@ import InfoSynopsis from './InfoSynopsis'
 
 function Infos() {
   let { type, id } = useParams()
-  const { data: info } = useInfos(type, id)
+  const info = useInfos(type, id)
+
+  console.log('data', info)
+  console.log('title', info?.Page?.media[0]?.title?.romaji)
 
   return (
     <>
@@ -26,8 +29,8 @@ function Infos() {
           <>
             <div className="info">
               <div className="header">
-                <InfoPresentation info={info} />
-                <InfoSynopsis synopsis={info.synopsis} />
+                <InfoPresentation info={info.Page.media[0]} />
+                {/* <InfoSynopsis synopsis={info.synopsis} /> */}
 
                 {/* {getInfo?.data?.trailer?.embed_url ? (
                   <embed
@@ -39,11 +42,11 @@ function Infos() {
                   <p>No trailer was found.</p>
                 )} */}
 
-                <InfoDetails info={info} />
+                {/* <InfoDetails info={info.Page.media[0]} /> */}
               </div>
-              <InfoStory background={info.background} />
+              {/* <InfoStory background={info.Page.media[0]} /> */}
               <InfoForm />
-              <InfoReviews />
+              {/* <InfoReviews /> */}
             </div>
           </>
         ) : null}

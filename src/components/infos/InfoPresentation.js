@@ -17,12 +17,12 @@ function InfoPresentation({ info }) {
     <>
       <div className="presentation">
         <PresentationTitle info={info} />
-        <InfoGalery
-          mainImage={info.images.jpg.image_url}
-          mainLargeImage={info.images.jpg.large_image_url}
-        />
-        {type === ANIME ? <Trailer streaming={info.streaming} /> : null}
-        <RateInfos info={info} rank={rank} changeRank={setRank} />
+        {/* <InfoGalery
+          mainImage={info.coverImage.large}
+          mainLargeImage={info.coverImage.extraLarge}
+        /> */}
+        {type === ANIME ? <Trailer streaming={info.streamingEpisodes} /> : null}
+        {/* <RateInfos info={info} rank={rank} changeRank={setRank} /> */}
       </div>
     </>
   )
@@ -31,14 +31,14 @@ function InfoPresentation({ info }) {
 function PresentationTitle({ info }) {
   return (
     <div className="titles">
-      <h2>{info.title_english ?? info.titles[0].title}</h2>
-      <p className="japaneseTitle">{info.title_japanese}</p>
-      <FavoriteIcon info={info} favorites={info.favorites} />
+      <h2>{info.title.english ?? info.title.romaji}</h2>
+      <p className="japaneseTitle">{info.title.native}</p>
+      <FavoriteIcon info={info} favourites={info.favourites} />
     </div>
   )
 }
 
-function FavoriteIcon({ info, favorites }) {
+function FavoriteIcon({ info, favourites }) {
   const [isFav, setIsFav] = useState(false)
 
   const [open, setOpen] = useState(false)
@@ -72,22 +72,22 @@ function FavoriteIcon({ info, favorites }) {
           handleCloseModal={handleCloseModal}
         />
       )}
-      <p>{isFav ? favorites + 1 : favorites}</p>
+      <p>{isFav ? favourites + 1 : favourites}</p>
     </div>
   )
 }
 
 function Trailer({ streaming }) {
-  return streaming[0] ? (
+  return (
     <>
       <a href="#trailer">WATCH TRAILER</a>
-      <Button href={streaming[0]?.url} variant="contained" size="small">
+      <Button href={streaming.url} variant="contained" size="small">
         WATCH STREAMING
         <br />
-        On {streaming[0]?.name}
+        On {streaming.site}
       </Button>
     </>
-  ) : null
+  )
 }
 
 function RateInfos({ info, rank, changeRank }) {

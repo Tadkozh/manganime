@@ -2,10 +2,30 @@ import { useQuery } from 'react-query'
 import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
 import { TOP_REQUEST } from '../graphql/top'
 import { clientApi, graphQLClient } from '../utils/clientApi'
+import { INFOS_REQUEST } from '../graphql/infos'
+import { SEARCH_REQUEST } from '../graphql/search'
 
-const useInfos = (type, id) => {
-  const { data, status } = useClientApi(type, id, 'full')
-  return { data, status }
+function useInfos(type, id) {
+  const { data } = useQuery({
+    queryKey: `${type}/${id}`,
+    queryFn: async () =>
+      await graphQLClient.request(INFOS_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+  return data
+
+  // const { data, status } = await graphQLClient.request(INFOS_REQUEST, {
+  //   type: type,
+  //   id: id,
+  // })
+  // console.log('type:', type)
+  // console.log('id:', id)
+  // console.log('data:', data)
+  // console.log('{ data }:', { data })
+  // return { data, status }
 }
 
 const useGalery = (type, id) => {
@@ -28,10 +48,27 @@ const useReviews = (type, id) => {
   return { data }
 }
 
-const useSearch = (type, options, page = 1) => {
+const useSearch = (type, query) => {
+  let queryString = Object.keys(query)
+    .map((key) => {
+      return `${query[key]}`
+    })
+    .join('')
+  console.log('queryString', queryString)
+
   const { data } = useQuery({
-    queryKey: `${type}${options}&page=${page}`,
-    queryFn: () => clientApi(`${type}${options}&page=${page}`),
+    queryKey: `${type}/${queryString}`,
+    queryFn: async () =>
+      await graphQLClient.request(SEARCH_REQUEST, {
+        search: query?.search,
+        format: query?.format,
+        status: query?.status,
+        score: query?.score,
+        popularity: query?.popularity,
+        sort: query?.sortBy,
+        page: query?.page,
+        perPage: query?.perPage,
+      }),
     staleTime: Infinity,
   })
   return data
