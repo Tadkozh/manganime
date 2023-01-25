@@ -1,4 +1,3 @@
-import { getUid } from '../firebase-config'
 import { addUser, getUserById, updateUser } from './operations'
 
 const updateProfileUser = (user, userCurrent) => {
@@ -28,27 +27,35 @@ const updateRating = (type, info, rating, user) => {
   }
   updateUserCurrent(newUser)
 }
+const updateBio = async (bio, user) => {
+  if (bio === user.bio) {
+    return
+  }
+  const newUser = structuredClone(user)
+  newUser.bio = bio
+  await updateUserCurrent(newUser)
+  return newUser
+}
 
 const storeUser = (data) => {
   if (data != null) {
-    const uid = getUid()
-    addUser(uid, data.user)
+    addUser(data.user)
   }
 }
 const updateUserCurrent = async (newUser) => {
-  const uid = getUid()
-  await updateUser(uid, newUser)
+  await updateUser(newUser)
 }
 
-const getUser = async (currentUser) => {
-  const user = await getUserById(currentUser.uid)
+const getUserbyId = async () => {
+  const user = await getUserById()
   return user
 }
 
 export {
+  updateBio,
   updateProfileUser,
   updateUserCurrent,
   updateRating,
-  getUser,
+  getUserbyId,
   storeUser,
 }
