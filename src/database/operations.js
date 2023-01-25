@@ -7,7 +7,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore'
 import { USER_COLLECTION } from '../commons/constants'
-import { db } from '../firebase-config'
+import { db, getUid } from '../firebase-config'
 
 const getDocUser = (uid) => doc(collection(db, USER_COLLECTION), uid)
 
@@ -22,8 +22,8 @@ const getUser = (data) => ({
   manga_opinion: data?.manga_opinion ?? [],
 })
 
-const addUser = async (uid, user) => {
-  const docUser = getDocUser(uid)
+const addUser = async (user) => {
+  const docUser = getDocUser(getUid())
   const userToAdd = getUser(user)
   try {
     await setDoc(docUser, userToAdd)
@@ -32,8 +32,8 @@ const addUser = async (uid, user) => {
   }
 }
 
-const updateUser = async (uid, user) => {
-  const docUser = getDocUser(uid)
+const updateUser = async (user) => {
+  const docUser = getDocUser(getUid())
   const userToUpdate = getUser(user)
   try {
     await updateDoc(docUser, userToUpdate)
@@ -41,8 +41,8 @@ const updateUser = async (uid, user) => {
     throw new Error(`${updateUser.name} error:${error.message}`)
   }
 }
-const deleteUser = async (uid) => {
-  const docUser = getDocUser(uid)
+const deleteUser = async () => {
+  const docUser = getDocUser(getUid())
   try {
     await deleteDoc(docUser)
   } catch (error) {
@@ -50,8 +50,8 @@ const deleteUser = async (uid) => {
   }
 }
 
-const getUserById = async (uid) => {
-  const docUser = getDocUser(uid)
+const getUserById = async () => {
+  const docUser = getDocUser(getUid())
   try {
     const docSnap = await getDoc(docUser)
     const user = docSnap.data()
