@@ -10,7 +10,7 @@ const CarouselBox = () => {
 
   return (
     <Paper
-      elevation={4}
+      elevation={20}
       component="article"
       sx={{
         bgcolor: theme.palette.background.content,
@@ -20,11 +20,7 @@ const CarouselBox = () => {
     >
       <Carousel sx={{}}>
         {episodes?.Page?.media.map((episode, index) => (
-          <ItemCarousel
-            data={episode}
-            key={index}
-            sx={{ background: 'black' }}
-          ></ItemCarousel>
+          <ItemCarousel data={episode} key={index}></ItemCarousel>
         ))}
       </Carousel>
     </Paper>
