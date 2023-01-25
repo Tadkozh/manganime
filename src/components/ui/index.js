@@ -68,6 +68,8 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import LoadingScreen from './LoadingScreen'
 
+import Carousel from 'react-material-ui-carousel'
+
 export {
   Accordion,
   AccordionSummary,
@@ -91,6 +93,7 @@ export {
   CardContent,
   CardMedia,
   CardHeader,
+  Carousel,
   Checkbox,
   CircleIcon,
   CircularProgress,

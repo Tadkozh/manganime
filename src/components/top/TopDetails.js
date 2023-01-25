@@ -24,7 +24,6 @@ const rankReducer = (state, action) => {
 
 const TopDetails = ({ type, isHomePage = false }) => {
   const topDatas = useTop(type)
-  console.log(topDatas)
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas?.length
@@ -115,6 +114,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
         ) : null}
         <Typography
           variant="h4"
+          component="h2"
           sx={{
             fontWeight: 'bold',
             textTransform: 'uppercase',
