@@ -1,14 +1,12 @@
 import React from 'react'
-import WatchItemCarousel from './WatchItemCarousel'
-import { useWatch } from '../../hooks/queriesHooks'
-import { EPISODES } from '../../commons/constants'
-import { Carousel, Paper } from '../ui'
+import ItemCarousel from './ItemCarousel'
+import { Carousel, Paper, Typography } from '../ui'
 import { useTheme } from '@mui/material'
+import { useEpisode } from '../../hooks/queriesHooks'
 
 const CarouselBox = () => {
   const theme = useTheme()
-  const recentEpisodes = useWatch(EPISODES)
-  console.log(recentEpisodes)
+  const episodes = useEpisode()
 
   return (
     <Paper
@@ -20,9 +18,13 @@ const CarouselBox = () => {
         m: '1em 0 0 0',
       }}
     >
-      <Carousel sx={{ }}>
-        {recentEpisodes?.map((watchItem, index) => (
-          <WatchItemCarousel type={watchItem} key={index}></WatchItemCarousel>
+      <Carousel sx={{}}>
+        {episodes?.Page?.media.map((episode, index) => (
+          <ItemCarousel
+            data={episode}
+            key={index}
+            sx={{ background: 'black' }}
+          ></ItemCarousel>
         ))}
       </Carousel>
     </Paper>
