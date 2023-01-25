@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query'
+import { EPISODE_REQUEST } from '../graphql/episodes'
 import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
 import { TOP_REQUEST } from '../graphql/top'
 import { clientApi, graphQLClient } from '../utils/clientApi'
@@ -63,6 +64,18 @@ const useTop = (type, perPage = 12) => {
   return data
 }
 
+const useEpisode = (perPage = 12) => {
+  const { data } = useQuery({
+    queryKey: `top/episode`,
+    queryFn: async () =>
+      await graphQLClient.request(EPISODE_REQUEST, {
+        perPage: perPage,
+      }),
+    staleTime: Infinity,
+  })
+  return data
+}
+
 const useClientApi = (type, id, endpoint) => {
   const { data, status } = useQuery({
     queryKey: `${type}/${id}/${endpoint}`,
@@ -79,6 +92,7 @@ export {
   useNews,
   useSearch,
   useTop,
+  useEpisode,
   useRecommendation,
   useReviews,
 }
