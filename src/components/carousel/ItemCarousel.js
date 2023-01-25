@@ -43,7 +43,7 @@ const WatchItemCarousel = ({ data }) => {
               textAlign: 'left',
               fontWeight: 'bold',
               textTransform: 'uppercase',
-              overflowY: 'hidden',
+              overflow: 'hidden',
               whiteSpace: 'nowrap',
               textOverflow: 'ellipsis',
               textShadow: '#fff 1px 0 0',
