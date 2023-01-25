@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ANIME, ID } from '../../commons/constants'
-import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
+import { ANIME } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
-import { updateUser } from '../../database/operations'
+import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
-import InfoGalery from './InfoGalery'
+import { updateRanking } from '../../database/user'
 import Modale from './../Modal'
+import InfoGalery from './InfoGalery'
 
 function InfoPresentation({ info }) {
   let { type } = useParams()
@@ -105,40 +105,17 @@ function PersonalRate({ info, rank, changeRank }) {
   const handleCloseModal = () => setOpen(false)
 
   const [value, setValue] = useState(0)
-  console.log(value)
 
-  const { data: authUser, getUid } = useAuth()
+  const { data: authUser } = useAuth()
   let { type } = useParams()
 
   const handleClick = () => {
     // changeRank(!rank)
-    console.log('authUser', authUser)
     if (authUser === null) {
       handleOpenModal()
     } else {
       changeRank(!rank)
-
-      const newUser = structuredClone(authUser)
-      const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
-      const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
-
-      const isAnimeId = newUser[type_opinion].some(
-        (opinion) => opinion.anime_id === info.mal_id,
-      )
-      if (isAnimeId) {
-        newUser[type_opinion].map((opinion) => {
-          if (opinion.anime_id === info.mal_id) {
-            opinion.rate = value
-          }
-        })
-      } else {
-        const ratedb = { rate: value, [type_id]: info.mal_id }
-        newUser[type_opinion].push(ratedb)
-      }
-      const userId = getUid()
-      console.log('newUser', newUser)
-
-      updateUser(userId, newUser)
+      updateRanking(type, info, value, authUser)
     }
   }
 
