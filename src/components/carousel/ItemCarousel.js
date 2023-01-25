@@ -33,7 +33,7 @@ const WatchItemCarousel = ({ data }) => {
             color: 'black',
             bgcolor: 'rgba(255, 255, 255,0.3)',
             borderRadius: '0.4em',
-            boxShadow: 'inset 0 0 10px #fff, 0 0 9px 3px #000',
+            boxShadow: 'inset 0 0 10px #000, 0 0 9px 3px #000',
           }}
         >
           <Typography
