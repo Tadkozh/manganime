@@ -22,7 +22,9 @@ export const INFOS_REQUEST = gql`
         status
 
         favourites
+        popularity
         averageScore
+        meanScore
 
         rankings {
           rank
@@ -37,6 +39,24 @@ export const INFOS_REQUEST = gql`
         }
 
         isAdult
+
+        description
+
+        genres
+
+        studios {
+          edges {
+            node {
+              name
+              id
+            }
+            id
+          }
+          nodes {
+            name
+            id
+          }
+        }
       }
     }
   }

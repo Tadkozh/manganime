@@ -1,10 +1,12 @@
-import { useQuery } from 'react-query'
-import { EPISODE_REQUEST } from '../graphql/episodes'
-import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
-import { TOP_REQUEST } from '../graphql/top'
 import { clientApi, graphQLClient } from '../utils/clientApi'
-import { INFOS_REQUEST } from '../graphql/infos'
+import { useQuery } from 'react-query'
 import { SEARCH_REQUEST } from '../graphql/search'
+import { TOP_REQUEST } from '../graphql/top'
+import { INFOS_REQUEST } from '../graphql/infos'
+import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
+import { GALERY_REQUEST } from '../graphql/galery'
+import { DETAILS_REQUEST } from '../graphql/details'
+import { EPISODE_REQUEST } from '../graphql/episodes'
 
 function useInfos(type, id) {
   const { data } = useQuery({
@@ -30,8 +32,34 @@ function useInfos(type, id) {
 }
 
 const useGalery = (type, id) => {
-  const { data, status } = useClientApi(type, id, 'pictures')
-  return { data, status }
+  const { data } = useQuery({
+    queryKey: `${type}/${id}`,
+    queryFn: async () =>
+      await graphQLClient.request(GALERY_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
+
+  // const { data, status } = useClientApi(type, id, 'pictures')
+  // return { data, status }
+}
+
+const useDetails = (type, id) => {
+  const { data } = useQuery({
+    queryKey: `${type}/${id}`,
+    queryFn: async () =>
+      await graphQLClient.request(DETAILS_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
 }
 
 const useNews = (type, id) => {
@@ -126,6 +154,7 @@ export {
   useFavorites,
   useInfos,
   useGalery,
+  useDetails,
   useNews,
   useSearch,
   useTop,

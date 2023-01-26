@@ -11,7 +11,7 @@ function InfoSynopsis({ synopsis }) {
           //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
           // }
         >
-          <p>{synopsis}</p>
+          {synopsis}
         </div>
         {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
         {readSynopsis ? 'Read less' : 'Read more'}

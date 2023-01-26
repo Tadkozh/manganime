@@ -12,20 +12,20 @@ import StatsDropdowns from '../stats/StatsDropdowns'
 
 function InfoPresentation({ info }) {
   let { type } = useParams()
-  const [rank, setRank] = useState(false)
+  const [userRank, setUserRank] = useState(false)
   const authUser = useAuth()
-  console.log(authUser)
+  // console.log(authUser)
 
   return (
     <>
       <div className="presentation">
         <PresentationTitle info={info} />
-        {/* <InfoGalery
+        <InfoGalery
           mainImage={info.coverImage.large}
           mainLargeImage={info.coverImage.extraLarge}
-        /> */}
+        />
         {type === ANIME ? <Trailer streaming={info.streamingEpisodes} /> : null}
-        {/* <RateInfos info={info} rank={rank} changeRank={setRank} /> */}
+        <RateInfos info={info} userRank={userRank} changeRank={setUserRank} />
       </div>
       {authUser.data ? <StatsDropdowns /> : null}
     </>
@@ -65,7 +65,6 @@ function FavoriteIcon({ info, favourites }) {
     <div className="favIcon">
       <FavoriteRoundedIcon
         fontSize="large"
-        // onClick={() => setIsFav(!isFav)}
         onClick={handleClickFav}
         className={isFav ? 'star fav' : 'star notFav'}
       />
@@ -94,32 +93,32 @@ function Trailer({ streaming }) {
   )
 }
 
-function RateInfos({ info, rank, changeRank }) {
+function RateInfos({ info, userRank, changeRank }) {
   return (
     <div className="rating">
-      <GlobalRate info={info} rank={rank} />
-      <PersonalRate info={info} rank={rank} changeRank={changeRank} />
+      <GlobalRate info={info} userRank={userRank} />
+      <PersonalRate info={info} userRank={userRank} changeRank={changeRank} />
     </div>
   )
 }
 
-function GlobalRate({ info, rank }) {
+function GlobalRate({ info, userRank }) {
   return (
     <div>
       <Typography component="legend">Global score:</Typography>
       <Rating
         name="rating"
-        defaultValue={info.score / 2}
+        defaultValue={info.meanScore / 20}
         precision={0.1}
         readOnly
       />
       <p>
         <small>
           (
-          {info?.scored_by
-            ? rank
-              ? `On ${info.scored_by + 1} notes`
-              : `On ${info.scored_by} notes`
+          {info.meanScore
+            ? userRank
+              ? `On ${info.meanScore + 1} notes`
+              : `On ${info.meanScore} notes`
             : 'No notes yet'}
           )
         </small>
@@ -128,7 +127,7 @@ function GlobalRate({ info, rank }) {
   )
 }
 
-function PersonalRate({ info, rank, changeRank }) {
+function PersonalRate({ info, userRank, changeRank }) {
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
@@ -142,7 +141,7 @@ function PersonalRate({ info, rank, changeRank }) {
     if (authUser === null) {
       handleOpenModal()
     } else {
-      changeRank(!rank)
+      changeRank(!userRank)
       updateRating(type, info, nbStar, authUser)
     }
   }
@@ -154,7 +153,7 @@ function PersonalRate({ info, rank, changeRank }) {
         name="rating"
         defaultValue={null}
         precision={0.5}
-        readOnly={rank ? true : false}
+        readOnly={userRank ? true : false}
         value={nbStar}
         onChange={(event, newNbStar) => {
           setNbStar(newNbStar)
@@ -164,10 +163,10 @@ function PersonalRate({ info, rank, changeRank }) {
         <Button
           variant="contained"
           size="small"
-          color={rank ? 'error' : 'success'}
+          color={userRank ? 'error' : 'success'}
           onClick={handleClickRate}
         >
-          {rank ? 'Cancel' : 'Submit your note'}
+          {userRank ? 'Cancel' : 'Submit your note'}
         </Button>
         {open && (
           <Modale

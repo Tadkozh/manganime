@@ -49,8 +49,6 @@ function SearchAnime() {
               count={getData?.Page?.pageInfo?.lastPage}
             />
 
-            <p>Page n°{query.page}</p>
-
             <SearchBar
               type={type}
               data={getData?.Page}
