@@ -8,6 +8,7 @@ import { updateRating } from '../../database/user'
 import { updateFavorite } from '../../database/user'
 import Modale from './../Modal'
 import InfoGalery from './InfoGalery'
+import StatsDropdowns from '../stats/StatsDropdowns'
 
 function InfoPresentation({ info }) {
   let { type } = useParams()
@@ -24,6 +25,7 @@ function InfoPresentation({ info }) {
         {type === ANIME ? <Trailer streaming={info.streaming} /> : null}
         <RateInfos info={info} rank={rank} changeRank={setRank} />
       </div>
+      <StatsDropdowns />
     </>
   )
 }
