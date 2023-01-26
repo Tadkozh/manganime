@@ -42,7 +42,7 @@ function Infos() {
                 <InfoDetails info={info} />
               </div>
               <InfoStory background={info.background} />
-              <InfoForm />
+              <InfoForm info={info} />
               <InfoReviews />
             </div>
           </>
