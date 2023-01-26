@@ -28,18 +28,15 @@ function Infos() {
                 <InfoPresentation info={info.Page.media[0]} />
                 <InfoSynopsis synopsis={info.Page.media[0].description} />
 
-                {/* {getInfo?.data?.trailer?.embed_url ? (
-                  <embed
-                    id="trailer"
-                    type="video/webm"
-                    src={getInfo?.data?.trailer?.embed_url}
-                  ></embed>
-                ) : (
-                  <p>No trailer was found.</p>
-                )} */}
-
                 <InfoDetails />
               </div>
+              {info.Page.media[0].trailer ? (
+                <img
+                  id="trailer"
+                  alt="trailer"
+                  src={info.Page.media[0].trailer.thumbnail}
+                />
+              ) : null}
               <InfoForm />
               {/* <InfoReviews /> */}
             </div>

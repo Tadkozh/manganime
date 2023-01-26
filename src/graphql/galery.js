@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 export const GALERY_REQUEST = gql`
-  query Galery($id: [Int], $type: MediaType) {
+  query Galery($type: MediaType, $id: [Int]) {
     Page {
       media(type: $type, id_in: $id) {
         coverImage {

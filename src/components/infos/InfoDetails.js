@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { ANIME, MANGA } from '../../commons/constants'
 import { useDetails } from '../../hooks/queriesHooks'
 
 function InfoDetails() {
@@ -7,17 +8,12 @@ function InfoDetails() {
   const data = useDetails(type, id)
   const info = data.Page.media[0]
 
-  console.log('startDate?.year', info?.startDate?.year)
-  console.log('startDate?.day', info?.startDate?.day)
-  console.log('typeData', info?.type)
-  console.log('favourites', info?.favourites)
-  console.log('popularity', info?.popularity)
-  console.log('isLicensed', info?.isLicensed)
+  console.log('rank', info.rankings[0].rank)
 
   const unknown = 'unknown'
 
-  // const isAnime = type === ANIME
-  // const isManga = type === MANGA
+  const isAnime = type === ANIME
+  const isManga = type === MANGA
 
   const typeData = info?.type
   let genresData = Object.keys(info?.genres)
@@ -25,10 +21,10 @@ function InfoDetails() {
       return `${info?.genres[data]}`
     })
     .join(', ')
-  const meanScoreData = info?.meanScore
-  const rankData = info?.rankings?.rank
+  const meanScoreData = `${info?.meanScore} / 100`
+  // const rankData = info?.rankings[0]?.rank
   const popularityData = info?.popularity
-  const favouritesData = info?.favourites
+  // const favouritesData = info?.favourites
   const statusData = info?.status
   const startDateYearData = info?.startDate?.year
   const startDateData = `${
@@ -50,7 +46,7 @@ function InfoDetails() {
       : info?.endDate?.month
   }/${info?.endDate?.year}`
   const episodesData = info?.episodes
-  const volumesData = info?.volumes
+  const volumesData = isManga ? info?.volumes : null
   const chaptersData = info?.chapters
   const durationData = info?.duration
   // const studiosData = isAnime ? info?.studios[0]?.name : null
@@ -78,21 +74,21 @@ function InfoDetails() {
       data: meanScoreData ?? unknown,
       doesDataExist: meanScoreData,
     },
-    {
-      label: 'Rank',
-      data: rankData && rankData !== 0 ? rankData : unknown,
-      doesDataExist: rankData,
-    },
+    // {
+    //   label: 'Rank',
+    //   data: rankData && rankData !== 0 ? rankData : unknown,
+    //   doesDataExist: rankData,
+    // },
     {
       label: 'Popularity',
       data: popularityData && popularityData !== 0 ? popularityData : unknown,
       doesDataExist: popularityData,
     },
-    {
-      label: 'Fanbase',
-      data: favouritesData && favouritesData !== 0 ? favouritesData : unknown,
-      doesDataExist: favouritesData,
-    },
+    // {
+    //   label: 'Fanbase',
+    //   data: favouritesData && favouritesData !== 0 ? favouritesData : unknown,
+    //   doesDataExist: favouritesData,
+    // },
     {
       label: 'Status',
       data: statusData ?? unknown,
@@ -125,7 +121,7 @@ function InfoDetails() {
     },
     {
       label: 'Duration',
-      data: durationData ?? unknown,
+      data: `≈ ${durationData} minutes` ?? unknown,
       doesDataExist: durationData,
     },
     {
@@ -154,20 +150,20 @@ function InfoDetails() {
     <>
       <div className="details">
         {details.map((data, index) => {
-          // if (details[index].doesDataExist !== undefined) {
-          return (
-            <div key={index}>
-              <div className="label">
-                <p>{data?.label}:</p>
+          if (details[index].data !== unknown) {
+            return (
+              <div key={index}>
+                <div className="label">
+                  <p>{data?.label}:</p>
+                </div>
+                <div className="data">
+                  <p>{data?.data}</p>
+                </div>
               </div>
-              <div className="data">
-                <p>{data?.data}</p>
-              </div>
-            </div>
-          )
-          // } else {
-          //   return null
-          // }
+            )
+          } else {
+            return null
+          }
         })}
       </div>
     </>

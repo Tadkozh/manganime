@@ -18,11 +18,14 @@ export const INFOS_REQUEST = gql`
           medium
         }
 
-        format
-        status
+        trailer {
+          id
+          site
+          thumbnail
+        }
 
-        favourites
-        popularity
+        format
+
         averageScore
         meanScore
 
@@ -42,21 +45,37 @@ export const INFOS_REQUEST = gql`
 
         description
 
+        # DETAILS
+        type
         genres
-
+        meanScore
+        rankings {
+          rank
+        }
+        popularity
+        favourites
+        status
+        startDate {
+          day
+          month
+          year
+        }
+        endDate {
+          day
+          month
+          year
+        }
+        episodes
+        volumes
+        chapters
+        duration
         studios {
-          edges {
-            node {
-              name
-              id
-            }
-            id
-          }
           nodes {
             name
-            id
           }
         }
+        isLicensed
+        source
       }
     }
   }

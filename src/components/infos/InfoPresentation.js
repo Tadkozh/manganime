@@ -16,6 +16,8 @@ function InfoPresentation({ info }) {
   const authUser = useAuth()
   // console.log(authUser)
 
+  console.log('thu', info?.trailer?.thumbnail)
+
   return (
     <>
       <div className="presentation">
@@ -166,7 +168,7 @@ function PersonalRate({ info, userRank, changeRank }) {
           color={userRank ? 'error' : 'success'}
           onClick={handleClickRate}
         >
-          {userRank ? 'Cancel' : 'Submit your note'}
+          {userRank ? 'Cancel note' : 'Submit note'}
         </Button>
         {open && (
           <Modale
