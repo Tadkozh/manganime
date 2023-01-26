@@ -32,7 +32,7 @@ const StatsDropdowns = () => {
   }
 
   const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index)
+    setSelectedIndex(index + 1)
     setOpen(false)
   }
 
@@ -95,16 +95,17 @@ const StatsDropdowns = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options.map((option, index) => (
-                    <MenuItem
-                      key={option}
-                      disabled={index === 2}
-                      selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index)}
-                    >
-                      {option}
-                    </MenuItem>
-                  ))}
+                  {options
+                    .filter((option, index) => index !== 0)
+                    .map((option, index) => (
+                      <MenuItem
+                        key={option}
+                        selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, index)}
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
