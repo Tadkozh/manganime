@@ -16,6 +16,9 @@ function InfoForm({ info }) {
   const { data: authUser } = useAuth()
   let { type } = useParams()
 
+  const [comment, setComment] = useState(false)
+  const changeComment = setComment
+
   const { register, handleSubmit } = useForm()
 
   const onSubmit = (data) => {
@@ -24,6 +27,7 @@ function InfoForm({ info }) {
     } else {
       // console.log(data) // {Infos récupérées par la librairie React Hook Form - title: 'test', comment: 'Je teste le formulaire'}
       updateComment(type, info, data, authUser)
+      changeComment(!comment)
     }
   }
 
@@ -57,8 +61,9 @@ function InfoForm({ info }) {
           style={{ margin: '0 auto' }}
           type="submit"
           value="Submit"
+          color={comment ? 'secondary' : 'success'}
         >
-          Submit
+          {comment ? 'Sent !' : 'Submit'}
         </Button>
         {open && (
           <Modale
