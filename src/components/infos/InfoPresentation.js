@@ -13,6 +13,8 @@ import StatsDropdowns from '../stats/StatsDropdowns'
 function InfoPresentation({ info }) {
   let { type } = useParams()
   const [rank, setRank] = useState(false)
+  const authUser = useAuth()
+  console.log(authUser)
 
   return (
     <>
@@ -25,7 +27,7 @@ function InfoPresentation({ info }) {
         {type === ANIME ? <Trailer streaming={info.streaming} /> : null}
         <RateInfos info={info} rank={rank} changeRank={setRank} />
       </div>
-      <StatsDropdowns />
+      {authUser.data ? <StatsDropdowns /> : null}
     </>
   )
 }
