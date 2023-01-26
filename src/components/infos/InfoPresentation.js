@@ -149,7 +149,7 @@ function PersonalRate({ info, rank, changeRank }) {
 
   return (
     <div>
-      <Typography component="legend">Your score:</Typography>
+      <Typography component="legend">Your Note:</Typography>
       <Rating
         name="rating"
         defaultValue={null}
@@ -164,10 +164,10 @@ function PersonalRate({ info, rank, changeRank }) {
         <Button
           variant="contained"
           size="small"
-          color={rank ? 'error' : 'success'}
+          color={rank ? 'secondary' : 'success'}
           onClick={handleClickRate}
         >
-          {rank ? 'Cancel' : 'Submit your note'}
+          {rank ? 'Cancel' : 'Submit'}
         </Button>
         {open && (
           <Modale
