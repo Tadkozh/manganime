@@ -43,8 +43,6 @@ const updateFavorite = (type, info, user) => {
   const newUserFav = structuredClone(user)
   const favorite_type = type === 'anime' ? 'favorite_anime' : 'favorite_manga'
   const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
-  console.log('user', user)
-  console.log('id', info.mal_id)
 
   const isItemId = newUserFav[favorite_type].some(
     (ItemId) => ItemId === info.mal_id,
