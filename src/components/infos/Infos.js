@@ -37,7 +37,7 @@ function Infos() {
                   src={info.Page.media[0].trailer.thumbnail}
                 />
               ) : null}
-              <InfoForm />
+              <InfoForm info={info} />
               {/* <InfoReviews /> */}
             </div>
           </>
