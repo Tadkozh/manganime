@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useInfos, useRecommendations } from '../../hooks/queriesHooks'
+import { useRecommendations } from '../../hooks/queriesHooks'
 import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 
@@ -10,17 +10,12 @@ import RecommendationsCard from './RecommendationsCard'
 const Recommendations = () => {
   let { type, id } = useParams()
 
-  const data = useRecommendations(
-    type,
-    id,
-  )
+  const data = useRecommendations(type, id)
   console.log('data', data)
-
-  const title = data?.Page?.media?.title?.english ?? "A REVOIR!!!"
 
   let directives = ''
   if (data?.length === 0) {
-    directives = `No recommendations about ${title}`
+    directives = `No recommendations.`
   } else {
     directives = (
       <>
@@ -29,10 +24,7 @@ const Recommendations = () => {
             display: 'flex',
             alignItem: 'center',
           }}
-        >
-          <ArrowRightSharp />
-          Click on Read More to see the article on MyAnimeList
-        </Typography>
+        ></Typography>
 
         <Typography
           sx={{
@@ -54,7 +46,7 @@ const Recommendations = () => {
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">
-          People who like <i>{title}</i> also enjoy
+          People who like this also enjoy
         </Typography>
         {directives}
 
