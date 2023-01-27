@@ -10,9 +10,10 @@ const updateProfileUser = (user, userCurrent) => {
 
 const updateComment = (type, info, comment, user) => {
   const newUserComment = structuredClone(user)
-  const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
-  const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
+  const type_opinion = type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+  const type_id = type === 'ANIME' ? 'anime_id' : 'manga_id'
 
+  console.log('info', info)
   // console.log('type', type)
   // console.log('type_id', type_id)
   // console.log('type_opinion', type_opinion)
@@ -30,14 +31,14 @@ const updateComment = (type, info, comment, user) => {
   // console.log('info', info)
 
   const isItemId = newUserComment[type_opinion].some(
-    (opinion) => opinion[type_id] === info.mal_id,
+    (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
     // S'il y a un anime avec le même numéro...
     newUserComment[type_opinion].map((opinion, key) => {
       //... On détermine lequel
       // console.log('opinion', opinion)
-      if (opinion[type_id] === info.mal_id) {
+      if (opinion[type_id] === info.id) {
         // Dans cet anime...
         let newOpinion
         if (!opinion?.comments) {
@@ -54,7 +55,7 @@ const updateComment = (type, info, comment, user) => {
   } else {
     // si anime pas encore traité, recréer tout (forcément, pas de rate)
     const commentdb = {
-      [type_id]: info.mal_id,
+      [type_id]: info.id,
       comments: commentArray,
     }
     newUserComment[type_opinion].push(commentdb)
@@ -66,15 +67,17 @@ const updateComment = (type, info, comment, user) => {
 
 const updateRating = (type, info, rating, user) => {
   const newUserRate = structuredClone(user)
-  const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
-  const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
+  const type_opinion = type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+  const type_id = type === 'ANIME' ? 'anime_id' : 'manga_id'
 
   const isItemId = newUserRate[type_opinion].some(
-    (opinion) => opinion[type_id] === info.mal_id,
+    (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
+    // S'il y a un anime avec le même numéro...
     newUserRate[type_opinion].map((opinion, key) => {
-      if (opinion[type_id] === info.mal_id) {
+      //... On détermine lequel
+      if (opinion[type_id] === info.id) {
         // Dans cet anime...
         let newOpinion
         if (!opinion?.rate) {
@@ -90,7 +93,7 @@ const updateRating = (type, info, rating, user) => {
     })
   } else {
     // si anime pas encore traité, recréer tout (forcément, pas de commentaire)
-    const ratedb = { rate: rating, [type_id]: info.mal_id }
+    const ratedb = { rate: rating, [type_id]: info.id }
     newUserRate[type_opinion].push(ratedb)
   }
   console.log('newUserRate', newUserRate)
@@ -108,14 +111,16 @@ const updateBio = async (bio, user) => {
 
 const updateFavorite = (type, info, user) => {
   const newUserFav = structuredClone(user)
-  const favorite_type = type === 'anime' ? 'favorite_anime' : 'favorite_manga'
+  const favorite_type = type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
+
+  console.log('info.type', info.type)
 
   const isItemId = newUserFav[favorite_type].some(
-    (ItemId) => ItemId === info.mal_id,
+    (ItemId) => ItemId === info.id,
   )
 
   if (!isItemId) {
-    newUserFav[favorite_type].push(info.mal_id)
+    newUserFav[favorite_type].push(info.id)
   }
   console.log('newUserFav', newUserFav)
   updateUserCurrent(newUserFav)
