@@ -13,11 +13,6 @@ const updateComment = (type, info, comment, user) => {
   const type_opinion = type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
   const type_id = type === 'ANIME' ? 'anime_id' : 'manga_id'
 
-  console.log('info', info)
-  // console.log('type', type)
-  // console.log('type_id', type_id)
-  // console.log('type_opinion', type_opinion)
-
   const fullComment = {
     create_at: new Date().toISOString(),
     title: comment.title,
@@ -26,34 +21,23 @@ const updateComment = (type, info, comment, user) => {
   const commentArray = []
   commentArray.push(fullComment)
 
-  // console.log('commentArray', commentArray)
-  // console.log('fullComment', fullComment)
-  // console.log('info', info)
-
   const isItemId = newUserComment[type_opinion].some(
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    // S'il y a un anime avec le même numéro...
     newUserComment[type_opinion].map((opinion, key) => {
-      //... On détermine lequel
-      // console.log('opinion', opinion)
       if (opinion[type_id] === info.id) {
-        // Dans cet anime...
         let newOpinion
         if (!opinion?.comments) {
-          // ...S'il n'y a pas de zone commentaire, on la crée
-          newOpinion = { ...opinion, comments: [fullComment] } // et on la remplit (tout en préservant rate : spread operator)
+          newOpinion = { ...opinion, comments: [fullComment] }
 
           newUserComment[type_opinion][key] = newOpinion
         } else {
-          //Si une zone commentaire existe déjà
-          newUserComment[type_opinion][key].comments.push(fullComment) // on ajoute le nouveau commentaire aux précédents
+          newUserComment[type_opinion][key].comments.push(fullComment)
         }
       }
     })
   } else {
-    // si anime pas encore traité, recréer tout (forcément, pas de rate)
     const commentdb = {
       [type_id]: info.id,
       comments: commentArray,
@@ -74,31 +58,26 @@ const updateRating = (type, info, rating, user) => {
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    // S'il y a un anime avec le même numéro...
     newUserRate[type_opinion].map((opinion, key) => {
-      //... On détermine lequel
       if (opinion[type_id] === info.id) {
-        // Dans cet anime...
         let newOpinion
         if (!opinion?.rate) {
-          // ...S'il n'y a pas de zone rate, on la crée
-          newOpinion = { ...opinion, rate: rating } // et on la remplit (tout en préservant les commentaires : spread operator)
+          newOpinion = { ...opinion, rate: rating }
 
           newUserRate[type_opinion][key] = newOpinion
         } else {
-          //Si une zone rate existe déjà
-          opinion.rate = rating // on écrase la rate précédente
+          opinion.rate = rating
         }
       }
     })
   } else {
-    // si anime pas encore traité, recréer tout (forcément, pas de commentaire)
     const ratedb = { rate: rating, [type_id]: info.id }
     newUserRate[type_opinion].push(ratedb)
   }
   console.log('newUserRate', newUserRate)
   updateUserCurrent(newUserRate)
 }
+
 const updateBio = async (bio, user) => {
   if (bio === user.bio) {
     return
@@ -112,8 +91,6 @@ const updateBio = async (bio, user) => {
 const updateFavorite = (type, info, user) => {
   const newUserFav = structuredClone(user)
   const favorite_type = type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
-
-  console.log('info.type', info.type)
 
   const isItemId = newUserFav[favorite_type].some(
     (ItemId) => ItemId === info.id,

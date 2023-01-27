@@ -7,8 +7,6 @@ import Modale from './../Modal'
 import { updateComment } from '../../database/user'
 
 function InfoForm({ info }) {
-  // console.log('info', info)
-
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
@@ -19,15 +17,15 @@ function InfoForm({ info }) {
   const [comment, setComment] = useState(false)
   const changeComment = setComment
 
+  // React Hook Form
   const { register, handleSubmit } = useForm()
 
   const onSubmit = (data) => {
     if (authUser === null) {
       handleOpenModal()
     } else {
-      // console.log(data) // {Infos récupérées par la librairie React Hook Form - title: 'test', comment: 'Je teste le formulaire'}
-      updateComment(type, info, data, authUser)
       changeComment(!comment)
+      updateComment(type, info, data, authUser)
     }
   }
 
