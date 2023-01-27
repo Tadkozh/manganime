@@ -42,7 +42,7 @@ function Infos() {
                 </div>
               ) : null}
 
-              <InfoForm info={info} />
+              <InfoForm info={info.Page.media[0]} />
               <InfoReviews />
             </div>
           </>
