@@ -6,6 +6,7 @@ export const EPISODE_REQUEST = gql`
       media(type: ANIME, sort: POPULARITY_DESC) {
         id
         title {
+          english
           romaji
         }
         bannerImage

@@ -2,55 +2,35 @@ import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '../ui'
 import { getUrl } from '../../utils/helper'
-import { INFOS } from '../../commons/constants'
+import { INFOS, ANIME } from '../../commons/constants'
 
 // CSS Files
 import './search.css'
 
 // Components
 import SearchBar from './SearchBar'
+
+// Hooks
 import { useSearch } from '../../hooks/queriesHooks'
 
 function SearchAnime() {
-  const type = 'anime'
+  const type = ANIME
 
   const [getData, setGetData] = useState()
+
   const [query, setQuery] = useState({
-    inputValue: '',
-    letter: '',
-    scoreMin: '',
-    type: '',
-    status: '',
-    rating: '',
-    orderBy: '',
-    sort: '',
+    // search: '',
+    format: 'TV',
+    status: 'FINISHED',
+    score: 0,
+    popularity: 0,
+    sortBy: 'TRENDING_DESC',
     hideHentai: true,
     page: 1,
+    perPage: 30,
   })
 
-  const letterUrl = query?.letter !== '' ? `?letter=${query?.letter}` : '?'
-  const scoreMinUrl =
-    query?.scoreMin !== '' ? `&min_score=${query?.scoreMin}` : ''
-  const typeUrl = query?.type !== '' ? `&type=${query?.type}` : ''
-  const statusUrl = query?.status !== '' ? `&status=${query?.status}` : ''
-  const ratingUrl = query?.rating !== '' ? `&rating=${query?.rating}` : ''
-  const orderByUrl = query?.orderBy !== '' ? `&order_by=${query?.orderBy}` : ''
-  const sortUrl = query?.sort !== '' ? `&sort=${query?.sort}` : `&sort=desc`
-  const hideHentaiUrl = query?.hideHentai ? `&sfw` : ''
-
-  const options = useMemo(() => {
-    return `${letterUrl}${scoreMinUrl}${typeUrl}${statusUrl}${ratingUrl}${orderByUrl}${sortUrl}${hideHentaiUrl}`
-  }, [
-    hideHentaiUrl,
-    letterUrl,
-    orderByUrl,
-    ratingUrl,
-    scoreMinUrl,
-    sortUrl,
-    statusUrl,
-    typeUrl,
-  ])
-  const data = useSearch(type, options, query.page)
+  const data = useSearch(type, query)
 
   useMemo(() => {
     if (data) {
@@ -60,37 +40,39 @@ function SearchAnime() {
 
   return (
     <>
-      {getData?.data ? (
+      {getData?.Page ? (
         <>
           <div className="search">
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={getData?.pagination?.last_visible_page}
+              count={getData?.Page?.pageInfo?.lastPage}
             />
 
             <SearchBar
               type={type}
-              data={getData}
+              data={getData?.Page}
               query={query}
               setQuery={setQuery}
             />
           </div>
 
           <div className="searchData">
-            {getData?.data.map((data, index) => {
+            {getData?.Page.media.map((data, index) => {
               return (
                 <div className="item" key={index}>
-                  <Link to={getUrl(type, INFOS, [data.mal_id])}>
+                  <Link to={getUrl(type, INFOS, [data.id])}>
                     <div className="imgWrapper">
                       <img
-                        src={data.images.jpg.image_url}
-                        alt={`small cover ${data.mal_id}`}
+                        src={data.coverImage.large}
+                        alt={`small cover of ${
+                          data.title.english ?? data.title.romaji
+                        }`}
                       />
                     </div>
-                    <p>{data.title_english ?? data.titles[0].title}</p>
+                    <p>{data.title.english ?? data.title.romaji}</p>
                     <Rating
-                      value={data.score / 2}
+                      value={data.averageScore / 20}
                       precision={0.1}
                       readOnly
                       size="small"
@@ -101,13 +83,13 @@ function SearchAnime() {
             })}
           </div>
 
-          <div className="paginationBottom">
+          {/* <div className="paginationBottom">
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
               count={getData?.pagination.last_visible_page}
             />
-          </div>
+          </div> */}
         </>
       ) : null}
     </>

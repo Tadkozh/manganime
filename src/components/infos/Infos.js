@@ -1,8 +1,12 @@
 import { useParams } from 'react-router-dom'
+import { Button } from '../ui'
 
 // CSS Files
 import './infos.css'
 import './infosQueries.css'
+
+// Constants
+import { ANIME } from '../../commons/constants'
 
 // Components
 import { useInfos } from '../../hooks/queriesHooks'
@@ -11,12 +15,12 @@ import InfoDetails from './InfoDetails'
 import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
 import InfoReviews from './InfoReviews'
-import InfoStory from './InfoStory'
 import InfoSynopsis from './InfoSynopsis'
 
 function Infos() {
   let { type, id } = useParams()
-  const { data: info } = useInfos(type, id)
+  const info = useInfos(type, id)
+  console.log('info', info)
 
   return (
     <>
@@ -26,22 +30,18 @@ function Infos() {
           <>
             <div className="info">
               <div className="header">
-                <InfoPresentation info={info} />
-                <InfoSynopsis synopsis={info.synopsis} />
-
-                {/* {getInfo?.data?.trailer?.embed_url ? (
-                  <embed
-                    id="trailer"
-                    type="video/webm"
-                    src={getInfo?.data?.trailer?.embed_url}
-                  ></embed>
-                ) : (
-                  <p>No trailer was found.</p>
-                )} */}
-
-                <InfoDetails info={info} />
+                <InfoPresentation info={info.Page.media[0]} />
+                <InfoSynopsis synopsis={info.Page.media[0].description} />
+                <InfoDetails />
               </div>
-              <InfoStory background={info.background} />
+
+              {type === ANIME && info ? (
+                <div className="watch">
+                  <Trailer info={info.Page.media[0].trailer} />
+                  <Streaming info={info.Page.media[0].streamingEpisodes[0]} />
+                </div>
+              ) : null}
+
               <InfoForm info={info} />
               <InfoReviews />
             </div>
@@ -50,6 +50,38 @@ function Infos() {
       </div>
     </>
   )
+}
+
+function Trailer({ info }) {
+  return info ? (
+    <div>
+      <Button href={`https://www.youtube.com/watch?v=${info.id}`}>
+        Watch trailer on {info.site}
+      </Button>
+      <iframe
+        title="Trailer"
+        src={`https://www.youtube.com/embed/${info.id}?autoplay=1&mute=1`}
+        thumbnail={info.thumbnail}
+      />
+      {/* <Button href={`https://www.youtube.com/watch?v=${info.id}`}>
+        Watch trailer on {info.site}
+      </Button>
+      <a href={`https://www.youtube.com/watch?v=${info.id}`}>
+        <img id="trailer" alt="trailer" src={info.thumbnail} />
+      </a> */}
+    </div>
+  ) : null
+}
+
+function Streaming({ info }) {
+  return info ? (
+    <div>
+      <Button href={info.url}>Watch streaming on {info.site}</Button>
+      <a href={info.url}>
+        <img id="trailer" alt="trailer" src={info.thumbnail} />
+      </a>
+    </div>
+  ) : null
 }
 
 export default Infos

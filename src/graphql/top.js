@@ -6,6 +6,7 @@ export const TOP_REQUEST = gql`
       media(type: $type, sort: SCORE_DESC) {
         id
         title {
+          english
           romaji
         }
         coverImage {

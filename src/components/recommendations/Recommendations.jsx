@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useInfos, useRecommendation } from '../../hooks/queriesHooks'
+import { useInfos, useRecommendations } from '../../hooks/queriesHooks'
 import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 
@@ -10,21 +10,17 @@ import RecommendationsCard from './RecommendationsCard'
 const Recommendations = () => {
   let { type, id } = useParams()
 
-  const { data: recommendations, status: statusRecom } = useRecommendation(
+  const data = useRecommendations(
     type,
     id,
   )
-  console.log('recommendations', recommendations)
-  console.log('statusRecom', statusRecom)
+  console.log('data', data)
 
-  const { data: titlehook, status: statusTitle } = useInfos(type, id)
-  console.log('titlehook', titlehook)
-  console.log('statusTitle', statusTitle)
-  const title = titlehook?.title
+  const title = data?.Page?.media?.title?.english ?? "A REVOIR!!!"
 
   let directives = ''
-  if (recommendations?.length === 0) {
-    directives = `No recommendation about ${title}`
+  if (data?.length === 0) {
+    directives = `No recommendations about ${title}`
   } else {
     directives = (
       <>
@@ -63,12 +59,12 @@ const Recommendations = () => {
         {directives}
 
         <div className="datagrid">
-          {recommendations
-            ? recommendations.map((data, index) => {
-                if (index < 12) {
+          {data
+            ? data?.Page?.recommendations.map((data, index) => {
+                if (index < 15) {
                   return (
                     <div key={index}>
-                      <RecommendationsCard data={data} />
+                      <RecommendationsCard data={data.media} />
                     </div>
                   )
                 }
@@ -80,4 +76,5 @@ const Recommendations = () => {
     </>
   )
 }
+
 export default Recommendations

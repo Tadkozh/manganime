@@ -41,6 +41,7 @@ const updateUser = async (user) => {
     throw new Error(`${updateUser.name} error:${error.message}`)
   }
 }
+
 const deleteUser = async () => {
   const docUser = getDocUser(getUid())
   try {
