@@ -7,12 +7,11 @@ function InfoSynopsis({ synopsis }) {
         <h4>Synopsis:</h4>
         <div
           className="synopsis"
+          dangerouslySetInnerHTML={{ __html: synopsis }}
           // className={
           //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
           // }
-        >
-          {synopsis}
-        </div>
+        ></div>
         {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
         {readSynopsis ? 'Read less' : 'Read more'}
       </Button> */}

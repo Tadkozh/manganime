@@ -57,6 +57,11 @@
   .details {
     grid-template-columns: 1fr 1fr 1fr;
   }
+
+  .watch {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 }
 
 /* Media queries 1024px */
@@ -70,9 +75,6 @@
   .info .header {
     display: flex;
     flex-direction: row;
-  }
-  .info .header > div {
-    width: 33%;
   }
   .synopsisWrapper {
     order: -1;

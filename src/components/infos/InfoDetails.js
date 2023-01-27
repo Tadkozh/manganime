@@ -8,8 +8,6 @@ function InfoDetails() {
   const data = useDetails(type, id)
   const info = data.Page.media[0]
 
-  console.log('rank', info.rankings[0].rank)
-
   const unknown = 'unknown'
 
   const isAnime = type === ANIME
@@ -21,10 +19,8 @@ function InfoDetails() {
       return `${info?.genres[data]}`
     })
     .join(', ')
-  const meanScoreData = `${info?.meanScore} / 100`
   // const rankData = info?.rankings[0]?.rank
-  const popularityData = info?.popularity
-  // const favouritesData = info?.favourites
+  const popularityData = info?.popularity.toLocaleString()
   const statusData = info?.status
   const startDateYearData = info?.startDate?.year
   const startDateData = `${
@@ -49,7 +45,6 @@ function InfoDetails() {
   const volumesData = isManga ? info?.volumes : null
   const chaptersData = info?.chapters
   const durationData = info?.duration
-  // const studiosData = isAnime ? info?.studios[0]?.name : null
   let studiosData = Object.keys(info?.studios?.nodes)
     .map((data) => {
       return `${info?.studios?.nodes[data]?.name}`
@@ -68,11 +63,6 @@ function InfoDetails() {
       label: 'Genres',
       data: genresData ?? unknown,
       doesDataExist: genresData,
-    },
-    {
-      label: 'Rating',
-      data: meanScoreData ?? unknown,
-      doesDataExist: meanScoreData,
     },
     // {
     //   label: 'Rank',

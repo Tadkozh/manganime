@@ -1,8 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { getUrl } from '../../utils/helper'
 import { Box, Card, Typography } from '../ui'
 
 const WatchItemCarousel = ({ data }) => {
   console.log(data)
+  console.log('id', data.id)
 
   return (
     <>
@@ -49,21 +52,49 @@ const WatchItemCarousel = ({ data }) => {
               textShadow: '#fff 1px 0 0',
             }}
           >
-            {data?.title?.romaji}
+            {data?.title?.english ?? data?.title?.romaji}
           </Typography>
-          <Typography
-            variant="h5"
-            component="a"
-            href={data.streamingEpisodes[data.streamingEpisodes.length - 1].url}
+
+          <Card
             sx={{
-              textDecoration: 'none',
-              fontWeight: 'bold',
-              color: 'blue',
-              textShadow: '#fff 1px 0 0',
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              width: '100%',
+              color: 'black',
+              bgcolor: 'transparent',
+              boxShadow: 'none',
+              gap: '50px',
             }}
           >
-            Watch
-          </Typography>
+            <Typography
+              variant="h5"
+              component="p"
+              sx={{
+                textDecoration: 'none',
+                fontWeight: 'bold',
+                color: 'blue',
+                textShadow: '#fff 1px 0 0',
+              }}
+            >
+              <Link to={getUrl('ANIME', 'infos', [data.id])}>Infos</Link>
+            </Typography>
+
+            <Typography
+              variant="h5"
+              component="a"
+              href={
+                data.streamingEpisodes[data.streamingEpisodes.length - 1].url
+              }
+              sx={{
+                textDecoration: 'none',
+                fontWeight: 'bold',
+                color: 'blue',
+                textShadow: '#fff 1px 0 0',
+              }}
+            >
+              Watch
+            </Typography>
+          </Card>
         </Card>
       </Box>
     </>

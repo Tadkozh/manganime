@@ -1,6 +1,6 @@
 import React from 'react'
 import ItemCarousel from './ItemCarousel'
-import { Carousel, Paper, Typography } from '../ui'
+import { Carousel, Paper } from '../ui'
 import { useTheme } from '@mui/material'
 import { useEpisode } from '../../hooks/queriesHooks'
 

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ANIME } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
 
@@ -11,12 +10,9 @@ import InfoGalery from './InfoGalery'
 import StatsDropdowns from '../stats/StatsDropdowns'
 
 function InfoPresentation({ info }) {
-  let { type } = useParams()
   const [userRank, setUserRank] = useState(false)
   const authUser = useAuth()
   // console.log(authUser)
-
-  console.log('thu', info?.trailer?.thumbnail)
 
   return (
     <>
@@ -26,7 +22,6 @@ function InfoPresentation({ info }) {
           mainImage={info.coverImage.large}
           mainLargeImage={info.coverImage.extraLarge}
         />
-        {type === ANIME ? <Trailer streaming={info.streamingEpisodes} /> : null}
         <RateInfos info={info} userRank={userRank} changeRank={setUserRank} />
       </div>
       {authUser.data ? <StatsDropdowns /> : null}
@@ -79,19 +74,6 @@ function FavoriteIcon({ info, favourites }) {
       )}
       <p>{isFav ? favourites + 1 : favourites}</p>
     </div>
-  )
-}
-
-function Trailer({ streaming }) {
-  return (
-    <>
-      <a href="#trailer">WATCH TRAILER</a>
-      <Button href={streaming.url} variant="contained" size="small">
-        WATCH STREAMING
-        <br />
-        On {streaming.site}
-      </Button>
-    </>
   )
 }
 

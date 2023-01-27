@@ -6,6 +6,8 @@ import { INFOS_REQUEST } from '../graphql/infos'
 import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
 import { GALERY_REQUEST } from '../graphql/galery'
 import { DETAILS_REQUEST } from '../graphql/details'
+import { REVIEWS_REQUEST } from '../graphql/reviews'
+import { RECOMMENDATIONS_REQUEST } from '../graphql/recommendations'
 import { EPISODE_REQUEST } from '../graphql/episodes'
 
 function useInfos(type, id) {
@@ -67,14 +69,32 @@ const useNews = (type, id) => {
   return { data, status }
 }
 
-const useRecommendation = (type, id) => {
-  const { data, status } = useClientApi(type, id, 'recommendations')
-  return { data, status }
+const useRecommendations = (type, id) => {
+  const { data } = useQuery({
+    queryKey: `${type}/${id}`,
+    queryFn: async () =>
+      await graphQLClient.request(RECOMMENDATIONS_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
 }
 
 const useReviews = (type, id) => {
-  const { data } = useClientApi(type, id, 'reviews')
-  return { data }
+  const { data } = useQuery({
+    queryKey: `${type}/${id}`,
+    queryFn: async () =>
+      await graphQLClient.request(REVIEWS_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
 }
 
 const useSearch = (type, query) => {
@@ -159,6 +179,6 @@ export {
   useSearch,
   useTop,
   useEpisode,
-  useRecommendation,
+  useRecommendations,
   useReviews,
 }

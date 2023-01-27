@@ -5,32 +5,48 @@ import { useReviews } from '../../hooks/queriesHooks'
 function InfoReviews() {
   let { type, id } = useParams()
   const reviews = useReviews(type, id)
+  const info = reviews.Page.media[0].reviews.nodes
 
   return (
     <>
-      {reviews ? (
+      {info ? (
         <div className="reviews">
-          {reviews?.data?.map((data, index) => {
+          {info.map((data, index) => {
+            const timestampCreated = info[index].createdAt
+            const dateCreated = new Date(timestampCreated * 1000)
+            const timestampUpdated = info[index].updatedAt
+            const dateUpdated = new Date(timestampUpdated * 1000)
+
             return (
               <div className="review" key={index}>
                 <div className="header">
                   <img
-                    src={data.user.images.jpg.image_url}
-                    alt={`username ${index}`}
+                    src={data.user.avatar.medium}
+                    alt={`Avatar ${index}`}
                     className="userImage"
                   />
                   <div>
-                    <p className="username">{data.user.username}</p>
-                    <p className="feelings">{data.tags}</p>
+                    <p className="username">
+                      {data.user.name} | Published the{' '}
+                      {dateCreated.toLocaleString()} | Updated the{' '}
+                      {dateUpdated.toLocaleString()}
+                    </p>
+                    <p className="feelings">{data.summary}</p>
                     <Rating
                       name="rating"
-                      defaultValue={data.score / 2}
+                      // defaultValue={data[0]?.score / 20}
+                      value={data.score / 20}
                       precision={0.5}
                       readOnly
                     />
                   </div>
                 </div>
-                <p className="text">{data.review}</p>
+                <div
+                  className="text"
+                  dangerouslySetInnerHTML={{
+                    __html: data.body,
+                  }}
+                ></div>
               </div>
             )
           })}

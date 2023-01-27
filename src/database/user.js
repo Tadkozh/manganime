@@ -126,6 +126,7 @@ const storeUser = (data) => {
     addUser(data.user)
   }
 }
+
 const updateUserCurrent = async (newUser) => {
   await updateUser(newUser)
 }

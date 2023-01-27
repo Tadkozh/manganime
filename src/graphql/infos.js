@@ -43,7 +43,31 @@ export const INFOS_REQUEST = gql`
 
         isAdult
 
-        description
+        description(asHtml: true)
+
+        # REVIEWS
+        reviews {
+          nodes {
+            summary
+            rating
+            ratingAmount
+            userRating
+            score
+            createdAt
+            updatedAt
+            user {
+              avatar {
+                large
+                medium
+              }
+              name
+            }
+            media {
+              id
+            }
+            body(asHtml: true)
+          }
+        }
 
         # DETAILS
         type
