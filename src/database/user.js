@@ -1,4 +1,5 @@
 import { addUser, getUserById, updateUser } from './operations'
+import { uploadFile } from '../utils/helper'
 
 const updateProfileUser = (user, userCurrent) => {
   const newUser = structuredClone(userCurrent)
@@ -100,10 +101,13 @@ const updateBio = async (bio, user) => {
   if (bio === user.bio) {
     return
   }
-  const newUser = structuredClone(user)
-  newUser.bio = bio
-  await updateUserCurrent(newUser)
-  return newUser
+  await updateUserCurrent({ bio })
+}
+
+const userPicture = async (picture) => {
+  const url = await uploadFile(picture)
+  updateUserCurrent({ picture: url })
+  return getUserById()
 }
 
 const updateFavorite = (type, info, user) => {
@@ -138,6 +142,7 @@ const getUserbyUid = async () => {
 
 export {
   updateBio,
+  userPicture,
   updateProfileUser,
   updateUserCurrent,
   updateRating,
