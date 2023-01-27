@@ -34,9 +34,8 @@ const addUser = async (user) => {
 
 const updateUser = async (user) => {
   const docUser = getDocUser(getUid())
-  const userToUpdate = getUser(user)
   try {
-    await updateDoc(docUser, userToUpdate)
+    await updateDoc(docUser, user)
   } catch (error) {
     throw new Error(`${updateUser.name} error:${error.message}`)
   }
