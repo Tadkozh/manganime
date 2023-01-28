@@ -19,37 +19,36 @@ import InfoSynopsis from './InfoSynopsis'
 
 function Infos() {
   let { type, id } = useParams()
-  const info = useInfos(type, id)
-  // console.log('info', info)
+  const data = useInfos(type, id)
+  const info = data?.Page?.media[0]
 
-  return (
+  console.log('data infos', info)
+
+  return info ? (
     <>
       <NavBarInfoTabs />
       <div className="infoWrapper">
-        {info ? (
-          <>
-            <div className="info">
-              <div className="header">
-                <InfoPresentation info={info.Page.media[0]} />
-                <InfoSynopsis synopsis={info.Page.media[0].description} />
-                <InfoDetails />
-              </div>
-
-              {type === ANIME && info ? (
-                <div className="watch">
-                  <Trailer info={info.Page.media[0].trailer} />
-                  <Streaming info={info.Page.media[0].streamingEpisodes[0]} />
-                </div>
-              ) : null}
-
-              <InfoForm info={info.Page.media[0]} />
-              <InfoReviews />
+        <>
+          <div className="info">
+            <div className="header">
+              <InfoPresentation info={info} />
+              <InfoSynopsis synopsis={info.description} />
+              <InfoDetails />
             </div>
-          </>
-        ) : null}
+
+            {type === ANIME && info ? (
+              <div className="watch">
+                <Trailer info={info.trailer} />
+              </div>
+            ) : null}
+
+            <InfoForm info={info} />
+            <InfoReviews />
+          </div>
+        </>
       </div>
     </>
-  )
+  ) : null
 }
 
 function Trailer({ info }) {
@@ -69,17 +68,6 @@ function Trailer({ info }) {
       <a href={`https://www.youtube.com/watch?v=${info.id}`}>
         <img id="trailer" alt="trailer" src={info.thumbnail} />
       </a> */}
-    </div>
-  ) : null
-}
-
-function Streaming({ info }) {
-  return info ? (
-    <div>
-      <Button href={info.url}>Watch streaming on {info.site}</Button>
-      <a href={info.url}>
-        <img id="trailer" alt="trailer" src={info.thumbnail} />
-      </a>
     </div>
   ) : null
 }

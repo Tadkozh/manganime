@@ -8,6 +8,7 @@ export const SEARCH_REQUEST = gql`
     $score: Int
     $popularity: Int
     $sort: [MediaSort]
+    $isAdult: Boolean
     $page: Int
     $perPage: Int
   ) {
@@ -18,31 +19,24 @@ export const SEARCH_REQUEST = gql`
         total
       }
       media(
+        search: $search
+        format: $format
+        status_in: $status
         averageScore_greater: $score
         popularity_greater: $popularity
-        status_in: $status
-        format: $format
         sort: $sort
-        search: $search
+        isAdult: $isAdult
       ) {
         id
+
         title {
           english
           romaji
-          native
         }
         coverImage {
           large
-          medium
         }
-        genres
-
-        format
-        status
-
         averageScore
-
-        isAdult
       }
     }
   }

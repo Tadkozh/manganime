@@ -103,7 +103,6 @@ const useSearch = (type, query) => {
       return `${query[key]}`
     })
     .join('')
-  console.log('queryString', queryString)
 
   const { data } = useQuery({
     queryKey: `${type}/${queryString}`,
@@ -115,11 +114,13 @@ const useSearch = (type, query) => {
         score: query?.score,
         popularity: query?.popularity,
         sort: query?.sortBy,
+        isAdult: query?.isAdult,
         page: query?.page,
         perPage: query?.perPage,
       }),
     staleTime: Infinity,
   })
+
   return data
 }
 

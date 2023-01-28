@@ -5,12 +5,18 @@ import { useReviews } from '../../hooks/queriesHooks'
 function InfoReviews() {
   let { type, id } = useParams()
   const reviews = useReviews(type, id)
-  const info = reviews.Page.media[0].reviews.nodes
+  const info = reviews?.Page?.media[0]?.reviews?.nodes
+  const title =
+    reviews?.Page?.media[0]?.title.english ??
+    reviews?.Page?.media[0]?.title.romaji
 
   return (
     <>
       {info ? (
-        <div className="reviews">
+        <div id="reviews" className="reviews">
+          <h3>
+            {info.length} reviews about {title}
+          </h3>
           {info.map((data, index) => {
             const timestampCreated = info[index].createdAt
             const dateCreated = new Date(timestampCreated * 1000)

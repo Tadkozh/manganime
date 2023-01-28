@@ -183,6 +183,9 @@ form > div {
   background-color: rgba(240, 248, 255, 0.5);
   padding: 5px;
 }
+.reviews h3 {
+  margin: 10px 0;
+}
 .review {
   background-color: lightgreen;
   padding: 10px;

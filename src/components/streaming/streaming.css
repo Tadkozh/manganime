@@ -1,0 +1,32 @@
+.streaming h2 {
+  text-align: center;
+  margin: 10px auto 25px;
+}
+.datagrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 225px);
+  gap: 50px;
+}
+.datagrid > div {
+  background-color: grey;
+  padding: 10px;
+  border-radius: 10px;
+}
+.datagrid a {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
+  color: #fff;
+  text-decoration: none;
+}
+.datagrid .imgWrapper {
+  max-width: 225px;
+}
+.datagrid img {
+  max-width: 100%;
+}
+.datagrid > div:hover img {
+  transform: scale(1.25);
+}
