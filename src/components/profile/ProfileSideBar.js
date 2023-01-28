@@ -1,12 +1,19 @@
+import React from 'react'
 import profilePicture from '../../assets/images/avatar_1.jpg'
+import { LOADING, SUCCESS } from '../../commons/constants'
+import { useAuth } from '../../context/AuthContext'
+import { userPicture } from '../../database/user'
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardContent,
   Container,
   Divider,
+  Edit,
   Grid,
+  Skeleton,
   Typography,
 } from '../ui'
 import { Stat } from './Stat'
@@ -17,6 +24,7 @@ const ProfileSideBar = () => {
       <Card
         sx={{
           with: '100%',
+          height: '500px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -24,7 +32,7 @@ const ProfileSideBar = () => {
           py: 1,
         }}
       >
-        <ProfileSideBarImage image={profilePicture} />
+        <ProfileSideBarImage />
         <ProfileSideBarListButtons />
         <Divider />
         <ProfileSideBarStatistics />
@@ -32,10 +40,54 @@ const ProfileSideBar = () => {
     </Grid>
   )
 }
-const ProfileSideBarImage = ({ image }) => {
+const ProfileSideBarImage = () => {
+  const { data: user, execute, status } = useAuth()
+  const handleUpload = (e) => {
+    if (e.target.files.length > 0) {
+      execute(userPicture(e.target.files[0]))
+    }
+  }
+
   return (
-    <CardContent sx={{ mx: 'auto' }}>
-      <img width={225} height={225} alt={'profile img'} src={image} />
+    <CardContent
+      sx={{
+        mx: 'auto',
+        p: 0,
+        position: 'relative',
+        lineHeight: 0,
+        maxHeight: '225px',
+        overflowY: 'hidden',
+      }}
+    >
+      {status === LOADING && (
+        <Skeleton sx={{ width: '225px', height: '225px' }} />
+      )}
+      {status === SUCCESS && (
+        <img
+          width={225}
+          alt={'profile img'}
+          src={user?.picture ? user?.picture : profilePicture}
+          style={{ backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
+          loading="lazy"
+        />
+      )}
+      <Box
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+        }}
+      >
+        <Button variant="text" component="label" sx={{ minWidth: 0 }}>
+          <Edit />
+          <input
+            hidden
+            accept="image/*"
+            type={'file'}
+            onChange={handleUpload}
+          />
+        </Button>
+      </Box>
     </CardContent>
   )
 }

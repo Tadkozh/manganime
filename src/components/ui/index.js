@@ -25,6 +25,7 @@ import {
   Refresh,
   Search,
   Whatshot,
+  Edit,
 } from '@mui/icons-material'
 import { default as Item, default as Stack } from '@mui/material/Stack'
 import { blue, green, grey, red, yellow } from '@mui/material/colors'
@@ -110,6 +111,7 @@ export {
   CssBaseline,
   Divider,
   DialogContent,
+  Edit,
   LoadingScreen,
   FavoriteRoundedIcon,
   FormControl,
