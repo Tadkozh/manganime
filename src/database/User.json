@@ -31,7 +31,7 @@
       }
     ],
     "stats": [
-      { "name": "Add to :", "animeId": [], "mangaId": [] },
+      { "name": "Add To List", "animeId": [], "mangaId": [] },
       { "name": "Watching", "animeId": [], "mangaId": [] },
       { "name": "Completed", "animeId": [], "mangaId": [] },
       { "name": "On-hold", "animeId": [], "mangaId": [] },

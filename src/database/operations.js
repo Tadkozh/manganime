@@ -20,14 +20,7 @@ const getUser = (data) => ({
   favorite_manga: data?.favorite_manga ?? [],
   anime_opinion: data?.anime_opinion ?? [],
   manga_opinion: data?.manga_opinion ?? [],
-  stats: data?.stats ?? [
-    { name: 'Add to :', animeId: [], mangaId: [] },
-    { name: 'Watching', animeId: [], mangaId: [] },
-    { name: 'Completed', animeId: [], mangaId: [] },
-    { name: 'On-hold', animeId: [], mangaId: [] },
-    { name: 'Dropped', animeId: [], mangaId: [] },
-    { name: 'Plan-to-watch', animeId: [], mangaId: [] },
-  ],
+  stats: data?.stats ?? [],
 })
 
 const addUser = async (user) => {

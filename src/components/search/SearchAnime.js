@@ -38,7 +38,7 @@ function SearchAnime() {
     }
   }, [data])
 
-  console.log('data search', data)
+  // console.log('data search', data)
 
   return (
     <>

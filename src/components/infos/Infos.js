@@ -22,7 +22,7 @@ function Infos() {
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]
 
-  console.log('data infos', info)
+  // console.log('data infos', info)
 
   return info ? (
     <>

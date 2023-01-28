@@ -79,38 +79,39 @@ const updateRating = (type, info, rating, user) => {
   updateUserCurrent(newUserRate)
 }
 
-const updateStat = (name, type, id, user) => {
+const updateStat = (name, infos, user) => {
   const newUserStat = structuredClone(user)
-  console.log('newUserStat', newUserStat)
-  const userStats = newUserStat?.data?.stats
-  const typeContent = type === 'ANIME' ? 'anime' : 'manga'
-  // const idContent = typeContent ? animeId : mangaId
-  // const animeId = typeContent ? id : null
-  const animeId = id
-  const mangaId = typeContent ? null : id
-  // const newStat = { name: name, animeId: [animeId], mangaId: [mangaId] }
+  console.log('new user stat clone', newUserStat)
+  const userStats = newUserStat?.stats
+  console.log('user stat', userStats)
+  const newStat = { name: name, animeId: [], mangaId: [] }
+  const idContent = infos?.type === 'ANIME' ? 'animeId' : 'mangaId'
+  const isNameStatExist = userStats?.some((array) => array?.name === name)
+  const isTypeIdExist =
+    userStats.length > 0 && isNameStatExist
+      ? userStats
+          ?.find((array) => array?.name === name)
+          [idContent]?.includes(infos?.id)
+      : null
 
-  if (
-    userStats.name === name &&
-    (userStats.animeId.includes(animeId) || userStats.mangaId.includes(mangaId))
-  ) {
-    return null
-  } else if (
-    userStats.find((array, index) => array.name === name) &&
-    !userStats
-      .find((array, index) => array.name === name)
-      .animeId.includes(animeId)
-  ) {
+  // Rajout de && isNameStatExist dans isTypeIdExist in case where array not empty
+
+  // const cancelId = userStats
+  //   .find((stat) => infos?.id)
+  //   [idContent].filter((array) => array !== infos?.id)
+  // console.log(cancelId)
+
+  if (userStats.length === 0 || !isNameStatExist) {
+    userStats?.push(newStat)
+  } else if (isNameStatExist && isTypeIdExist) {
+    return
+  } else if (isNameStatExist && !isTypeIdExist) {
     console.log('je passe')
-    userStats.find((array) => array.name === name).animeId.push(...animeId)
-    // updateUserCurrent(newUserStat)
-  } else if (userStats.name === name && !userStats.mangaId.includes(mangaId)) {
-    userStats.find((array) => array.name === name).mangaId.push(mangaId)
-    // updateUserCurrent(newUserStat)
-  } else console.error('Go back refactoring your code ahahaha')
-
-  updateUserCurrent(newUserStat)
+  }
+  userStats?.find((array) => array?.name === name)[idContent]?.push(infos?.id)
   console.log('newUserStat', newUserStat)
+
+  // updateUserCurrent(newUserStat)
 }
 
 const updateBio = async (bio, user) => {
