@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { RESET_FILTERS, SEARCH } from '../../utils/constants'
 import {
+  Box,
   Button,
   FormControl,
   FormControlLabel,
@@ -12,6 +13,7 @@ import {
   styled,
   Switch,
   TextField,
+  Typography,
 } from '../ui'
 
 // Arrays
@@ -36,11 +38,16 @@ function SearchBar({ type, data, query, setQuery }) {
   }
 
   return (
-    <div className="settingsBar">
-      <p>
-        {data?.pageInfo ? `${data?.pageInfo?.total} results` : 'Loading...'}
-      </p>
-
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '10px',
+        padding: '10px',
+      }}
+    >
       <SelectSearch
         title={'Format'}
         name={'formatInput'}
@@ -125,7 +132,15 @@ function SearchBar({ type, data, query, setQuery }) {
         }
       />
 
-      <div className="inputSearch">
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '20px',
+        }}
+      >
         <InputSearch
           title={SEARCH}
           name="searchInput"
@@ -157,8 +172,12 @@ function SearchBar({ type, data, query, setQuery }) {
         >
           <Refresh /> {RESET_FILTERS}
         </Button>
-      </div>
-    </div>
+      </Box>
+
+      <Typography component="p">
+        {data?.pageInfo ? `${data?.pageInfo?.total} results` : 'Loading...'}
+      </Typography>
+    </Box>
   )
 }
 

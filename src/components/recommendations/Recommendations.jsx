@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useRecommendations } from '../../hooks/queriesHooks'
+import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 import { useTheme } from '@mui/material'
 
@@ -11,13 +11,18 @@ const Recommendations = () => {
   let { type, id } = useParams()
   const theme = useTheme()
 
-  const data = useRecommendations(type, id)
-  console.log('data recommendations', data)
-  const info = data?.Page?.recommendations
-  console.log('info', info)
+  const dataInfo = useTitle(type, id)
+  const title =
+    dataInfo?.Page?.media[0]?.title?.english ??
+    dataInfo?.Page?.media[0]?.title?.romaji
+
+  const data = useRecommendations(
+    type,
+    id,
+  )
 
   let directives = ''
-  if (info?.length === 0) {
+  if (data?.length === 0) {
     directives = `No recommendations.`
   } else {
     directives = (
@@ -42,7 +47,7 @@ const Recommendations = () => {
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">
-          People who like this also enjoy
+          People who like {title} also enjoy
         </Typography>
         {directives}
 
@@ -57,8 +62,10 @@ const Recommendations = () => {
         >
           {data
             ? data?.Page?.recommendations.map((data, index) => {
-                if (index < 12) {
-                  return <RecommendationsCard data={data.media} key={index} />
+                if (index < 15) {
+                  return (
+                      <RecommendationsCard data={data.media} key={index} />
+                  )
                 }
                 return null
               })

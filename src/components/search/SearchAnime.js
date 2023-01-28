@@ -1,11 +1,8 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Pagination, Rating } from '../ui'
+import { Box, Card, CardMedia, Pagination, Rating, Typography } from '../ui'
 import { getUrl } from '../../utils/helper'
 import { INFOS, ANIME } from '../../commons/constants'
-
-// CSS Files
-import './search.css'
 
 // Components
 import SearchBar from './SearchBar'
@@ -38,17 +35,15 @@ function SearchAnime() {
     }
   }, [data])
 
-  console.log('data search', data)
-
   return (
     <>
       {getData?.Page ? (
         <>
-          <div className="search">
-            <Pagination
-              onChange={(e, p) => setQuery({ ...query, page: p })}
-              className="pagination"
-              count={getData?.Page?.pageInfo?.lastPage}
+          <Box sx={{ backgroundColor: 'salmon' }}>
+            <PaginationItem
+              getData={getData}
+              query={query}
+              setQuery={setQuery}
             />
 
             <SearchBar
@@ -57,22 +52,93 @@ function SearchAnime() {
               query={query}
               setQuery={setQuery}
             />
-          </div>
+          </Box>
 
-          <div className="searchData">
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, 200px)',
+              justifyContent: 'center',
+              gap: '20px',
+              maxWidth: '1920px',
+              padding: '10px',
+            }}
+          >
             {getData?.Page.media.map((data, index) => {
               return (
-                <div className="item" key={index}>
-                  <Link to={getUrl(type, INFOS, [data.id])}>
-                    <div className="imgWrapper">
-                      <img
-                        src={data.coverImage.large}
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                    backgroundColor: 'bisque',
+                    fontSize: '1rem',
+                    textAlign: 'center',
+                    padding: '10px 10px 5px',
+                    border: 'solid 0px blue',
+                    borderRadius: '10px',
+                    transition: '0.25s',
+                    ':hover a': {
+                      justifyContent: 'space-evenly',
+                    },
+                    ':hover .imgWrapper': {
+                      boxShadow: '0 5px 30px -5px',
+                    },
+                    ':hover img': {
+                      transform: 'scale(1.1)',
+                    },
+                    ':hover': {
+                      backgroundColor: 'rgb(255, 204, 142)}',
+                    },
+                  }}
+                >
+                  <Link
+                    to={getUrl(type, INFOS, [data.id])}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '5px',
+                      color: '#000',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <Card
+                      className="imgWrapper"
+                      sx={{
+                        overflow: 'hidden',
+                        borderRadius: '5px',
+                        boxShadow: '0 0 15px -5px',
+                        transition: '0.5s',
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        image={data.coverImage.large}
                         alt={`small cover of ${
-                          data.title.english ?? data.title.romaji
+                          data.title.romaji ?? data.title.english
                         }`}
+                        sx={{
+                          height: '100%',
+                          borderRadius: '5px',
+                          transition: '0.25s',
+                        }}
                       />
-                    </div>
-                    <p>{data.title.english ?? data.title.romaji}</p>
+                    </Card>
+                    <Typography
+                      component="p"
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '5px',
+                        color: '#000',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      {data.title.romaji ?? data.title.english}
+                    </Typography>
                     <Rating
                       value={data.averageScore / 20}
                       precision={0.1}
@@ -80,21 +146,30 @@ function SearchAnime() {
                       size="small"
                     />
                   </Link>
-                </div>
+                </Box>
               )
             })}
-          </div>
-
-          <div className="paginationBottom">
-            <Pagination
-              onChange={(e, p) => setQuery({ ...query, page: p })}
-              className="pagination"
-              count={getData?.Page?.pageInfo?.lastPage}
-            />
-          </div>
+          </Box>
         </>
       ) : null}
+
+      <PaginationItem getData={getData} query={query} setQuery={setQuery} />
     </>
+  )
+}
+
+function PaginationItem({ getData, query, setQuery }) {
+  return (
+    <Pagination
+      onChange={(e, p) => setQuery({ ...query, page: p })}
+      count={getData?.Page?.pageInfo?.lastPage}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'salmon',
+        padding: '10px',
+      }}
+    />
   )
 }
 

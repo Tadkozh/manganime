@@ -27,25 +27,17 @@ function Infos() {
   return info ? (
     <>
       <NavBarInfoTabs />
-      <div className="infoWrapper">
-        <>
-          <div className="info">
-            <div className="header">
-              <InfoPresentation info={info} />
-              <InfoSynopsis synopsis={info.description} />
-              <InfoDetails />
-            </div>
+      <div className="info">
+        <div className="header">
+          <InfoPresentation info={info} />
+          <InfoSynopsis synopsis={info.description} />
+          <InfoDetails />
+        </div>
 
-            {type === ANIME && info ? (
-              <div className="watch">
-                <Trailer info={info.trailer} />
-              </div>
-            ) : null}
+        {type === ANIME ? <Trailer info={info.trailer} /> : null}
 
-            <InfoForm info={info} />
-            <InfoReviews />
-          </div>
-        </>
+        <InfoForm info={info} />
+        <InfoReviews />
       </div>
     </>
   ) : null
@@ -53,22 +45,21 @@ function Infos() {
 
 function Trailer({ info }) {
   return info ? (
-    <div>
-      <Button href={`https://www.youtube.com/watch?v=${info.id}`}>
+    <>
+      <Button
+        href={`https://www.youtube.com/watch?v=${info.id}`}
+        variant="contained"
+        sx={{ m: '0 auto' }}
+      >
         Watch trailer on {info.site}
       </Button>
       <iframe
         title="Trailer"
         src={`https://www.youtube.com/embed/${info.id}?autoplay=1&mute=1`}
         thumbnail={info.thumbnail}
+        style={{ margin: '0 auto' }}
       />
-      {/* <Button href={`https://www.youtube.com/watch?v=${info.id}`}>
-        Watch trailer on {info.site}
-      </Button>
-      <a href={`https://www.youtube.com/watch?v=${info.id}`}>
-        <img id="trailer" alt="trailer" src={info.thumbnail} />
-      </a> */}
-    </div>
+    </>
   ) : null
 }
 
