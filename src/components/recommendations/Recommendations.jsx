@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom'
 import { useRecommendations } from '../../hooks/queriesHooks'
-import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 import { useTheme } from '@mui/material'
 
@@ -47,20 +46,24 @@ const Recommendations = () => {
         </Typography>
         {directives}
 
-        <div className="grid-recommendations">
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, 225px)',
+            justifyContent: 'center',
+            justifyItems: 'center',
+            gap: '50px',
+          }}
+        >
           {data
             ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 12) {
-                  return (
-                    <div key={index}>
-                      <RecommendationsCard data={data.media} />
-                    </div>
-                  )
+                  return <RecommendationsCard data={data.media} key={index} />
                 }
                 return null
               })
             : 'loading, please wait...'}
-        </div>
+        </Box>
       </Box>
     </>
   )
