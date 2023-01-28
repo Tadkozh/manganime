@@ -45,6 +45,13 @@ export const INFOS_REQUEST = gql`
 
         description(asHtml: true)
 
+        # STREAMING
+        streamingEpisodes {
+          title
+          url
+          site
+        }
+
         # REVIEWS
         reviews {
           nodes {

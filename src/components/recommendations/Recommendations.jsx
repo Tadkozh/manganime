@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useInfos, useRecommendations } from '../../hooks/queriesHooks'
+import { useRecommendations } from '../../hooks/queriesHooks'
 import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 
@@ -14,7 +14,7 @@ const Recommendations = () => {
     type,
     id,
   )
-  console.log('data', data)
+  console.log('data recommendations', data)
 
   const title = data?.Page?.media?.title?.english ?? "A REVOIR!!!"
 
@@ -50,7 +50,7 @@ const Recommendations = () => {
 
   return (
     <>
-      <NavBarInfoTabs />
+      {/* <NavBarInfoTabs /> */}
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">
