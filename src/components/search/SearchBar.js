@@ -21,14 +21,15 @@ function SearchBar({ type, data, query, setQuery }) {
   const [searchInput, setSearchInput] = useState('')
 
   function resetFilters() {
+    setSearchInput('')
     setQuery({
-      // search: null,
+      search: null,
       format: 'TV',
       status: 'FINISHED',
       score: 0,
       popularity: 0,
       sortBy: 'TRENDING_DESC',
-      hideHentai: true,
+      isAdult: false,
       page: 1,
       perPage: 30,
     })
@@ -44,7 +45,9 @@ function SearchBar({ type, data, query, setQuery }) {
         title={'Format'}
         name={'formatInput'}
         getter={query.format}
-        handleChange={(e) => setQuery({ ...query, format: e.target.value })}
+        handleChange={(e) =>
+          setQuery({ ...query, format: e.target.value, page: 1 })
+        }
         defaultValue={
           type === 'anime'
             ? selectValues?.anime?.format[0]?.value
@@ -66,7 +69,9 @@ function SearchBar({ type, data, query, setQuery }) {
         title="score min"
         name="scoreMinInput"
         getter={query.score}
-        handleChange={(e) => setQuery({ ...query, score: e.target.value })}
+        handleChange={(e) =>
+          setQuery({ ...query, score: e.target.value, page: 1 })
+        }
         defaultValue={selectValues.scoreMin[0].value}
         defaultChildren={selectValues.scoreMin[0].children}
         selectValues={selectValues.scoreMin}
@@ -76,7 +81,9 @@ function SearchBar({ type, data, query, setQuery }) {
         title="Status"
         name="statusInput"
         getter={query.status}
-        handleChange={(e) => setQuery({ ...query, status: e.target.value })}
+        handleChange={(e) =>
+          setQuery({ ...query, status: e.target.value, page: 1 })
+        }
         defaultValue={
           type === 'anime'
             ? selectValues.anime.status[0].value
@@ -98,19 +105,22 @@ function SearchBar({ type, data, query, setQuery }) {
         title="Sort by"
         name="sortByInput"
         getter={query.sortBy}
-        handleChange={(e) => setQuery({ ...query, sortBy: e.target.value })}
+        handleChange={(e) =>
+          setQuery({ ...query, sortBy: e.target.value, page: 1 })
+        }
         defaultValue={selectValues.sortBy[0].value}
         defaultChildren={selectValues.sortBy[0].children}
         selectValues={selectValues.sortBy}
       />
 
       <FormControlLabel
-        control={<HideHentai checked={query.hideHentai} />}
+        control={<HideHentai checked={!query.isAdult} />}
         label="Hide Hentai"
         onChange={() =>
           setQuery({
             ...query,
-            hideHentai: !query.hideHentai,
+            isAdult: !query.isAdult,
+            page: 1,
           })
         }
       />
@@ -120,18 +130,24 @@ function SearchBar({ type, data, query, setQuery }) {
           title={SEARCH}
           name="searchInput"
           placeholder="Write here..."
-          getter={query.search}
+          getter={searchInput}
           handleChange={(e) => setSearchInput(e.target.value)}
         />
 
-        {/* <Button
+        <Button
           variant="contained"
           sx={{ gap: '5px', fontWeight: 'bold' }}
           size="small"
-          onClick={() => setQuery({ ...query, search: searchInput })}
+          onClick={() =>
+            setQuery({
+              ...query,
+              search: searchInput === '' ? null : searchInput,
+              page: 1,
+            })
+          }
         >
           <Search /> {SEARCH}
-        </Button> */}
+        </Button>
 
         <Button
           variant="contained"

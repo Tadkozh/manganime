@@ -19,13 +19,13 @@ function SearchAnime() {
   const [getData, setGetData] = useState()
 
   const [query, setQuery] = useState({
-    // search: '',
+    search: null,
     format: 'TV',
     status: 'FINISHED',
     score: 0,
     popularity: 0,
     sortBy: 'TRENDING_DESC',
-    hideHentai: true,
+    isAdult: false,
     page: 1,
     perPage: 30,
   })
@@ -37,6 +37,8 @@ function SearchAnime() {
       setGetData(data)
     }
   }, [data])
+
+  console.log('data search', data)
 
   return (
     <>
@@ -83,13 +85,13 @@ function SearchAnime() {
             })}
           </div>
 
-          {/* <div className="paginationBottom">
+          <div className="paginationBottom">
             <Pagination
               onChange={(e, p) => setQuery({ ...query, page: p })}
               className="pagination"
-              count={getData?.pagination.last_visible_page}
+              count={getData?.Page?.pageInfo?.lastPage}
             />
-          </div> */}
+          </div>
         </>
       ) : null}
     </>

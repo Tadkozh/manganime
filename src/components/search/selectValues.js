@@ -2,6 +2,7 @@ const selectValues = {
   scoreMin: [],
   sortBy: [
     { value: 'TRENDING_DESC', children: 'Trending' },
+    { value: 'SCORE_DESC', children: 'Score' },
     { value: 'TITLE_ENGLISH_DESC', children: 'Title' },
     { value: 'START_DATE_DESC', children: 'Start date' },
     { value: 'END_DATE_DESC', children: 'End date' },
