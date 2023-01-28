@@ -5,6 +5,7 @@ export const EPISODE_REQUEST = gql`
     Page(page: 1, perPage: $perPage) {
       media(type: ANIME, sort: POPULARITY_DESC) {
         id
+        type
         title {
           english
           romaji
