@@ -10,8 +10,11 @@ import RecommendationsCard from './RecommendationsCard'
 const Recommendations = () => {
   let { type, id } = useParams()
 
-  const data = useRecommendations(type, id)
-  console.log('data', data)
+  const data = useRecommendations(
+    type,
+    id,
+  )
+  console.log('data recommendations', data)
 
   let directives = ''
   if (data?.length === 0) {
@@ -19,13 +22,6 @@ const Recommendations = () => {
   } else {
     directives = (
       <>
-        <Typography
-          sx={{
-            display: 'flex',
-            alignItem: 'center',
-          }}
-        ></Typography>
-
         <Typography
           sx={{
             marginBottom: 5,

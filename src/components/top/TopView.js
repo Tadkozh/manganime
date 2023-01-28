@@ -102,11 +102,11 @@ const TopView = ({ datas, isHomePage = false, type, rank }) => {
                   component="img"
                   height="400"
                   sx={{ objectFit: 'inherit', transition: 'all 0.2s ease' }}
-                  image={data.coverImage.extraLarge}
-                  alt={data?.title_english ?? data?.title}
+                  image={data?.coverImage?.extraLarge}
+                  alt={data?.title?.english ?? data?.title?.romaji}
                 />
-                {showOverlay.status && showOverlay.index === index && (
-                  <Link to={getUrl(type, INFOS, [data?.mal_id])}>
+                {showOverlay?.status && showOverlay?.index === index && (
+                  <Link to={getUrl(type, INFOS, [data?.id])}>
                     <Box
                       component="div"
                       sx={{
@@ -125,7 +125,7 @@ const TopView = ({ datas, isHomePage = false, type, rank }) => {
               </CardActionArea>
               <CardContent sx={{ p: 0 }}>
                 <Typography component="h5" sx={sxTopLiTitle}>
-                  {data.title.romaji}
+                  {data?.title?.english ?? data?.title?.romaji}
                 </Typography>
               </CardContent>
             </Card>
