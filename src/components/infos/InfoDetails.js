@@ -5,16 +5,18 @@ function InfoDetails() {
   let { type, id } = useParams()
 
   const data = useDetails(type, id)
-  const info = data.Page.media[0]
+  const info = data?.Page?.media[0]
 
   const unknown = 'unknown'
 
   const typeData = info?.type
-  let genresData = Object.keys(info?.genres)
-    .map((data) => {
-      return `${info?.genres[data]}`
-    })
-    .join(', ')
+  let genresData = info
+    ? Object.keys(info?.genres)
+        .map((data) => {
+          return `${info?.genres[data]}`
+        })
+        .join(', ')
+    : null
   // const rankData = info?.rankings[0]?.rank
   const popularityData = info?.popularity.toLocaleString()
   const statusData = info?.status
@@ -51,11 +53,13 @@ function InfoDetails() {
   const volumesData = info?.volumes
   const chaptersData = info?.chapters
   const durationData = info?.duration
-  let studiosData = Object.keys(info?.studios?.nodes)
-    .map((data) => {
-      return `${info?.studios?.nodes[data]?.name}`
-    })
-    .join(', ')
+  let studiosData = info
+    ? Object.keys(info?.studios?.nodes)
+        .map((data) => {
+          return `${info?.studios?.nodes[data]?.name}`
+        })
+        .join(', ')
+    : null
   const isLicensedData = info?.isLicensed
   const sourceData = info?.source
 

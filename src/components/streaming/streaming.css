@@ -2,17 +2,17 @@
   text-align: center;
   margin: 10px auto 25px;
 }
-.datagrid {
+.streaming .datagrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 225px);
   gap: 50px;
 }
-.datagrid > div {
+.streaming .datagrid > div {
   background-color: grey;
   padding: 10px;
   border-radius: 10px;
 }
-.datagrid a {
+.streaming .datagrid a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,12 +21,12 @@
   color: #fff;
   text-decoration: none;
 }
-.datagrid .imgWrapper {
+.streaming .datagrid .imgWrapper {
   max-width: 225px;
 }
-.datagrid img {
+.streaming .datagrid img {
   max-width: 100%;
 }
-.datagrid > div:hover img {
+.streaming .datagrid > div:hover img {
   transform: scale(1.25);
 }

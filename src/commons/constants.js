@@ -39,7 +39,6 @@ export const ROUTE_SEARCH_ANIME = `/${ANIME}/${SEARCH}`
 export const ROUTE_SEARCH_MANGA = `/${MANGA}/${SEARCH}`
 export const ROUTE_INFOS = `/:${TYPE}/${INFOS}/:${ID}`
 export const ROUTE_STREAMING = `/:${TYPE}/${STREAMING}/:${ID}`
-export const ROUTE_NEWS = `/:${TYPE}/${NEWS}/:${ID}`
 export const ROUTE_RECOMMENDATIONS = `/:${TYPE}/${RECOMMENDATIONS}/:${ID}`
 export const ROUTE_404 = '*'
 export const JIKAN_API = process.env.REACT_APP_JIKAN_API
