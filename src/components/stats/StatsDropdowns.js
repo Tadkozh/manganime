@@ -10,25 +10,56 @@ import {
   MenuItem,
   MenuList,
 } from '../ui'
+import { updateStat } from '../../database/user'
+
+// const options = [
+//   'Add to :',
+//   'Watching',
+//   'Completed',
+//   'On-hold',
+//   'Dropped',
+//   'Plan-to-watch',
+// ]
+
+// const optionsTest = [
+//   // { name: 'Add to :' },
+//   { name: 'Watching', animeId: [10, 30, 30], mangaId: [30] },
+//   { name: 'Completed', animeId: [], mangaId: [2] },
+// ]
+// console.log(optionsTest.map((optionsTest) => optionsTest.animeId))
+// optionsTest[1].animeId.push(1000)
+// console.log(optionsTest.map((optionsTest) => optionsTest.animeId))
+// console.log(
+//   optionsTest.map(
+//     (optionsTest) => optionsTest.animeId.length + optionsTest.mangaId.length,
+//   ),
+// )
 
 const options = [
-  'Add to :',
-  'Watching',
-  'Completed',
-  'On-hold',
-  'Dropped',
-  'Plan-to-watch',
+  { name: 'Add to List :', animeId: [], mangaId: [] },
+  { name: 'Watching', animeId: [], mangaId: [] },
+  { name: 'Completed', animeId: [], mangaId: [] },
+  { name: 'On-hold', animeId: [], mangaId: [] },
+  { name: 'Dropped', animeId: [], mangaId: [] },
+  { name: 'Plan-to-watch', animeId: [], mangaId: [] },
 ]
+// console.log(options)
 
-const StatsDropdowns = () => {
+const StatsDropdowns = ({ userDatas, contentInfos }) => {
   const [stat, setStat] = React.useState('')
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const [newStat, setNewStat] = React.useState(userDatas?.data?.stats)
+
+  // console.log('content infos:', contentInfos)
+  // console.log('user datas in StatsDropdowns :', userDatas)
+  // console.log('new user datas in StatsDropdowns :', newStat)
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`)
+    console.info(`You clicked ${options[selectedIndex].name}`)
     console.info(' Stat : ', stat)
+    updateStat(stat, contentInfos.type, contentInfos.id, userDatas)
   }
 
   const handleMenuItemClick = (event, index) => {
@@ -48,7 +79,7 @@ const StatsDropdowns = () => {
   }
 
   React.useEffect(() => {
-    setStat(`${options[selectedIndex]}`)
+    setStat(`${options[selectedIndex].name}`)
   }, [selectedIndex])
 
   return (
@@ -61,7 +92,7 @@ const StatsDropdowns = () => {
         aria-label="split button"
       >
         <Button onClick={handleClick} sx={{ maxWidth: 'max-content' }}>
-          {options[selectedIndex]}
+          {options[selectedIndex].name}
         </Button>
         <Button
           size="small"
@@ -95,15 +126,15 @@ const StatsDropdowns = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options
+                  {userDatas.data.stats
                     .filter((option, index) => index !== 0)
                     .map((option, index) => (
                       <MenuItem
-                        key={option}
+                        key={index}
                         selected={index === selectedIndex}
                         onClick={(event) => handleMenuItemClick(event, index)}
                       >
-                        {option}
+                        {option.name}
                       </MenuItem>
                     ))}
                 </MenuList>

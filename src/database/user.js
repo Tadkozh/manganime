@@ -1,3 +1,4 @@
+import { ManageHistoryRounded } from '@mui/icons-material'
 import { addUser, getUserById, updateUser } from './operations'
 
 const updateProfileUser = (user, userCurrent) => {
@@ -78,6 +79,40 @@ const updateRating = (type, info, rating, user) => {
   updateUserCurrent(newUserRate)
 }
 
+const updateStat = (name, type, id, user) => {
+  const newUserStat = structuredClone(user)
+  console.log('newUserStat', newUserStat)
+  const userStats = newUserStat?.data?.stats
+  const typeContent = type === 'ANIME' ? 'anime' : 'manga'
+  // const idContent = typeContent ? animeId : mangaId
+  // const animeId = typeContent ? id : null
+  const animeId = id
+  const mangaId = typeContent ? null : id
+  // const newStat = { name: name, animeId: [animeId], mangaId: [mangaId] }
+
+  if (
+    userStats.name === name &&
+    (userStats.animeId.includes(animeId) || userStats.mangaId.includes(mangaId))
+  ) {
+    return null
+  } else if (
+    userStats.find((array, index) => array.name === name) &&
+    !userStats
+      .find((array, index) => array.name === name)
+      .animeId.includes(animeId)
+  ) {
+    console.log('je passe')
+    userStats.find((array) => array.name === name).animeId.push(...animeId)
+    // updateUserCurrent(newUserStat)
+  } else if (userStats.name === name && !userStats.mangaId.includes(mangaId)) {
+    userStats.find((array) => array.name === name).mangaId.push(mangaId)
+    // updateUserCurrent(newUserStat)
+  } else console.error('Go back refactoring your code ahahaha')
+
+  updateUserCurrent(newUserStat)
+  console.log('newUserStat', newUserStat)
+}
+
 const updateBio = async (bio, user) => {
   if (bio === user.bio) {
     return
@@ -125,6 +160,7 @@ export {
   updateRating,
   updateFavorite,
   updateComment,
+  updateStat,
   getUserbyUid,
   storeUser,
 }

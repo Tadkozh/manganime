@@ -12,7 +12,6 @@ import StatsDropdowns from '../stats/StatsDropdowns'
 function InfoPresentation({ info }) {
   const [userRank, setUserRank] = useState(false)
   const authUser = useAuth()
-  // console.log(authUser)
 
   return (
     <>
@@ -24,7 +23,9 @@ function InfoPresentation({ info }) {
         />
         <RateInfos info={info} userRank={userRank} changeRank={setUserRank} />
       </div>
-      {authUser.data ? <StatsDropdowns /> : null}
+      {authUser.data ? (
+        <StatsDropdowns userDatas={authUser} contentInfos={info} />
+      ) : null}
     </>
   )
 }

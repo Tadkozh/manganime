@@ -20,7 +20,7 @@ import InfoSynopsis from './InfoSynopsis'
 function Infos() {
   let { type, id } = useParams()
   const info = useInfos(type, id)
-  console.log('info', info)
+  // console.log('info', info)
 
   return (
     <>
