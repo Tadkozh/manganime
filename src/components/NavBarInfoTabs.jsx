@@ -18,8 +18,7 @@ export default function NavBarInfoTabs() {
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]?.streamingEpisodes
 
-  console.log("info navbar", info)
-  
+  console.log('info navbar', info)
 
   const urlInfos = getUrl(type, INFOS, [id])
   const urlStreaming = getUrl(type, STREAMING, [id])
@@ -27,14 +26,16 @@ export default function NavBarInfoTabs() {
 
   return (
     <Box sx={{ width: '100%', bgcolor: 'rgb(75, 75, 75)' }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        centered
-        onClick={() => window.location.reload(false)} // en attendant mieux
-      >
+      <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Infos" to={urlInfos} component={Link} value={urlInfos} />
-        {info && info.length > 0 ? <Tab label="Streaming" to={urlStreaming} component={Link} value={urlStreaming} /> : null}
+        {info && info.length > 0 ? (
+          <Tab
+            label="Streaming"
+            to={urlStreaming}
+            component={Link}
+            value={urlStreaming}
+          />
+        ) : null}
         <Tab
           label="Recommendations"
           to={urlRecom}

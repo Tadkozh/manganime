@@ -5,6 +5,8 @@
 .streaming .datagrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 225px);
+  justify-content: center;
+  justify-items: center;
   gap: 50px;
 }
 .streaming .datagrid > div {
