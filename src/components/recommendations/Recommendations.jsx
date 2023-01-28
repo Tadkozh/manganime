@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
 import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
+import { useTheme } from '@mui/material'
 
 // Components
 import NavBarInfoTabs from './../NavBarInfoTabs'
@@ -9,6 +10,7 @@ import RecommendationsCard from './RecommendationsCard'
 
 const Recommendations = () => {
   let { type, id } = useParams()
+  const theme = useTheme()
 
   const dataInfo = useTitle(type, id)
   const title =
@@ -50,7 +52,15 @@ const Recommendations = () => {
         </Typography>
         {directives}
 
-        <div className="datagrid">
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, 225px)',
+            justifyContent: 'center',
+            justifyItems: 'center',
+            gap: '50px',
+          }}
+        >
           {data
             ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 15) {
@@ -61,7 +71,7 @@ const Recommendations = () => {
                 return null
               })
             : 'loading, please wait...'}
-        </div>
+        </Box>
       </Box>
     </>
   )

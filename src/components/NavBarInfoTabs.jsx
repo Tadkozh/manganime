@@ -17,7 +17,7 @@ export default function NavBarInfoTabs() {
 
   const data = useStreaming(type, id)
   const info = data?.Page?.media[0]?.streamingEpisodes
-
+  
   const urlInfos = getUrl(type, INFOS, [id])
   const urlStreaming = getUrl(type, STREAMING, [id])
   const urlRecom = getUrl(type, RECOMMENDATIONS, [id])
@@ -30,7 +30,14 @@ export default function NavBarInfoTabs() {
         centered
       >
         <Tab label="Infos" to={urlInfos} component={Link} value={urlInfos} />
-        {info && info.length > 0 ? <Tab label="Streaming" to={urlStreaming} component={Link} value={urlStreaming} /> : null}
+        {info && info.length > 0 ? (
+          <Tab
+            label="Streaming"
+            to={urlStreaming}
+            component={Link}
+            value={urlStreaming}
+          />
+        ) : null}
         <Tab
           label="Recommendations"
           to={urlRecom}
