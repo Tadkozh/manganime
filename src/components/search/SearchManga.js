@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom'
 import { Pagination, Rating } from '@mui/material'
 import { INFOS } from '../../commons/constants'
 
-// CSS Files
-import './search.css'
-
 // Components
 import SearchBar from './SearchBar'
 import { getUrl } from '../../utils/helper'

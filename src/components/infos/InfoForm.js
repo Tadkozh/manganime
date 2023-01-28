@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
@@ -20,6 +20,9 @@ function InfoForm({ info }) {
   // React Hook Form
   const { register, handleSubmit } = useForm()
 
+  const [commentTitle, setCommentTitle] = useState('')
+  const [commentValue, setCommentValue] = useState('')
+
   const onSubmit = (data) => {
     if (authUser === null) {
       handleOpenModal()
@@ -29,30 +32,40 @@ function InfoForm({ info }) {
     }
   }
 
+  useEffect(() => {
+    if (commentTitle !== '' || commentValue !== '') {
+      if (authUser === null) {
+        handleOpenModal()
+      }
+    }
+  }, [authUser, commentTitle, commentValue])
+
   return (
     <>
-      <p>
-        Leave a comment (Before write, please note that you must be logged in)
-      </p>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <p>Leave a review</p>
         <TextField
           id="outlined-basic"
-          label="Title (Before write, please note that you must be logged in)"
+          label="Title"
           variant="filled"
           size="small"
           required
           type="string"
           name="title"
           {...register('title')}
+          value={commentTitle}
+          onChange={(e) => setCommentTitle(e.target.value)}
         />
         <TextField
           id="outlined-basic"
-          label="Your comment (Before write, please note that you must be logged in)"
+          label="Your review"
           variant="filled"
           multiline
           required
           name="comment"
           {...register('comment')}
+          value={commentValue}
+          onChange={(e) => setCommentValue(e.target.value)}
         />
         <Button
           variant="contained"

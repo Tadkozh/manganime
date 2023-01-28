@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useRecommendations } from '../../hooks/queriesHooks'
+import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
 import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 
@@ -10,11 +10,15 @@ import RecommendationsCard from './RecommendationsCard'
 const Recommendations = () => {
   let { type, id } = useParams()
 
+  const dataInfo = useTitle(type, id)
+  const title =
+    dataInfo?.Page?.media[0]?.title?.english ??
+    dataInfo?.Page?.media[0]?.title?.romaji
+
   const data = useRecommendations(
     type,
     id,
   )
-  console.log('data recommendations', data)
 
   let directives = ''
   if (data?.length === 0) {
@@ -42,7 +46,7 @@ const Recommendations = () => {
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">
-          People who like this also enjoy
+          People who like {title} also enjoy
         </Typography>
         {directives}
 
@@ -51,9 +55,7 @@ const Recommendations = () => {
             ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 15) {
                   return (
-                    <div key={index}>
-                      <RecommendationsCard data={data.media} />
-                    </div>
+                      <RecommendationsCard data={data.media} key={index} />
                   )
                 }
                 return null

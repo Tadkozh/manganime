@@ -1,14 +1,16 @@
 import { Rating } from '../ui'
 import { useParams } from 'react-router-dom'
-import { useReviews } from '../../hooks/queriesHooks'
+import { useTitle, useReviews } from '../../hooks/queriesHooks'
 
 function InfoReviews() {
   let { type, id } = useParams()
+  const dataInfo = useTitle(type, id)
+  const title =
+    dataInfo?.Page?.media[0]?.title?.english ??
+    dataInfo?.Page?.media[0]?.title?.romaji
+
   const reviews = useReviews(type, id)
   const info = reviews?.Page?.media[0]?.reviews?.nodes
-  const title =
-    reviews?.Page?.media[0]?.title.english ??
-    reviews?.Page?.media[0]?.title.romaji
 
   return (
     <>

@@ -4,6 +4,7 @@ import { EPISODE_REQUEST } from '../graphql/episodes'
 import { TOP_REQUEST } from '../graphql/top'
 import { SEARCH_REQUEST } from '../graphql/search'
 import { INFOS_REQUEST } from '../graphql/infos'
+import { TITLE_REQUEST } from '../graphql/title'
 import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
 import { GALERY_REQUEST } from '../graphql/galery'
 import { DETAILS_REQUEST } from '../graphql/details'
@@ -11,11 +12,52 @@ import { REVIEWS_REQUEST } from '../graphql/reviews'
 import { STREAMING_REQUEST } from '../graphql/streaming'
 import { RECOMMENDATIONS_REQUEST } from '../graphql/recommendations'
 
+const useSearch = (type, query) => {
+  let queryString = Object.keys(query)
+    .map((key) => {
+      return `${query[key]}`
+    })
+    .join('')
+
+  const { data } = useQuery({
+    queryKey: `${type}/${queryString}/search`,
+    queryFn: async () =>
+      await graphQLClient.request(SEARCH_REQUEST, {
+        search: query?.search,
+        format: query?.format,
+        status: query?.status,
+        score: query?.score,
+        popularity: query?.popularity,
+        sort: query?.sortBy,
+        isAdult: query?.isAdult,
+        page: query?.page,
+        perPage: query?.perPage,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
+}
+
 function useInfos(type, id) {
   const { data } = useQuery({
     queryKey: `${type}/${id}/infos`,
     queryFn: async () =>
       await graphQLClient.request(INFOS_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
+}
+
+const useTitle = (type, id) => {
+  const { data } = useQuery({
+    queryKey: `${type}/${id}/galery`,
+    queryFn: async () =>
+      await graphQLClient.request(TITLE_REQUEST, {
         type: type,
         id: id,
       }),
@@ -67,20 +109,6 @@ const useReviews = (type, id) => {
   return data
 }
 
-const useRecommendations = (type, id) => {
-  const { data } = useQuery({
-    queryKey: `${type}/${id}/recommandations`,
-    queryFn: async () =>
-      await graphQLClient.request(RECOMMENDATIONS_REQUEST, {
-        type: type,
-        id: id,
-      }),
-    staleTime: Infinity,
-  })
-
-  return data
-}
-
 const useStreaming = (type, id) => {
   const { data } = useQuery({
     queryKey: `${type}/${id}/streaming`,
@@ -95,26 +123,13 @@ const useStreaming = (type, id) => {
   return data
 }
 
-const useSearch = (type, query) => {
-  let queryString = Object.keys(query)
-    .map((key) => {
-      return `${query[key]}`
-    })
-    .join('')
-
+const useRecommendations = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${queryString}/search`,
+    queryKey: `${type}/${id}/recommendations`,
     queryFn: async () =>
-      await graphQLClient.request(SEARCH_REQUEST, {
-        search: query?.search,
-        format: query?.format,
-        status: query?.status,
-        score: query?.score,
-        popularity: query?.popularity,
-        sort: query?.sortBy,
-        isAdult: query?.isAdult,
-        page: query?.page,
-        perPage: query?.perPage,
+      await graphQLClient.request(RECOMMENDATIONS_REQUEST, {
+        type: type,
+        id: id,
       }),
     staleTime: Infinity,
   })
@@ -178,6 +193,7 @@ export {
   useFavorites,
   useSearch,
   useInfos,
+  useTitle,
   useGalery,
   useDetails,
   useReviews,

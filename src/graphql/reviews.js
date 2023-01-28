@@ -1,13 +1,14 @@
 import { gql } from 'graphql-request'
 
 export const REVIEWS_REQUEST = gql`
-  query Details($type: MediaType, $id: [Int]) {
+  query Details($type: MediaType, $id: Int) {
     Page {
       media(type: $type, id: $id) {
+        id
+
         reviews {
           nodes {
             summary
-            body(asHtml: true)
             rating
             ratingAmount
             userRating
@@ -15,10 +16,16 @@ export const REVIEWS_REQUEST = gql`
             createdAt
             updatedAt
             user {
-              avatar
+              avatar {
+                large
+                medium
+              }
               name
             }
-            media
+            media {
+              id
+            }
+            body(asHtml: true)
           }
         }
       }
