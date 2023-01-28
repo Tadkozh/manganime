@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom'
 import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
-import './recommendations.css'
 import { ArrowRightSharp, Box, Typography } from './../ui'
 import { useTheme } from '@mui/material'
 
