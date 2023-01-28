@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { ANIME, MANGA } from '../../commons/constants'
 import { useDetails } from '../../hooks/queriesHooks'
 
 function InfoDetails() {
@@ -9,9 +8,6 @@ function InfoDetails() {
   const info = data.Page.media[0]
 
   const unknown = 'unknown'
-
-  const isAnime = type === ANIME
-  const isManga = type === MANGA
 
   const typeData = info?.type
   let genresData = Object.keys(info?.genres)
@@ -24,25 +20,35 @@ function InfoDetails() {
   const statusData = info?.status
   const startDateYearData = info?.startDate?.year
   const startDateData = `${
-    info?.startDate?.day < 10
-      ? `0${info?.startDate?.day}`
-      : info?.startDate?.day
-  }/${
-    info?.startDate?.month < 10
-      ? `0${info?.startDate?.month}`
-      : info?.startDate?.month
-  }/${info?.startDate?.year}`
+    info?.startDate?.day
+      ? info?.startDate?.day < 10
+        ? `0${info?.startDate?.day}/`
+        : `${info?.startDate?.day}/`
+      : ''
+  }${
+    info?.startDate?.month
+      ? info?.startDate?.month < 10
+        ? `0${info?.startDate?.month}/`
+        : `${info?.startDate?.month}/`
+      : ''
+  }${info?.startDate?.year ? info?.startDate?.year : ''}`
 
   const endDateYearData = info?.endDate?.year
   const endDateData = `${
-    info?.endDate?.day < 10 ? `0${info?.endDate?.day}` : info?.endDate?.day
-  }/${
-    info?.endDate?.month < 10
-      ? `0${info?.endDate?.month}`
-      : info?.endDate?.month
-  }/${info?.endDate?.year}`
+    info?.endDate?.day
+      ? info?.endDate?.day < 10
+        ? `0${info?.endDate?.day}/`
+        : `${info?.endDate?.day}/`
+      : ''
+  }${
+    info?.endDate?.month
+      ? info?.endDate?.month < 10
+        ? `0${info?.endDate?.month}/`
+        : `${info?.endDate?.month}/`
+      : ''
+  }${info?.endDate?.year ? info?.endDate?.year : ''}`
   const episodesData = info?.episodes
-  const volumesData = isManga ? info?.volumes : null
+  const volumesData = info?.volumes
   const chaptersData = info?.chapters
   const durationData = info?.duration
   let studiosData = Object.keys(info?.studios?.nodes)
@@ -91,7 +97,7 @@ function InfoDetails() {
     },
     {
       label: 'Aired to',
-      data: endDateYearData ? endDateData : 'Still active',
+      data: endDateYearData ? endDateData : unknown,
       doesDataExist: endDateData,
     },
     {

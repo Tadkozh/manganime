@@ -114,8 +114,8 @@ function SearchBar({ type, data, query, setQuery }) {
       />
 
       <FormControlLabel
-        control={<HideHentai checked={!query.isAdult} />}
-        label="Hide Hentai"
+        control={<HideHentai checked={query.isAdult} />}
+        label="Hentai"
         onChange={() =>
           setQuery({
             ...query,
