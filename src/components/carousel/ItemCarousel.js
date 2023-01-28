@@ -1,12 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
-import { Box, Card, Typography } from '../ui'
+import { Box, Card, Link, Typography } from '../ui'
 
 const WatchItemCarousel = ({ data }) => {
-  console.log(data)
-  console.log('id', data.id)
-
   return (
     <>
       <Box
@@ -52,9 +48,18 @@ const WatchItemCarousel = ({ data }) => {
               textShadow: '#fff 1px 0 0',
             }}
           >
-            {data?.title?.english ?? data?.title?.romaji}
+            <Link
+              href={getUrl(data?.type, 'infos', [data?.id])}
+              underline="hover"
+              sx={{
+                color: 'inherit',
+                textDecorationColor: 'inherit',
+                cursor: 'pointer',
+              }}
+            >
+              {data?.title?.english ?? data?.title?.romaji}
+            </Link>
           </Typography>
-
           <Card
             sx={{
               display: 'flex',
@@ -66,33 +71,24 @@ const WatchItemCarousel = ({ data }) => {
               gap: '50px',
             }}
           >
-            <Typography
-              variant="h5"
-              component="p"
-              sx={{
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                color: 'blue',
-                textShadow: '#fff 1px 0 0',
-              }}
-            >
-              <Link to={getUrl('ANIME', 'infos', [data.id])}>Infos</Link>
-            </Typography>
-
-            <Typography
-              variant="h5"
-              component="a"
-              href={
-                data.streamingEpisodes[data.streamingEpisodes.length - 1].url
-              }
-              sx={{
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                color: 'blue',
-                textShadow: '#fff 1px 0 0',
-              }}
-            >
-              Watch
+            <Typography variant="h5" component="p">
+              <Link
+                href={
+                  data?.streamingEpisodes[data?.streamingEpisodes?.length - 1]
+                    ?.url
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  fontWeight: 'bold',
+                  color: 'blue',
+                  textDecorationColor: 'blue',
+                  textShadow: '#fff 1px 0 0',
+                  cursor: 'pointer',
+                }}
+              >
+                Watch
+              </Link>
             </Typography>
           </Card>
         </Card>
