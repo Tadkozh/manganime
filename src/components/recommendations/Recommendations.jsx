@@ -16,24 +16,12 @@ const Recommendations = () => {
   )
   console.log('data recommendations', data)
 
-  const title = data?.Page?.media?.title?.english ?? "A REVOIR!!!"
-
   let directives = ''
   if (data?.length === 0) {
-    directives = `No recommendations about ${title}`
+    directives = `No recommendations.`
   } else {
     directives = (
       <>
-        <Typography
-          sx={{
-            display: 'flex',
-            alignItem: 'center',
-          }}
-        >
-          <ArrowRightSharp />
-          Click on Read More to see the article on MyAnimeList
-        </Typography>
-
         <Typography
           sx={{
             marginBottom: 5,
@@ -50,11 +38,11 @@ const Recommendations = () => {
 
   return (
     <>
-      {/* <NavBarInfoTabs /> */}
+      <NavBarInfoTabs />
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">
-          People who like <i>{title}</i> also enjoy
+          People who like this also enjoy
         </Typography>
         {directives}
 
