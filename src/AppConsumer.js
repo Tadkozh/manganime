@@ -6,7 +6,6 @@ import {
   ROUTE_HOME,
   ROUTE_INFOS,
   ROUTE_LOGIN_REGISTER,
-  ROUTE_NEWS,
   ROUTE_PROFILE,
   ROUTE_RECOMMENDATIONS,
   ROUTE_SEARCH_ANIME,
@@ -15,6 +14,7 @@ import {
   ROUTE_TOP_ANIME,
   ROUTE_TOP_MANGA,
 } from './commons/constants'
+
 import { Error404 } from './components/error/Error404'
 import { ErrorFallback } from './components/error/ErrorFallBack'
 import { LoginRegister } from './components/LoginRegister'
@@ -28,7 +28,6 @@ import TopAnime from './components/top/TopAnime'
 import TopManga from './components/top/TopManga'
 import Infos from './components/infos/Infos'
 import Streaming from './components/streaming/Streaming'
-import News from './components/news/News'
 import Recommendations from './components/recommendations/Recommendations'
 
 import ModalOri from './components/ModalOri'
@@ -50,7 +49,6 @@ const AppConsumer = () => {
           <Route path={ROUTE_TOP_MANGA} element={<TopManga />} />
           <Route path={ROUTE_INFOS} element={<Infos />} />
           <Route path={ROUTE_STREAMING} element={<Streaming />} />
-          <Route path={ROUTE_NEWS} element={<News />} />
           <Route path={ROUTE_RECOMMENDATIONS} element={<Recommendations />} />
           <Route path={ROUTE_404} element={<Error404 />} />
           <Route path="/" element={<PrivateRoute />}>

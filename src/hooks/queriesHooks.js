@@ -1,18 +1,19 @@
 import { clientApi, graphQLClient } from '../utils/clientApi'
 import { useQuery } from 'react-query'
-import { SEARCH_REQUEST } from '../graphql/search'
+import { EPISODE_REQUEST } from '../graphql/episodes'
 import { TOP_REQUEST } from '../graphql/top'
+import { SEARCH_REQUEST } from '../graphql/search'
 import { INFOS_REQUEST } from '../graphql/infos'
 import { FAVORITES_LIST_REQUEST } from '../graphql/favorites'
 import { GALERY_REQUEST } from '../graphql/galery'
 import { DETAILS_REQUEST } from '../graphql/details'
 import { REVIEWS_REQUEST } from '../graphql/reviews'
+import { STREAMING_REQUEST } from '../graphql/streaming'
 import { RECOMMENDATIONS_REQUEST } from '../graphql/recommendations'
-import { EPISODE_REQUEST } from '../graphql/episodes'
 
 function useInfos(type, id) {
   const { data } = useQuery({
-    queryKey: `${type}/${id}`,
+    queryKey: `${type}/${id}/infos`,
     queryFn: async () =>
       await graphQLClient.request(INFOS_REQUEST, {
         type: type,
@@ -20,22 +21,13 @@ function useInfos(type, id) {
       }),
     staleTime: Infinity,
   })
-  return data
 
-  // const { data, status } = await graphQLClient.request(INFOS_REQUEST, {
-  //   type: type,
-  //   id: id,
-  // })
-  // console.log('type:', type)
-  // console.log('id:', id)
-  // console.log('data:', data)
-  // console.log('{ data }:', { data })
-  // return { data, status }
+  return data
 }
 
 const useGalery = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}`,
+    queryKey: `${type}/${id}/galery`,
     queryFn: async () =>
       await graphQLClient.request(GALERY_REQUEST, {
         type: type,
@@ -45,14 +37,11 @@ const useGalery = (type, id) => {
   })
 
   return data
-
-  // const { data, status } = useClientApi(type, id, 'pictures')
-  // return { data, status }
 }
 
 const useDetails = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}`,
+    queryKey: `${type}/${id}/details`,
     queryFn: async () =>
       await graphQLClient.request(DETAILS_REQUEST, {
         type: type,
@@ -64,14 +53,23 @@ const useDetails = (type, id) => {
   return data
 }
 
-const useNews = (type, id) => {
-  const { data, status } = useClientApi(type, id, 'news')
-  return { data, status }
+const useReviews = (type, id) => {
+  const { data } = useQuery({
+    queryKey: `${type}/${id}/reviews`,
+    queryFn: async () =>
+      await graphQLClient.request(REVIEWS_REQUEST, {
+        type: type,
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
 }
 
 const useRecommendations = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}`,
+    queryKey: `${type}/${id}/recommandations`,
     queryFn: async () =>
       await graphQLClient.request(RECOMMENDATIONS_REQUEST, {
         type: type,
@@ -83,11 +81,11 @@ const useRecommendations = (type, id) => {
   return data
 }
 
-const useReviews = (type, id) => {
+const useStreaming = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}`,
+    queryKey: `${type}/${id}/streaming`,
     queryFn: async () =>
-      await graphQLClient.request(REVIEWS_REQUEST, {
+      await graphQLClient.request(STREAMING_REQUEST, {
         type: type,
         id: id,
       }),
@@ -105,7 +103,7 @@ const useSearch = (type, query) => {
     .join('')
 
   const { data } = useQuery({
-    queryKey: `${type}/${queryString}`,
+    queryKey: `${type}/${queryString}/search`,
     queryFn: async () =>
       await graphQLClient.request(SEARCH_REQUEST, {
         search: query?.search,
@@ -126,7 +124,7 @@ const useSearch = (type, query) => {
 
 const useFavorites = (type, listFavorites = []) => {
   const { data, status } = useQuery({
-    queryKey: `favorites/${type}/${listFavorites.join('')}`,
+    queryKey: `${type}/${listFavorites.join('')}/favorites`,
     queryFn: async () =>
       await graphQLClient.request(FAVORITES_LIST_REQUEST, {
         ids: listFavorites,
@@ -134,12 +132,13 @@ const useFavorites = (type, listFavorites = []) => {
       }),
     staleTime: Infinity,
   })
+
   return { data: data?.Page.media, status }
 }
 
 const useTop = (type, perPage = 12) => {
   const { data } = useQuery({
-    queryKey: `top/${type}`,
+    queryKey: `${type}/top`,
     queryFn: async () =>
       await graphQLClient.request(TOP_REQUEST, {
         type: type,
@@ -147,6 +146,7 @@ const useTop = (type, perPage = 12) => {
       }),
     staleTime: Infinity,
   })
+
   return data
 }
 
@@ -159,6 +159,7 @@ const useEpisode = (perPage = 12) => {
       }),
     staleTime: Infinity,
   })
+
   return data
 }
 
@@ -168,18 +169,19 @@ const useClientApi = (type, id, endpoint) => {
     queryFn: () => clientApi(`${type}/${id}/${endpoint}`),
     staleTime: Infinity,
   })
+
   return { data: data?.data, status }
 }
 
 export {
+  useEpisode,
   useFavorites,
+  useSearch,
   useInfos,
   useGalery,
   useDetails,
-  useNews,
-  useSearch,
-  useTop,
-  useEpisode,
-  useRecommendations,
   useReviews,
+  useStreaming,
+  useRecommendations,
+  useTop,
 }
