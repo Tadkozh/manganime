@@ -96,17 +96,9 @@ function GlobalRate({ info, userRank }) {
         precision={0.1}
         readOnly
       />
-      <p>
-        <small>
-          (
-          {info.meanScore
-            ? userRank
-              ? `On ${info.meanScore + 1} notes`
-              : `On ${info.meanScore} notes`
-            : 'No notes yet'}
-          )
-        </small>
-      </p>
+      <Button href="#reviews" variant="contained" size="small" color="success">
+        REVIEWS
+      </Button>
     </div>
   )
 }
@@ -116,17 +108,19 @@ function PersonalRate({ info, userRank, changeRank }) {
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
-  const [nbStar, setNbStar] = useState(0)
+  const [nbStar, setNbStar] = useState(null)
 
   const { data: authUser } = useAuth()
   let { type } = useParams()
 
-  const handleClickRate = () => {
+  function handleClickRate() {
     if (authUser === null) {
       handleOpenModal()
     } else {
-      changeRank(!userRank)
-      updateRating(type, info, nbStar, authUser)
+      if (nbStar !== null) {
+        changeRank(!userRank)
+        updateRating(type, info, nbStar, authUser)
+      }
     }
   }
 
@@ -139,9 +133,7 @@ function PersonalRate({ info, userRank, changeRank }) {
         precision={0.5}
         readOnly={userRank ? true : false}
         value={nbStar}
-        onChange={(event, newNbStar) => {
-          setNbStar(newNbStar)
-        }}
+        onChange={(e, newNbStar) => setNbStar(newNbStar)}
       />
       <div>
         <Button
@@ -150,7 +142,7 @@ function PersonalRate({ info, userRank, changeRank }) {
           color={userRank ? 'error' : 'success'}
           onClick={handleClickRate}
         >
-          {userRank ? 'Cancel' : 'Submit your note'}
+          {userRank ? 'Cancel note' : 'Submit note'}
         </Button>
         {open && (
           <Modale

@@ -5,7 +5,7 @@ import { ANIME, MANGA } from '../commons/constants'
 const MangAnime = () => {
   return (
     <>
-      <CarouselBox></CarouselBox>
+      <CarouselBox />
       <TopDetails isHomePage type={ANIME} />
       <TopDetails isHomePage type={MANGA} />
     </>
