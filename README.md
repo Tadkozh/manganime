@@ -1,11 +1,23 @@
-# Projet React Mastery - Anime | Manga
+# Projet React Mastery - MangAnime
+
+---
+
+# To see this project in action locally :
+
+- git clone git@github.com:Tadkozh/manganime.git
+- Remember to create your .env.local from the .env template
+- npm install
+- npm start
+- enjoy !
+
+![MangAnime](ressources/smallpreview.png)
 
 **API :**
 
 - Jikan API (REST)
 - AniList Api (GraphQL)
 
-**Outils utilisés :**
+**The tools used :**
 
 - Notion
 - Figma
@@ -27,7 +39,7 @@
 
 - Backend :
 
-  - Firebase (Authentication + Firestore Database)
+  - Firebase (Authentication + Firestore Database + Storage)
 
 - React :
 
@@ -35,6 +47,8 @@
   - react-router-dom
   - react-error-boundary
   - react-query
+  - React Hook Form
+  - React-material-ui-carousel
 
 - Tests :
   - msw
