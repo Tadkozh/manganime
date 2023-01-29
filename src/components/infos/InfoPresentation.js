@@ -1,13 +1,22 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { Button, FavoriteRoundedIcon, Rating, Typography } from '../ui'
+import {
+  Box,
+  Button,
+  FavoriteRoundedIcon,
+  Grid,
+  Rating,
+  Typography,
+} from '../ui'
 
 import { updateRating } from '../../database/user'
 import { updateFavorite } from '../../database/user'
 import Modale from './../Modal'
 import InfoGalery from './InfoGalery'
 import StatsDropdowns from '../stats/StatsDropdowns'
+
+import StarIcon from '@mui/icons-material/Star'
 
 function InfoPresentation({ info }) {
   const [userRank, setUserRank] = useState(false)
@@ -16,15 +25,26 @@ function InfoPresentation({ info }) {
 
   return (
     <>
-      <div className="presentation">
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          border: 'solid',
+        }}
+      >
         <PresentationTitle info={info} />
         <InfoGalery
           mainImage={info.coverImage.large}
           mainLargeImage={info.coverImage.extraLarge}
         />
-        <RateInfos info={info} userRank={userRank} changeRank={setUserRank} />
-      </div>
-      {authUser.data ? <StatsDropdowns /> : null}
+        <RatingInfos info={info} userRank={userRank} changeRank={setUserRank} />
+      </Grid>
+      {/* {authUser.data ? <StatsDropdowns /> : null} */}
     </>
   )
 }
@@ -77,24 +97,95 @@ function FavoriteIcon({ info, favourites }) {
   )
 }
 
-function RateInfos({ info, userRank, changeRank }) {
+function HoverRating({
+  name,
+  defaultValue,
+  nbStar,
+  setNbStar,
+  precision,
+  readOnly,
+}) {
+  const [value, setValue] = useState(nbStar)
+  const [hover, setHover] = useState(-1)
+
+  const labels = {
+    null: 'No opinion',
+    0.5: 'Very bad 👿',
+    1: 'Bad 👎',
+    1.5: 'Poor 😑',
+    2: 'Mediocre 😐',
+    2.5: 'Ok 👍',
+    3: 'Nice 🙂',
+    3.5: 'Good 😎',
+    4: 'Very good 🔥',
+    4.5: 'Excellent 😍',
+    5: 'Perfect! 💯',
+  }
+
+  function getLabelText(value) {
+    return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`
+  }
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Rating
+          name={name}
+          defaultValue={defaultValue}
+          value={value}
+          precision={precision}
+          getLabelText={getLabelText}
+          readOnly={readOnly}
+          onChange={
+            setNbStar
+              ? (e, newNbStar) => {
+                  setValue(newNbStar)
+                  setNbStar(newNbStar)
+                }
+              : null
+          }
+          onChangeActive={
+            setNbStar
+              ? (e, newHover) => {
+                  setHover(newHover)
+                }
+              : null
+          }
+          emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        />
+        <Box>
+          {labels[hover !== -1 ? hover : setNbStar ? value : Math.round(value)]}
+        </Box>
+      </Box>
+    </Box>
+  )
+}
+
+function RatingInfos({ info, userRank, changeRank }) {
   return (
     <div className="rating">
-      <GlobalRate info={info} userRank={userRank} />
-      <PersonalRate info={info} userRank={userRank} changeRank={changeRank} />
+      <GlobalRating info={info} />
+      <PersonalRating info={info} userRank={userRank} changeRank={changeRank} />
     </div>
   )
 }
 
-function GlobalRate({ info, userRank }) {
+function GlobalRating({ info }) {
   return (
     <div>
       <Typography component="legend">Global score:</Typography>
-      <Rating
-        name="rating"
+      <HoverRating
+        name={'Global rating'}
         defaultValue={info.meanScore / 20}
+        nbStar={info.meanScore / 20}
+        setNbStar={false}
         precision={0.1}
-        readOnly
+        readOnly={true}
       />
       <Button href="#reviews" variant="contained" size="small" color="success">
         REVIEWS
@@ -103,7 +194,7 @@ function GlobalRate({ info, userRank }) {
   )
 }
 
-function PersonalRate({ info, userRank, changeRank }) {
+function PersonalRating({ info, userRank, changeRank }) {
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
@@ -127,13 +218,13 @@ function PersonalRate({ info, userRank, changeRank }) {
   return (
     <div>
       <Typography component="legend">Your Note:</Typography>
-      <Rating
-        name="rating"
+      <HoverRating
+        name={'Personal rating'}
         defaultValue={null}
+        nbStar={null}
+        setNbStar={setNbStar}
         precision={0.5}
-        readOnly={userRank ? true : false}
-        value={nbStar}
-        onChange={(e, newNbStar) => setNbStar(newNbStar)}
+        readOnly={false}
       />
       <div>
         <Button

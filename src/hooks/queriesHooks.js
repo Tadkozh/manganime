@@ -55,7 +55,7 @@ function useInfos(type, id) {
 
 const useTitle = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/galery`,
+    queryKey: `${type}/${id}/title`,
     queryFn: async () =>
       await graphQLClient.request(TITLE_REQUEST, {
         type: type,

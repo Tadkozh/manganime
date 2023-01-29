@@ -2,11 +2,11 @@ import * as React from 'react'
 import { useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { INFOS, STREAMING, RECOMMENDATIONS } from '../commons/constants'
-import { Box, Tab, Tabs } from '../components/ui'
+import { Box, Tab, Tabs } from './ui'
 import { useStreaming } from '../hooks/queriesHooks'
 import { getUrl } from '../utils/helper'
 
-export default function NavBarInfoTabs() {
+export default function NavBarInfo() {
   let { type, id } = useParams()
   const location = useLocation()
 

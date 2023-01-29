@@ -4,10 +4,10 @@ import { useTitle, useReviews } from '../../hooks/queriesHooks'
 
 function InfoReviews() {
   let { type, id } = useParams()
-  const dataInfo = useTitle(type, id)
+  const dataTitle = useTitle(type, id)
   const title =
-    dataInfo?.Page?.media[0]?.title?.english ??
-    dataInfo?.Page?.media[0]?.title?.romaji
+    dataTitle?.Page?.media[0]?.title?.romaji ??
+    dataTitle?.Page?.media[0]?.title?.english
 
   const reviews = useReviews(type, id)
   const info = reviews?.Page?.media[0]?.reviews?.nodes

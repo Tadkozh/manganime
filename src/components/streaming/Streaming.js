@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useStreaming } from '../../hooks/queriesHooks'
 
-import NavBarInfoTabs from '../NavBarInfoTabs'
+import NavBarInfo from '../NavBarInfo'
 import { Button, Card, CardMedia, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 
@@ -16,7 +16,7 @@ function Streaming() {
 
   return info ? (
     <>
-      <NavBarInfoTabs />
+      <NavBarInfo />
       <Typography
         component="h2"
         variant="h3"

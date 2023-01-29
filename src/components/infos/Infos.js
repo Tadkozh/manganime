@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { Button } from '../ui'
+import { Box, Button, Grid } from '../ui'
 
 // CSS Files
 import './infos.css'
@@ -10,7 +10,7 @@ import { ANIME } from '../../commons/constants'
 
 // Components
 import { useInfos } from '../../hooks/queriesHooks'
-import NavBarInfoTabs from '../NavBarInfoTabs'
+import NavBarInfo from '../NavBarInfo'
 import InfoDetails from './InfoDetails'
 import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
@@ -22,23 +22,39 @@ function Infos() {
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]
 
-  console.log('data infos', info)
+  // const responsiveGrids = {
+  //   item,
+  //   xs={12},
+  //   sm={6},
+  //   md={4},
+  // }
 
   return info ? (
     <>
-      <NavBarInfoTabs />
-      <div className="info">
-        <div className="header">
+      <NavBarInfo />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          alignContent: 'center',
+          justifyContent: 'center',
+          justifyItems: 'center',
+          maxWidth: '100%',
+          padding: '10px',
+        }}
+      >
+        <Grid container>
           <InfoPresentation info={info} />
           <InfoSynopsis synopsis={info.description} />
           <InfoDetails />
-        </div>
+        </Grid>
 
         {type === ANIME ? <Trailer info={info.trailer} /> : null}
 
         <InfoForm info={info} />
         <InfoReviews />
-      </div>
+      </Box>
     </>
   ) : null
 }

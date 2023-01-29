@@ -1,3 +1,4 @@
+import { Box, Grid } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useDetails } from '../../hooks/queriesHooks'
 
@@ -148,7 +149,21 @@ function InfoDetails() {
 
   return (
     <>
-      <div className="details">
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        sx={{
+          width: '100%',
+          maxHeight: '400px',
+          backgroundColor: 'rgba(128, 128, 128, 0.5)',
+          padding: '5px 10px',
+          margin: '20px auto',
+          overflowY: 'auto',
+          border: 'solid',
+        }}
+      >
         {details.map((data, index) => {
           if (details[index].data !== unknown) {
             return (
@@ -165,7 +180,7 @@ function InfoDetails() {
             return null
           }
         })}
-      </div>
+      </Grid>
     </>
   )
 }
