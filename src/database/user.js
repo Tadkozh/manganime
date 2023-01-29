@@ -26,7 +26,7 @@ const updateComment = (type, info, comment, user) => {
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    newUserComment[type_opinion].map((opinion, key) => {
+    newUserComment[type_opinion].foreach((opinion, key) => {
       if (opinion[type_id] === info.id) {
         let newOpinion
         if (!opinion?.comments) {
@@ -59,7 +59,7 @@ const updateRating = (type, info, rating, user) => {
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    newUserRate[type_opinion].map((opinion, key) => {
+    newUserRate[type_opinion].foreach((opinion, key) => {
       if (opinion[type_id] === info.id) {
         let newOpinion
         if (!opinion?.rate) {
