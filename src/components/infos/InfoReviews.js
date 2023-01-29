@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Paper, Rating, Typography } from '../ui'
+import { Box, CardMedia, Paper, Rating, Typography } from '../ui'
 import { useParams } from 'react-router-dom'
 import { useTitle, useReviews } from '../../hooks/queriesHooks'
 

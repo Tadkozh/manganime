@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
-import { Box, Button, Paper, Rating, TextField, Typography } from '../ui'
+import { Box, Button, Rating, TextField, Typography } from '../ui'
 import StarIcon from '@mui/icons-material/Star'
 
 import { updateComment } from '../../database/user'

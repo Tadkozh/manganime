@@ -2,12 +2,12 @@ import { useParams } from 'react-router-dom'
 import { useStreaming } from '../../hooks/queriesHooks'
 
 import NavBarInfo from '../NavBarInfo'
-import { Button, Card, CardMedia, Typography, useTheme } from '@mui/material'
+import { Button, Card, CardMedia, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
 function Streaming() {
   let { type, id } = useParams()
-  const theme = useTheme()
+  // const theme = useTheme()
 
   const data = useStreaming(type, id)
   const info = data?.Page?.media[0]?.streamingEpisodes
