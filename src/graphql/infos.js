@@ -5,6 +5,8 @@ export const INFOS_REQUEST = gql`
     Page {
       media(type: $type, id: $id) {
         id
+        type
+
         title {
           romaji
           english
@@ -24,19 +26,12 @@ export const INFOS_REQUEST = gql`
           thumbnail
         }
 
-        format
-
-        averageScore
-        meanScore
-
         rankings {
           rank
           context
         }
 
         isAdult
-
-        description(asHtml: true)
       }
     }
   }

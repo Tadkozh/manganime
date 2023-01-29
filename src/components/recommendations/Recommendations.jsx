@@ -4,7 +4,7 @@ import { ArrowRightSharp, Box, Typography } from './../ui'
 import { useTheme } from '@mui/material'
 
 // Components
-import NavBarInfoTabs from './../NavBarInfoTabs'
+import NavBarInfo from '../NavBarInfo'
 import RecommendationsCard from './RecommendationsCard'
 
 const Recommendations = () => {
@@ -43,7 +43,7 @@ const Recommendations = () => {
 
   return (
     <>
-      <NavBarInfoTabs />
+      <NavBarInfo />
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">

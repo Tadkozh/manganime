@@ -5,15 +5,14 @@ export const DETAILS_REQUEST = gql`
     Page {
       media(type: $type, id: $id) {
         id
-
         type
+
         genres
         meanScore
         rankings {
           rank
         }
         popularity
-        favourites
         status
         startDate {
           day

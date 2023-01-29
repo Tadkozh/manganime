@@ -1,24 +1,43 @@
-import { Rating } from '../ui'
+import { Box, Card, CardMedia, Paper, Rating, Typography } from '../ui'
 import { useParams } from 'react-router-dom'
 import { useTitle, useReviews } from '../../hooks/queriesHooks'
 
 function InfoReviews() {
   let { type, id } = useParams()
-  const dataInfo = useTitle(type, id)
+  const dataTitle = useTitle(type, id)
   const title =
-    dataInfo?.Page?.media[0]?.title?.english ??
-    dataInfo?.Page?.media[0]?.title?.romaji
+    dataTitle?.Page?.media[0]?.title?.romaji ??
+    dataTitle?.Page?.media[0]?.title?.english
 
   const reviews = useReviews(type, id)
   const info = reviews?.Page?.media[0]?.reviews?.nodes
 
   return (
-    <>
-      {info ? (
-        <div id="reviews" className="reviews">
-          <h3>
+    info && (
+      <Paper
+        elevation={6}
+        sx={{
+          maxWidth: '100%',
+        }}
+      >
+        <Box
+          id="reviews"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: '100%',
+            padding: '5px',
+          }}
+        >
+          <Typography
+            component="h3"
+            variant="h4"
+            sx={{
+              margin: '10px auto',
+            }}
+          >
             {info.length} reviews about {title}
-          </h3>
+          </Typography>
           {info.map((data, index) => {
             const timestampCreated = info[index].createdAt
             const dateCreated = new Date(timestampCreated * 1000)
@@ -26,20 +45,45 @@ function InfoReviews() {
             const dateUpdated = new Date(timestampUpdated * 1000)
 
             return (
-              <div className="review" key={index}>
-                <div className="header">
-                  <img
-                    src={data.user.avatar.medium}
-                    alt={`Avatar ${index}`}
-                    className="userImage"
+              <Box
+                key={index}
+                sx={{
+                  // backgroundColor: 'lightgreen',
+                  padding: '10px',
+                  borderRadius: '10px',
+                  marginBottom: '20px',
+                }}
+              >
+                <Box
+                  sx={{
+                    minHeight: '75px',
+                    marginBottom: '10px',
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      maxWidth: '75px',
+                      minHeight: '50px',
+                      maxHeight: '75px',
+                      border: 'solid 1px',
+                      marginRight: '10px',
+                      float: 'left',
+                    }}
+                    image={data.user.avatar.medium}
+                    alt={`Avatar of ${data.user.name}`}
                   />
-                  <div>
-                    <p className="username">
+                  <Box>
+                    <Typography
+                      sx={{
+                        fontWeight: 'bold',
+                      }}
+                    >
                       {data.user.name} | Published the{' '}
                       {dateCreated.toLocaleString()} | Updated the{' '}
                       {dateUpdated.toLocaleString()}
-                    </p>
-                    <p className="feelings">{data.summary}</p>
+                    </Typography>
+                    <Typography>{data.summary}</Typography>
                     <Rating
                       name="rating"
                       // defaultValue={data[0]?.score / 20}
@@ -47,20 +91,26 @@ function InfoReviews() {
                       precision={0.5}
                       readOnly
                     />
-                  </div>
-                </div>
-                <div
-                  className="text"
+                  </Box>
+                </Box>
+
+                <Box
+                  sx={{
+                    maxHeight: '150px',
+                    overflowY: 'auto',
+                    padding: '10px',
+                    boxShadow: '0 0 8px -5px',
+                  }}
                   dangerouslySetInnerHTML={{
                     __html: data.body,
                   }}
-                ></div>
-              </div>
+                ></Box>
+              </Box>
             )
           })}
-        </div>
-      ) : null}
-    </>
+        </Box>
+      </Paper>
+    )
   )
 }
 
