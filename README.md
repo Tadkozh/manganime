@@ -83,4 +83,4 @@ You can also see the projet online : [Netlify](https://63cd71315b20ae00095bf397-
   - user-event
   - React Testing Library
 
-Take a look to [Resources](https://github.com/Tadkozh/manganime/tree/dev/ressources) : useState, Wireframe
+Take a look to [Resources](https://github.com/Tadkozh/manganime/tree/dev/ressources) : User stories, Wireframe
