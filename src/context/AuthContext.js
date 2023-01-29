@@ -12,28 +12,25 @@ import {
   BAD_USE_CONTEXT,
   LOADING,
   SIGN_IN,
-  SIGN_UP,
-  SIGN_UPDATE,
   SUCCESS,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
-import { createUser, getUserByUid } from '../database/operations'
+import {
+  getUserbyUid,
+  storeUser,
+  updateProfileUser,
+  updateUserCurrent,
+} from '../database/user'
 import { auth } from '../firebase-config'
 import { useUserData } from '../hooks/useUserData'
-import { errorAuth, validateForm } from '../utils/helper'
+import {
+  errorAuth,
+  validationProfileForm,
+  validationSignForm,
+} from '../utils/helper'
 
 const AuthContext = React.createContext()
 
-const storeNewUser = (data) => {
-  if (data != null) {
-    createUser(data.user)
-  }
-}
-
-const getUserConnect = async (currentUser) => {
-  const user = await getUserByUid(currentUser.uid)
-  return user
-}
 const AuthProviders = ({ children }) => {
   const { data, status, error, setError, setData, execute } = useUserData()
 
@@ -42,7 +39,7 @@ const AuthProviders = ({ children }) => {
     if (!data) {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
-          execute(getUserConnect(currentUser))
+          execute(getUserbyUid())
         } else {
           setData(null)
         }
@@ -58,7 +55,7 @@ const AuthProviders = ({ children }) => {
         email,
         password,
       ).catch((err) => setError(errorAuth(err)))
-      storeNewUser(user)
+      storeUser(user)
     },
     [setError],
   )
@@ -77,7 +74,29 @@ const AuthProviders = ({ children }) => {
     })
   }, [setData])
 
-  const validateUpdate = (email, password, user) => {
+  const updateUserAuth = React.useCallback(
+    async (user) => {
+      const promises = validationUpdateAuth(
+        user.email,
+        user.password,
+        auth.currentUser,
+      )
+      await Promise.all(promises)
+        .then(async () => {
+          await updateUserCurrent(user)
+          execute(getUserbyUid())
+        })
+        .catch((err) => {
+          if (err.code === AUTH_REQUIRE_RECENT_LOGIN) {
+            logout()
+            setTimeout(setError(errorAuth(err)), 200)
+          }
+        })
+    },
+    [execute, logout, setError],
+  )
+
+  const validationUpdateAuth = (email, password, user) => {
     const promises = []
     if (email !== user.email) {
       promises.push(updateEmail(user, email))
@@ -88,61 +107,42 @@ const AuthProviders = ({ children }) => {
     return promises
   }
 
-  const updateUserAuth = React.useCallback(
-    async (email, password) => {
-      const promises = validateUpdate(email, password, auth.currentUser)
-      await Promise.all(promises)
-        .then(() => {
-          // maj user
-          // execute(getUserConnect(currentUser))
-        })
-        .catch((err) => {
-          if (err.code === AUTH_REQUIRE_RECENT_LOGIN) {
-            logout()
-            setTimeout(setError(errorAuth(err)), 100)
-          }
-        })
-    },
-    [logout, setError],
-  )
-
-  const performAction = React.useCallback(
-    (action, email, password) => {
-      switch (action) {
-        case SIGN_IN:
-          login(email, password)
-          break
-        case SIGN_UP:
-          register(email, password)
-          break
-        case SIGN_UPDATE:
-          updateUserAuth(email, password)
-          break
-        default:
-          throw new Error('')
-      }
-    },
-    [login, register, updateUserAuth],
-  )
-
-  const preValidate = React.useCallback(
-    async (email, password, action = SIGN_IN, isProfile = false) => {
-      const errorForm = isProfile
-        ? validateForm(email, password, true)
-        : validateForm(email, password)
+  const validationProfile = React.useCallback(
+    (userToUpdate, userCurrent) => {
+      const errorForm = validationProfileForm(userToUpdate)
       if (errorForm) {
         setError(errorForm)
         return
       }
-      performAction(action, email, password)
-      // action === SIGN_IN ? login(email, password) : register(email, password)
+      const newUser = updateProfileUser(userToUpdate, userCurrent)
+      updateUserAuth(newUser)
     },
-    [performAction, setError],
+    [setError, updateUserAuth],
+  )
+
+  const validationSign = React.useCallback(
+    (email, password, action = SIGN_IN) => {
+      const errorForm = validationSignForm(email, password)
+      if (errorForm) {
+        setError(errorForm)
+        return
+      }
+      action === SIGN_IN ? login(email, password) : register(email, password)
+    },
+    [login, register, setError],
   )
 
   const values = React.useMemo(
-    () => ({ data, error, status, logout, preValidate }),
-    [data, error, status, logout, preValidate],
+    () => ({
+      data,
+      error,
+      status,
+      logout,
+      validationSign,
+      validationProfile,
+      execute,
+    }),
+    [data, error, status, execute, logout, validationSign, validationProfile],
   )
 
   if (status === LOADING) {

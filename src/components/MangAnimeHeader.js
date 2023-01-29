@@ -80,7 +80,10 @@ const pagesChildren = [
   SEARCH_ANIME_CHILDREN,
   SEARCH_MANGA_CHILDREN,
 ]
-const settings = [PROFILE, LOG_OUT, LOG_IN]
+// const settings = [PROFILE, LOG_OUT, LOG_IN]
+let settings = ''
+const settingsConnected = [PROFILE, LOG_OUT]
+const settingsNotConnected = [LOG_IN]
 
 const getPropsTypo = {
   mr: 1,
@@ -94,6 +97,12 @@ const getPropsTypo = {
 
 const MangAnimeHeader = () => {
   const navigate = useNavigate()
+
+  const authUser = useAuth()
+  // authUser.data !== null
+  //   ? (settings = settingsConnected)
+  //   : (settings = settingsNotConnected)
+  settings = authUser.data !== null ? settingsConnected : settingsNotConnected
 
   return (
     <AppBar position="sticky" sx={{ top: '0' }}>

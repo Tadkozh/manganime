@@ -1,43 +1,29 @@
 import { useParams } from 'react-router-dom'
-import { useInfos, useRecommendation } from '../../hooks/queriesHooks'
-import './recommendations.css'
+import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
 import { ArrowRightSharp, Box, Typography } from './../ui'
+// import { useTheme } from '@mui/material'
 
 // Components
-import NavBarInfoTabs from './../NavBarInfoTabs'
+import NavBarInfo from '../NavBarInfo'
 import RecommendationsCard from './RecommendationsCard'
 
 const Recommendations = () => {
   let { type, id } = useParams()
+  // const theme = useTheme()
 
-  const { data: recommendations, status: statusRecom } = useRecommendation(
-    type,
-    id,
-  )
-  console.log('recommendations', recommendations)
-  console.log('statusRecom', statusRecom)
+  const dataInfo = useTitle(type, id)
+  const title =
+    dataInfo?.Page?.media[0]?.title?.english ??
+    dataInfo?.Page?.media[0]?.title?.romaji
 
-  const { data: titlehook, status: statusTitle } = useInfos(type, id)
-  console.log('titlehook', titlehook)
-  console.log('statusTitle', statusTitle)
-  const title = titlehook?.title
+  const data = useRecommendations(type, id)
 
   let directives = ''
-  if (recommendations?.length === 0) {
-    directives = `No recommendation about ${title}`
+  if (data?.length === 0) {
+    directives = `No recommendation currently.`
   } else {
     directives = (
       <>
-        <Typography
-          sx={{
-            display: 'flex',
-            alignItem: 'center',
-          }}
-        >
-          <ArrowRightSharp />
-          Click on Read More to see the article on MyAnimeList
-        </Typography>
-
         <Typography
           sx={{
             marginBottom: 5,
@@ -54,30 +40,35 @@ const Recommendations = () => {
 
   return (
     <>
-      <NavBarInfoTabs />
+      <NavBarInfo />
 
       <Box sx={{ padding: 6 }}>
         <Typography variant="h4" component="h2">
-          People who like <i>{title}</i> also enjoy
+          People who like {title} also enjoy
         </Typography>
         {directives}
 
-        <div className="datagrid">
-          {recommendations
-            ? recommendations.map((data, index) => {
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, 225px)',
+            justifyContent: 'center',
+            justifyItems: 'center',
+            gap: '50px',
+          }}
+        >
+          {data
+            ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 12) {
-                  return (
-                    <div key={index}>
-                      <RecommendationsCard data={data} />
-                    </div>
-                  )
+                  return <RecommendationsCard data={data.media} key={index} />
                 }
                 return null
               })
             : 'loading, please wait...'}
-        </div>
+        </Box>
       </Box>
     </>
   )
 }
+
 export default Recommendations

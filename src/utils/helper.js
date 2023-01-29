@@ -14,40 +14,82 @@ import {
   PASSWORD_REQUIRED,
   PASSWORD_REQUIREMENT,
   TOO_MANY_REQUEST,
+  USERNAME_REQUIRED,
+  USERNAME_TOO_SHORT,
   USER_EXSIT,
   USER_NOT_FOUND,
   USER_SIGN_IN_AGAIN,
   WRONG_PASSWORD,
 } from './constants'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { storage } from '../firebase-config'
 
-const validateForm = (email, password, isProfile = false) => {
+const validationSignForm = (email, password) => {
+  const errorEmail = validationEmail(email)
+  const errorPassword = validationPassword(password)
+  if (errorEmail) {
+    return errorEmail
+  }
+  if (errorPassword) {
+    return errorPassword
+  }
+  return null
+}
+
+const validationProfileForm = (newUser) => {
+  const errorEmail = validationEmail(newUser.email)
+  const errorPassword = validationPassword(newUser.password, true)
+  const errorUsername = validationUsername(newUser.name)
+  if (errorEmail) {
+    return errorEmail
+  }
+  if (errorPassword) {
+    return errorPassword
+  }
+  if (errorUsername) {
+    return errorUsername
+  }
+  return null
+}
+
+const validationUsername = (username) => {
+  if (username === '') {
+    return errorGenerator(USERNAME_REQUIRED)
+  }
+  if (username.length < 3) {
+    return errorGenerator(USERNAME_TOO_SHORT)
+  }
+  return null
+}
+
+const validationEmail = (email) => {
   const expression =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const rex = new RegExp(expression, 'g')
-
   if (!email) {
-    const error = new Error(EMAIL_REQUIRED)
-    error.status = 400
-    return error
+    return errorGenerator(EMAIL_REQUIRED)
   }
   if (!rex.test(email)) {
-    const error = new Error(EMAIL_NOT_VALID)
-    error.status = 400
-    return error
+    return errorGenerator(EMAIL_NOT_VALID)
   }
+  return null
+}
+
+const validationPassword = (password, isProfile = false) => {
   if (!isProfile || (isProfile && password)) {
     if (!password) {
-      const error = new Error(PASSWORD_REQUIRED)
-      error.status = 400
-      return error
+      return errorGenerator(PASSWORD_REQUIRED)
     }
     if (password.length < 6) {
-      const error = new Error(PASSWORD_REQUIREMENT)
-      error.status = 400
-      return error
+      return errorGenerator(PASSWORD_REQUIREMENT)
     }
   }
   return null
+}
+const errorGenerator = (message, status = 400) => {
+  const error = new Error(message)
+  error.status = status
+  return error
 }
 
 const errorAuth = (error) => {
@@ -99,12 +141,27 @@ const getUrl = (type, route, option = []) => {
   const optionUrl = option?.map((item) => `/${item}`).join('')
   return `/${type}/${route}${optionUrl}`
 }
+
 const capFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+const uploadFile = async (file) => {
+  const storageRef = ref(storage, `/images/${file.name}`)
+  let url = null
+
+  await uploadBytes(storageRef, file).then(async (snapshot) => {
+    await getDownloadURL(snapshot.ref).then((newUrl) => {
+      url = newUrl
+    })
+  })
+  return url
+}
+
 
 export {
-  validateForm,
+  uploadFile,
+  validationProfileForm,
+  validationSignForm,
   errorAuth,
   getImageName,
   getRandomNumber,
