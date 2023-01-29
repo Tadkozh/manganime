@@ -31,7 +31,18 @@ const ProfileEdit = ({ user }) => {
   return (
     <Grid container>
       <Grid item xs={12} md={6} lg={6}>
-        <Box component={'form'} onSubmit={handdleSubmit} sx={{ m: 1 }}>
+        <Box
+          component={'form'}
+          onSubmit={handdleSubmit}
+          sx={{
+            m: 1,
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            p: '10px',
+          }}
+        >
           <TextField
             label={'Username'}
             name={'username'}
