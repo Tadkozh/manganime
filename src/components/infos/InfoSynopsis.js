@@ -1,27 +1,32 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
+import { useSynopsis } from '../../hooks/queriesHooks'
 
-function InfoSynopsis({ synopsis }) {
+function InfoSynopsis() {
+  let { type, id } = useParams()
+  const data = useSynopsis(type, id)
+  const synopsis = data?.Page?.media[0]?.description
+
   // const [readSynopsis, setReadSynopsis] = useState(false)
 
   return (
     <>
-      <Grid item xs={12} sm={6} md={4} sx={{ order: { md: '-1' } }}>
-        <Typography component="h4">Synopsis:</Typography>
-        <Box
-          sx={{
-            overflowY: 'auto',
-            pr: '10px',
-            border: 'solid',
-          }}
-          dangerouslySetInnerHTML={{ __html: synopsis }}
-          // className={
-          //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
-          // }
-        ></Box>
-        {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
+      <Typography component="h3" variant="h4" sx={{ pl: '10px', mb: '10px' }}>
+        Synopsis:
+      </Typography>
+      <Box
+        sx={{
+          p: '0 10px',
+          overflowY: 'auto',
+        }}
+        dangerouslySetInnerHTML={{ __html: synopsis }}
+        // className={
+        //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
+        // }
+      ></Box>
+      {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
         {readSynopsis ? 'Read less' : 'Read more'}
       </Button> */}
-      </Grid>
     </>
   )
 }

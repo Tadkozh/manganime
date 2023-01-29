@@ -2,12 +2,14 @@ const selectValues = {
   scoreMin: [],
   sortBy: [
     { value: 'TRENDING_DESC', children: 'Trending' },
-    { value: 'SCORE_DESC', children: 'Score' },
+    { value: 'SCORE_DESC', children: 'Best score' },
+    { value: 'SCORE', children: 'Worst score' },
     { value: 'START_DATE_DESC', children: 'Newest started' },
     { value: 'END_DATE_DESC', children: 'Newest ended' },
     { value: 'START_DATE', children: 'Oldest started' },
     { value: 'END_DATE', children: 'Oldest ended' },
-    { value: 'TITLE_ENGLISH_DESC', children: 'Title' },
+    { value: 'TITLE_ROMAJI', children: 'Title (A-Z)' },
+    { value: 'TITLE_ROMAJI_DESC', children: 'Title (Z-A)' },
   ],
 
   anime: {

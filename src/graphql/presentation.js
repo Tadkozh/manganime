@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
-export const TITLE_REQUEST = gql`
-  query Title($type: MediaType, $id: Int) {
+export const PRESENTATION_REQUEST = gql`
+  query Presentation($type: MediaType, $id: Int) {
     Page {
       media(type: $type, id: $id) {
         id
@@ -9,7 +9,10 @@ export const TITLE_REQUEST = gql`
         title {
           romaji
           english
+          native
         }
+
+        favourites
       }
     }
   }

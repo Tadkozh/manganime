@@ -6,67 +6,71 @@ import { useGalery } from '../../hooks/queriesHooks'
 
 import { Close } from '@mui/icons-material'
 
-function InfoGalery({ mainImage, mainLargeImage }) {
+function InfoGalery() {
   let { type, id } = useParams()
   const data = useGalery(type, id)
+  const info = data?.Page?.media[0]
+  const collectionType = info?.type?.toLowerCase()
 
   const [largeImg, setLargeImg] = React.useState(false)
 
-  return (
+  return info ? (
     <>
-      <img
-        src={mainImage}
-        alt="Poster of the artwork"
+      <Box
+        component="img"
+        src={info.coverImage.large}
+        alt={`Poster of the ${collectionType}`}
         onClick={() => setLargeImg(!largeImg)}
       />
 
       <LargeImage
         data={data}
-        mainLargeImage={mainLargeImage}
+        mainLargeImage={info.coverImage.extraLarge}
         largeImg={largeImg}
         setLargeImg={setLargeImg}
+        collectionType={collectionType}
       />
     </>
-  )
+  ) : null
 }
 
-function LargeImage({ mainLargeImage, largeImg, setLargeImg }) {
+function LargeImage({ mainLargeImage, largeImg, setLargeImg, collectionType }) {
   return (
-    <>
+    <Box
+      sx={{
+        flexGrow: 1,
+        display: largeImg ? 'flex' : 'none',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'fixed',
+        top: '50%',
+        left: 0,
+        transform: 'translateY(-50%)',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        zIndex: 2000,
+      }}
+    >
+      <Close
+        sx={{ color: 'red', fontSize: '50px' }}
+        onClick={() => setLargeImg(!largeImg)}
+      />
       <Box
-        sx={{
-          flexGrow: 1,
-          display: largeImg ? 'flex' : 'none',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'fixed',
-          top: '50%',
-          left: 0,
-          transform: 'translateY(-50%)',
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          zIndex: 2000,
-          border: 'solid',
-        }}
-      >
-        <Close
-          sx={{ color: 'red', fontSize: '50px' }}
-          onClick={() => setLargeImg(!largeImg)}
-        />
-        <img
-          style={{ maxHeight: '80%' }}
-          src={mainLargeImage}
-          alt="Poster of the artwork"
-          onClick={() => setLargeImg(!largeImg)}
-        />
-      </Box>
-    </>
+        component="img"
+        sx={{ maxHeight: '80%' }}
+        src={mainLargeImage}
+        alt={`Poster of the ${collectionType}`}
+        onClick={() => setLargeImg(!largeImg)}
+      />
+    </Box>
   )
 }
 
 export default InfoGalery
+
+// ANCIENNE GALERIE AVEC CAROUSEL MAIS RETIRÉ CAR NE MARCHE QU'AVEC JIKAN BOUHOUUU
 
 //   const [largeImg, setLargeImg] = React.useState(false)
 //   const [activeStep, setActiveStep] = React.useState(-1)

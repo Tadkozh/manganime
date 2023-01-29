@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useDetails } from '../../hooks/queriesHooks'
 
@@ -68,119 +68,107 @@ function InfoDetails() {
     {
       label: 'Type',
       data: typeData ?? unknown,
-      doesDataExist: typeData,
     },
     {
       label: 'Genres',
       data: genresData ?? unknown,
-      doesDataExist: genresData,
     },
     // {
     //   label: 'Rank',
     //   data: rankData && rankData !== 0 ? rankData : unknown,
-    //   doesDataExist: rankData,
     // },
     {
       label: 'Popularity',
       data: popularityData && popularityData !== 0 ? popularityData : unknown,
-      doesDataExist: popularityData,
     },
     // {
     //   label: 'Fanbase',
     //   data: favouritesData && favouritesData !== 0 ? favouritesData : unknown,
-    //   doesDataExist: favouritesData,
     // },
     {
       label: 'Status',
       data: statusData ?? unknown,
-      doesDataExist: statusData,
     },
     {
       label: 'Aired from',
       data: startDateYearData ? startDateData : unknown,
-      doesDataExist: startDateData,
     },
     {
       label: 'Aired to',
       data: endDateYearData ? endDateData : unknown,
-      doesDataExist: endDateData,
     },
     {
       label: 'Episodes',
       data: episodesData ?? unknown,
-      doesDataExist: episodesData,
     },
     {
       label: 'Volumes',
       data: volumesData ?? unknown,
-      doesDataExist: volumesData,
     },
     {
       label: 'Chapters',
       data: chaptersData ?? unknown,
-      doesDataExist: chaptersData,
     },
     {
       label: 'Duration',
       data: `≈ ${durationData} minutes` ?? unknown,
-      doesDataExist: durationData,
     },
     {
       label: 'Studios',
       data: studiosData ?? unknown,
-      doesDataExist: studiosData,
     },
     // {
     //   label: 'Producers',
     //   data: producersData ?? unknown,
-    //   doesDataExist: producersData,
     // },
     {
       label: 'Is licensed',
       data: isLicensedData ? 'Yes' : 'No',
-      doesDataExist: isLicensedData,
     },
     {
       label: 'Source',
       data: sourceData ?? unknown,
-      doesDataExist: sourceData,
     },
   ]
 
   return (
     <>
-      <Grid
-        item
-        xs={12}
-        sm={6}
-        md={4}
-        sx={{
-          width: '100%',
-          maxHeight: '400px',
-          backgroundColor: 'rgba(128, 128, 128, 0.5)',
-          padding: '5px 10px',
-          margin: '20px auto',
-          overflowY: 'auto',
-          border: 'solid',
-        }}
-      >
-        {details.map((data, index) => {
-          if (details[index].data !== unknown) {
-            return (
-              <div key={index}>
-                <div className="label">
-                  <p>{data?.label}:</p>
-                </div>
-                <div className="data">
-                  <p>{data?.data}</p>
-                </div>
-              </div>
-            )
-          } else {
-            return null
-          }
-        })}
-      </Grid>
+      {details.map((data, index) => {
+        if (details[index].data !== unknown) {
+          return (
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                margin: '5px auto',
+              }}
+            >
+              <Typography
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '50%',
+                  backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                  padding: '5px 10px',
+                }}
+              >
+                {data?.label}:
+              </Typography>
+              <Typography
+                sx={{
+                  width: '50%',
+                  backgroundColor: 'rgba(128, 128, 128, 0.75)',
+                  padding: '5px',
+                }}
+              >
+                {data?.data}
+              </Typography>
+            </Box>
+          )
+        } else {
+          return null
+        }
+      })}
     </>
   )
 }
