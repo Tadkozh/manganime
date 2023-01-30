@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ANIME, INFOS, PAGE } from '../../commons/constants'
 import { Box, Pagination } from '../ui'
 
@@ -26,27 +26,31 @@ function SearchAnime() {
     }
   }, [data])
 
+  React.useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [query?.page])
+
   return (
     <>
       {getData?.Page ? (
         <>
-          <Box>
-            <SearchBar
-              type={type}
-              query={query}
-              setQuery={setQuery}
-              resetQuery={resetQuery}
-            />
-          </Box>
-
+          <SearchBar
+            type={type}
+            query={query}
+            setQuery={setQuery}
+            resetQuery={resetQuery}
+          />
           <Box
             sx={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, 200px)',
               justifyContent: 'center',
               gap: '20px',
-              maxWidth: '1920px',
               padding: '10px',
+              mx: 4,
             }}
           >
             {getData?.Page.media.map((data, index) => {
@@ -57,21 +61,24 @@ function SearchAnime() {
           </Box>
         </>
       ) : null}
-
-      <PaginationItem pageInfo={getData?.Page?.pageInfo} setQuery={setQuery} />
+      <PaginationItem
+        pageInfo={getData?.Page?.pageInfo}
+        setQuery={setQuery}
+        page={query.page}
+      />
     </>
   )
 }
 
-function PaginationItem({ pageInfo, setQuery }) {
+function PaginationItem({ pageInfo, setQuery, page }) {
   return (
     <Pagination
       onChange={(e, p) => setQuery(PAGE, p)}
       count={pageInfo?.lastPage}
+      page={page}
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        backgroundColor: 'salmon',
         padding: '10px',
       }}
     />
