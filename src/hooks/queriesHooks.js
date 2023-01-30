@@ -9,10 +9,10 @@ const useSearch = (type, query) => {
     })
     .join('')
 
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: `${type}/${queryString}/search`,
-    queryFn: async () => {
-      return await graphQLClient.request(GQL.SEARCH_REQUEST, {
+    queryFn: async () =>
+      await graphQLClient.request(GQL.SEARCH_REQUEST, {
         search: query?.search,
         format: query?.format,
         status: query?.status,
@@ -22,16 +22,12 @@ const useSearch = (type, query) => {
         isAdult: query?.isAdult,
         page: query?.page,
         perPage: query?.perPage,
-      })
-    },
-    getNextPageParam: (lastPage, page) => {
-      return lastPage.Page.pageInfo.hasNextPage
-    },
+      }),
     keepPreviousData: true,
     staleTime: Infinity,
   })
 
-  return { data, fetchNextPage, isFetchingNextPage }
+  return { data, fetchNextPage, isFetching }
 }
 
 function useInfos(type, id) {
