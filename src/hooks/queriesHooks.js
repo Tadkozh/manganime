@@ -1,5 +1,5 @@
 import { graphQLClient } from '../utils/clientApi'
-import { useQuery } from 'react-query'
+import { useInfiniteQuery, useQuery } from 'react-query'
 import * as GQL from '../graphql/index'
 
 const useSearch = (type, query) => {
@@ -9,7 +9,7 @@ const useSearch = (type, query) => {
     })
     .join('')
 
-  const { data } = useQuery({
+  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: `${type}/${queryString}/search`,
     queryFn: async () =>
       await graphQLClient.request(GQL.SEARCH_REQUEST, {
@@ -23,10 +23,11 @@ const useSearch = (type, query) => {
         page: query?.page,
         perPage: query?.perPage,
       }),
+    keepPreviousData: true,
     staleTime: Infinity,
   })
 
-  return data
+  return { data, fetchNextPage, isFetching }
 }
 
 function useInfos(type, id) {
@@ -209,16 +210,6 @@ const useEpisode = (perPage = 12) => {
 
   return data
 }
-
-// const useClientApi = (type, id, endpoint) => {
-//   const { data, status } = useQuery({
-//     queryKey: `${type}/${id}/${endpoint}`,
-//     queryFn: () => clientApi(`${type}/${id}/${endpoint}`),
-//     staleTime: Infinity,
-//   })
-
-//   return { data: data?.data, status }
-// }
 
 export {
   useEpisode,

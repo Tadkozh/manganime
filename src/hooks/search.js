@@ -32,7 +32,7 @@ const searchParamsReducer = (state, action) => {
     case ISADULT:
       return { ...state, isAdult: !state.isAdult }
     case PAGE:
-      return { ...state, page: action.payload }
+      return { ...state, page: state.page + 1 }
     case PER_PAGE:
       return { ...state, perPage: action.payload }
     case RESET:
