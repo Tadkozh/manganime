@@ -28,7 +28,7 @@ import {
   Edit,
 } from '@mui/icons-material'
 import { default as Item, default as Stack } from '@mui/material/Stack'
-import { blue, green, grey, red, yellow } from '@mui/material/colors'
+import { blue, green, grey, red, yellow, purple } from '@mui/material/colors'
 
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
@@ -136,6 +136,7 @@ export {
   MUISwitchMode,
   Pagination,
   Paper,
+  purple,
   Popper,
   Search,
   Select,
