@@ -2,33 +2,29 @@ import { useTheme } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
-import { Box, Card, CardMedia, Container, Paper, Typography } from './index'
+import { Card, CardMedia, Container, Typography } from './index'
 
 const CardImage = ({ data, type, route }) => {
   const theme = useTheme()
-  const [hover, setHover] = React.useState(false)
   const title = data.title.romaji ?? data.title.english
-
-  const handleHoverIn = () => {
-    setHover(true)
-  }
-  const handleHoverOut = () => {
-    setHover(false)
-  }
 
   return (
     <Card
-      onMouseLeave={handleHoverOut}
-      onMouseOver={handleHoverIn}
-      sx={{ position: 'relative' }}
+      sx={{
+        position: 'relative',
+        ':hover': {
+          opacity: '0.4',
+        },
+      }}
     >
-      <Box
+      <Link
         to={getUrl(type, route, [data.id])}
-        sx={{
+        style={{
+          textDecoration: 'none',
           cursor: 'pointer',
           textAlign: 'center',
+          color: theme.palette.text.primary,
         }}
-        color={theme.palette.text.primary}
       >
         <CardMedia
           component="img"
@@ -47,29 +43,8 @@ const CardImage = ({ data, type, route }) => {
             {getTroncateTitle(title)}
           </Typography>
         </Container>
-        {hover ? <OverlayCard type={type} data={data} route={route} /> : null}
-      </Box>
+      </Link>
     </Card>
-  )
-}
-
-const OverlayCard = ({ type, data, route }) => {
-  return (
-    <Link to={getUrl(type, route, [data?.id])}>
-      <Paper
-        component="div"
-        sx={{
-          position: 'absolute',
-          opacity: '0.4',
-          width: '100%',
-          height: '100%',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: '1',
-        }}
-      />
-    </Link>
   )
 }
 
