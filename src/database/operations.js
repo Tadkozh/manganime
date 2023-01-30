@@ -6,10 +6,10 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore'
-import { USER_COLLECTION } from '../commons/constants'
+import { DATABASE_COLLECTION } from '../commons/constants'
 import { db, getUid } from '../firebase-config'
 
-const getDocUser = (uid) => doc(collection(db, USER_COLLECTION), uid)
+const getDocUser = (uid) => doc(collection(db, DATABASE_COLLECTION.USERS), uid)
 
 const getUser = (data) => ({
   email: data.email,
@@ -35,9 +35,8 @@ const addUser = async (user) => {
 
 const updateUser = async (user) => {
   const docUser = getDocUser(getUid())
-  const userToUpdate = getUser(user)
   try {
-    await updateDoc(docUser, userToUpdate)
+    await updateDoc(docUser, user)
   } catch (error) {
     throw new Error(`${updateUser.name} error:${error.message}`)
   }

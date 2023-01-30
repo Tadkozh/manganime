@@ -5,9 +5,11 @@ export const INFOS_REQUEST = gql`
     Page {
       media(type: $type, id: $id) {
         id
+        type
+
         title {
-          english
           romaji
+          english
           native
         }
 
@@ -24,89 +26,12 @@ export const INFOS_REQUEST = gql`
           thumbnail
         }
 
-        format
-
-        averageScore
-        meanScore
-
         rankings {
           rank
           context
         }
 
-        streamingEpisodes {
-          title
-          thumbnail
-          url
-          site
-        }
-
         isAdult
-
-        description(asHtml: true)
-
-        # STREAMING
-        streamingEpisodes {
-          title
-          url
-          site
-        }
-
-        # REVIEWS
-        reviews {
-          nodes {
-            summary
-            rating
-            ratingAmount
-            userRating
-            score
-            createdAt
-            updatedAt
-            user {
-              avatar {
-                large
-                medium
-              }
-              name
-            }
-            media {
-              id
-            }
-            body(asHtml: true)
-          }
-        }
-
-        # DETAILS
-        type
-        genres
-        meanScore
-        rankings {
-          rank
-        }
-        popularity
-        favourites
-        status
-        startDate {
-          day
-          month
-          year
-        }
-        endDate {
-          day
-          month
-          year
-        }
-        episodes
-        volumes
-        chapters
-        duration
-        studios {
-          nodes {
-            name
-          }
-        }
-        isLicensed
-        source
       }
     }
   }

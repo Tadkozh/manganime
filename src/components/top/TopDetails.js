@@ -25,12 +25,15 @@ const rankReducer = (state, action) => {
 const TopDetails = ({ type, isHomePage = false }) => {
   const topDatas = useTop(type)
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
+
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas?.length
+
   const [rank, dispatch] = React.useReducer(rankReducer, {
     minRank: 0,
     maxRank: 4,
   })
+
   const theme = useTheme()
   const sxTopContainerHomePage = {
     maxWidth: '1600px',

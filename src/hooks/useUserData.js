@@ -1,4 +1,4 @@
-import { FAIL, IDLE, LOADING, SUCCESS } from '../commons/constants'
+import { ERROR, IDLE, LOADING, SUCCESS } from '../commons/constants'
 
 import React from 'react'
 import { errorAuth } from '../utils/helper'
@@ -10,8 +10,8 @@ const userReducer = (state, action) => {
       return { status: LOADING, data: null }
     case SUCCESS:
       return { status: SUCCESS, data: action.payload }
-    case FAIL:
-      return { status: FAIL, data: null }
+    case ERROR:
+      return { status: ERROR, data: null }
     default:
       throw new Error(`Erreur sur le 'reducer ${userReducer.name}`)
   }
@@ -33,7 +33,7 @@ const useUserData = () => {
         })
         .catch((error) => {
           setError(errorAuth(error))
-          dispatch({ type: FAIL })
+          dispatch({ type: ERROR })
         })
     },
     [setError],

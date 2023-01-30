@@ -5,9 +5,10 @@ export const TOP_REQUEST = gql`
     Page(page: 1, perPage: $perPage) {
       media(type: $type, sort: SCORE_DESC) {
         id
+
         title {
-          english
           romaji
+          english
         }
         coverImage {
           extraLarge

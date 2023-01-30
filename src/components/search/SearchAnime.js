@@ -1,34 +1,22 @@
-import { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { Pagination, Rating } from '../ui'
-import { getUrl } from '../../utils/helper'
-import { INFOS, ANIME } from '../../commons/constants'
+import React, { useMemo, useState } from 'react'
+import { ANIME, INFOS, PAGE } from '../../commons/constants'
+import { Box, Pagination } from '../ui'
 
-// CSS Files
-import './search.css'
-
-// Components
 import SearchBar from './SearchBar'
 
-// Hooks
 import { useSearch } from '../../hooks/queriesHooks'
+import { useSearchFieldsParams } from '../../hooks/search'
+import { CardImage } from '../ui/CardImage'
 
 function SearchAnime() {
   const type = ANIME
 
   const [getData, setGetData] = useState()
-
-  const [query, setQuery] = useState({
-    search: null,
-    format: 'TV',
-    status: 'FINISHED',
-    score: 0,
-    popularity: 0,
-    sortBy: 'TRENDING_DESC',
-    isAdult: false,
-    page: 1,
-    perPage: 30,
-  })
+  const {
+    setValue: setQuery,
+    resetFields: resetQuery,
+    state: query,
+  } = useSearchFieldsParams()
 
   const data = useSearch(type, query)
 
@@ -38,63 +26,62 @@ function SearchAnime() {
     }
   }, [data])
 
-  // console.log('data search', data)
+  React.useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [query?.page])
 
   return (
     <>
       {getData?.Page ? (
         <>
-          <div className="search">
-            <Pagination
-              onChange={(e, p) => setQuery({ ...query, page: p })}
-              className="pagination"
-              count={getData?.Page?.pageInfo?.lastPage}
-            />
-
-            <SearchBar
-              type={type}
-              data={getData?.Page}
-              query={query}
-              setQuery={setQuery}
-            />
-          </div>
-
-          <div className="searchData">
+          <SearchBar
+            type={type}
+            query={query}
+            setQuery={setQuery}
+            resetQuery={resetQuery}
+          />
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, 200px)',
+              justifyContent: 'center',
+              gap: '20px',
+              padding: '10px',
+              mx: 4,
+            }}
+          >
             {getData?.Page.media.map((data, index) => {
               return (
-                <div className="item" key={index}>
-                  <Link to={getUrl(type, INFOS, [data.id])}>
-                    <div className="imgWrapper">
-                      <img
-                        src={data.coverImage.large}
-                        alt={`small cover of ${
-                          data.title.english ?? data.title.romaji
-                        }`}
-                      />
-                    </div>
-                    <p>{data.title.english ?? data.title.romaji}</p>
-                    <Rating
-                      value={data.averageScore / 20}
-                      precision={0.1}
-                      readOnly
-                      size="small"
-                    />
-                  </Link>
-                </div>
+                <CardImage data={data} type={type} route={INFOS} key={index} />
               )
             })}
-          </div>
-
-          <div className="paginationBottom">
-            <Pagination
-              onChange={(e, p) => setQuery({ ...query, page: p })}
-              className="pagination"
-              count={getData?.Page?.pageInfo?.lastPage}
-            />
-          </div>
+          </Box>
         </>
       ) : null}
+      <PaginationItem
+        pageInfo={getData?.Page?.pageInfo}
+        setQuery={setQuery}
+        page={query.page}
+      />
     </>
+  )
+}
+
+function PaginationItem({ pageInfo, setQuery, page }) {
+  return (
+    <Pagination
+      onChange={(e, p) => setQuery(PAGE, p)}
+      count={pageInfo?.lastPage}
+      page={page}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '10px',
+      }}
+    />
   )
 }
 

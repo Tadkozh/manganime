@@ -1,5 +1,6 @@
 import { ManageHistoryRounded } from '@mui/icons-material'
 import { addUser, getUserById, updateUser } from './operations'
+import { uploadFile } from '../utils/helper'
 
 const updateProfileUser = (user, userCurrent) => {
   const newUser = structuredClone(userCurrent)
@@ -26,7 +27,7 @@ const updateComment = (type, info, comment, user) => {
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    newUserComment[type_opinion].map((opinion, key) => {
+    newUserComment[type_opinion].foreach((opinion, key) => {
       if (opinion[type_id] === info.id) {
         let newOpinion
         if (!opinion?.comments) {
@@ -59,7 +60,7 @@ const updateRating = (type, info, rating, user) => {
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    newUserRate[type_opinion].map((opinion, key) => {
+    newUserRate[type_opinion].foreach((opinion, key) => {
       if (opinion[type_id] === info.id) {
         let newOpinion
         if (!opinion?.rate) {
@@ -118,10 +119,13 @@ const updateBio = async (bio, user) => {
   if (bio === user.bio) {
     return
   }
-  const newUser = structuredClone(user)
-  newUser.bio = bio
-  await updateUserCurrent(newUser)
-  return newUser
+  await updateUserCurrent({ bio })
+}
+
+const userPicture = async (picture) => {
+  const url = await uploadFile(picture)
+  updateUserCurrent({ picture: url })
+  return getUserById()
 }
 
 const updateFavorite = (type, info, user) => {
@@ -156,6 +160,7 @@ const getUserbyUid = async () => {
 
 export {
   updateBio,
+  userPicture,
   updateProfileUser,
   updateUserCurrent,
   updateRating,

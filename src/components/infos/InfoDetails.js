@@ -1,3 +1,4 @@
+import { Box, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useDetails } from '../../hooks/queriesHooks'
 
@@ -5,16 +6,18 @@ function InfoDetails() {
   let { type, id } = useParams()
 
   const data = useDetails(type, id)
-  const info = data.Page.media[0]
+  const info = data?.Page?.media[0]
 
   const unknown = 'unknown'
 
   const typeData = info?.type
-  let genresData = Object.keys(info?.genres)
-    .map((data) => {
-      return `${info?.genres[data]}`
-    })
-    .join(', ')
+  let genresData = info
+    ? Object.keys(info?.genres)
+        .map((data) => {
+          return `${info?.genres[data]}`
+        })
+        .join(', ')
+    : null
   // const rankData = info?.rankings[0]?.rank
   const popularityData = info?.popularity.toLocaleString()
   const statusData = info?.status
@@ -51,11 +54,13 @@ function InfoDetails() {
   const volumesData = info?.volumes
   const chaptersData = info?.chapters
   const durationData = info?.duration
-  let studiosData = Object.keys(info?.studios?.nodes)
-    .map((data) => {
-      return `${info?.studios?.nodes[data]?.name}`
-    })
-    .join(', ')
+  let studiosData = info
+    ? Object.keys(info?.studios?.nodes)
+        .map((data) => {
+          return `${info?.studios?.nodes[data]?.name}`
+        })
+        .join(', ')
+    : null
   const isLicensedData = info?.isLicensed
   const sourceData = info?.source
 
@@ -63,105 +68,107 @@ function InfoDetails() {
     {
       label: 'Type',
       data: typeData ?? unknown,
-      doesDataExist: typeData,
     },
     {
       label: 'Genres',
       data: genresData ?? unknown,
-      doesDataExist: genresData,
     },
     // {
     //   label: 'Rank',
     //   data: rankData && rankData !== 0 ? rankData : unknown,
-    //   doesDataExist: rankData,
     // },
     {
       label: 'Popularity',
       data: popularityData && popularityData !== 0 ? popularityData : unknown,
-      doesDataExist: popularityData,
     },
     // {
     //   label: 'Fanbase',
     //   data: favouritesData && favouritesData !== 0 ? favouritesData : unknown,
-    //   doesDataExist: favouritesData,
     // },
     {
       label: 'Status',
       data: statusData ?? unknown,
-      doesDataExist: statusData,
     },
     {
       label: 'Aired from',
       data: startDateYearData ? startDateData : unknown,
-      doesDataExist: startDateData,
     },
     {
       label: 'Aired to',
       data: endDateYearData ? endDateData : unknown,
-      doesDataExist: endDateData,
     },
     {
       label: 'Episodes',
       data: episodesData ?? unknown,
-      doesDataExist: episodesData,
     },
     {
       label: 'Volumes',
       data: volumesData ?? unknown,
-      doesDataExist: volumesData,
     },
     {
       label: 'Chapters',
       data: chaptersData ?? unknown,
-      doesDataExist: chaptersData,
     },
     {
       label: 'Duration',
       data: `≈ ${durationData} minutes` ?? unknown,
-      doesDataExist: durationData,
     },
     {
       label: 'Studios',
       data: studiosData ?? unknown,
-      doesDataExist: studiosData,
     },
     // {
     //   label: 'Producers',
     //   data: producersData ?? unknown,
-    //   doesDataExist: producersData,
     // },
     {
       label: 'Is licensed',
       data: isLicensedData ? 'Yes' : 'No',
-      doesDataExist: isLicensedData,
     },
     {
       label: 'Source',
       data: sourceData ?? unknown,
-      doesDataExist: sourceData,
     },
   ]
 
   return (
     <>
-      <div className="details">
-        {details.map((data, index) => {
-          if (details[index].data !== unknown) {
-            return (
-              <div key={index}>
-                <div className="label">
-                  <p>{data?.label}:</p>
-                </div>
-                <div className="data">
-                  <p>{data?.data}</p>
-                </div>
-              </div>
-            )
-          } else {
-            return null
-          }
-        })}
-      </div>
+      {details.map((data, index) => {
+        if (details[index].data !== unknown) {
+          return (
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                margin: '5px auto',
+              }}
+            >
+              <Typography
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '50%',
+                  backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                  padding: '5px 10px',
+                }}
+              >
+                {data?.label}:
+              </Typography>
+              <Typography
+                sx={{
+                  width: '50%',
+                  backgroundColor: 'rgba(128, 128, 128, 0.75)',
+                  padding: '5px',
+                }}
+              >
+                {data?.data}
+              </Typography>
+            </Box>
+          )
+        } else {
+          return null
+        }
+      })}
     </>
   )
 }

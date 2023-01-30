@@ -1,8 +1,10 @@
+import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   Box,
-  Button,
+  // Button,
   Card,
+  CardActionArea,
   CardContent,
   CardMedia,
   Paper,
@@ -16,17 +18,49 @@ import { getUrl } from '../../utils/helper'
 const RecommendationsCard = ({ data }) => {
   let { type } = useParams()
 
+  const [showOverlay, setShowOverlay] = useState({
+    status: false,
+  })
+
   return (
     <Paper elevation={24}>
       <Card sx={{ maxWidth: 225 }}>
-        <Link to={getUrl(type, INFOS, [data.id])}>
+        <CardActionArea
+          sx={{ position: 'relative' }}
+          onMouseOver={(e) => {
+            setShowOverlay({ status: true })
+          }}
+          onMouseLeave={() => {
+            setShowOverlay({ status: false })
+          }}
+        >
+          {/* <Link to={getUrl(type, INFOS, [data.id])}> */}
           <CardMedia
             height={335}
             component="img"
             image={data.coverImage.large}
             alt={data.title.english ?? data.title.romaji}
           />
-        </Link>
+          {/* </Link> */}
+
+          {showOverlay.status && (
+            <Link to={getUrl(type, INFOS, [data.id])}>
+              <Box
+                component="div"
+                sx={{
+                  position: 'absolute',
+                  bgcolor: 'rgba(245, 136, 39, 0.3)',
+                  width: '100%',
+                  height: '100%',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: '1',
+                }}
+              />
+            </Link>
+          )}
+        </CardActionArea>
         <CardContent sx={{ height: 140 }}>
           <Typography
             variant="h6"

@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { RESET_FILTERS, SEARCH } from '../../utils/constants'
+import { ISADULT, SEARCH } from '../../commons/constants'
+import { RESET_FILTERS } from '../../utils/constants'
 import {
+  Box,
   Button,
   FormControl,
   FormControlLabel,
@@ -14,203 +16,137 @@ import {
   TextField,
 } from '../ui'
 
-// Arrays
-import { selectValues } from './selectValues'
+import { fields, getSelectValues, selectValues } from './selectValues'
 
-function SearchBar({ type, data, query, setQuery }) {
-  const [searchInput, setSearchInput] = useState('')
+const getNameInput = (title) => {
+  return title.toLowerCase().replace(/ /g, '') + 'Input'
+}
 
-  function resetFilters() {
-    setSearchInput('')
-    setQuery({
-      search: null,
-      format: 'TV',
-      status: 'FINISHED',
-      score: 0,
-      popularity: 0,
-      sortBy: 'TRENDING_DESC',
-      isAdult: false,
-      page: 1,
-      perPage: 30,
-    })
-  }
-
+function SearchBar({ type, query, setQuery, resetQuery }) {
   return (
-    <div className="settingsBar">
-      <p>
-        {data?.pageInfo ? `${data?.pageInfo?.total} results` : 'Loading...'}
-      </p>
-
-      <SelectSearch
-        title={'Format'}
-        name={'formatInput'}
-        getter={query.format}
-        handleChange={(e) =>
-          setQuery({ ...query, format: e.target.value, page: 1 })
-        }
-        defaultValue={
-          type === 'anime'
-            ? selectValues?.anime?.format[0]?.value
-            : selectValues?.manga?.format[0]?.value
-        }
-        defaultChildren={
-          type === 'anime'
-            ? selectValues?.anime?.format[0]?.children
-            : selectValues?.manga?.format[0]?.children
-        }
-        selectValues={
-          type === 'anime'
-            ? selectValues.anime.format
-            : selectValues.manga.format
-        }
-      />
-
-      <SelectSearch
-        title="score min"
-        name="scoreMinInput"
-        getter={query.score}
-        handleChange={(e) =>
-          setQuery({ ...query, score: e.target.value, page: 1 })
-        }
-        defaultValue={selectValues.scoreMin[0].value}
-        defaultChildren={selectValues.scoreMin[0].children}
-        selectValues={selectValues.scoreMin}
-      />
-
-      <SelectSearch
-        title="Status"
-        name="statusInput"
-        getter={query.status}
-        handleChange={(e) =>
-          setQuery({ ...query, status: e.target.value, page: 1 })
-        }
-        defaultValue={
-          type === 'anime'
-            ? selectValues.anime.status[0].value
-            : selectValues.manga.status[0].value
-        }
-        defaultChildren={
-          type === 'anime'
-            ? selectValues.anime.status[0].children
-            : selectValues.manga.status[0].children
-        }
-        selectValues={
-          type === 'anime'
-            ? selectValues.anime.status
-            : selectValues.manga.status
-        }
-      />
-
-      <SelectSearch
-        title="Sort by"
-        name="sortByInput"
-        getter={query.sortBy}
-        handleChange={(e) =>
-          setQuery({ ...query, sortBy: e.target.value, page: 1 })
-        }
-        defaultValue={selectValues.sortBy[0].value}
-        defaultChildren={selectValues.sortBy[0].children}
-        selectValues={selectValues.sortBy}
-      />
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '10px',
+        m: 2,
+        p: 2,
+      }}
+    >
+      {fields.map((field, index) => (
+        <SelectSearch
+          key={index}
+          title={field.title}
+          getter={query[field.property]}
+          handleChange={(e) => setQuery(field.property, e.target.value)}
+          selectValues={
+            field?.onlyvalue
+              ? selectValues[field.property]
+              : getSelectValues(type, field.property)
+          }
+        />
+      ))}
 
       <FormControlLabel
         control={<HideHentai checked={query.isAdult} />}
         label="Hentai"
-        onChange={() =>
-          setQuery({
-            ...query,
-            isAdult: !query.isAdult,
-            page: 1,
-          })
-        }
+        onChange={() => setQuery(ISADULT)}
       />
-
-      <div className="inputSearch">
-        <InputSearch
-          title={SEARCH}
-          name="searchInput"
-          placeholder="Write here..."
-          getter={searchInput}
-          handleChange={(e) => setSearchInput(e.target.value)}
-        />
-
-        <Button
-          variant="contained"
-          sx={{ gap: '5px', fontWeight: 'bold' }}
-          size="small"
-          onClick={() =>
-            setQuery({
-              ...query,
-              search: searchInput === '' ? null : searchInput,
-              page: 1,
-            })
-          }
-        >
-          <Search /> {SEARCH}
-        </Button>
-
-        <Button
-          variant="contained"
-          sx={{ gap: '5px', backgroundColor: 'red', fontWeight: 'bold' }}
-          size="small"
-          onClick={resetFilters}
-        >
-          <Refresh /> {RESET_FILTERS}
-        </Button>
-      </div>
-    </div>
+      <RightSearch setQuery={setQuery} resetQuery={resetQuery} />
+    </Box>
   )
 }
 
-function SelectSearch({
-  title,
-  name,
-  getter,
-  handleChange,
-  defaultValue,
-  defaultChildren,
-  selectValues,
-}) {
+const RightSearch = ({ setQuery, resetQuery }) => {
+  const [searchInput, setSearchInput] = useState('')
+
+  function resetFilters() {
+    setSearchInput('')
+    resetQuery()
+  }
   return (
-    <>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel sx={{ color: 'rgba(0, 0, 0, 0.65)' }} id={name}>
-          {title}
-        </InputLabel>
-        <Select labelId={name} id={name} value={getter} onChange={handleChange}>
-          {defaultChildren !== '' ? (
-            <MenuItem value={defaultValue}>
-              <em>{defaultChildren}</em>
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: '20px',
+      }}
+    >
+      <InputSearch
+        title={SEARCH}
+        getter={searchInput}
+        handleChange={(e) => setSearchInput(e.target.value)}
+      />
+      <Button
+        variant="contained"
+        onClick={() =>
+          setQuery(SEARCH, searchInput === '' ? null : searchInput)
+        }
+        sx={{ gap: '5px' }}
+      >
+        <Search /> {SEARCH}
+      </Button>
+      <Button variant="outlined" onClick={resetFilters} sx={{ gap: '5px' }}>
+        <Refresh /> {RESET_FILTERS}
+      </Button>
+    </Box>
+  )
+}
+
+function SelectSearch({ title, getter, handleChange, selectValues }) {
+  const name = getNameInput(title)
+  return (
+    <FormControl sx={{ m: 1, minWidth: 120 }} size="small" variant="filled">
+      <InputLabel id={name}>{title}</InputLabel>
+      <Select
+        labelId={name}
+        id={name}
+        value={getter}
+        onChange={handleChange}
+        label={title}
+        sx={{ borderRadius: '5px' }}
+        disableUnderline
+      >
+        {selectValues.map((item, index) =>
+          index === 0 ? (
+            <MenuItem key={index} value={item.value}>
+              <em> {item.children}</em>
             </MenuItem>
-          ) : null}
-          {selectValues.map((data, index) => {
-            if (index > 0) {
-              return (
-                <MenuItem key={index} value={data.value}>
-                  {data.children}
-                </MenuItem>
-              )
-            } else return null
-          })}
-        </Select>
-      </FormControl>
-    </>
+          ) : (
+            <MenuItem key={index} value={item.value}>
+              {item.children}
+            </MenuItem>
+          ),
+        )}
+      </Select>
+    </FormControl>
   )
 }
 
-function InputSearch({ title, name, placeholder, getter, handleChange }) {
+function InputSearch({ title, getter, handleChange }) {
   return (
-    <TextField
+    <CustomTextField
       variant="filled"
       size="small"
       label={title}
-      placeholder={placeholder}
+      placeholder="Write here..."
       value={getter}
-      id={name}
+      id={getNameInput(title)}
       onChange={handleChange}
     />
   )
 }
+const CustomTextField = styled(TextField)(() => ({
+  '& .MuiFilledInput-root': {
+    '&:before, &:after': {
+      borderBottom: 'none',
+    },
+    borderRadius: '5px',
+  },
+}))
 
 const HideHentai = styled(Switch)(({ theme }) => ({
   padding: 8,

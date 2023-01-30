@@ -21,6 +21,8 @@ import {
   USER_SIGN_IN_AGAIN,
   WRONG_PASSWORD,
 } from './constants'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { storage } from '../firebase-config'
 
 const validationSignForm = (email, password) => {
   const errorEmail = validationEmail(email)
@@ -143,8 +145,21 @@ const getUrl = (type, route, option = []) => {
 const capFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+const uploadFile = async (file) => {
+  const storageRef = ref(storage, `/images/${file.name}`)
+  let url = null
+
+  await uploadBytes(storageRef, file).then(async (snapshot) => {
+    await getDownloadURL(snapshot.ref).then((newUrl) => {
+      url = newUrl
+    })
+  })
+  return url
+}
+
 
 export {
+  uploadFile,
   validationProfileForm,
   validationSignForm,
   errorAuth,

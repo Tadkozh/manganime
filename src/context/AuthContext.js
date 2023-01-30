@@ -11,7 +11,7 @@ import {
   AUTH_REQUIRE_RECENT_LOGIN,
   BAD_USE_CONTEXT,
   LOADING,
-  SIGN_IN,
+  SIGN,
   SUCCESS,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
@@ -121,13 +121,13 @@ const AuthProviders = ({ children }) => {
   )
 
   const validationSign = React.useCallback(
-    (email, password, action = SIGN_IN) => {
+    (email, password, action = SIGN.IN) => {
       const errorForm = validationSignForm(email, password)
       if (errorForm) {
         setError(errorForm)
         return
       }
-      action === SIGN_IN ? login(email, password) : register(email, password)
+      action === SIGN.IN ? login(email, password) : register(email, password)
     },
     [login, register, setError],
   )

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { GraphQLClient } from 'graphql-request'
-import { ANIME_LIST_API, JIKAN_API } from '../commons/constants'
+import { ANIME_LIST_API } from '../commons/constants'
 
-const clientApi = async (endpoint) => {
-  console.log('REQUEST', `${JIKAN_API}/${endpoint}`)
+const clientApi = async (endpoint, API) => {
+  console.log('REQUEST', `${API}/${endpoint}`)
   return await axios
-    .get(`${JIKAN_API}/${endpoint}`)
+    .get(`${API}/${endpoint}`)
     .then((data) => data?.data)
     .catch((error) => {
       if (error.response) {
@@ -23,7 +23,7 @@ const clientApi = async (endpoint) => {
 const graphQLClient = new GraphQLClient(ANIME_LIST_API, {
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
 })
 

@@ -30,8 +30,8 @@ export const SEARCH_REQUEST = gql`
         id
 
         title {
-          english
           romaji
+          english
         }
         coverImage {
           large
