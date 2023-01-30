@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
 import { ArrowRightSharp, Box, Typography } from './../ui'
+import { INFOS } from '../../commons/constants'
 // import { useTheme } from '@mui/material'
 
 // Components
@@ -17,8 +18,8 @@ const Recommendations = () => {
     dataInfo?.Page?.media[0]?.title?.romaji
 
   const data = useRecommendations(type, id)
+
   console.log(data)
-  console.log(data?.Page?.recommendations[0]?.media?.title?.english)
 
   let directives = ''
   if (data?.Page?.recommendations.length === 0) {
@@ -27,7 +28,6 @@ const Recommendations = () => {
     directives = (
       <>
         <Typography
-          component="p"
           sx={{
             marginBottom: 5,
             display: 'flex',
@@ -65,7 +65,9 @@ const Recommendations = () => {
                 if (index < 12) {
                   return (
                     <RecommendationsCard
-                      data={data?.Page?.recommendations[0]?.media}
+                      type={type}
+                      route={INFOS}
+                      data={data.media}
                       key={index}
                     />
                   )

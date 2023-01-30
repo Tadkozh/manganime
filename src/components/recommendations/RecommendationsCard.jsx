@@ -8,7 +8,6 @@ const RecommendationsCard = ({ data, type, route }) => {
   const theme = useTheme()
   const [hover, setHover] = React.useState(false)
   const title = data?.title?.romaji ?? data?.title?.english
-  console.log({ title }.length)
 
   const handleHoverIn = () => {
     setHover(true)
