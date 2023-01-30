@@ -15,8 +15,7 @@ export const SEARCH_REQUEST = gql`
     Page(page: $page, perPage: $perPage) {
       pageInfo {
         currentPage
-        lastPage
-        total
+        hasNextPage
       }
       media(
         search: $search
