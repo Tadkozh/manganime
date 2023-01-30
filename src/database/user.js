@@ -1,5 +1,6 @@
 import { addUser, getUserById, updateUser } from './operations'
 import { uploadFile } from '../utils/helper'
+import { arrayRemove, arrayUnion } from 'firebase/firestore'
 
 const updateProfileUser = (user, userCurrent) => {
   const newUser = structuredClone(userCurrent)
@@ -50,9 +51,17 @@ const updateComment = (type, info, comment, user) => {
   updateUserCurrent(newUserComment)
 }
 
+// const getTypeId = (type) => {
+//   return type === 'ANIME' ? 'anime_id' : 'manga_id'
+// }
+// const getTypeOpinion = (type) => {
+//   return type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+// }
+
 const updateRating = (type, info, rating, user) => {
   const newUserRate = structuredClone(user)
   const type_opinion = type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+
   const type_id = type === 'ANIME' ? 'anime_id' : 'manga_id'
 
   const isItemId = newUserRate[type_opinion].some(
@@ -92,19 +101,19 @@ const userPicture = async (picture) => {
   return getUserById()
 }
 
-const updateFavorite = (type, info, user) => {
-  const newUserFav = structuredClone(user)
-  const favorite_type = type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
-
-  const isItemId = newUserFav[favorite_type].some(
-    (ItemId) => ItemId === info.id,
+const getType = (type) => {
+  return type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
+}
+const updateFavorite = async (type, info, user) => {
+  const typeFavorite = getType(type)
+  const favorites = structuredClone(user[typeFavorite])
+  const isExist = favorites.some((id) => id === info.id)
+  console.log('isExist', isExist)
+  updateUserCurrent(
+    isExist
+      ? { [typeFavorite]: arrayRemove(info.id) }
+      : { [typeFavorite]: arrayUnion(info.id) },
   )
-
-  if (!isItemId) {
-    newUserFav[favorite_type].push(info.id)
-  }
-  console.log('newUserFav', newUserFav)
-  updateUserCurrent(newUserFav)
 }
 
 const storeUser = (data) => {
