@@ -47,7 +47,7 @@ function useInfos(type, id) {
     queryKey: `${type}/${id}/infos`,
     queryFn: async () =>
       await graphQLClient.request(INFOS_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -61,7 +61,7 @@ const usePresentation = (type, id) => {
     queryKey: `${type}/${id}/presentation`,
     queryFn: async () =>
       await graphQLClient.request(PRESENTATION_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -75,7 +75,7 @@ const useTitle = (type, id) => {
     queryKey: `${type}/${id}/title`,
     queryFn: async () =>
       await graphQLClient.request(TITLE_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -89,7 +89,7 @@ const useGalery = (type, id) => {
     queryKey: `${type}/${id}/galery`,
     queryFn: async () =>
       await graphQLClient.request(GALERY_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -103,7 +103,7 @@ const useRating = (type, id) => {
     queryKey: `${type}/${id}/rating`,
     queryFn: async () =>
       await graphQLClient.request(RATING_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -117,7 +117,7 @@ const useSynopsis = (type, id) => {
     queryKey: `${type}/${id}/synopsis`,
     queryFn: async () =>
       await graphQLClient.request(SYNOPSIS_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -131,7 +131,7 @@ const useDetails = (type, id) => {
     queryKey: `${type}/${id}/details`,
     queryFn: async () =>
       await graphQLClient.request(DETAILS_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -145,7 +145,7 @@ const useReviews = (type, id) => {
     queryKey: `${type}/${id}/reviews`,
     queryFn: async () =>
       await graphQLClient.request(REVIEWS_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -159,7 +159,7 @@ const useStreaming = (type, id) => {
     queryKey: `${type}/${id}/streaming`,
     queryFn: async () =>
       await graphQLClient.request(STREAMING_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -173,7 +173,7 @@ const useRecommendations = (type, id) => {
     queryKey: `${type}/${id}/recommendations`,
     queryFn: async () =>
       await graphQLClient.request(RECOMMENDATIONS_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         id: id,
       }),
     staleTime: Infinity,
@@ -188,7 +188,7 @@ const useFavorites = (type, listFavorites = []) => {
     queryFn: async () =>
       await graphQLClient.request(FAVORITES_LIST_REQUEST, {
         ids: listFavorites,
-        type: type,
+        type: type.toUpperCase(),
       }),
     staleTime: Infinity,
   })
@@ -201,7 +201,7 @@ const useTop = (type, perPage = 12) => {
     queryKey: `${type}/top`,
     queryFn: async () =>
       await graphQLClient.request(TOP_REQUEST, {
-        type: type,
+        type: type.toUpperCase(),
         perPage: perPage,
       }),
     staleTime: Infinity,
