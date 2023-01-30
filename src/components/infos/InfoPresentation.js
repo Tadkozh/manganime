@@ -29,7 +29,7 @@ function InfoPresentation() {
         <FavoriteIcon info={info} />
 
         <InfoGalery />
-        <RatingInfos />
+        <RatingInfos info={info} />
 
         {authUser ? (
           <StatsDropdowns userDatas={authUser} contentInfos={info} />

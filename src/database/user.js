@@ -13,8 +13,8 @@ const updateProfileUser = (user, userCurrent) => {
 
 const updateComment = (type, info, comment, user) => {
   const newUserComment = structuredClone(user)
-  const type_opinion = type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
-  const type_id = type === 'ANIME' ? 'anime_id' : 'manga_id'
+  const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
+  const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
 
   const fullComment = {
     create_at: new Date().toISOString(),
@@ -28,7 +28,7 @@ const updateComment = (type, info, comment, user) => {
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    newUserComment[type_opinion].foreach((opinion, key) => {
+    newUserComment[type_opinion].map((opinion, key) => {
       if (opinion[type_id] === info.id) {
         let newOpinion
         if (!opinion?.comments) {
@@ -61,15 +61,15 @@ const updateComment = (type, info, comment, user) => {
 
 const updateRating = (type, info, rating, user) => {
   const newUserRate = structuredClone(user)
-  const type_opinion = type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+  const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
 
-  const type_id = type === 'ANIME' ? 'anime_id' : 'manga_id'
+  const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
 
   const isItemId = newUserRate[type_opinion].some(
     (opinion) => opinion[type_id] === info.id,
   )
   if (isItemId) {
-    newUserRate[type_opinion].foreach((opinion, key) => {
+    newUserRate[type_opinion].map((opinion, key) => {
       if (opinion[type_id] === info.id) {
         let newOpinion
         if (!opinion?.rate) {
