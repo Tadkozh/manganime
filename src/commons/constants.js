@@ -1,47 +1,108 @@
-export const APP_API_URL = 'https://api.jikan.moe/v4'
-export const BAD_USE_CONTEXT = 'ne peut pas être utilisé sans'
-export const ENV_DEV = 'development'
-export const AUTH_USER_NOT_FOUND = 'auth/user-not-found'
-export const AUTH_WRONG_PASSWORD = 'auth/wrong-password'
-export const AUTH_TOO_MANY_REQUEST = 'auth/too-many-requests'
-export const AUTH_USER_ALREADY_EXIST = 'auth/credential-already-in-use'
-export const AUTH_EMAIL_EXISTS = 'auth/email-already-in-use'
-export const AUTH_REQUIRE_RECENT_LOGIN = 'auth/requires-recent-login'
-export const IDLE = 'idle'
-export const LOADING = 'loading'
-export const SUCCESS = 'success'
-export const FETCHING = 'fetching'
-export const DONE = 'done'
-export const FAIL = 'fail'
-export const SIGN_IN = 'signIn'
-export const SIGN_UP = 'signUp'
-export const SIGN_UPDATE = 'signUpdate'
-export const USER_COLLECTION = 'users'
-export const LIGHT = 'light'
-export const DARK = 'dark'
-export const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
-export const ANIME = 'ANIME'
-export const MANGA = 'MANGA'
-export const TYPE = 'type'
-export const TOP = 'top'
-export const INFOS = 'infos'
-export const STREAMING = 'streaming'
-export const NEWS = 'news'
-export const RECOMMENDATIONS = 'recommendations'
-export const ID = 'id'
-export const ROUTE_HOME = '/'
-export const ROUTE_LOGIN_REGISTER = '/login'
-export const ROUTE_PROFILE = '/profile'
-export const ROUTE_TOP_ANIME = `/${ANIME}/${TOP}`
-export const ROUTE_TOP_MANGA = `/${MANGA}/${TOP}`
-export const ROUTE_SEARCH_ANIME = `/${ANIME}/search`
-export const ROUTE_SEARCH_MANGA = `/${MANGA}/search`
-export const ROUTE_INFOS = `/:${TYPE}/${INFOS}/:${ID}`
-export const ROUTE_STREAMING = `/:${TYPE}/${STREAMING}/:${ID}`
-export const ROUTE_RECOMMENDATIONS = `/:${TYPE}/${RECOMMENDATIONS}/:${ID}`
-export const ROUTE_404 = '*'
-export const JIKAN_API = process.env.REACT_APP_JIKAN_API
 export const ANIME_LIST_API = process.env.REACT_APP_ANILIST_API
+export const THEME_COLOR_LOCAL_STORAGE = 'themeColor'
+export const ENV_DEV = 'development'
+export const BAD_USE_CONTEXT = `can't be use without`
+
+export const DATABASE_COLLECTION = {
+  USERS: 'users',
+  COMMENTS: 'comments',
+}
+
+export const THEMES = {
+  DARK: 'dark',
+  LIGHT: 'light',
+}
+
+export const TYPE = {
+  ANIME: 'anime',
+  MANGA: 'manga',
+}
+
+export const SIGN = {
+  IN: 'signIn',
+  UP: 'signUp',
+}
+
+const STATE_DATA = {
+  IDLE: 'idle',
+  LOADING: 'loading',
+  SUCCESS: 'success',
+  ERROR: 'error',
+}
+const STATE_REF = STATE_DATA
+
+export const IDLE = STATE_REF.IDLE
+export const LOADING = STATE_REF.LOADING
+export const SUCCESS = STATE_REF.SUCCESS
+export const ERROR = STATE_REF.ERROR
+
+const FIREBASE_AUTH_ERROR = {
+  USER_NOT_FOUND: 'auth/user-not-found',
+  WRONG_PASSWORD: 'auth/wrong-password',
+  TOO_MANY_REQUEST: 'auth/too-many-requests',
+  USER_ALREADY_EXIST: 'auth/credential-already-in-use',
+  EMAIL_EXISTS: 'auth/email-already-in-use',
+  REQUIRE_RECENT_LOGIN: 'auth/requires-recent-login',
+}
+const AUTH_REF = FIREBASE_AUTH_ERROR
+
+export const AUTH_USER_NOT_FOUND = AUTH_REF.USER_NOT_FOUND
+export const AUTH_WRONG_PASSWORD = AUTH_REF.WRONG_PASSWORD
+export const AUTH_TOO_MANY_REQUEST = AUTH_REF.TOO_MANY_REQUEST
+export const AUTH_USER_ALREADY_EXIST = AUTH_REF.USER_ALREADY_EXIST
+export const AUTH_EMAIL_EXISTS = AUTH_REF.EMAIL_EXISTS
+export const AUTH_REQUIRE_RECENT_LOGIN = AUTH_REF.REQUIRE_RECENT_LOGIN
+
+const ROUTES_NAMES = {
+  ANIME: 'anime',
+  MANGA: 'manga',
+  TOP: 'top',
+  INFOS: 'infos',
+  STREAMING: 'streaming',
+  NEWS: 'news',
+  RECOMMENDATIONS: 'recommendations',
+  EPISODE: 'episode',
+}
+
+export const ANIME = ROUTES_NAMES.ANIME
+export const MANGA = ROUTES_NAMES.MANGA
+export const TOP = ROUTES_NAMES.TOP
+export const INFOS = ROUTES_NAMES.INFOS
+export const STREAMING = ROUTES_NAMES.STREAMING
+export const NEWS = ROUTES_NAMES.NEWS
+export const RECOMMENDATIONS = ROUTES_NAMES.RECOMMENDATIONS
+export const EPISODE = ROUTES_NAMES.EPISODE
+
+const ROUTES = {
+  HOME: '/',
+  LOGIN_REGISTER: '/login',
+  PROFILE: '/profile',
+  TOP: {
+    ANIME: '/anime/top',
+    MANGA: '/manga/top',
+  },
+  SEARCH: {
+    ANIME: '/anime/search',
+    MANGA: '/manga/search',
+  },
+  NEWS: '/:type/news/:id',
+  INFOS: '/:type/infos/:id',
+  RECOMMENDATIONS: '/:type/recommendations/:id',
+  STREAMING: '/:type/streaming/:id',
+  404: '*',
+}
+export const ROUTE_HOME = ROUTES.HOME
+export const ROUTE_LOGIN_REGISTER = ROUTES.LOGIN_REGISTER
+export const ROUTE_PROFILE = ROUTES.PROFILE
+export const ROUTE_TOP_ANIME = ROUTES.TOP.ANIME
+export const ROUTE_TOP_MANGA = ROUTES.TOP.MANGA
+export const ROUTE_SEARCH_ANIME = ROUTES.SEARCH.ANIME
+export const ROUTE_SEARCH_MANGA = ROUTES.SEARCH.MANGA
+export const ROUTE_RECOMMENDATIONS = ROUTES.RECOMMENDATIONS
+export const ROUTE_STREAMING = ROUTES.STREAMING
+export const ROUTE_NEWS = ROUTES.NEWS
+export const ROUTE_INFOS = ROUTES.INFOS
+export const ROUTE_404 = ROUTES[404]
 
 const SEARCH_STATUS = {
   FINISHED: 'FINISHED',
