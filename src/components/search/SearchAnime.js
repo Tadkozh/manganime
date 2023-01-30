@@ -6,6 +6,7 @@ import SearchBar from './SearchBar'
 
 import { useSearch } from '../../hooks/queriesHooks'
 import { useSearchFieldsParams } from '../../hooks/search'
+import { ListCardsSkeleton } from '../skeletons/CardImageSkeleton'
 import { CardImage } from '../ui/CardImage'
 
 function SearchAnime() {
@@ -19,7 +20,7 @@ function SearchAnime() {
     state: query,
   } = useSearchFieldsParams()
 
-  const { data, fetchNextPage, isFetchingNextPage } = useSearch(type, query)
+  const { data, fetchNextPage, isFetching } = useSearch(type, query)
 
   const handleLoadMore = () => {
     setMoreData(true)
@@ -64,26 +65,29 @@ function SearchAnime() {
         setQuery={setQuery}
         resetQuery={resetQuery}
       />
-      {getData ? (
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, 200px)',
-            justifyContent: 'center',
-            gap: '20px',
-            padding: '10px',
-            mx: 4,
-          }}
-        >
-          {getData.map((page) =>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, 200px)',
+          justifyContent: 'center',
+          gap: '20px',
+          padding: '10px',
+          mx: 4,
+        }}
+      >
+        {getData.length > 0 ? (
+          getData.map((page) =>
             page.Page.media.map((data, index) => {
               return (
                 <CardImage data={data} type={type} route={INFOS} key={index} />
               )
             }),
-          )}
-        </Box>
-      ) : null}
+          )
+        ) : (
+          <ListCardsSkeleton />
+        )}
+        {isFetching && getData.length > 0 ? <ListCardsSkeleton /> : null}
+      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -98,7 +102,7 @@ function SearchAnime() {
           sx={{ width: 'max-content' }}
           disabled={hasNextPage ? false : true}
         >
-          {isFetchingNextPage
+          {isFetching
             ? 'Loading more...'
             : hasNextPage
             ? 'Load More'
