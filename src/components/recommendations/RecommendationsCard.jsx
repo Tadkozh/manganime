@@ -1,93 +1,84 @@
-import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import {
-  Box,
-  // Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Paper,
-  Typography,
-} from './../ui'
-
-// Components
-import { INFOS } from '../../commons/constants'
+import { useTheme } from '@mui/material'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
+import { Box, Card, CardMedia, Container, Paper, Typography } from './../ui'
 
-const RecommendationsCard = ({ data }) => {
-  let { type } = useParams()
+const RecommendationsCard = ({ data, type, route }) => {
+  const theme = useTheme()
+  const [hover, setHover] = React.useState(false)
+  const title = data?.title?.romaji ?? data?.title?.english
 
-  const [showOverlay, setShowOverlay] = useState({
-    status: false,
-  })
+  const handleHoverIn = () => {
+    setHover(true)
+  }
+  const handleHoverOut = () => {
+    setHover(false)
+  }
 
   return (
-    <Paper elevation={24}>
-      <Card sx={{ maxWidth: 225 }}>
-        <CardActionArea
-          sx={{ position: 'relative' }}
-          onMouseOver={(e) => {
-            setShowOverlay({ status: true })
-          }}
-          onMouseLeave={() => {
-            setShowOverlay({ status: false })
+    <Card
+      onMouseLeave={handleHoverOut}
+      onMouseOver={handleHoverIn}
+      sx={{ maxWidth: 225, position: 'relative' }}
+    >
+      <Box
+        to={getUrl(type, route, [data?.id])}
+        sx={{
+          cursor: 'pointer',
+          textAlign: 'center',
+        }}
+        color={theme.palette.text.primary}
+      >
+        <CardMedia
+          component="img"
+          image={data?.coverImage?.large}
+          alt={title}
+          height={335}
+        />
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            my: 1,
           }}
         >
-          {/* <Link to={getUrl(type, INFOS, [data.id])}> */}
-          <CardMedia
-            height={335}
-            component="img"
-            image={data.coverImage.large}
-            alt={data.title.english ?? data.title.romaji}
-          />
-          {/* </Link> */}
-
-          {showOverlay.status && (
-            <Link to={getUrl(type, INFOS, [data.id])}>
-              <Box
-                component="div"
-                sx={{
-                  position: 'absolute',
-                  bgcolor: 'rgba(245, 136, 39, 0.3)',
-                  width: '100%',
-                  height: '100%',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: '1',
-                }}
-              />
-            </Link>
-          )}
-        </CardActionArea>
-        <CardContent sx={{ height: 140 }}>
-          <Typography
-            variant="h6"
-            component="h3"
-            sx={{ height: 64, textAlign: 'center' }}
-          >
-            {data.title.english ?? data.title.romaji}
+          <Typography component="p" sx={{ mt: 'auto' }}>
+            {getTroncateTitle(title)}
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            {/* <Button
-              variant="contained"
-              href={data.entry.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read more
-            </Button> */}
-          </Box>
-        </CardContent>
-      </Card>
-    </Paper>
+        </Container>
+        {hover ? <OverlayCard type={type} data={data} route={route} /> : null}
+      </Box>
+    </Card>
   )
+}
+
+const OverlayCard = ({ type, data, route }) => {
+  return (
+    <Link to={getUrl(type, route, [data?.id])}>
+      <Paper
+        component="div"
+        sx={{
+          position: 'absolute',
+          bgcolor: 'rgba(245, 136, 39, 0.3)',
+          opacity: '0.4',
+          width: '100%',
+          height: '100%',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: '1',
+        }}
+      />
+    </Link>
+  )
+}
+
+const getTroncateTitle = (title) => {
+  if ({ title }.length > 40) {
+    return title.substring(0, 40).concat('...')
+  }
+  return title
 }
 
 export default RecommendationsCard

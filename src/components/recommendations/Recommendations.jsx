@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
 import { ArrowRightSharp, Box, Typography } from './../ui'
+import { INFOS } from '../../commons/constants'
 // import { useTheme } from '@mui/material'
 
 // Components
@@ -9,7 +10,6 @@ import RecommendationsCard from './RecommendationsCard'
 
 const Recommendations = () => {
   let { type, id } = useParams()
-  // const theme = useTheme()
 
   const dataInfo = useTitle(type, id)
   const title =
@@ -18,8 +18,10 @@ const Recommendations = () => {
 
   const data = useRecommendations(type, id)
 
+  console.log(data.Page.recommendations)
+
   let directives = ''
-  if (data?.length === 0) {
+  if (data?.Page?.recommendations.length === 0) {
     directives = `No recommendation currently.`
   } else {
     directives = (
@@ -60,7 +62,14 @@ const Recommendations = () => {
           {data
             ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 12) {
-                  return <RecommendationsCard data={data.media} key={index} />
+                  return (
+                    <RecommendationsCard
+                      type={type}
+                      route={INFOS}
+                      data={data.media}
+                      key={index}
+                    />
+                  )
                 }
                 return null
               })

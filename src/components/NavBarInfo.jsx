@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { INFOS, STREAMING, RECOMMENDATIONS } from '../commons/constants'
 import { Box, Tab, Tabs } from './ui'
-import { useStreaming } from '../hooks/queriesHooks'
+import { useStreaming, useRecommendations } from '../hooks/queriesHooks'
 import { getUrl } from '../utils/helper'
 
 export default function NavBarInfo() {
@@ -15,22 +15,20 @@ export default function NavBarInfo() {
     setValue(newValue)
   }
 
-  const data = useStreaming(type, id)
-  const info = data?.Page?.media[0]?.streamingEpisodes
-  
+  const dataStreaming = useStreaming(type, id)
+  const infoStreaming = dataStreaming?.Page?.media[0]?.streamingEpisodes
+  const dataRecommendations = useRecommendations(type, id)
+
   const urlInfos = getUrl(type, INFOS, [id])
   const urlStreaming = getUrl(type, STREAMING, [id])
   const urlRecom = getUrl(type, RECOMMENDATIONS, [id])
 
   return (
     <Box sx={{ width: '100%', bgcolor: 'rgb(75, 75, 75)' }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        centered
-      >
+      <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Infos" to={urlInfos} component={Link} value={urlInfos} />
-        {info && info.length > 0 ? (
+
+        {infoStreaming && infoStreaming.length > 0 ? (
           <Tab
             label="Streaming"
             to={urlStreaming}
@@ -38,12 +36,15 @@ export default function NavBarInfo() {
             value={urlStreaming}
           />
         ) : null}
-        <Tab
-          label="Recommendations"
-          to={urlRecom}
-          component={Link}
-          value={urlRecom}
-        />
+
+        {dataRecommendations?.Page?.recommendations.length > 0 ? (
+          <Tab
+            label="Recommendations"
+            to={urlRecom}
+            component={Link}
+            value={urlRecom}
+          />
+        ) : null}
       </Tabs>
     </Box>
   )
