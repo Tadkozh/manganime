@@ -17,14 +17,17 @@ const Recommendations = () => {
     dataInfo?.Page?.media[0]?.title?.romaji
 
   const data = useRecommendations(type, id)
+  console.log(data)
+  console.log(data?.Page?.recommendations[0]?.media?.title?.english)
 
   let directives = ''
-  if (data?.length === 0) {
+  if (data?.Page?.recommendations.length === 0) {
     directives = `No recommendation currently.`
   } else {
     directives = (
       <>
         <Typography
+          component="p"
           sx={{
             marginBottom: 5,
             display: 'flex',
@@ -60,7 +63,12 @@ const Recommendations = () => {
           {data
             ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 12) {
-                  return <RecommendationsCard data={data.media} key={index} />
+                  return (
+                    <RecommendationsCard
+                      data={data?.Page?.recommendations[0]?.media}
+                      key={index}
+                    />
+                  )
                 }
                 return null
               })

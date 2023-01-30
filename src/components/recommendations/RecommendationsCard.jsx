@@ -7,7 +7,8 @@ import { Box, Card, CardMedia, Container, Paper, Typography } from './../ui'
 const RecommendationsCard = ({ data, type, route }) => {
   const theme = useTheme()
   const [hover, setHover] = React.useState(false)
-  const title = data.title.romaji ?? data.title.english
+  const title = data?.title?.romaji ?? data?.title?.english
+  console.log({ title }.length)
 
   const handleHoverIn = () => {
     setHover(true)
@@ -23,7 +24,7 @@ const RecommendationsCard = ({ data, type, route }) => {
       sx={{ maxWidth: 225, position: 'relative' }}
     >
       <Box
-        to={getUrl(type, route, [data.id])}
+        to={getUrl(type, route, [data?.id])}
         sx={{
           cursor: 'pointer',
           textAlign: 'center',
@@ -32,7 +33,7 @@ const RecommendationsCard = ({ data, type, route }) => {
       >
         <CardMedia
           component="img"
-          image={data.coverImage.large}
+          image={data?.coverImage?.large}
           alt={title}
           height={335}
         />
@@ -75,7 +76,7 @@ const OverlayCard = ({ type, data, route }) => {
 }
 
 const getTroncateTitle = (title) => {
-  if (title.length > 40) {
+  if ({ title }.length > 40) {
     return title.substring(0, 40).concat('...')
   }
   return title
