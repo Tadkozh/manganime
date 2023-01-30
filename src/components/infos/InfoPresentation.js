@@ -8,12 +8,10 @@ import FavoriteIcon from './FavoriteIcon'
 import { usePresentation } from '../../hooks/queriesHooks'
 import { useParams } from 'react-router-dom'
 
-
 function InfoPresentation() {
   let { type, id } = useParams()
   const data = usePresentation(type, id)
   const info = data?.Page?.media[0]
-
   const { data: authUser } = useAuth()
 
   return (
@@ -34,8 +32,8 @@ function InfoPresentation() {
         <RatingInfos />
 
         {authUser ? (
-        <StatsDropdowns userDatas={authUser} contentInfos={info} />
-      ) : null}
+          <StatsDropdowns userDatas={authUser} contentInfos={info} />
+        ) : null}
       </>
     )
   )

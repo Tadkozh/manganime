@@ -5,7 +5,7 @@ export const PRESENTATION_REQUEST = gql`
     Page {
       media(type: $type, id: $id) {
         id
-
+        type
         title {
           romaji
           english

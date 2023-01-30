@@ -82,37 +82,49 @@ const updateRating = (type, info, rating, user) => {
 
 const updateStat = (name, infos, user) => {
   const newUserStat = structuredClone(user)
-  console.log('new user stat clone', newUserStat)
   const userStats = newUserStat?.stats
   console.log('user stat', userStats)
   const newStat = { name: name, animeId: [], mangaId: [] }
   const idContent = infos?.type === 'ANIME' ? 'animeId' : 'mangaId'
   const isNameStatExist = userStats?.some((array) => array?.name === name)
-  const isTypeIdExist =
-    userStats.length > 0 && isNameStatExist
-      ? userStats
-          ?.find((array) => array?.name === name)
-          [idContent]?.includes(infos?.id)
-      : null
+  const getOtherNameStatWithContentId = userStats?.find(
+    (stat) => stat.name !== name && stat[idContent]?.includes(infos?.id),
+  )
 
-  // Rajout de && isNameStatExist dans isTypeIdExist in case where array not empty
+  // const isTypeIdExist =
+  //   userStats.length > 0
+  //     ? userStats
+  //         ?.some((array) => array?.name === name)
+  //         [idContent]?.includes(infos?.id)
+  //     : null
 
-  // const cancelId = userStats
-  //   .find((stat) => infos?.id)
-  //   [idContent].filter((array) => array !== infos?.id)
-  // console.log(cancelId)
+  // const getContentIdToCancelIndex = userStats
+  //   .find((stat) => stat.name !== name && stat[idContent]?.includes(infos?.id))
+  //   [idContent].indexOf(infos?.id)
 
-  if (userStats.length === 0 || !isNameStatExist) {
+  // const createNewContentIdArray = userStats
+  //   .find((stat) => stat.name !== name && stat[idContent]?.includes(infos?.id))
+  //   [idContent].splice(getContentIdToCancelIndex, 1)
+
+  if (userStats?.length === 0 || !isNameStatExist) {
     userStats?.push(newStat)
-  } else if (isNameStatExist && isTypeIdExist) {
-    return
-  } else if (isNameStatExist && !isTypeIdExist) {
-    console.log('je passe')
   }
-  userStats?.find((array) => array?.name === name)[idContent]?.push(infos?.id)
-  console.log('newUserStat', newUserStat)
+  if (getOtherNameStatWithContentId) {
+    userStats
+      ?.find(
+        (stat) => stat?.name !== name && stat[idContent]?.includes(infos?.id),
+      )
+      [idContent]?.splice(
+        getOtherNameStatWithContentId[idContent]?.indexOf(infos?.id),
+        1,
+      )
+  } else {
+    return
+  }
 
-  // updateUserCurrent(newUserStat)
+  userStats?.find((array) => array?.name === name)[idContent]?.push(infos?.id)
+  updateUserCurrent(newUserStat)
+  console.log('newUserStat', newUserStat)
 }
 
 const updateBio = async (bio, user) => {

@@ -26,7 +26,7 @@ const StatsDropdowns = ({ userDatas, contentInfos }) => {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
-  // console.log(userDatas?.stats)
+  // console.log('datas before click : ', userDatas?.stats)
 
   const handleClick = () => {
     updateStat(stat, contentInfos, userDatas)
