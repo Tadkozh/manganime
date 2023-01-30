@@ -6,10 +6,10 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore'
-import { USER_COLLECTION } from '../commons/constants'
+import { DATABASE_COLLECTION } from '../commons/constants'
 import { db, getUid } from '../firebase-config'
 
-const getDocUser = (uid) => doc(collection(db, USER_COLLECTION), uid)
+const getDocUser = (uid) => doc(collection(db, DATABASE_COLLECTION.USERS), uid)
 
 const getUser = (data) => ({
   email: data.email,

@@ -5,7 +5,7 @@ import avatarProfile from '../assets/images/avatar_2.gif'
 import { ReactComponent as LogoIconDark } from '../assets/images/logo_dark.svg'
 import { ReactComponent as LogoIconLight } from '../assets/images/logo_light.svg'
 import {
-  LIGHT,
+  THEMES,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
@@ -137,7 +137,7 @@ const AppBarLogo = ({
     'aria-label': `Logo MangAnime ${arialabel}`,
     onClick: handleCLick,
   }
-  const Logo = getColor() === LIGHT ? <LogoIconLight /> : <LogoIconDark />
+  const Logo = getColor() === THEMES.LIGHT ? <LogoIconLight /> : <LogoIconDark />
 
   return (
     <Typography
@@ -246,7 +246,7 @@ const AppBarMenu = ({ navigate }) => {
         <MUISwitchMode
           mode={mode}
           onClick={colorMode.toggleColorMode}
-          checked={mode === LIGHT ? false : true}
+          checked={mode === THEMES.LIGHT ? false : true}
           sx={{
             position: 'relative',
             left: '50%',
@@ -314,7 +314,7 @@ const AppBarMenu = ({ navigate }) => {
         <MUISwitchMode
           mode={mode}
           onClick={colorMode.toggleColorMode}
-          checked={mode === LIGHT ? false : true}
+          checked={mode === THEMES.LIGHT ? false : true}
         />
       </Box>
     </>

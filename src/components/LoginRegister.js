@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Navigate } from 'react-router-dom'
-import { LOADING, SIGN_IN, SIGN_UP, SUCCESS } from '../commons/constants'
+import { LOADING, SIGN, SUCCESS } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { getRandomNumber } from '../utils/helper'
 import {
@@ -148,8 +148,8 @@ export const FormLogin = ({ validationSign, create, status }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     create
-      ? validationSign(email, password, SIGN_IN)
-      : validationSign(email, password, SIGN_UP)
+      ? validationSign(email, password, SIGN.IN)
+      : validationSign(email, password, SIGN.UP)
   }
 
   return (
