@@ -10,9 +10,10 @@ import {
   MenuItem,
   MenuList,
 } from '../ui'
+import { updateStat } from '../../database/user'
 
-const options = [
-  'Add to :',
+const nameStats = [
+  'Add To List',
   'Watching',
   'Completed',
   'On-hold',
@@ -20,15 +21,15 @@ const options = [
   'Plan-to-watch',
 ]
 
-const StatsDropdowns = () => {
+const StatsDropdowns = ({ userDatas, contentInfos }) => {
   const [stat, setStat] = React.useState('')
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
+  // console.log('datas before click : ', userDatas?.stats)
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`)
-    console.info(' Stat : ', stat)
+    updateStat(stat, contentInfos, userDatas)
   }
 
   const handleMenuItemClick = (event, index) => {
@@ -41,27 +42,25 @@ const StatsDropdowns = () => {
   }
 
   const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+    if (anchorRef?.current && anchorRef?.current?.contains(event?.target)) {
       return
     }
     setOpen(false)
   }
 
   React.useEffect(() => {
-    setStat(`${options[selectedIndex]}`)
-  }, [selectedIndex])
+    setStat(`${nameStats[selectedIndex]}`)
+  }, [contentInfos.type, selectedIndex])
 
   return (
     <>
       <ButtonGroup
-        // variant put by default in contained/div with Material UI.
-        // But with actual css config created it makes a large appearance.
         variant="contained"
         ref={anchorRef}
         aria-label="split button"
       >
         <Button onClick={handleClick} sx={{ maxWidth: 'max-content' }}>
-          {options[selectedIndex]}
+          {nameStats[selectedIndex]}
         </Button>
         <Button
           size="small"
@@ -95,15 +94,15 @@ const StatsDropdowns = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options
-                    .filter((option, index) => index !== 0)
-                    .map((option, index) => (
+                  {nameStats
+                    .filter((name, index) => index !== 0)
+                    .map((name, index) => (
                       <MenuItem
-                        key={option}
+                        key={index}
                         selected={index === selectedIndex}
                         onClick={(event) => handleMenuItemClick(event, index)}
                       >
-                        {option}
+                        {name}
                       </MenuItem>
                     ))}
                 </MenuList>

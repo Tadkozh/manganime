@@ -20,6 +20,7 @@ const getUser = (data) => ({
   favorite_manga: data?.favorite_manga ?? [],
   anime_opinion: data?.anime_opinion ?? [],
   manga_opinion: data?.manga_opinion ?? [],
+  stats: data?.stats ?? [],
 })
 
 const addUser = async (user) => {

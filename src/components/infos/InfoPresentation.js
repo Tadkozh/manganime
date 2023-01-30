@@ -4,7 +4,6 @@ import { Typography } from '../ui'
 import InfoGalery from './InfoGalery'
 import StatsDropdowns from '../stats/StatsDropdowns'
 import RatingInfos from './RatingInfos'
-
 import FavoriteIcon from './FavoriteIcon'
 import { usePresentation } from '../../hooks/queriesHooks'
 import { useParams } from 'react-router-dom'
@@ -13,8 +12,7 @@ function InfoPresentation() {
   let { type, id } = useParams()
   const data = usePresentation(type, id)
   const info = data?.Page?.media[0]
-
-  const authUser = useAuth()
+  const { data: authUser } = useAuth()
 
   return (
     info && (
@@ -33,7 +31,9 @@ function InfoPresentation() {
         <InfoGalery />
         <RatingInfos />
 
-        {authUser.data ? <StatsDropdowns /> : null}
+        {authUser ? (
+          <StatsDropdowns userDatas={authUser} contentInfos={info} />
+        ) : null}
       </>
     )
   )
