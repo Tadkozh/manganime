@@ -5,7 +5,6 @@ import { INFOS, STREAMING, RECOMMENDATIONS } from '../commons/constants'
 import { Box, Tab, Tabs } from './ui'
 import { useStreaming, useRecommendations } from '../hooks/queriesHooks'
 import { getUrl } from '../utils/helper'
-import { Construction } from '@mui/icons-material'
 
 export default function NavBarInfo() {
   let { type, id } = useParams()
@@ -19,8 +18,6 @@ export default function NavBarInfo() {
   const dataStreaming = useStreaming(type, id)
   const infoStreaming = dataStreaming?.Page?.media[0]?.streamingEpisodes
   const dataRecommendations = useRecommendations(type, id)
-  const infoRecommendations = dataRecommendations?.Page?.recommendations
-  // console.log(dataRecommendations.Page.recommendations)
 
   const urlInfos = getUrl(type, INFOS, [id])
   const urlStreaming = getUrl(type, STREAMING, [id])
@@ -30,6 +27,7 @@ export default function NavBarInfo() {
     <Box sx={{ width: '100%', bgcolor: 'rgb(75, 75, 75)' }}>
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Infos" to={urlInfos} component={Link} value={urlInfos} />
+
         {infoStreaming && infoStreaming.length > 0 ? (
           <Tab
             label="Streaming"
@@ -38,7 +36,8 @@ export default function NavBarInfo() {
             value={urlStreaming}
           />
         ) : null}
-        {infoRecommendations && infoRecommendations.length > 0 ? (
+
+        {dataRecommendations?.Page?.recommendations.length > 0 ? (
           <Tab
             label="Recommendations"
             to={urlRecom}

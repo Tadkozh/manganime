@@ -10,7 +10,6 @@ import RecommendationsCard from './RecommendationsCard'
 
 const Recommendations = () => {
   let { type, id } = useParams()
-  // const theme = useTheme()
 
   const dataInfo = useTitle(type, id)
   const title =
@@ -19,7 +18,7 @@ const Recommendations = () => {
 
   const data = useRecommendations(type, id)
 
-  console.log(data)
+  console.log(data.Page.recommendations)
 
   let directives = ''
   if (data?.Page?.recommendations.length === 0) {
