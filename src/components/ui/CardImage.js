@@ -2,7 +2,7 @@ import { useTheme } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
-import { Card, CardMedia, Container, Typography } from './index'
+import { Card, CardMedia, Typography } from './index'
 
 const CardImage = ({ data, type, route }) => {
   const theme = useTheme()
@@ -20,10 +20,13 @@ const CardImage = ({ data, type, route }) => {
       <Link
         to={getUrl(type, route, [data.id])}
         style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          color: theme.palette.text.primary,
+          textAlign: 'center',
           textDecoration: 'none',
           cursor: 'pointer',
-          textAlign: 'center',
-          color: theme.palette.text.primary,
         }}
       >
         <CardMedia
@@ -32,17 +35,18 @@ const CardImage = ({ data, type, route }) => {
           alt={title}
           height={280}
         />
-        <Container
+        <Typography
+          component="p"
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            my: 1,
+            justifyContent: 'center',
+            height: '100%',
+            p: '10px',
           }}
         >
-          <Typography component="p" sx={{ mt: 'auto' }}>
-            {getTroncateTitle(title)}
-          </Typography>
-        </Container>
+          {getTroncateTitle(title)}
+        </Typography>
       </Link>
     </Card>
   )
