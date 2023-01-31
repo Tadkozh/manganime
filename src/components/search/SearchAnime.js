@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { ANIME, INFOS } from '../../commons/constants'
 import { Box, Button } from '../ui'
 
@@ -12,14 +12,18 @@ import { CardImage } from '../ui/CardImage'
 function SearchAnime() {
   const type = ANIME
 
-
   const {
     setValue: setQuery,
     resetFields: resetQuery,
     state: query,
   } = useSearchFieldsParams()
 
-  const { data: getData, fetchNextPage, isFetching } = useSearch(type, query)
+  const {
+    data: getData,
+    fetchNextPage,
+    isFetching,
+    hasNextPage,
+  } = useSearch(type, query)
 
   const handleLoadMore = () => {
     fetchNextPage()
@@ -30,10 +34,6 @@ function SearchAnime() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
-  const hasNextPage = useMemo(
-    () => getData?.[query.page - 1]?.Page?.pageInfo?.hasNextPage,
-    [getData, query.page],
-  )
 
   return (
     <>
