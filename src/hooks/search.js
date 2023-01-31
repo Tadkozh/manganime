@@ -1,8 +1,10 @@
 import React from 'react'
 import {
+  ANIME,
   FINISHED,
   FORMAT,
   ISADULT,
+  NOVEL,
   PER_PAGE,
   POPULARITY,
   RESET,
@@ -35,7 +37,7 @@ const searchParamsReducer = (state, action) => {
     case RESET:
       return {
         search: null,
-        format: TV,
+        format: action.payload,
         status: FINISHED,
         score: 0,
         popularity: 0,
@@ -48,10 +50,11 @@ const searchParamsReducer = (state, action) => {
   }
 }
 
-const useSearchFieldsParams = () => {
+const useSearchFieldsParams = (type) => {
+  const formatValue = type === ANIME ? TV : NOVEL
   const [state, dispatch] = React.useReducer(searchParamsReducer, {
     search: null,
-    format: TV,
+    format: formatValue,
     status: FINISHED,
     score: 0,
     popularity: 0,
@@ -65,7 +68,7 @@ const useSearchFieldsParams = () => {
   }
 
   const resetFields = () => {
-    dispatch({ type: RESET })
+    dispatch({ type: RESET, payload: formatValue })
   }
 
   return { setValue, resetFields, state }
