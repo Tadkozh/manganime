@@ -116,7 +116,6 @@ function PersonalRating({ info }) {
   const [hasUserNoted, setHasUserNoted] = useState(false)
 
   const { data: authUser } = useAuth()
-  let { type } = useParams()
 
   function handleClickRate() {
     if (authUser === null) {
@@ -124,7 +123,7 @@ function PersonalRating({ info }) {
     } else {
       if (nbStar !== null) {
         setHasUserNoted(!hasUserNoted)
-        updateRating(type, info, nbStar, authUser)
+        updateRating(info, nbStar, authUser)
       }
     }
   }
