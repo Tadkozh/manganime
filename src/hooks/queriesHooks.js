@@ -1,17 +1,16 @@
 import { graphQLClient } from '../utils/clientApi'
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import * as GQL from '../graphql/index'
 
 const useSearch = (type, query) => {
-  let queryString = Object.keys(query)
-    .map((key) => {
-      return `${query[key]}`
-    })
-    .join('')
+  let queryKeys = []
+  Object.keys(query).forEach((key) => {
+    queryKeys.push({ [key]: query[key] })
+  })
 
-  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: `${type}/${queryString}/search`,
-    queryFn: async () =>
+  const { data, fetchNextPage, isFetching, hasNextPage } = useInfiniteQuery({
+    queryKey: [type, 'search', ...queryKeys],
+    queryFn: async ({ pageParam = 1 }) =>
       await graphQLClient.request(GQL.SEARCH_REQUEST, {
         search: query?.search,
         format: query?.format,
@@ -20,19 +19,24 @@ const useSearch = (type, query) => {
         popularity: query?.popularity,
         sort: query?.sortBy,
         isAdult: query?.isAdult,
-        page: query?.page,
+        page: pageParam,
         perPage: query?.perPage,
       }),
+    getNextPageParam: (lastPage, page) => {
+      return lastPage.Page.pageInfo.hasNextPage
+        ? lastPage.Page.pageInfo.currentPage + 1
+        : false
+    },
     keepPreviousData: true,
     staleTime: Infinity,
   })
 
-  return { data, fetchNextPage, isFetching }
+  return { data: data?.pages, fetchNextPage, isFetching, hasNextPage }
 }
 
 function useInfos(type, id) {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/infos`,
+    queryKey: [type, id, 'infos'],
     queryFn: async () =>
       await graphQLClient.request(GQL.INFOS_REQUEST, {
         type: type.toUpperCase(),
@@ -46,7 +50,7 @@ function useInfos(type, id) {
 
 const usePresentation = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/presentation`,
+    queryKey: [type, id, 'presentation'],
     queryFn: async () =>
       await graphQLClient.request(GQL.PRESENTATION_REQUEST, {
         type: type.toUpperCase(),
@@ -60,7 +64,7 @@ const usePresentation = (type, id) => {
 
 const useTitle = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/title`,
+    queryKey: [type, id, 'title'],
     queryFn: async () =>
       await graphQLClient.request(GQL.TITLE_REQUEST, {
         type: type.toUpperCase(),
@@ -74,7 +78,7 @@ const useTitle = (type, id) => {
 
 const useGalery = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/galery`,
+    queryKey: [type, id, 'galery'],
     queryFn: async () =>
       await graphQLClient.request(GQL.GALERY_REQUEST, {
         type: type.toUpperCase(),
@@ -88,7 +92,7 @@ const useGalery = (type, id) => {
 
 const useRating = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/rating`,
+    queryKey: [type, id, 'rating'],
     queryFn: async () =>
       await graphQLClient.request(GQL.RATING_REQUEST, {
         type: type.toUpperCase(),
@@ -102,7 +106,7 @@ const useRating = (type, id) => {
 
 const useSynopsis = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/synopsis`,
+    queryKey: [type, id, 'synopsis'],
     queryFn: async () =>
       await graphQLClient.request(GQL.SYNOPSIS_REQUEST, {
         type: type.toUpperCase(),
@@ -116,7 +120,7 @@ const useSynopsis = (type, id) => {
 
 const useDetails = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/details`,
+    queryKey: [type, id, 'details'],
     queryFn: async () =>
       await graphQLClient.request(GQL.DETAILS_REQUEST, {
         type: type.toUpperCase(),
@@ -127,10 +131,9 @@ const useDetails = (type, id) => {
 
   return data
 }
-
 const useReviews = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/reviews`,
+    queryKey: [type, id, 'reviews'],
     queryFn: async () =>
       await graphQLClient.request(GQL.REVIEWS_REQUEST, {
         type: type.toUpperCase(),
@@ -141,10 +144,9 @@ const useReviews = (type, id) => {
 
   return data
 }
-
 const useStreaming = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/streaming`,
+    queryKey: [type, id, 'streaming'],
     queryFn: async () =>
       await graphQLClient.request(GQL.STREAMING_REQUEST, {
         type: type.toUpperCase(),
@@ -155,10 +157,9 @@ const useStreaming = (type, id) => {
 
   return data
 }
-
 const useRecommendations = (type, id) => {
   const { data } = useQuery({
-    queryKey: `${type}/${id}/recommendations`,
+    queryKey: [type, id, 'recommendations'],
     queryFn: async () =>
       await graphQLClient.request(GQL.RECOMMENDATIONS_REQUEST, {
         type: type.toUpperCase(),
@@ -169,10 +170,9 @@ const useRecommendations = (type, id) => {
 
   return data
 }
-
 const useFavorites = (type, listFavorites = []) => {
   const { data, status } = useQuery({
-    queryKey: `${type}/${listFavorites.join('')}/favorites`,
+    queryKey: [type, ...listFavorites, 'favorites'],
     queryFn: async () =>
       await graphQLClient.request(GQL.FAVORITES_LIST_REQUEST, {
         ids: listFavorites,
@@ -186,7 +186,7 @@ const useFavorites = (type, listFavorites = []) => {
 
 const useTop = (type, perPage = 12) => {
   const { data } = useQuery({
-    queryKey: `${type}/top`,
+    queryKey: [type, 'top'],
     queryFn: async () =>
       await graphQLClient.request(GQL.TOP_REQUEST, {
         type: type.toUpperCase(),
@@ -200,7 +200,7 @@ const useTop = (type, perPage = 12) => {
 
 const useEpisode = (perPage = 12) => {
   const { data } = useQuery({
-    queryKey: `top/episode`,
+    queryKey: ['top', 'episode'],
     queryFn: async () =>
       await graphQLClient.request(GQL.EPISODE_REQUEST, {
         perPage: perPage,

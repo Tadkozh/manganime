@@ -1,7 +1,12 @@
-import { createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material'
+import {
+  createTheme,
+  CssBaseline,
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@mui/material'
 import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ENV_DEV, THEMES } from '../commons/constants'
 import { ColorModeContext } from '../context/ColorModeContext'
 import { useStorageColorTheme } from '../hooks/storageColorTheme'
@@ -74,4 +79,3 @@ const AppProviders = ({ children }) => {
 }
 
 export { AppProviders }
-

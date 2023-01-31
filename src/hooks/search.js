@@ -3,7 +3,6 @@ import {
   FINISHED,
   FORMAT,
   ISADULT,
-  PAGE,
   PER_PAGE,
   POPULARITY,
   RESET,
@@ -31,8 +30,6 @@ const searchParamsReducer = (state, action) => {
       return { ...state, sortBy: action.payload }
     case ISADULT:
       return { ...state, isAdult: !state.isAdult }
-    case PAGE:
-      return { ...state, page: state.page + 1 }
     case PER_PAGE:
       return { ...state, perPage: action.payload }
     case RESET:
@@ -44,7 +41,6 @@ const searchParamsReducer = (state, action) => {
         popularity: 0,
         sortBy: TRENDING_DESC,
         isAdult: false,
-        page: 1,
         perPage: 30,
       }
     default:
@@ -61,7 +57,6 @@ const useSearchFieldsParams = () => {
     popularity: 0,
     sortBy: TRENDING_DESC,
     isAdult: false,
-    page: 1,
     perPage: 30,
   })
 

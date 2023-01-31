@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { ANIME, INFOS, PAGE } from '../../commons/constants'
+import React from 'react'
+import { ANIME, INFOS } from '../../commons/constants'
 import { Box, Button } from '../ui'
 
 import SearchBar from './SearchBar'
@@ -12,50 +12,28 @@ import { CardImage } from '../ui/CardImage'
 function SearchAnime() {
   const type = ANIME
 
-  const [getData, setGetData] = useState([])
-  const [moreData, setMoreData] = useState(false)
   const {
     setValue: setQuery,
     resetFields: resetQuery,
     state: query,
   } = useSearchFieldsParams()
 
-  const { data, fetchNextPage, isFetching } = useSearch(type, query)
+  const {
+    data: getData,
+    fetchNextPage,
+    isFetching,
+    hasNextPage,
+  } = useSearch(type, query)
 
   const handleLoadMore = () => {
-    setMoreData(true)
-    setQuery(PAGE)
     fetchNextPage()
   }
 
-  useMemo(() => {
-    if (data) {
-      if (moreData && getData[query - 1] !== data) {
-        setGetData([...getData, data.pages[0]])
-        setMoreData(false)
-      } else {
-        setGetData(data.pages)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  const hasNextPage = useMemo(
-    () => getData?.[query.page - 1]?.Page?.pageInfo?.hasNextPage,
-    [getData, query.page],
-  )
-
   React.useEffect(() => {
-    const scrollDown = setTimeout(
-      () =>
-        window.scroll({
-          top: document.body.scrollHeight,
-          behavior: 'smooth',
-        }),
-      300,
-    )
-    return () => clearTimeout(scrollDown)
-  }, [moreData])
+    fetchNextPage(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query])
+
 
   return (
     <>
@@ -75,7 +53,7 @@ function SearchAnime() {
           mx: 4,
         }}
       >
-        {getData.length > 0 ? (
+        {getData !== undefined ? (
           getData.map((page) =>
             page.Page.media.map((data, index) => {
               return (
@@ -86,7 +64,7 @@ function SearchAnime() {
         ) : (
           <ListCardsSkeleton />
         )}
-        {isFetching && getData.length > 0 ? <ListCardsSkeleton /> : null}
+        {isFetching && getData?.length > 0 ? <ListCardsSkeleton /> : null}
       </Box>
       <Box
         sx={{
