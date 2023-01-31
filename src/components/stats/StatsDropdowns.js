@@ -21,20 +21,18 @@ const nameStats = [
   'Plan-to-watch',
 ]
 
-const StatsDropdowns = ({ userDatas, contentInfos }) => {
-  const [stat, setStat] = React.useState('')
+const StatsDropdowns = ({ userDatas, contentInfos, executeUser }) => {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
-  // console.log('datas before click : ', userDatas?.stats)
+  const whichContentArray =
+    contentInfos?.type === 'ANIME' ? 'animeId' : 'mangaId'
+  const getActiveStatName = userDatas?.stats?.find((stats) =>
+    stats[whichContentArray]?.includes(contentInfos?.id),
+  )?.name
 
-  const handleClick = () => {
-    updateStat(stat, contentInfos, userDatas)
-  }
-
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index + 1)
+  const handleMenuItemClick = (event, name) => {
     setOpen(false)
+    executeUser(updateStat(name, contentInfos, userDatas))
   }
 
   const handleToggle = () => {
@@ -48,10 +46,6 @@ const StatsDropdowns = ({ userDatas, contentInfos }) => {
     setOpen(false)
   }
 
-  React.useEffect(() => {
-    setStat(`${nameStats[selectedIndex]}`)
-  }, [contentInfos.type, selectedIndex])
-
   return (
     <>
       <ButtonGroup
@@ -59,8 +53,8 @@ const StatsDropdowns = ({ userDatas, contentInfos }) => {
         ref={anchorRef}
         aria-label="split button"
       >
-        <Button onClick={handleClick} sx={{ maxWidth: 'max-content' }}>
-          {nameStats[selectedIndex]}
+        <Button sx={{ maxWidth: 'max-content' }}>
+          {getActiveStatName ?? nameStats[0]}
         </Button>
         <Button
           size="small"
@@ -95,12 +89,15 @@ const StatsDropdowns = ({ userDatas, contentInfos }) => {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
                   {nameStats
-                    .filter((name, index) => index !== 0)
+                    .filter(
+                      (item) =>
+                        item !== nameStats[0] && item !== getActiveStatName,
+                    )
                     .map((name, index) => (
                       <MenuItem
                         key={index}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
+                        // selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, name)}
                       >
                         {name}
                       </MenuItem>

@@ -100,21 +100,6 @@ const updateStat = (name, infos, user) => {
     (stat) => stat.name !== name && stat[idContent]?.includes(infos?.id),
   )
 
-  // const isTypeIdExist =
-  //   userStats.length > 0
-  //     ? userStats
-  //         ?.some((array) => array?.name === name)
-  //         [idContent]?.includes(infos?.id)
-  //     : null
-
-  // const getContentIdToCancelIndex = userStats
-  //   .find((stat) => stat.name !== name && stat[idContent]?.includes(infos?.id))
-  //   [idContent].indexOf(infos?.id)
-
-  // const createNewContentIdArray = userStats
-  //   .find((stat) => stat.name !== name && stat[idContent]?.includes(infos?.id))
-  //   [idContent].splice(getContentIdToCancelIndex, 1)
-
   if (userStats?.length === 0 || !isNameStatExist) {
     userStats?.push(newStat)
   }
@@ -128,12 +113,11 @@ const updateStat = (name, infos, user) => {
         1,
       )
   } else {
-    return
   }
 
   userStats?.find((array) => array?.name === name)[idContent]?.push(infos?.id)
+  // console.log('newUserStat', newUserStat)
   updateUserCurrent(newUserStat)
-  console.log('newUserStat', newUserStat)
 }
 
 const updateBio = async (bio, user) => {
