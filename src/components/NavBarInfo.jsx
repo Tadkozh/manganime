@@ -5,10 +5,12 @@ import { INFOS, STREAMING, RECOMMENDATIONS } from '../commons/constants'
 import { Box, Tab, Tabs } from './ui'
 import { useStreaming, useRecommendations } from '../hooks/queriesHooks'
 import { getUrl } from '../utils/helper'
+import { useTheme } from '@mui/material'
 
 export default function NavBarInfo() {
   let { type, id } = useParams()
   const location = useLocation()
+  const theme = useTheme()
 
   const [value, setValue] = useState(location.pathname)
   const handleChange = (event, newValue) => {
@@ -24,9 +26,15 @@ export default function NavBarInfo() {
   const urlRecom = getUrl(type, RECOMMENDATIONS, [id])
 
   return (
-    <Box sx={{ width: '100%', bgcolor: 'rgb(75, 75, 75)' }}>
+    <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="Infos" to={urlInfos} component={Link} value={urlInfos} />
+        <Tab
+          label="Infos"
+          to={urlInfos}
+          component={Link}
+          value={urlInfos}
+          sx={{ color: theme.palette.text.primary }}
+        />
 
         {infoStreaming && infoStreaming.length > 0 ? (
           <Tab
@@ -34,6 +42,7 @@ export default function NavBarInfo() {
             to={urlStreaming}
             component={Link}
             value={urlStreaming}
+            sx={{ color: theme.palette.text.primary }}
           />
         ) : null}
 
@@ -43,6 +52,7 @@ export default function NavBarInfo() {
             to={urlRecom}
             component={Link}
             value={urlRecom}
+            sx={{ color: theme.palette.text.primary }}
           />
         ) : null}
       </Tabs>
