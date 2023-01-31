@@ -9,8 +9,7 @@ import { useSearchFieldsParams } from '../../hooks/search'
 import { ListCardsSkeleton } from '../skeletons/CardImageSkeleton'
 import { CardImage } from '../ui/CardImage'
 
-function SearchMangAnime({type}) {
-
+function SearchMangAnime({ type }) {
   const {
     setValue: setQuery,
     resetFields: resetQuery,
@@ -50,7 +49,13 @@ function SearchMangAnime({type}) {
           getData.map((page) =>
             page.Page.media.map((data, index) => {
               return (
-                <CardImage data={data} type={type} route={INFOS} key={index} />
+                <CardImage
+                  data={data}
+                  type={type}
+                  route={INFOS}
+                  key={index}
+                  dimension={{ height: '280px' }}
+                />
               )
             }),
           )
