@@ -12,7 +12,7 @@ function InfoPresentation() {
   let { type, id } = useParams()
   const data = usePresentation(type, id)
   const info = data?.Page?.media[0]
-  const { data: authUser } = useAuth()
+  const { data: authUser, setData: execute } = useAuth()
 
   return (
     info && (
@@ -32,7 +32,11 @@ function InfoPresentation() {
         <RatingInfos info={info} />
 
         {authUser ? (
-          <StatsDropdowns userDatas={authUser} contentInfos={info} />
+          <StatsDropdowns
+            userDatas={authUser}
+            contentInfos={info}
+            executeUser={execute}
+          />
         ) : null}
       </>
     )
