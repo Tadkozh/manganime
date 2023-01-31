@@ -1,4 +1,4 @@
-import { ManageHistoryRounded } from '@mui/icons-material'
+// import { ManageHistoryRounded } from '@mui/icons-material'
 import { addUser, getUserById, updateUser } from './operations'
 import { uploadFile } from '../utils/helper'
 import { arrayRemove, arrayUnion } from 'firebase/firestore'
@@ -11,10 +11,10 @@ const updateProfileUser = (user, userCurrent) => {
   return newUser
 }
 
-const updateComment = (type, info, comment, user) => {
+const updateComment = (info, comment, user) => {
   const newUserComment = structuredClone(user)
-  const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
-  const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
+  const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+  const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
   const fullComment = {
     create_at: new Date().toISOString(),
@@ -59,11 +59,11 @@ const updateComment = (type, info, comment, user) => {
 //   return type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
 // }
 
-const updateRating = (type, info, rating, user) => {
+const updateRating = (info, rating, user) => {
   const newUserRate = structuredClone(user)
-  const type_opinion = type === 'anime' ? 'anime_opinion' : 'manga_opinion'
+  const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
 
-  const type_id = type === 'anime' ? 'anime_id' : 'manga_id'
+  const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
   const isItemId = newUserRate[type_opinion].some(
     (opinion) => opinion[type_id] === info.id,
@@ -152,8 +152,8 @@ const userPicture = async (picture) => {
 const getType = (type) => {
   return type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
 }
-const updateFavorite = async (type, info, user) => {
-  const typeFavorite = getType(type)
+const updateFavorite = async (info, user) => {
+  const typeFavorite = getType(info.type)
   const favorites = structuredClone(user[typeFavorite])
   const isExist = favorites.some((id) => id === info.id)
   console.log('isExist', isExist)

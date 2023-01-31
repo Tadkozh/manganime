@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
 import { Box, Button, Rating, TextField, Typography } from '../ui'
@@ -13,7 +12,6 @@ import { labels } from './scoreLabels'
 
 function InfoForm({ info }) {
   const { data: authUser } = useAuth()
-  let { type } = useParams()
 
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
@@ -33,7 +31,7 @@ function InfoForm({ info }) {
       handleOpenModal()
     } else {
       changeComment(!comment)
-      updateComment(type, info, data, authUser)
+      updateComment(info, data, authUser)
     }
   }
 
