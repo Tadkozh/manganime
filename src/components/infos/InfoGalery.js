@@ -1,15 +1,9 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 
-import { useParams } from 'react-router-dom'
-import { useGalery } from '../../hooks/queriesHooks'
-
 import { Close } from '@mui/icons-material'
 
-function InfoGalery() {
-  let { type, id } = useParams()
-  const data = useGalery(type, id)
-  const info = data?.Page?.media[0]
+function InfoGalery({ info }) {
   const collectionType = info?.type?.toLowerCase()
 
   const [largeImg, setLargeImg] = React.useState(false)
@@ -24,7 +18,7 @@ function InfoGalery() {
       />
 
       <LargeImage
-        data={data}
+        data={info}
         mainLargeImage={info.coverImage.extraLarge}
         largeImg={largeImg}
         setLargeImg={setLargeImg}

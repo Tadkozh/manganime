@@ -1,13 +1,6 @@
 import { Box, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import { useDetails } from '../../hooks/queriesHooks'
 
-function InfoDetails() {
-  let { type, id } = useParams()
-
-  const data = useDetails(type, id)
-  const info = data?.Page?.media[0]
-
+function InfoDetails({ info }) {
   const unknown = 'unknown'
 
   const typeData = info?.type

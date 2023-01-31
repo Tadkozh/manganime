@@ -1,12 +1,6 @@
 import { Box, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import { useSynopsis } from '../../hooks/queriesHooks'
 
-function InfoSynopsis() {
-  let { type, id } = useParams()
-  const data = useSynopsis(type, id)
-  const synopsis = data?.Page?.media[0]?.description
-
+function InfoSynopsis({ synopsis }) {
   // const [readSynopsis, setReadSynopsis] = useState(false)
 
   return (

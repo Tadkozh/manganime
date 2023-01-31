@@ -11,32 +11,6 @@ import Modale from '../Modal'
 
 import { updateRating } from '../../database/user'
 import { labels } from './scoreLabels'
-import { useRating } from '../../hooks/queriesHooks'
-
-function RatingInfos() {
-  let { type, id } = useParams()
-  const data = useRating(type, id)
-  const info = data?.Page?.media[0]
-
-  return (
-    info && (
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '20px',
-          width: '100%',
-          textAlign: 'center',
-          margin: '5px auto',
-        }}
-      >
-        <GlobalRating info={info} />
-        <PersonalRating info={info} />
-      </Box>
-    )
-  )
-}
 
 function RatingItem({
   name,
@@ -90,7 +64,15 @@ function RatingItem({
 
 function GlobalRating({ info }) {
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+      }}
+    >
       <Typography component="legend">Global note:</Typography>
       <RatingItem
         name={'Global rating'}
@@ -100,7 +82,13 @@ function GlobalRating({ info }) {
         precision={0.1}
         isReadOnly={true}
       />
-      <Button href="#reviews" variant="contained" size="small" color="success">
+      <Button
+        href="#reviews"
+        variant="contained"
+        size="small"
+        color="success"
+        sx={{ mt: '5px' }}
+      >
         Read reviews
       </Button>
     </Box>
@@ -131,23 +119,16 @@ function PersonalRating({ info }) {
 
   return (
     <Box>
-      <Typography component="legend">Your note:</Typography>
       <RatingItem
         name={'Personal rating'}
         defaultValue={null}
         nbStar={null}
         setNbStar={setNbStar}
         precision={0.5}
-        isReadOnly={hasUserNoted ? true : false}
+        isReadOnly={false}
+        // onChange={updateRating(type, info, nbStar, authUser)}
       />
-      <Button
-        variant="contained"
-        size="small"
-        color={hasUserNoted ? 'error' : 'success'}
-        onClick={handleClickRate}
-      >
-        {hasUserNoted ? 'Cancel note' : 'Submit note'}
-      </Button>
+
       {open && (
         <Modale
           open={open}
@@ -159,4 +140,4 @@ function PersonalRating({ info }) {
   )
 }
 
-export default RatingInfos
+export { GlobalRating, PersonalRating }
