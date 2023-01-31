@@ -161,7 +161,6 @@ const SEARCH_FIELDS = {
   POPULARITY: 'popularity',
   SORT: 'sortBy',
   ISADULT: 'isAdult',
-  PAGE: 'page',
   PER_PAGE: 'perPage',
   RESET: 'reset',
 }

@@ -5,14 +5,12 @@ import * as GQL from '../graphql/index'
 const useSearch = (type, query) => {
   let queryKeys = []
   Object.keys(query).forEach((key) => {
-    if (key !== 'page') {
-      queryKeys.push({ [key]: query[key] })
-    }
+    queryKeys.push({ [key]: query[key] })
   })
 
-  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+  const { data, fetchNextPage, isFetching, hasNextPage } = useInfiniteQuery({
     queryKey: [type, 'search', ...queryKeys],
-    queryFn: async ({ pageParam = query.page }) =>
+    queryFn: async ({ pageParam = 1 }) =>
       await graphQLClient.request(GQL.SEARCH_REQUEST, {
         search: query?.search,
         format: query?.format,
@@ -33,7 +31,7 @@ const useSearch = (type, query) => {
     staleTime: Infinity,
   })
 
-  return { data: data?.pages, fetchNextPage, isFetching }
+  return { data: data?.pages, fetchNextPage, isFetching, hasNextPage }
 }
 
 function useInfos(type, id) {
