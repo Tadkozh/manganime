@@ -7,7 +7,7 @@ import { GlobalRating } from './RatingInfos'
 import StatsDropdowns from '../stats/StatsDropdowns'
 
 function InfoPresentation({ info }) {
-  const { data: authUser } = useAuth()
+  const { data: authUser, setData: execute } = useAuth()
 
   return (
     info && (
@@ -34,7 +34,11 @@ function InfoPresentation({ info }) {
         >
           <GlobalRating info={info} />
           {authUser ? (
-            <StatsDropdowns userDatas={authUser} contentInfos={info} />
+            <StatsDropdowns
+              userDatas={authUser}
+              contentInfos={info}
+              executeUser={execute}
+            />
           ) : null}
         </Box>
       </>

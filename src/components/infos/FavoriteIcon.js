@@ -1,5 +1,4 @@
 import { useAuth } from '../../context/AuthContext'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 import { Box, Typography } from '@mui/material'
@@ -17,14 +16,13 @@ function FavoriteIcon({ info }) {
   const handleCloseModal = () => setOpen(false)
 
   const { data: authUser } = useAuth()
-  let { type } = useParams()
 
   const handleClickFav = () => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       setIsFav(!isFav)
-      updateFavorite(type, info, authUser)
+      updateFavorite(info, authUser)
     }
   }
 

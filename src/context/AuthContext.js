@@ -135,6 +135,7 @@ const AuthProviders = ({ children }) => {
   const values = React.useMemo(
     () => ({
       data,
+      setData,
       error,
       status,
       logout,
@@ -142,7 +143,16 @@ const AuthProviders = ({ children }) => {
       validationProfile,
       execute,
     }),
-    [data, error, status, execute, logout, validationSign, validationProfile],
+    [
+      data,
+      error,
+      status,
+      execute,
+      logout,
+      validationSign,
+      validationProfile,
+      setData,
+    ],
   )
 
   if (status === LOADING) {
