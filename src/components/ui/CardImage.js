@@ -1,4 +1,4 @@
-import { Paper, useTheme } from '@mui/material'
+import { useTheme } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
