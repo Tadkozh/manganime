@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
-import { Box, Button, Rating, TextField, Typography } from '../ui'
-import StarIcon from '@mui/icons-material/Star'
+import { Button, Paper, TextField, Typography } from '../ui'
 
 import { updateComment } from '../../database/user'
 
-import Modale from './../Modal'
+import { PersonalRating } from './RatingInfos'
 
-import { labels } from './scoreLabels'
+import Modale from './../Modal'
 
 function InfoForm({ info }) {
   const { data: authUser } = useAuth()
@@ -44,14 +43,15 @@ function InfoForm({ info }) {
   }, [authUser, commentTitle, commentValue])
 
   return (
-    <Box
+    <Paper
       component="form"
       sx={{
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
         width: '100%',
-        mb: '25px',
+        p: '10px',
+        m: '10px auto',
       }}
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -59,7 +59,7 @@ function InfoForm({ info }) {
         Leave a review
       </Typography>
 
-      <FormRating />
+      <PersonalRating />
 
       <TextField
         id="outlined-basic"
@@ -103,44 +103,7 @@ function InfoForm({ info }) {
           handleCloseModal={handleCloseModal}
         />
       )}
-    </Box>
-  )
-}
-
-function FormRating() {
-  const [value, setValue] = useState(null)
-  const [hover, setHover] = useState(-1)
-
-  const [open, setOpen] = useState(false)
-  const handleOpenModal = () => setOpen(true)
-  const handleCloseModal = () => setOpen(false)
-
-  return (
-    <Box>
-      <Rating
-        name={'Review rating'}
-        defaultValue={null}
-        value={value}
-        precision={0.5}
-        readOnly={false}
-        onChange={(e, newValue) => {
-          setValue(newValue)
-        }}
-        onChangeActive={(e, newHover) => {
-          setHover(newHover)
-        }}
-        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-      />
-      <Typography>{labels[hover !== -1 ? hover : value]}</Typography>
-
-      {open && (
-        <Modale
-          open={open}
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
-    </Box>
+    </Paper>
   )
 }
 

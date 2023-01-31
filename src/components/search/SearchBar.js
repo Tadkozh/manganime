@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   InputLabel,
   MenuItem,
+  Paper,
   Refresh,
   Search,
   Select,
@@ -24,14 +25,13 @@ const getNameInput = (title) => {
 
 function SearchBar({ type, query, setQuery, resetQuery }) {
   return (
-    <Box
+    <Paper
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center',
         gap: '10px',
-        m: 2,
         p: 2,
       }}
     >
@@ -55,7 +55,7 @@ function SearchBar({ type, query, setQuery, resetQuery }) {
         onChange={() => setQuery(ISADULT)}
       />
       <RightSearch setQuery={setQuery} resetQuery={resetQuery} />
-    </Box>
+    </Paper>
   )
 }
 

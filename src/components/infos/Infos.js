@@ -36,16 +36,23 @@ function Infos() {
         >
           <Grid container>
             <GridChild
+              xs={12}
+              sm={6}
+              md={4}
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 position: 'relative',
+                m: '10px auto',
               }}
-              children={<InfoPresentation />}
+              children={<InfoPresentation info={info} />}
             />
 
             <GridChild
+              xs={12}
+              sm={6}
+              md={4}
               sx={{
                 order: {
                   md: '-1',
@@ -57,18 +64,23 @@ function Infos() {
                 padding: '10px',
                 borderRadius: '5px',
                 boxShadow: '0 0 12px -5px #000',
+                m: '10px auto',
               }}
-              children={<InfoSynopsis />}
+              children={<InfoSynopsis synopsis={info.description} />}
             />
 
             <GridChild
+              xs={12}
+              sm={12}
+              md={4}
               sx={{
                 maxHeight: '500px',
                 backgroundColor: 'rgba(128, 128, 128, 0.5)',
                 padding: '5px 10px',
                 overflowY: 'auto',
+                m: '10px auto',
               }}
-              children={<InfoDetails />}
+              children={<InfoDetails info={info} />}
             />
           </Grid>
 
@@ -82,9 +94,9 @@ function Infos() {
   )
 }
 
-function GridChild({ sx, children }) {
+function GridChild({ xs, sm, md, sx, children }) {
   return (
-    <Grid item xs={12} sm={6} md={4} sx={sx}>
+    <Grid item xs={xs} sm={sm} md={md} sx={sx}>
       {children}
     </Grid>
   )
@@ -98,7 +110,6 @@ function Trailer({ info }) {
           href={`https://www.youtube.com/watch?v=${info.id}`}
           target="_blank"
           rel="noreferrer"
-          sx={{ m: '25px auto 0' }}
         >
           Watch trailer on {info.site}
         </Button>
@@ -106,7 +117,12 @@ function Trailer({ info }) {
           title="Trailer"
           src={`https://www.youtube.com/embed/${info.id}?autoplay=1&mute=1`}
           thumbnail={info.thumbnail}
-          style={{ margin: '0 auto' }}
+          style={{
+            width: '100%',
+            maxWidth: '800px',
+            aspectRatio: '3/2',
+            margin: '0 auto',
+          }}
         />
       </>
     )

@@ -1,17 +1,12 @@
 import { useAuth } from '../../context/AuthContext'
-import { Typography } from '../ui'
+import { Box, Typography } from '../ui'
 
-import InfoGalery from './InfoGalery'
-import StatsDropdowns from '../stats/StatsDropdowns'
-import RatingInfos from './RatingInfos'
 import FavoriteIcon from './FavoriteIcon'
-import { usePresentation } from '../../hooks/queriesHooks'
-import { useParams } from 'react-router-dom'
+import InfoGalery from './InfoGalery'
+import { GlobalRating } from './RatingInfos'
+import StatsDropdowns from '../stats/StatsDropdowns'
 
-function InfoPresentation() {
-  let { type, id } = useParams()
-  const data = usePresentation(type, id)
-  const info = data?.Page?.media[0]
+function InfoPresentation({ info }) {
   const { data: authUser, setData: execute } = useAuth()
 
   return (
@@ -22,22 +17,30 @@ function InfoPresentation() {
           variant="h3"
           sx={{ textAlign: 'center', m: '0 auto' }}
         >
-          {info.title.english ?? info.title.romaji}
+          {info.title.romaji ?? info.title.english}
         </Typography>
         <Typography>{info.title.native}</Typography>
 
+        <InfoGalery info={info} />
+
         <FavoriteIcon info={info} />
 
-        <InfoGalery />
-        <RatingInfos info={info} />
-
-        {authUser ? (
-          <StatsDropdowns
-            userDatas={authUser}
-            contentInfos={info}
-            executeUser={execute}
-          />
-        ) : null}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '10px',
+            mt: '10px',
+          }}
+        >
+          <GlobalRating info={info} />
+          {authUser ? (
+            <StatsDropdowns
+              userDatas={authUser}
+              contentInfos={info}
+              executeUser={execute}
+            />
+          ) : null}
+        </Box>
       </>
     )
   )

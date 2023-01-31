@@ -77,61 +77,6 @@ const useTitle = (type, id) => {
   return data
 }
 
-const useGalery = (type, id) => {
-  const { data } = useQuery({
-    queryKey: [type, id, 'galery'],
-    queryFn: async () =>
-      await graphQLClient.request(GQL.GALERY_REQUEST, {
-        type: type.toUpperCase(),
-        id: id,
-      }),
-    staleTime: Infinity,
-  })
-
-  return data
-}
-
-const useRating = (type, id) => {
-  const { data } = useQuery({
-    queryKey: [type, id, 'rating'],
-    queryFn: async () =>
-      await graphQLClient.request(GQL.RATING_REQUEST, {
-        type: type.toUpperCase(),
-        id: id,
-      }),
-    staleTime: Infinity,
-  })
-
-  return data
-}
-
-const useSynopsis = (type, id) => {
-  const { data } = useQuery({
-    queryKey: [type, id, 'synopsis'],
-    queryFn: async () =>
-      await graphQLClient.request(GQL.SYNOPSIS_REQUEST, {
-        type: type.toUpperCase(),
-        id: id,
-      }),
-    staleTime: Infinity,
-  })
-
-  return data
-}
-
-const useDetails = (type, id) => {
-  const { data } = useQuery({
-    queryKey: [type, id, 'details'],
-    queryFn: async () =>
-      await graphQLClient.request(GQL.DETAILS_REQUEST, {
-        type: type.toUpperCase(),
-        id: id,
-      }),
-    staleTime: Infinity,
-  })
-
-  return data
-}
 const useReviews = (type, id) => {
   const { data } = useQuery({
     queryKey: [type, id, 'reviews'],
@@ -145,6 +90,7 @@ const useReviews = (type, id) => {
 
   return data
 }
+
 const useStreaming = (type, id) => {
   const { data } = useQuery({
     queryKey: [type, id, 'streaming'],
@@ -158,6 +104,7 @@ const useStreaming = (type, id) => {
 
   return data
 }
+
 const useRecommendations = (type, id) => {
   const { data } = useQuery({
     queryKey: [type, id, 'recommendations'],
@@ -171,6 +118,7 @@ const useRecommendations = (type, id) => {
 
   return data
 }
+
 const useFavorites = (type, listFavorites = []) => {
   const { data, status } = useQuery({
     queryKey: [type, ...listFavorites, 'favorites'],
@@ -214,17 +162,13 @@ const useEpisode = (perPage = 12) => {
 
 export {
   useEpisode,
-  useFavorites,
+  useTop,
   useSearch,
   useInfos,
   usePresentation,
   useTitle,
-  useGalery,
-  useRating,
-  useSynopsis,
-  useDetails,
   useReviews,
   useStreaming,
   useRecommendations,
-  useTop,
+  useFavorites,
 }
