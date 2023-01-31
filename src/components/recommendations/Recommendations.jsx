@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom'
-import { useTitle, useRecommendations } from '../../hooks/queriesHooks'
-import { ArrowRightSharp, Box, Typography } from './../ui'
 import { INFOS } from '../../commons/constants'
+import { useRecommendations, useTitle } from '../../hooks/queriesHooks'
+import { ArrowRightSharp, Box, Typography } from './../ui'
 // import { useTheme } from '@mui/material'
 
 // Components
 import NavBarInfo from '../NavBarInfo'
-import RecommendationsCard from './RecommendationsCard'
+import { CardImage } from '../ui/CardImage'
 
 const Recommendations = () => {
   let { type, id } = useParams()
@@ -63,11 +63,15 @@ const Recommendations = () => {
             ? data?.Page?.recommendations.map((data, index) => {
                 if (index < 12) {
                   return (
-                    <RecommendationsCard
+                    <CardImage
                       type={type}
                       route={INFOS}
                       data={data.media}
                       key={index}
+                      dimension={{
+                        height: '335px',
+                        maxwidth: '223px',
+                      }}
                     />
                   )
                 }
@@ -79,5 +83,4 @@ const Recommendations = () => {
     </>
   )
 }
-
 export default Recommendations
