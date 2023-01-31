@@ -21,13 +21,14 @@ const useSearch = (type, query) => {
         isAdult: query?.isAdult,
         page: pageParam,
         perPage: query?.perPage,
+        type: type.toUpperCase(),
       }),
     getNextPageParam: (lastPage, page) => {
       return lastPage.Page.pageInfo.hasNextPage
         ? lastPage.Page.pageInfo.currentPage + 1
         : false
     },
-    keepPreviousData: true,
+    keepPreviousData: false,
     staleTime: Infinity,
   })
 
