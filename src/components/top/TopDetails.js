@@ -1,15 +1,15 @@
+import { Grid, useTheme } from '@mui/material'
 import React from 'react'
-import TopView from './TopView'
+import { LOADING, SUCCESS } from '../../commons/constants'
 import { useTop } from '../../hooks/queriesHooks'
-import { useTheme } from '@mui/material'
+import { ListCardsSkeleton } from '../skeletons/CardImageSkeleton'
 import {
-  Button,
-  Container,
-  KeyboardArrowLeft,
+  Button, KeyboardArrowLeft,
   KeyboardArrowRight,
   MobileStepper,
-  Typography,
+  Typography
 } from '../ui'
+import TopView from './TopView'
 
 const rankReducer = (state, action) => {
   switch (action?.type) {
@@ -23,15 +23,16 @@ const rankReducer = (state, action) => {
 }
 
 const TopDetails = ({ type, isHomePage = false }) => {
-  const topDatas = useTop(type)
+  const { data: topDatas, status } = useTop(type)
   const [filteredTopDatas, setFilteredTopDatas] = React.useState([])
 
   const [activeStep, setActiveStep] = React.useState(0)
   const maxSteps = topDatas?.length
+  const nbPerPage = 4
 
   const [rank, dispatch] = React.useReducer(rankReducer, {
     minRank: 0,
-    maxRank: 4,
+    maxRank: nbPerPage,
   })
 
   const theme = useTheme()
@@ -40,9 +41,19 @@ const TopDetails = ({ type, isHomePage = false }) => {
     position: 'relative',
     m: '2em 0',
     p: '1em 0',
-    bgcolor: theme.palette.background.content,
+    bgcolor: theme.palette.background.default,
     boxShadow:
       '0px 2px 4px 2px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+  }
+  const sxArrow = {
+    zIndex: 1,
+    // color: 'rgb(68,68,68)',
+    // ':hover': { bgcolor: 'rgba(68,68,68,0.5)' },
+    color: theme.palette.primary,
+    ':hover': {
+      bgcolor: theme.palette.text.secondary,
+      opacity: '0.5',
+    },
   }
 
   React.useEffect(() => {
@@ -52,6 +63,17 @@ const TopDetails = ({ type, isHomePage = false }) => {
       )
     }
   }, [rank?.maxRank, rank?.minRank, topDatas])
+
+  const isExist = React.useMemo(() => {
+    if (filteredTopDatas.length > 0 && topDatas !== undefined) {
+      return (
+        filteredTopDatas[filteredTopDatas.length - 1]?.id ===
+        topDatas?.Page?.media[topDatas?.Page?.media.length - 1].id
+      )
+    } else {
+      return false
+    }
+  }, [filteredTopDatas, topDatas])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -65,11 +87,15 @@ const TopDetails = ({ type, isHomePage = false }) => {
 
   return (
     <>
-      <Container
-        component="article"
-        disableGutters
+      <Grid
+        item
+        // component="article"
+        // disableGutters
         sx={isHomePage ? sxTopContainerHomePage : null}
-        maxWidth={!isHomePage ? false : 'lg'}
+        // maxWidth={!isHomePage ? false : 'lg'}
+        xs={12}
+        xl={8}
+        lg={8}
       >
         {isHomePage ? (
           <MobileStepper
@@ -87,25 +113,17 @@ const TopDetails = ({ type, isHomePage = false }) => {
             position="static"
             nextButton={
               <Button
-                sx={{
-                  zIndex: 1,
-                  color: 'rgb(68,68,68)',
-                  ':hover': { bgcolor: 'rgba(68,68,68,0.5)' },
-                }}
+                sx={sxArrow}
                 size="small"
-                onClick={filteredTopDatas?.length === 4 ? handleNext : null}
-                disabled={activeStep === maxSteps - 1}
+                onClick={!isExist ? handleNext : null}
+                disabled={isExist}
               >
                 <KeyboardArrowRight sx={{ fontSize: '4em' }} />
               </Button>
             }
             backButton={
               <Button
-                sx={{
-                  zIndex: 1,
-                  color: 'rgb(68,68,68)',
-                  ':hover': { bgcolor: 'rgba(68,68,68,0.5)' },
-                }}
+                sx={sxArrow}
                 size="small"
                 onClick={handleBack}
                 disabled={activeStep === 0}
@@ -127,7 +145,14 @@ const TopDetails = ({ type, isHomePage = false }) => {
         >
           Top {type}
         </Typography>
-        {topDatas ? (
+        {status === LOADING ? (
+          <ListCardsSkeleton
+            dimension={{ height: '400px', width: '16em' }}
+            nbCard={isHomePage ? 4 : 12}
+            top={{ isUse: true, isHomePage: isHomePage }}
+          />
+        ) : null}
+        {status === SUCCESS ? (
           <TopView
             isHomePage={isHomePage ? true : false}
             datas={isHomePage ? filteredTopDatas : topDatas?.Page?.media}
@@ -135,7 +160,7 @@ const TopDetails = ({ type, isHomePage = false }) => {
             rank={rank.minRank + 1}
           />
         ) : null}
-      </Container>
+      </Grid>
     </>
   )
 }

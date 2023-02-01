@@ -31,7 +31,7 @@ import {
 const AuthContext = React.createContext()
 
 const AuthProviders = ({ children }) => {
-  const { data, status, setData, execute } = useUserData()
+  const { data, status, setData } = useUserData()
   const { clean: error, setClean: setError } = useCleanupError()
   const [authUser, setAuthUser] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(true)
@@ -100,7 +100,7 @@ const AuthProviders = ({ children }) => {
           }
         })
     },
-    [logout, setData],
+    [logout, setData, setError],
   )
 
   const validationUpdateAuth = (email, password, user) => {
@@ -149,14 +149,12 @@ const AuthProviders = ({ children }) => {
       logout,
       validationSign,
       validationProfile,
-      execute,
     }),
     [
       data,
       authUser,
       error,
       status,
-      execute,
       logout,
       validationSign,
       validationProfile,
