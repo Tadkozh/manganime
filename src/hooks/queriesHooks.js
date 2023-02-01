@@ -134,7 +134,7 @@ const useFavorites = (type, listFavorites = []) => {
 }
 
 const useTop = (type, perPage = 12) => {
-  const { data } = useQuery({
+  const { data, status } = useQuery({
     queryKey: [type, 'top'],
     queryFn: async () =>
       await graphQLClient.request(GQL.TOP_REQUEST, {
@@ -144,11 +144,11 @@ const useTop = (type, perPage = 12) => {
     staleTime: Infinity,
   })
 
-  return data
+  return { data, status }
 }
 
 const useEpisode = (perPage = 12) => {
-  const { data } = useQuery({
+  const { data, status } = useQuery({
     queryKey: ['top', 'episode'],
     queryFn: async () =>
       await graphQLClient.request(GQL.EPISODE_REQUEST, {
@@ -157,7 +157,7 @@ const useEpisode = (perPage = 12) => {
     staleTime: Infinity,
   })
 
-  return data
+  return { data, status }
 }
 
 export {
