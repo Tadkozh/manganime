@@ -77,7 +77,7 @@ const Recommendations = () => {
                 }
                 return null
               })
-            : /* <ListCardsSkeleton dimension={{ width: 225, height: 225 }} /> */
+            : /* <ListCardsSkeleton dimension={{ width: 225, height: 335 }} /> */
               'loading, please wait...'}
         </Box>
       </Box>
