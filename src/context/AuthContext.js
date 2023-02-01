@@ -10,9 +10,7 @@ import React from 'react'
 import {
   AUTH_REQUIRE_RECENT_LOGIN,
   BAD_USE_CONTEXT,
-  LOADING,
   SIGN,
-  SUCCESS,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
 import {
@@ -22,7 +20,7 @@ import {
   updateUserCurrent,
 } from '../database/user'
 import { auth } from '../firebase-config'
-import { useAuthData } from '../hooks/authData'
+import { useCleanupError } from '../hooks/cleanupError'
 import { useUserData } from '../hooks/useUserData'
 import {
   errorAuth,
@@ -33,11 +31,10 @@ import {
 const AuthContext = React.createContext()
 
 const AuthProviders = ({ children }) => {
-  const { data, status, setData, execute } = useAuthData()
+  const { data, status, setData, execute } = useUserData()
+  const { clean: error, setClean: setError } = useCleanupError()
   const [authUser, setAuthUser] = React.useState(null)
-  const [error, setError] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(true)
-  console.log('test')
 
   // Check if user is already connected
   React.useEffect(() => {
