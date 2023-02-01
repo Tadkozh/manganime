@@ -9,7 +9,7 @@ import { auth } from '../../firebase-config'
 import { render } from '../../test/test-utils'
 import { LoginRegister } from '../LoginRegister'
 
-jest.mock('../header/MangAnimeAppBar')
+jest.mock('../MangAnimeHeader')
 
 describe('LoginRegister component', () => {
   const user = userEvent.setup()

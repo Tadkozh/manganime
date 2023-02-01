@@ -1,4 +1,5 @@
 import React from 'react'
+import { INFOS } from '../../commons/constants'
 import { getUrl } from '../../utils/helper'
 import { Box, Card, Link, Typography } from '../ui'
 
@@ -49,7 +50,7 @@ const WatchItemCarousel = ({ data }) => {
             }}
           >
             <Link
-              href={getUrl(data?.type, 'infos', [data?.id])}
+              href={getUrl(data?.type.toLowerCase(), INFOS, [data?.id])}
               underline="hover"
               sx={{
                 color: 'inherit',
