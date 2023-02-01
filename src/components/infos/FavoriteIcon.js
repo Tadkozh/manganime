@@ -9,21 +9,25 @@ import Modale from '../Modal'
 import { updateFavorite } from '../../database/user'
 
 function FavoriteIcon({ info }) {
-  const [isFav, setIsFav] = useState(false)
-
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
   const { data: authUser, setData } = useAuth()
 
+  const favourites = info.type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
+  const color = () => (authUser[favourites].includes(info.id) ? true : false)
+  const [isFav, setIsFav] = useState(color)
+  console.log('isFav', isFav)
+
   const handleClickFav = async () => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       setIsFav(!isFav)
-      const user = await updateFavorite(info, authUser)
-      setData(user)
+      const newUser = await updateFavorite(info, authUser)
+      setData(newUser)
+      console.log(newUser)
     }
   }
 
@@ -56,7 +60,7 @@ function FavoriteIcon({ info }) {
             fontSize: '0.75rem',
           }}
         >
-          {isFav ? info.favourites + 1 : info.favourites}
+          {/* {isFav ? info.favourites + 1 : info.favourites} */}
         </Typography>
       </Box>
     )
