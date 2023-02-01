@@ -62,7 +62,6 @@ const updateComment = (info, comment, user) => {
 const updateRating = (info, rating, user) => {
   const newUserRate = structuredClone(user)
   const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
-
   const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
   const isItemId = newUserRate[type_opinion].some(
@@ -89,7 +88,7 @@ const updateRating = (info, rating, user) => {
   updateUserCurrent(newUserRate)
 }
 
-const updateStat = async(name, infos, user) => {
+const updateStat = async (name, infos, user) => {
   const newUserStat = structuredClone(user)
   const userStats = newUserStat?.stats
   console.log('user stat', userStats)

@@ -1,8 +1,8 @@
 const labels = {
   null: 'No opinion 🤔',
-  0.5: 'Very bad 👿',
-  1: 'Bad 👎',
-  1.5: 'Poor 😑',
+  0.5: 'Terrible 👿',
+  1: 'Very bad 👎',
+  1.5: 'Bad 😑',
   2: 'Mediocre 😐',
   2.5: 'Ok 👍',
   3: 'Nice 🙂',

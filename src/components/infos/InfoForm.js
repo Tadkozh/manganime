@@ -59,7 +59,7 @@ function InfoForm({ info }) {
         Leave a review
       </Typography>
 
-      <PersonalRating />
+      <PersonalRating info={info} />
 
       <TextField
         id="outlined-basic"

@@ -4,8 +4,8 @@ export const INFOS_REQUEST = gql`
   query InfoMangAnime($type: MediaType, $id: Int) {
     Page {
       media(type: $type, id: $id) {
-        id
         type
+        id
 
         # PRESENTATION
         title {
