@@ -27,6 +27,10 @@ function SearchMangAnime({ type }) {
     fetchNextPage()
   }
 
+  const dimension = React.useMemo(
+    () => ({ height: '280px', width: '280px' }),
+    [],
+  )
   return (
     <>
       <SearchBar
@@ -60,9 +64,11 @@ function SearchMangAnime({ type }) {
             }),
           )
         ) : (
-          <ListCardsSkeleton />
+          <ListCardsSkeleton dimension={dimension} />
         )}
-        {isFetching && getData?.length > 0 ? <ListCardsSkeleton /> : null}
+        {isFetching && getData?.length > 0 ? (
+          <ListCardsSkeleton dimension={dimension} />
+        ) : null}
       </Box>
       <Box
         sx={{

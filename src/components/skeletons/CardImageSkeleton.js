@@ -1,18 +1,16 @@
-import {
-  Card, Container, Skeleton,
-  Typography
-} from '../ui'
+import { Card, Container, Skeleton, Typography } from '../ui'
 
-const ListCardsSkeleton = ({ nbCard = 30 }) => {
+const ListCardsSkeleton = ({ dimension = {}, nbCard = 30 }) => {
   let list = []
   for (let i = 0; i < nbCard; i++) {
     list.push(i)
   }
-  return list.map((item, index) => {
-    return <CardImageSkeleton key={index} />
+  return list.map((_item, index) => {
+    return <CardImageSkeleton key={index} dimension={dimension} />
   })
 }
-const CardImageSkeleton = () => {
+
+const CardImageSkeleton = ({ dimension = {} }) => {
   return (
     <Card
       sx={{
@@ -20,7 +18,11 @@ const CardImageSkeleton = () => {
         flexDirection: 'column',
       }}
     >
-      <Skeleton variant="rectangular" height={280} width={280} />
+      <Skeleton
+        variant="rectangular"
+        height={dimension?.height}
+        width={dimension?.width}
+      />
 
       <Container
         sx={{
@@ -39,4 +41,3 @@ const CardImageSkeleton = () => {
 }
 
 export { ListCardsSkeleton }
-
