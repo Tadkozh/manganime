@@ -22,6 +22,7 @@ import {
   updateUserCurrent,
 } from '../database/user'
 import { auth } from '../firebase-config'
+import { useAuthData } from '../hooks/authData'
 import { useUserData } from '../hooks/useUserData'
 import {
   errorAuth,
@@ -32,21 +33,28 @@ import {
 const AuthContext = React.createContext()
 
 const AuthProviders = ({ children }) => {
-  const { data, status, error, setError, setData, execute } = useUserData()
+  const { data, status, setData, execute } = useAuthData()
+  const [authUser, setAuthUser] = React.useState(null)
+  const [error, setError] = React.useState(null)
+  const [isLoading, setIsLoading] = React.useState(true)
+  console.log('test')
 
   // Check if user is already connected
   React.useEffect(() => {
-    if (!data) {
+    if (!authUser) {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
-          execute(getUserbyUid())
+          const user = await getUserbyUid()
+          setData(user)
+          setAuthUser(currentUser)
         } else {
-          setData(null)
+          setAuthUser(null)
         }
+        setIsLoading(false)
       })
       return unsubscribe
     }
-  }, [data, execute, setData])
+  }, [authUser, setData])
 
   const register = React.useCallback(
     async (email, password) => {
@@ -70,6 +78,7 @@ const AuthProviders = ({ children }) => {
   )
   const logout = React.useCallback(() => {
     signOut(auth).then(() => {
+      setAuthUser(null)
       setData(null)
     })
   }, [setData])
@@ -84,7 +93,8 @@ const AuthProviders = ({ children }) => {
       await Promise.all(promises)
         .then(async () => {
           await updateUserCurrent(user)
-          execute(getUserbyUid())
+          const newUser = await getUserbyUid()
+          setData(newUser)
         })
         .catch((err) => {
           if (err.code === AUTH_REQUIRE_RECENT_LOGIN) {
@@ -93,7 +103,7 @@ const AuthProviders = ({ children }) => {
           }
         })
     },
-    [execute, logout, setError],
+    [logout, setData],
   )
 
   const validationUpdateAuth = (email, password, user) => {
@@ -138,6 +148,7 @@ const AuthProviders = ({ children }) => {
       setData,
       error,
       status,
+      authUser,
       logout,
       validationSign,
       validationProfile,
@@ -145,6 +156,7 @@ const AuthProviders = ({ children }) => {
     }),
     [
       data,
+      authUser,
       error,
       status,
       execute,
@@ -155,12 +167,12 @@ const AuthProviders = ({ children }) => {
     ],
   )
 
-  if (status === LOADING) {
+  if (isLoading) {
     return <LoadingScreen />
   }
   return (
     <AuthContext.Provider value={values}>
-      {status === SUCCESS && children}
+      {!isLoading && children}
     </AuthContext.Provider>
   )
 }
