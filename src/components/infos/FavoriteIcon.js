@@ -9,21 +9,27 @@ import Modale from '../Modal'
 import { updateFavorite } from '../../database/user'
 
 function FavoriteIcon({ info }) {
-  const [isFav, setIsFav] = useState(false)
-
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
   const { data: authUser, setData } = useAuth()
 
+  const favourites = info.type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
+  // const color = () => (authUser[favourites].includes(info.id) ? true : false)
+  const [isFav, setIsFav] = useState(() =>
+    authUser[favourites].includes(info.id) ? true : false,
+  )
+  console.log('isFav', isFav)
+
   const handleClickFav = async () => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       setIsFav(!isFav)
-      const user = await updateFavorite(info, authUser)
-      setData(user)
+      const newUser = await updateFavorite(info, authUser)
+      setData(newUser)
+      console.log(newUser)
     }
   }
 
@@ -56,11 +62,7 @@ function FavoriteIcon({ info }) {
             fontSize: '0.75rem',
           }}
         >
-          {isFav ? info.favourites + 1 : info.favourites}
-          {/* TODO
-          Dans le cas des favorites, il faudra aussi intégrer dans la logique le fait de savoir si l’id n’est pas déjà 
-          dans son tableau de la DB (favorite_manga ou favorite_anime), pour décider de la couleur de l’icône. 
-          Sinon le visiteur ne saura pas s’il ajoute ou supprime un favori, la fonction updateFavorite gérant les deux. */}
+          {/* {isFav ? info.favourites + 1 : info.favourites} */}
         </Typography>
       </Box>
     )
