@@ -1,6 +1,6 @@
 import React from 'react'
 import profilePicture from '../../assets/images/avatar_1.jpg'
-import { LOADING, SUCCESS } from '../../commons/constants'
+import { IDLE, LOADING, SUCCESS } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { userPicture } from '../../database/user'
 import {
@@ -62,15 +62,15 @@ const ProfileSideBarImage = () => {
       {status === LOADING && (
         <Skeleton sx={{ width: '225px', height: '225px' }} />
       )}
-      {status === SUCCESS && (
+      {status === SUCCESS || status === IDLE ? (
         <img
           width={225}
           alt={'profile img'}
-          src={user?.picture ? user?.picture : profilePicture}
+          src={user?.picture !== '' ? user?.picture : profilePicture}
           style={{ backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
           loading="lazy"
         />
-      )}
+      ) : null}
       <Box
         style={{
           position: 'absolute',

@@ -89,7 +89,7 @@ const updateRating = (info, rating, user) => {
   updateUserCurrent(newUserRate)
 }
 
-const updateStat = (name, infos, user) => {
+const updateStat = async(name, infos, user) => {
   const newUserStat = structuredClone(user)
   const userStats = newUserStat?.stats
   console.log('user stat', userStats)
@@ -118,13 +118,15 @@ const updateStat = (name, infos, user) => {
   userStats?.find((array) => array?.name === name)[idContent]?.push(infos?.id)
   // console.log('newUserStat', newUserStat)
   updateUserCurrent(newUserStat)
+  return getUserById()
 }
 
 const updateBio = async (bio, user) => {
   if (bio === user.bio) {
     return
   }
-  await updateUserCurrent({ bio })
+  updateUserCurrent({ bio })
+  return getUserById()
 }
 
 const userPicture = async (picture) => {
@@ -146,6 +148,7 @@ const updateFavorite = async (info, user) => {
       ? { [typeFavorite]: arrayRemove(info.id) }
       : { [typeFavorite]: arrayUnion(info.id) },
   )
+  return getUserById()
 }
 
 const storeUser = (data) => {
