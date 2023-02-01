@@ -57,6 +57,10 @@ function FavoriteIcon({ info }) {
           }}
         >
           {isFav ? info.favourites + 1 : info.favourites}
+          {/* TODO
+          Dans le cas des favorites, il faudra aussi intégrer dans la logique le fait de savoir si l’id n’est pas déjà 
+          dans son tableau de la DB (favorite_manga ou favorite_anime), pour décider de la couleur de l’icône. 
+          Sinon le visiteur ne saura pas s’il ajoute ou supprime un favori, la fonction updateFavorite gérant les deux. */}
         </Typography>
       </Box>
     )
