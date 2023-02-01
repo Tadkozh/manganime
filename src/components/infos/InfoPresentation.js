@@ -7,7 +7,7 @@ import { GlobalRating } from './RatingInfos'
 import StatsDropdowns from '../stats/StatsDropdowns'
 
 function InfoPresentation({ info }) {
-  const { data: authUser, setData} = useAuth()
+  const { data: authUser, setData } = useAuth()
 
   return (
     info && (
@@ -28,6 +28,7 @@ function InfoPresentation({ info }) {
         <Box
           sx={{
             display: 'flex',
+            alignItems: 'end',
             gap: '10px',
             mt: '10px',
           }}
