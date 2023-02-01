@@ -68,10 +68,10 @@ const Recommendations = () => {
                       route={INFOS}
                       data={data.media}
                       key={index}
-                      dimension={{
-                        height: '335px',
-                        maxwidth: '223px',
-                      }}
+                      // dimension={{
+                        // height: '335px',
+                        // maxwidth: '223px',
+                      // }}
                     />
                   )
                 }
