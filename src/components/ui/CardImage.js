@@ -35,8 +35,9 @@ const CardImage = ({ data, type, route, dimension = {} }) => {
           component="img"
           image={data.coverImage.large}
           alt={title}
-          height={dimension?.height}
-          width={dimension?.width}
+          // height={dimension?.height}
+          // width={dimension?.width}
+          sx={{ aspectRatio: '2/3' }}
         />
         <Typography
           component="p"
