@@ -21,7 +21,7 @@ const nameStats = [
   'Plan-to-watch',
 ]
 
-const StatsDropdowns = ({ userDatas, contentInfos, executeUser }) => {
+const StatsDropdowns = ({ userDatas, contentInfos, setData }) => {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const whichContentArray =
@@ -30,9 +30,10 @@ const StatsDropdowns = ({ userDatas, contentInfos, executeUser }) => {
     stats[whichContentArray]?.includes(contentInfos?.id),
   )?.name
 
-  const handleMenuItemClick = (event, name) => {
+  const handleMenuItemClick = async (event, name) => {
+    const user = await updateStat(name, contentInfos, userDatas)
+    setData(user)
     setOpen(false)
-    executeUser(updateStat(name, contentInfos, userDatas))
   }
 
   const handleToggle = () => {

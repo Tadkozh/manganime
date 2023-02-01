@@ -6,10 +6,11 @@ import { Box, Button, Container, TextareaAutosize } from '../ui'
 
 const ProfileBioForm = ({ closeBio, user }) => {
   const [bio, setBio] = React.useState('')
-  const { execute } = useAuth()
+  const { setData } = useAuth()
 
-  const handleSaveBio = () => {
-    execute(updateBio(bio, user))
+  const handleSaveBio = async () => {
+    const newUser = await updateBio(bio, user)
+    setData(newUser)
     closeBio(true)
   }
 

@@ -15,14 +15,15 @@ function FavoriteIcon({ info }) {
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
-  const { data: authUser } = useAuth()
+  const { data: authUser, setData } = useAuth()
 
-  const handleClickFav = () => {
+  const handleClickFav = async () => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       setIsFav(!isFav)
-      updateFavorite(info, authUser)
+      const user = await updateFavorite(info, authUser)
+      setData(user)
     }
   }
 

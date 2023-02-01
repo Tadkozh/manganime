@@ -58,6 +58,9 @@ const ProfileMainContainer = ({ user }) => {
   const handleChangeProfile = () => {
     setEditProfile(!editProfile)
   }
+  const handleSaveProfile = () => {
+    setEditProfile(false)
+  }
   const openFormBio = () => {
     setIsDisplayBioForm(true)
   }
@@ -85,7 +88,7 @@ const ProfileMainContainer = ({ user }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Typography variant="h4">Welcome {user.name}</Typography>
+          <Typography variant="h4">Welcome {user?.name}</Typography>
           <Button
             variant="outlined"
             color="primary"
@@ -97,9 +100,13 @@ const ProfileMainContainer = ({ user }) => {
         {isDisplayBioForm ? (
           <ProfileBioForm closeBio={closeFormBio} user={user} />
         ) : (
-          <ProfileBio bio={user.bio} openFormBio={openFormBio} />
+          <ProfileBio bio={user?.bio} openFormBio={openFormBio} />
         )}
-        {editProfile ? <ProfileEdit user={user} /> : <ProfileMainContent />}
+        {editProfile ? (
+          <ProfileEdit user={user} closeEdit={handleSaveProfile} />
+        ) : (
+          <ProfileMainContent />
+        )}
       </Paper>
     </Grid>
   )
@@ -145,8 +152,8 @@ const ProfileMainType = ({ name }) => {
   const { data: user } = useAuth()
   const lastList =
     name === ANIME
-      ? getLastFavorites(user.favorite_anime)
-      : getLastFavorites(user.favorite_manga)
+      ? getLastFavorites(user?.favorite_anime)
+      : getLastFavorites(user?.favorite_manga)
   return (
     <>
       <Stats stats={stats} type={name} />
@@ -155,7 +162,7 @@ const ProfileMainType = ({ name }) => {
   )
 }
 const getLastFavorites = (array) => {
-  if (array.length > 3) {
+  if (array?.length > 3) {
     return array.slice(array.length - 3)
   }
   return array
@@ -179,7 +186,7 @@ const LastUpdate = ({ type, lastest }) => {
       <Grid item xs={12} md={6}>
         <Typography variant="h6">Last {type} Updates</Typography>
 
-        {items.length === 0 ? (
+        {items?.length === 0 ? (
           <>
             <Typography variant="body1" sx={{ m: 1 }}>
               No favourites.
@@ -189,8 +196,11 @@ const LastUpdate = ({ type, lastest }) => {
             </Typography>
           </>
         ) : (
-          items.map((item, key) => (
-            <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
+          items?.map((item, key) => (
+            <Card
+              sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}
+              key={key + getImageName(item?.coverImage.medium)}
+            >
               <PosterImage data={item} key={key} />
             </Card>
           ))

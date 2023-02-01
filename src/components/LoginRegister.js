@@ -73,7 +73,7 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const { validationSign, error, data, status } = useAuth()
+  const { validationSign, error, authUser: data, isLoading } = useAuth()
   const [imageRandom] = React.useState(getRandomNumber())
 
   const handleSignUp = () => {
@@ -83,7 +83,7 @@ const LoginRegister = ({ signup = true }) => {
     setCreate(true)
   }
 
-  if (data !== null && status === SUCCESS) {
+  if (data !== null && !isLoading) {
     return <Navigate to="/profile" />
   }
 
@@ -111,7 +111,7 @@ const LoginRegister = ({ signup = true }) => {
               <FormLogin
                 validationSign={validationSign}
                 create={create}
-                status={status}
+                isLoading={isLoading}
               />
               {error ? (
                 <Alert severity="error">Erreur: {error.message}</Alert>
@@ -134,7 +134,7 @@ const LoginRegister = ({ signup = true }) => {
     </>
   )
 }
-export const FormLogin = ({ validationSign, create, status }) => {
+export const FormLogin = ({ validationSign, create, isLoading }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   // eslint-disable-next-line no-unused-vars
@@ -154,7 +154,7 @@ export const FormLogin = ({ validationSign, create, status }) => {
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {status === LOADING ? <LoadingScreen /> : null}
+      {isLoading ? <LoadingScreen /> : null}
       <TextFieldCustom
         label="adresse email"
         name="email"
