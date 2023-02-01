@@ -1,9 +1,46 @@
 import { capFirstLetter } from '../../utils/helper'
-import { Box, CircleIcon, Container, Divider, Typography } from '../ui'
+import {
+  blue,
+  Box,
+  CircleIcon,
+  Container,
+  Divider,
+  green,
+  grey,
+  red,
+  Typography,
+  yellow,
+} from '../ui'
 import { Stat } from './Stat'
+import { ANIME } from '../../commons/constants'
+
+const statsColor = [
+  {
+    color: green[500],
+  },
+  {
+    color: blue[500],
+  },
+  {
+    color: yellow[500],
+  },
+  {
+    color: red[500],
+  },
+  {
+    color: grey[500],
+  },
+]
+
+const sumOfStats = (stats, arrayType) => {
+  return stats
+    .map((stat) => stat[arrayType].length)
+    .reduce((total, actual) => actual + total)
+}
 
 const ProfileStats = ({ stats, type }) => {
-  const totalStats = sumOfStats(stats)
+  const arrayType = type === ANIME ? 'animeId' : 'mangaId'
+  const totalStats = sumOfStats(stats, arrayType)
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h6">{capFirstLetter(type)} Stats</Typography>
@@ -19,8 +56,11 @@ const ProfileStats = ({ stats, type }) => {
             }}
             key={stat.name}
           >
-            <CircleIcon sx={{ color: stat.color }} key={stat.name + key} />
-            <Stat name={stat.name} number={stat.number} key={key} />
+            <CircleIcon
+              sx={{ color: statsColor[key].color }}
+              key={stat.name + key}
+            />
+            <Stat name={stat.name} number={stat[arrayType].length} key={key} />
           </Container>
         ))}
         <Stat
@@ -31,12 +71,6 @@ const ProfileStats = ({ stats, type }) => {
       </Container>
     </Box>
   )
-}
-
-const sumOfStats = (stats) => {
-  return stats
-    .map((stat) => stat.number)
-    .reduce((total, actual) => actual + total)
 }
 
 export { ProfileStats }
