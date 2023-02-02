@@ -1,5 +1,5 @@
 import { useAuth } from '../../context/AuthContext'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Button, Rating, Typography } from '@mui/material'
 import { Box } from '@mui/system'
@@ -8,7 +8,6 @@ import StarIcon from '@mui/icons-material/Star'
 
 import Modale from '../Modal'
 
-import { updateRating } from '../../database/user'
 import { labels } from './scoreLabels'
 
 function RatingItem({
@@ -48,13 +47,12 @@ function RatingItem({
   )
 }
 
-function PersonalRating({ info }) {
+function PersonalRating({ info, nbStar, setNbStar }) {
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
   const [hover, setHover] = useState(-1)
-  const [nbStar, setNbStar] = useState(null)
 
   const { data: authUser } = useAuth()
 
@@ -65,15 +63,6 @@ function PersonalRating({ info }) {
       setNbStar(newNbStar)
     }
   }
-
-  useEffect(() => {
-    if (authUser) {
-      updateRating(info, nbStar, authUser)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nbStar])
-
-  console.log('note ch', nbStar)
 
   return (
     <Box>

@@ -11,53 +11,47 @@ const updateProfileUser = (user, userCurrent) => {
   return newUser
 }
 
-const updateComment = (info, comment, user) => {
+const updateComment = (user, info, note, comment) => {
   const newUserComment = structuredClone(user)
   const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
   const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
   const fullComment = {
     create_at: new Date().toISOString(),
+    note: note,
     title: comment.title,
     message: comment.comment,
   }
+
   const commentArray = []
   commentArray.push(fullComment)
 
   const isItemId = newUserComment[type_opinion].some(
     (opinion) => opinion[type_id] === info.id,
   )
-  if (isItemId) {
-    newUserComment[type_opinion].map((opinion, key) => {
-      if (opinion[type_id] === info.id) {
-        let newOpinion
-        if (!opinion?.comments) {
-          newOpinion = { ...opinion, comments: [fullComment] }
 
-          newUserComment[type_opinion][key] = newOpinion
-        } else {
-          newUserComment[type_opinion][key].comments.push(fullComment)
-        }
-      }
-    })
-  } else {
+  if (!isItemId) {
     const commentdb = {
       [type_id]: info.id,
       comments: commentArray,
     }
-    newUserComment[type_opinion].push(commentdb)
-  }
 
-  console.log('newUserComment', newUserComment)
-  updateUserCurrent(newUserComment)
+    newUserComment[type_opinion].push(commentdb)
+    updateUserCurrent(newUserComment)
+  }
 }
 
-// const getTypeId = (type) => {
-//   return type === 'ANIME' ? 'anime_id' : 'manga_id'
-// }
-// const getTypeOpinion = (type) => {
-//   return type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
-// }
+function editComment(user, info, type_opinion, type_id) {}
+
+function deleteComment(user, info, type_opinion, type_id) {
+  const comments = structuredClone(user[type_opinion])
+  const index = comments.findIndex((anime) => anime[type_id] === info.id)
+
+  updateUserCurrent({ [type_opinion]: arrayRemove(comments[index]) })
+
+  // A QUOI CA SERT :
+  // return getUserById()
+}
 
 const updateRating = (info, rating, user) => {
   const newUserRate = structuredClone(user)
@@ -74,10 +68,12 @@ const updateRating = (info, rating, user) => {
         if (!opinion?.rate) {
           newOpinion = { ...opinion, rate: rating }
 
-          newUserRate[type_opinion][key] = newOpinion
+          return (newUserRate[type_opinion][key] = newOpinion)
         } else {
-          opinion.rate = rating
+          return (opinion.rate = rating)
         }
+      } else {
+        return null
       }
     })
   } else {
@@ -137,6 +133,7 @@ const userPicture = async (picture) => {
 const getType = (type) => {
   return type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
 }
+
 const updateFavorite = async (info, user) => {
   const typeFavorite = getType(info.type)
   const favorites = structuredClone(user[typeFavorite])
@@ -173,6 +170,8 @@ export {
   updateRating,
   updateFavorite,
   updateComment,
+  editComment,
+  deleteComment,
   updateStat,
   getUserbyUid,
   storeUser,

@@ -25,12 +25,14 @@ function InfoForm({ info }) {
   const [commentTitle, setCommentTitle] = useState('')
   const [commentValue, setCommentValue] = useState('')
 
+  const [nbStar, setNbStar] = useState(null)
+
   const onSubmit = (data) => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       changeComment(!comment)
-      updateComment(info, data, authUser)
+      updateComment(authUser, info, nbStar, data)
     }
   }
 
@@ -59,7 +61,7 @@ function InfoForm({ info }) {
         Leave a review
       </Typography>
 
-      <PersonalRating info={info} />
+      <PersonalRating info={info} nbStar={nbStar} setNbStar={setNbStar} />
 
       <TextField
         id="outlined-basic"

@@ -65,18 +65,22 @@ const selectValues = {
 
   manga: {
     format: [
-      { value: NOVEL, children: 'Novel' },
       { value: MANGA_SCH, children: 'Manga' },
+      { value: NOVEL, children: 'Novel' },
       { value: ONE_SHOT, children: 'One shot' },
     ],
     sortBy: [
+      { value: TRENDING_DESC, children: 'Trending' },
+      { value: SCORE_DESC, children: 'Score' },
+      { value: POPULARITY_DESC, children: 'Popularity' },
+      { value: START_DATE_DESC, children: 'Newest started' },
+      { value: END_DATE_DESC, children: 'Newest ended' },
+      { value: START_DATE, children: 'Oldest started' },
+      { value: END_DATE, children: 'Oldest ended' },
       { value: FORMAT_DESC, children: 'Format' },
       { value: CHAPTERS_DESC, children: 'Chapter' },
       { value: FAVOURITES_DESC, children: 'Favourites' },
       { value: UPDATED_AT_DESC, children: 'Last updated' },
-      { value: POPULARITY_DESC, children: 'Popularity' },
-      { value: TRENDING_DESC, children: 'Trending' },
-      { value: SCORE_DESC, children: 'Score' },
     ],
   },
 }

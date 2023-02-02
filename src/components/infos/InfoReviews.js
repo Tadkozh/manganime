@@ -18,6 +18,7 @@ function InfoReviews() {
         elevation={6}
         sx={{
           maxWidth: '100%',
+          m: '10px auto',
         }}
       >
         <Box
@@ -33,7 +34,8 @@ function InfoReviews() {
             component="h3"
             variant="h4"
             sx={{
-              margin: '10px auto',
+              p: '10px',
+              m: '10px 0',
             }}
           >
             {info.length} reviews about {title}
@@ -48,16 +50,15 @@ function InfoReviews() {
               <Box
                 key={index}
                 sx={{
-                  // backgroundColor: 'lightgreen',
-                  padding: '10px',
+                  p: '10px',
                   borderRadius: '10px',
-                  marginBottom: '20px',
+                  mb: '20px',
                 }}
               >
                 <Box
                   sx={{
                     minHeight: '75px',
-                    marginBottom: '10px',
+                    mb: '10px',
                   }}
                 >
                   <CardMedia
@@ -67,7 +68,7 @@ function InfoReviews() {
                       minHeight: '50px',
                       maxHeight: '75px',
                       border: 'solid 1px',
-                      marginRight: '10px',
+                      mr: '10px',
                       float: 'left',
                     }}
                     image={data.user.avatar.medium}

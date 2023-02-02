@@ -8,15 +8,29 @@ import { ANIME } from '../../commons/constants'
 import { useInfos } from '../../hooks/queriesHooks'
 import NavBarInfo from '../NavBarInfo'
 import InfoDetails from './InfoDetails'
+import YourReview from './YourReview'
 import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
 import InfoReviews from './InfoReviews'
 import InfoSynopsis from './InfoSynopsis'
+import { useAuth } from '../../context/AuthContext'
 
 function Infos() {
   let { type, id } = useParams()
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]
+
+  const { data: authUser } = useAuth()
+  const newUserComment = structuredClone(authUser)
+
+  const type_opinion =
+    info?.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
+
+  const type_id = info?.type === 'ANIME' ? 'anime_id' : 'manga_id'
+
+  const hasUserLetOpinion = newUserComment[type_opinion].some(
+    (opinion) => opinion[type_id] === info?.id,
+  )
 
   return (
     info && (
@@ -86,7 +100,17 @@ function Infos() {
 
           {type === ANIME && <Trailer info={info.trailer} />}
 
-          <InfoForm info={info} />
+          {hasUserLetOpinion ? (
+            <YourReview
+              user={authUser}
+              newUserComment={newUserComment}
+              info={info}
+              type_opinion={type_opinion}
+              type_id={type_id}
+            />
+          ) : (
+            <InfoForm info={info} />
+          )}
           <InfoReviews />
         </Box>
       </>

@@ -17,8 +17,8 @@ function FavoriteIcon({ info }) {
 
   const favourites = info.type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
   const color = () => (authUser[favourites].includes(info.id) ? true : false)
-  const [isFav, setIsFav] = useState(color)
-  console.log('isFav', isFav)
+  const [isFav, setIsFav] = useState(authUser ? color : false)
+  // console.log('isFav', isFav)
 
   const handleClickFav = async () => {
     if (authUser === null) {

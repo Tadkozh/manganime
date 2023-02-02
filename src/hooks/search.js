@@ -4,7 +4,7 @@ import {
   FINISHED,
   FORMAT,
   ISADULT,
-  NOVEL,
+  MANGA_SCH,
   PER_PAGE,
   POPULARITY,
   RESET,
@@ -51,7 +51,7 @@ const searchParamsReducer = (state, action) => {
 }
 
 const useSearchFieldsParams = (type) => {
-  const formatValue = type === ANIME ? TV : NOVEL
+  const formatValue = type === ANIME ? TV : MANGA_SCH
   const [state, dispatch] = React.useReducer(searchParamsReducer, {
     search: null,
     format: formatValue,
