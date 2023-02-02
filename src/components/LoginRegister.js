@@ -39,8 +39,9 @@ const TextFieldCustom = ({
     onChange={onChange}
   />
 )
-const ButtonCustom = ({ children, onClick, type = 'button' }) => (
+const ButtonCustom = ({ children, onClick, type = 'button', aria }) => (
   <Button
+    aria-label={aria}
     onClick={onClick}
     fullWidth
     variant="contained"
@@ -87,7 +88,7 @@ const LoginRegister = ({ signup = true }) => {
     return <Navigate to="/profile" />
   }
 
-  const label = create ? 'Se connecter' : 'Créer un compte'
+  const label = create ? 'Sign in' : 'Sign up'
   return (
     <>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -114,7 +115,7 @@ const LoginRegister = ({ signup = true }) => {
                 isLoading={isLoading}
               />
               {error ? (
-                <Alert severity="error">Erreur: {error.message}</Alert>
+                <Alert severity="error">Error: {error.message}</Alert>
               ) : null}
             </DialogContent>
 
@@ -122,9 +123,13 @@ const LoginRegister = ({ signup = true }) => {
               <Grid item xs></Grid>
               <Grid item>
                 {create ? (
-                  <Button onClick={handleSignUp}>Créer un compte</Button>
+                  <Button aria-label="registerAccount" onClick={handleSignUp}>
+                    Register
+                  </Button>
                 ) : (
-                  <Button onClick={handleSignIn}>Se connecter</Button>
+                  <Button aria-label="loginAccount" onClick={handleSignIn}>
+                    Log in
+                  </Button>
                 )}
               </Grid>
             </Grid>
@@ -178,9 +183,15 @@ export const FormLogin = ({ validationSign, create, isLoading }) => {
         }
         label="se souvenir de moi"
       />
-      <ButtonCustom type="submit">
-        {create ? 'Connexion' : 'Créer'}
-      </ButtonCustom>
+      {create ? (
+        <ButtonCustom aria={'loginSubmit'} type="submit">
+          Login
+        </ButtonCustom>
+      ) : (
+        <ButtonCustom aria={'registerSubmit'} type="submit">
+          Register
+        </ButtonCustom>
+      )}
     </Box>
   )
 }

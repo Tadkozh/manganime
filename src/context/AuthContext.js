@@ -55,11 +55,12 @@ const AuthProviders = ({ children }) => {
 
   const register = React.useCallback(
     async (email, password) => {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      ).catch((err) => setError(errorAuth(err)))
+      let user
+      try {
+        user = await createUserWithEmailAndPassword(auth, email, password)
+      } catch (err) {
+        setError(errorAuth(err))
+      }
       storeUser(user)
     },
     [setError],
@@ -67,9 +68,11 @@ const AuthProviders = ({ children }) => {
 
   const login = React.useCallback(
     (email, password) => {
-      signInWithEmailAndPassword(auth, email, password).catch((err) =>
-        setError(errorAuth(err)),
-      )
+      try {
+        signInWithEmailAndPassword(auth, email, password)
+      } catch (err) {
+        setError(errorAuth(err))
+      }
     },
     [setError],
   )
