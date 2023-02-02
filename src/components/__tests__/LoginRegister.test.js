@@ -18,9 +18,9 @@ describe('LoginRegister component', () => {
     render(<LoginRegister />)
 
     const inputEmail = await screen.findByRole('textbox', {
-      name: /adresse email/i,
+      name: /e-mail address/i,
     })
-    const inputPassword = await screen.findByLabelText(/mot de passe/i)
+    const inputPassword = await screen.findByLabelText(/password/i)
     const email = faker.internet.email()
     const password = faker.internet.password()
 
@@ -40,9 +40,9 @@ describe('LoginRegister component', () => {
     render(<LoginRegister />)
 
     const inputEmail = await screen.findByRole('textbox', {
-      name: /adresse email/i,
+      name: /e-mail address/i,
     })
-    const inputPassword = await screen.findByLabelText(/mot de passe/i)
+    const inputPassword = await screen.findByLabelText(/password/i)
     const email = faker.internet.email()
     const password = faker.internet.password()
 

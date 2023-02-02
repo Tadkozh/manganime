@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Navigate } from 'react-router-dom'
-import { LOADING, SIGN, SUCCESS } from '../commons/constants'
+import { SIGN } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { getRandomNumber } from '../utils/helper'
 import {
@@ -13,11 +13,11 @@ import {
   DialogContent,
   FormControlLabel,
   Grid,
+  LoadingScreen,
   LockOutlinedIcon,
   Paper,
   TextField,
   Typography,
-  LoadingScreen,
 } from './ui'
 
 const TextFieldCustom = ({
@@ -161,14 +161,14 @@ export const FormLogin = ({ validationSign, create, isLoading }) => {
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
       {isLoading ? <LoadingScreen /> : null}
       <TextFieldCustom
-        label="adresse email"
+        label="e-mail address"
         name="email"
         complete="email"
         focus={true}
         onChange={handleChangeEmail}
       />
       <TextFieldCustom
-        label="mot de passe"
+        label="password"
         name="password"
         complete="current-password"
         onChange={handleChangePasword}
