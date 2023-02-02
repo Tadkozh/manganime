@@ -21,8 +21,6 @@ import {
   USER_SIGN_IN_AGAIN,
   WRONG_PASSWORD,
 } from './constants'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { storage } from '../firebase-config'
 
 const validationSignForm = (email, password) => {
   const errorEmail = validationEmail(email)
@@ -53,7 +51,7 @@ const validationProfileForm = (newUser) => {
 }
 
 const validationUsername = (username) => {
-  if (username === '') {
+  if (!username) {
     return errorGenerator(USERNAME_REQUIRED)
   }
   if (username.length < 3) {
@@ -87,8 +85,11 @@ const validationPassword = (password, isProfile = false) => {
   return null
 }
 const errorGenerator = (message, status = 400) => {
+  if (!message) {
+    throw new Error(`message empty or null when call ${errorGenerator.name}`)
+  }
   const error = new Error(message)
-  error.status = status
+  error.code = status
   return error
 }
 
@@ -125,9 +126,13 @@ const errorAuth = (error) => {
 }
 
 const getImageName = (url) => {
+  if (!url) {
+    throw new Error(`message empty or null when call ${errorGenerator.name}`)
+  }
   const text = url.split(/[/]/)
   const image = text[text.length - 1]
-  const imageSplit = image.split(/./)
+  const imageSplit = image.split(/[.]/)
+
   return imageSplit[0]
 }
 
@@ -137,31 +142,27 @@ const getRandomNumber = () => {
   return Math.round(Math.random() * (max - min) + min)
 }
 
-const getUrl = (type, route, option = []) => {
-  const optionUrl = option?.map((item) => `/${item}`).join('')
-  return `/${type}/${route}${optionUrl}`
+const getUrl = (paths = []) => {
+  if (paths.length === 0) {
+    throw new Error(`routes empty when call ${getUrl.name}`)
+  }
+  return paths?.map((path) => `/${path}`).join('')
 }
 
-const capFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+const capFirstLetter = (text) => {
+  if (!text) {
+    throw new Error(`text empty when call ${capFirstLetter.name}`)
+  }
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }
-const uploadFile = async (file) => {
-  const storageRef = ref(storage, `/images/${file.name}`)
-  let url = null
-
-  await uploadBytes(storageRef, file).then(async (snapshot) => {
-    await getDownloadURL(snapshot.ref).then((newUrl) => {
-      url = newUrl
-    })
-  })
-  return url
-}
-
 
 export {
-  uploadFile,
+  errorGenerator,
   validationProfileForm,
   validationSignForm,
+  validationEmail,
+  validationUsername,
+  validationPassword,
   errorAuth,
   getImageName,
   getRandomNumber,
