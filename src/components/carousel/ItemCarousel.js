@@ -50,7 +50,7 @@ const WatchItemCarousel = ({ data }) => {
             }}
           >
             <Link
-              href={getUrl(data?.type.toLowerCase(), INFOS, [data?.id])}
+              href={getUrl([data?.type.toLowerCase(), INFOS, data?.id])}
               underline="hover"
               sx={{
                 color: 'inherit',

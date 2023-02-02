@@ -10,7 +10,7 @@ import {
   CardContent,
   CardMedia,
   Paper,
-  Typography
+  Typography,
 } from '../ui'
 import { TopIcon } from './TopIcon'
 
@@ -86,7 +86,7 @@ const TopView = ({ datas, isHomePage = false, type, rank }) => {
                   alt={data?.title?.romaji ?? data?.title?.english}
                 />
                 {showOverlay?.status && showOverlay?.index === index && (
-                  <Link to={getUrl(type, INFOS, [data?.id])}>
+                  <Link to={getUrl([type, INFOS, data?.id])}>
                     <Box
                       component="div"
                       sx={{

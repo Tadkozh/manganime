@@ -1,6 +1,6 @@
 // import { ManageHistoryRounded } from '@mui/icons-material'
 import { addUser, getUserById, updateUser } from './operations'
-import { uploadFile } from '../utils/helper'
+import { uploadFile } from './storage'
 import { arrayRemove, arrayUnion } from 'firebase/firestore'
 
 const updateProfileUser = (user, userCurrent) => {

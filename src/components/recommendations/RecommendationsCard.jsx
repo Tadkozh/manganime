@@ -21,7 +21,7 @@ const RecommendationsCard = ({ data, type, route }) => {
       }}
     >
       <Link
-        to={getUrl(type, route, [data?.id])}
+        to={getUrl([type, route, data?.id])}
         style={{
           textDecoration: 'none',
           cursor: 'pointer',
