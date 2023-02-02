@@ -21,9 +21,9 @@ export default function NavBarInfo() {
   const infoStreaming = dataStreaming?.Page?.media[0]?.streamingEpisodes
   const dataRecommendations = useRecommendations(type, id)
 
-  const urlInfos = getUrl(type, INFOS, [id])
-  const urlStreaming = getUrl(type, STREAMING, [id])
-  const urlRecom = getUrl(type, RECOMMENDATIONS, [id])
+  const urlInfos = getUrl([type, INFOS, id])
+  const urlStreaming = getUrl([type, STREAMING, id])
+  const urlRecom = getUrl([type, RECOMMENDATIONS, id])
 
   return (
     <Box sx={{ width: '100%' }}>

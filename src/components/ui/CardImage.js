@@ -20,7 +20,7 @@ const CardImage = ({ data, type, route, dimension = {} }) => {
       elevation={24}
     >
       <Link
-        to={getUrl(type, route, [data.id])}
+        to={getUrl([type, route, data.id])}
         style={{
           display: 'flex',
           flexDirection: 'column',
