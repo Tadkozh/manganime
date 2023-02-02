@@ -119,6 +119,20 @@ const useRecommendations = (type, id) => {
   return data
 }
 
+const useTrend = (type, id) => {
+  const { data } = useQuery({
+    queryKey: [type, id, 'trending'],
+    queryFn: async () =>
+      await graphQLClient.request(GQL.TREND_REQUEST, {
+        type: type.toUpperCase(),
+        id: id,
+      }),
+    staleTime: Infinity,
+  })
+
+  return data
+}
+
 const useFavorites = (type, listFavorites = []) => {
   const { data, status } = useQuery({
     queryKey: [type, ...listFavorites, 'favorites'],
