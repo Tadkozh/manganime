@@ -119,13 +119,14 @@ const useRecommendations = (type, id) => {
   return data
 }
 
-const useTrend = (type, id) => {
+const useTrend = (type, limit) => {
   const { data } = useQuery({
-    queryKey: [type, id, 'trending'],
+    queryKey: [type, limit, 'trending'],
     queryFn: async () =>
       await graphQLClient.request(GQL.TREND_REQUEST, {
         type: type.toUpperCase(),
-        id: id,
+        page: 1,
+        perPage: limit,
       }),
     staleTime: Infinity,
   })
