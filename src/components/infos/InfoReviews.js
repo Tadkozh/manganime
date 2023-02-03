@@ -17,98 +17,105 @@ function InfoReviews() {
       <Paper
         elevation={6}
         sx={{
-          maxWidth: '100%',
+          width: '100%',
+          m: '10px auto',
         }}
       >
-        <Box
-          id="reviews"
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            maxWidth: '100%',
-            padding: '5px',
-          }}
-        >
-          <Typography
-            component="h3"
-            variant="h4"
+        {info.length < 1 ? (
+          <Typography sx={{ textAlign: 'center', p: '10px' }}>
+            This {type} has no reviews yet.
+          </Typography>
+        ) : (
+          <Box
+            id="reviews"
             sx={{
-              margin: '10px auto',
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: '100%',
+              padding: '5px',
             }}
           >
-            {info.length} reviews about {title}
-          </Typography>
-          {info.map((data, index) => {
-            const timestampCreated = info[index].createdAt
-            const dateCreated = new Date(timestampCreated * 1000)
-            const timestampUpdated = info[index].updatedAt
-            const dateUpdated = new Date(timestampUpdated * 1000)
+            <Typography
+              component="h3"
+              variant="h4"
+              sx={{
+                p: '10px',
+                m: '10px 0',
+              }}
+            >
+              {info.length} Review{info.length !== 1 && 's'} about {title}
+            </Typography>
+            {info.map((data, index) => {
+              const timestampCreated = info[index].createdAt
+              const dateCreated = new Date(timestampCreated * 1000)
+              const timestampUpdated = info[index].updatedAt
+              const dateUpdated = new Date(timestampUpdated * 1000)
 
-            return (
-              <Box
-                key={index}
-                sx={{
-                  // backgroundColor: 'lightgreen',
-                  padding: '10px',
-                  borderRadius: '10px',
-                  marginBottom: '20px',
-                }}
-              >
+              return (
                 <Box
+                  key={index}
                   sx={{
-                    minHeight: '75px',
-                    marginBottom: '10px',
+                    p: '10px',
+                    borderRadius: '10px',
+                    mb: '20px',
                   }}
                 >
-                  <CardMedia
-                    component="img"
+                  <Box
                     sx={{
-                      maxWidth: '75px',
-                      minHeight: '50px',
-                      maxHeight: '75px',
-                      border: 'solid 1px',
-                      marginRight: '10px',
-                      float: 'left',
+                      minHeight: '75px',
+                      mb: '10px',
                     }}
-                    image={data.user.avatar.medium}
-                    alt={`Avatar of ${data.user.name}`}
-                  />
-                  <Box>
-                    <Typography
+                  >
+                    <CardMedia
+                      component="img"
                       sx={{
-                        fontWeight: 'bold',
+                        maxWidth: '75px',
+                        minHeight: '50px',
+                        maxHeight: '75px',
+                        border: 'solid 1px',
+                        mr: '10px',
+                        float: 'left',
                       }}
-                    >
-                      {data.user.name} | Published the{' '}
-                      {dateCreated.toLocaleString()} | Updated the{' '}
-                      {dateUpdated.toLocaleString()}
-                    </Typography>
-                    <Typography>{data.summary}</Typography>
-                    <Rating
-                      name="rating"
-                      // defaultValue={data[0]?.score / 20}
-                      value={data.score / 20}
-                      precision={0.5}
-                      readOnly
+                      image={data.user.avatar.medium}
+                      alt={`Avatar of ${data.user.name}`}
                     />
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {data.user.name} | Published the{' '}
+                        {dateCreated.toLocaleString()} | Updated the{' '}
+                        {dateUpdated.toLocaleString()}
+                      </Typography>
+                      <Typography>{data.summary}</Typography>
+                      <Rating
+                        name="rating"
+                        // defaultValue={data[0]?.score / 20}
+                        value={data.score / 20}
+                        precision={0.5}
+                        readOnly
+                      />
+                    </Box>
                   </Box>
-                </Box>
 
-                <Box
-                  sx={{
-                    maxHeight: '150px',
-                    overflowY: 'auto',
-                    padding: '10px',
-                    boxShadow: '0 0 8px -5px',
-                  }}
-                  dangerouslySetInnerHTML={{
-                    __html: data.body,
-                  }}
-                ></Box>
-              </Box>
-            )
-          })}
-        </Box>
+                  <Box
+                    sx={{
+                      maxHeight: '150px',
+                      overflowY: 'auto',
+                      padding: '10px',
+                      boxShadow: '0 0 8px -5px',
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: data.body,
+                    }}
+                  ></Box>
+                </Box>
+              )
+            })}
+          </Box>
+        )}
       </Paper>
     )
   )

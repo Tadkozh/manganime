@@ -19,6 +19,7 @@ import {
 } from '@mui/material'
 
 import {
+  DeleteForever,
   ArrowRightSharp,
   Cancel,
   HomeRounded,
@@ -88,6 +89,7 @@ export {
   Alert,
   AppBar,
   ArrowDropDownIcon,
+  DeleteForever,
   ArrowRightSharp,
   Avatar,
   blue,

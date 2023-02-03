@@ -18,7 +18,7 @@ function FavoriteIcon({ info }) {
   const favourites = info.type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
   const color = () => (authUser[favourites].includes(info.id) ? true : false)
   const [isFav, setIsFav] = useState(authUser ? color : false)
-  console.log('isFav', isFav)
+  // console.log('isFav', isFav)
 
   const handleClickFav = async () => {
     if (authUser === null) {
@@ -37,12 +37,11 @@ function FavoriteIcon({ info }) {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          position: 'absolute',
-          top: '0',
-          right: '5px',
+          justifyContent: 'space-between',
+          textAlign: 'center',
         }}
       >
+        <Typography>Add to favorites</Typography>
         <FavoriteRoundedIcon
           fontSize="large"
           onClick={handleClickFav}
@@ -60,7 +59,7 @@ function FavoriteIcon({ info }) {
             fontSize: '0.75rem',
           }}
         >
-          {/* {isFav ? info.favourites + 1 : info.favourites} */}
+          {isFav ? info.favourites + 1 : info.favourites}
         </Typography>
       </Box>
     )

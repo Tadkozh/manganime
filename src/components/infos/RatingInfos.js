@@ -1,5 +1,4 @@
 import { useAuth } from '../../context/AuthContext'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 import { Button, Rating, Typography } from '@mui/material'
@@ -9,42 +8,28 @@ import StarIcon from '@mui/icons-material/Star'
 
 import Modale from '../Modal'
 
-import { updateRating } from '../../database/user'
 import { labels } from './scoreLabels'
 
 function RatingItem({
   name,
   defaultValue,
   nbStar,
-  setNbStar,
   precision,
   isReadOnly,
+  onChange,
+  onChangeActive,
+  hover,
 }) {
-  const [value, setValue] = useState(nbStar)
-  const [hover, setHover] = useState(-1)
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Rating
         name={name}
         defaultValue={defaultValue}
-        value={value}
+        value={nbStar}
         precision={precision}
         readOnly={isReadOnly}
-        onChange={
-          setNbStar
-            ? (e, newNbStar) => {
-                setValue(newNbStar)
-                setNbStar(newNbStar)
-              }
-            : null
-        }
-        onChangeActive={
-          setNbStar
-            ? (e, newHover) => {
-                setHover(newHover)
-              }
-            : null
-        }
+        onChange={onChange}
+        onChangeActive={onChangeActive}
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
       />
       <Typography>
@@ -52,12 +37,55 @@ function RatingItem({
           labels[
             hover !== -1
               ? hover
-              : setNbStar
-              ? value
-              : Math.floor(value * 2) * 0.5
+              : !isReadOnly
+              ? nbStar
+              : Math.floor(defaultValue * 2) * 0.5
           ]
         }
       </Typography>
+    </Box>
+  )
+}
+
+function PersonalRating({ info, nbStar, setNbStar }) {
+  const [open, setOpen] = useState(false)
+  const handleOpenModal = () => setOpen(true)
+  const handleCloseModal = () => setOpen(false)
+
+  const [hover, setHover] = useState(-1)
+
+  const { data: authUser } = useAuth()
+
+  function handleClickRate(e, newNbStar) {
+    if (authUser === null) {
+      handleOpenModal()
+    } else {
+      setNbStar(newNbStar)
+    }
+  }
+
+  return (
+    <Box>
+      <RatingItem
+        name={'Personal rating'}
+        defaultValue={null}
+        nbStar={nbStar}
+        precision={0.5}
+        isReadOnly={false}
+        onChange={(e, newNbStar) => handleClickRate(e, newNbStar)}
+        onChangeActive={(e, newHover) => {
+          setHover(newHover)
+        }}
+        hover={hover}
+      />
+
+      {open && (
+        <Modale
+          open={open}
+          handleOpenModal={handleOpenModal}
+          handleCloseModal={handleCloseModal}
+        />
+      )}
     </Box>
   )
 }
@@ -78,63 +106,12 @@ function GlobalRating({ info }) {
         name={'Global rating'}
         defaultValue={info.meanScore / 20}
         nbStar={info.meanScore / 20}
-        setNbStar={false}
         precision={0.1}
         isReadOnly={true}
+        onChange={null}
+        onChangeActive={null}
+        hover={-1}
       />
-      <Button
-        href="#reviews"
-        variant="contained"
-        size="small"
-        color="success"
-        sx={{ mt: '5px' }}
-      >
-        Read reviews
-      </Button>
-    </Box>
-  )
-}
-
-function PersonalRating({ info }) {
-  const [open, setOpen] = useState(false)
-  const handleOpenModal = () => setOpen(true)
-  const handleCloseModal = () => setOpen(false)
-
-  const [nbStar, setNbStar] = useState(null)
-  const [hasUserNoted, setHasUserNoted] = useState(false)
-
-  const { data: authUser } = useAuth()
-
-  function handleClickRate() {
-    if (authUser === null) {
-      handleOpenModal()
-    } else {
-      if (nbStar !== null) {
-        setHasUserNoted(!hasUserNoted)
-        updateRating(info, nbStar, authUser)
-      }
-    }
-  }
-
-  return (
-    <Box>
-      <RatingItem
-        name={'Personal rating'}
-        defaultValue={null}
-        nbStar={null}
-        setNbStar={setNbStar}
-        precision={0.5}
-        isReadOnly={false}
-        // onChange={updateRating(type, info, nbStar, authUser)}
-      />
-
-      {open && (
-        <Modale
-          open={open}
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
     </Box>
   )
 }
