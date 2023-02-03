@@ -6,9 +6,11 @@ export const FAVORITES_LIST_REQUEST = gql`
       media(sort: POPULARITY_DESC, type: $type, id_in: $ids) {
         title {
           romaji
+          english
         }
         coverImage {
           medium
+          extraLarge
         }
       }
     }

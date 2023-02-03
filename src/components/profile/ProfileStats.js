@@ -60,7 +60,12 @@ const ProfileStats = ({ stats, type }) => {
               sx={{ color: statsColor[key].color }}
               key={stat.name + key}
             />
-            <Stat name={stat.name} number={stat[arrayType].length} key={key} />
+            <Stat
+              name={stat.name}
+              number={stat[arrayType].length}
+              key={key}
+              type={type}
+            />
           </Container>
         ))}
         <Stat

@@ -35,7 +35,7 @@ const ProfileMainContainer = ({ user }) => {
     setIsDisplayBioForm(false)
   }
   return (
-    <Grid item xs={10} md={8} sx={{ p: 1 }}>
+    <Grid item xs={10} md={8} sx={{ p: 1, maxWidth: 'inherit' }}>
       <Paper
         sx={{
           with: '100%',
@@ -117,7 +117,6 @@ const ProfileMainStatistics = () => {
 }
 const ProfileMainType = ({ name }) => {
   const { data: user } = useAuth()
-  console.log(user)
   const lastList =
     name === ANIME
       ? getLastFavorites(user?.favorite_anime)

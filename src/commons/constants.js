@@ -62,6 +62,7 @@ const ROUTES_NAMES = {
   NEWS: 'news',
   RECOMMENDATIONS: 'recommendations',
   EPISODE: 'episode',
+  PROFILE: 'profile',
 }
 
 export const ANIME = ROUTES_NAMES.ANIME
@@ -72,11 +73,13 @@ export const STREAMING = ROUTES_NAMES.STREAMING
 export const NEWS = ROUTES_NAMES.NEWS
 export const RECOMMENDATIONS = ROUTES_NAMES.RECOMMENDATIONS
 export const EPISODE = ROUTES_NAMES.EPISODE
+export const PROFILE = ROUTES_NAMES.PROFILE
 
 const ROUTES = {
   HOME: '/',
   LOGIN_REGISTER: '/login',
   PROFILE: '/profile',
+  PROFILE_STAT: '/profile/:categorie/:stat',
   TOP: {
     ANIME: '/anime/top',
     MANGA: '/manga/top',
@@ -94,6 +97,7 @@ const ROUTES = {
 export const ROUTE_HOME = ROUTES.HOME
 export const ROUTE_LOGIN_REGISTER = ROUTES.LOGIN_REGISTER
 export const ROUTE_PROFILE = ROUTES.PROFILE
+export const ROUTE_PROFILE_STAT = ROUTES.PROFILE_STAT
 export const ROUTE_TOP_ANIME = ROUTES.TOP.ANIME
 export const ROUTE_TOP_MANGA = ROUTES.TOP.MANGA
 export const ROUTE_SEARCH_ANIME = ROUTES.SEARCH.ANIME
