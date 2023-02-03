@@ -1,14 +1,13 @@
-import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 
-import { Button, Rating, Typography } from '@mui/material'
+import { Rating } from '@mui/material'
 import { Box } from '@mui/system'
 
 import StarIcon from '@mui/icons-material/Star'
 
 import Modale from '../Modal'
 
-import { labels } from './scoreLabels'
 
 function RatingItem({
   name,
@@ -21,29 +20,16 @@ function RatingItem({
   hover,
 }) {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Rating
-        name={name}
-        defaultValue={defaultValue}
-        value={nbStar}
-        precision={precision}
-        readOnly={isReadOnly}
-        onChange={onChange}
-        onChangeActive={onChangeActive}
-        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-      />
-      <Typography>
-        {
-          labels[
-            hover !== -1
-              ? hover
-              : !isReadOnly
-              ? nbStar
-              : Math.floor(defaultValue * 2) * 0.5
-          ]
-        }
-      </Typography>
-    </Box>
+    <Rating
+      name={name}
+      defaultValue={defaultValue}
+      value={nbStar}
+      precision={precision}
+      readOnly={isReadOnly}
+      onChange={onChange}
+      onChangeActive={onChangeActive}
+      emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+    />
   )
 }
 
@@ -101,7 +87,7 @@ function GlobalRating({ info }) {
         textAlign: 'center',
       }}
     >
-      <Typography component="legend">Global note:</Typography>
+      {/* <Typography component="legend">Global note:</Typography> */}
       <RatingItem
         name={'Global rating'}
         defaultValue={info.meanScore / 20}
@@ -117,3 +103,4 @@ function GlobalRating({ info }) {
 }
 
 export { GlobalRating, PersonalRating }
+

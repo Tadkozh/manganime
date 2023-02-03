@@ -43,10 +43,11 @@ const ProfileSideBar = () => {
   )
 }
 const ProfileSideBarImage = () => {
-  const { data: user, execute, status } = useAuth()
-  const handleUpload = (e) => {
+  const { data: user, setData, status } = useAuth()
+  const handleUpload = async (e) => {
     if (e.target.files.length > 0) {
-      execute(userPicture(e.target.files[0]))
+      const newUser = await userPicture(e.target.files[0])
+      setData(newUser)
     }
   }
 

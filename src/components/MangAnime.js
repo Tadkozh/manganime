@@ -4,13 +4,14 @@ import Trending from './Trending'
 import { ANIME, MANGA } from '../commons/constants'
 
 const MangAnime = () => {
+  const limit = 10
   return (
     <>
       <CarouselBox />
       <TopDetails isHomePage type={ANIME} />
       <TopDetails isHomePage type={MANGA} />
-      <Trending isHomePage type={ANIME} />
-      <Trending isHomePage type={MANGA} />
+      <Trending type={ANIME} limit={limit} />
+      <Trending type={MANGA} limit={limit} />
     </>
   )
 }

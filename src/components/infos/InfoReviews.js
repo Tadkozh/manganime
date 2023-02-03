@@ -1,6 +1,14 @@
-import { Box, CardMedia, Paper, Rating, Typography } from '../ui'
 import { useParams } from 'react-router-dom'
-import { useTitle, useReviews } from '../../hooks/queriesHooks'
+import { useReviews, useTitle } from '../../hooks/queriesHooks'
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Rating,
+  Typography,
+} from '../ui'
 
 function InfoReviews() {
   let { type, id } = useParams()
@@ -14,13 +22,7 @@ function InfoReviews() {
 
   return (
     info && (
-      <Paper
-        elevation={6}
-        sx={{
-          width: '100%',
-          m: '10px auto',
-        }}
-      >
+      <>
         {info.length < 1 ? (
           <Typography sx={{ textAlign: 'center', p: '10px' }}>
             This {type} has no reviews yet.
@@ -31,7 +33,6 @@ function InfoReviews() {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              maxWidth: '100%',
               padding: '5px',
             }}
           >
@@ -52,72 +53,55 @@ function InfoReviews() {
               const dateUpdated = new Date(timestampUpdated * 1000)
 
               return (
-                <Box
-                  key={index}
-                  sx={{
-                    p: '10px',
-                    borderRadius: '10px',
-                    mb: '20px',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      minHeight: '75px',
-                      mb: '10px',
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      sx={{
-                        maxWidth: '75px',
-                        minHeight: '50px',
-                        maxHeight: '75px',
-                        border: 'solid 1px',
-                        mr: '10px',
-                        float: 'left',
-                      }}
-                      image={data.user.avatar.medium}
-                      alt={`Avatar of ${data.user.name}`}
-                    />
-                    <Box>
-                      <Typography
-                        sx={{
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        {data.user.name} | Published the{' '}
-                        {dateCreated.toLocaleString()} | Updated the{' '}
-                        {dateUpdated.toLocaleString()}
-                      </Typography>
-                      <Typography>{data.summary}</Typography>
-                      <Rating
-                        name="rating"
-                        // defaultValue={data[0]?.score / 20}
-                        value={data.score / 20}
-                        precision={0.5}
-                        readOnly
-                      />
-                    </Box>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      maxHeight: '150px',
-                      overflowY: 'auto',
-                      padding: '10px',
-                      boxShadow: '0 0 8px -5px',
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html: data.body,
-                    }}
-                  ></Box>
-                </Box>
+                <Review data={data} create={dateCreated} update={dateUpdated} />
               )
             })}
           </Box>
         )}
-      </Paper>
+      </>
     )
+  )
+}
+
+const Review = ({ data, create, update }) => {
+  return (
+    <Card
+      sx={{
+        p: 1,
+        mb: 3,
+      }}
+    >
+      <CardHeader
+        avatar={
+          <Avatar
+            src={data.user.avatar.medium}
+            variant="circular"
+            sx={{ height: '65px', width: '65px' }}
+          />
+        }
+        title={`${data.user.name} | Published the
+                        ${create.toLocaleString()} | Updated the
+                        ${update.toLocaleString()}`}
+        subheader={data.summary}
+        action={
+          <Rating
+            name="rating"
+            value={data.score / 20}
+            precision={0.5}
+            readOnly
+          />
+        }
+      />
+      <CardContent>
+        <Typography
+          variant="body1"
+          dangerouslySetInnerHTML={{
+            __html: data.body,
+          }}
+          sx={{ p: 2, overflowX: 'hidden', width: '100%' }}
+        />
+      </CardContent>
+    </Card>
   )
 }
 

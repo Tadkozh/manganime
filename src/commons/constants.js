@@ -59,6 +59,7 @@ const ROUTES_NAMES = {
   TOP: 'top',
   INFOS: 'infos',
   STREAMING: 'streaming',
+  TREND: 'trend',
   NEWS: 'news',
   RECOMMENDATIONS: 'recommendations',
   EPISODE: 'episode',
@@ -70,6 +71,7 @@ export const MANGA = ROUTES_NAMES.MANGA
 export const TOP = ROUTES_NAMES.TOP
 export const INFOS = ROUTES_NAMES.INFOS
 export const STREAMING = ROUTES_NAMES.STREAMING
+export const TREND = ROUTES_NAMES.TREND
 export const NEWS = ROUTES_NAMES.NEWS
 export const RECOMMENDATIONS = ROUTES_NAMES.RECOMMENDATIONS
 export const EPISODE = ROUTES_NAMES.EPISODE
@@ -89,6 +91,10 @@ const ROUTES = {
     ANIME: '/anime/search',
     MANGA: '/manga/search',
   },
+  TREND: {
+    ANIME: '/anime/trend',
+    MANGA: '/manga/trend',
+  },
   NEWS: '/:type/news/:id',
   INFOS: '/:type/infos/:id',
   RECOMMENDATIONS: '/:type/recommendations/:id',
@@ -106,6 +112,8 @@ export const ROUTE_SEARCH_ANIME = ROUTES.SEARCH.ANIME
 export const ROUTE_SEARCH_MANGA = ROUTES.SEARCH.MANGA
 export const ROUTE_RECOMMENDATIONS = ROUTES.RECOMMENDATIONS
 export const ROUTE_STREAMING = ROUTES.STREAMING
+export const ROUTE_TREND_ANIME = ROUTES.TREND.ANIME
+export const ROUTE_TREND_MANGA = ROUTES.TREND.MANGA
 export const ROUTE_NEWS = ROUTES.NEWS
 export const ROUTE_INFOS = ROUTES.INFOS
 export const ROUTE_404 = ROUTES[404]

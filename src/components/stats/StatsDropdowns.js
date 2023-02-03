@@ -53,8 +53,16 @@ const StatsDropdowns = ({ userDatas, contentInfos, setAuthUser }) => {
         variant="contained"
         ref={anchorRef}
         aria-label="split button"
+        size="small"
+        sx={{ width: '100%', height: '100%' }}
       >
-        <Button sx={{ maxWidth: 'max-content' }}>
+        <Button
+          sx={{
+            width: '100%',
+            textTransform: 'none',
+            fontSize: '0.9em',
+          }}
+        >
           {getActiveStatName ?? nameStats[0]}
         </Button>
         <Button

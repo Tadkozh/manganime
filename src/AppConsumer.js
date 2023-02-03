@@ -15,6 +15,8 @@ import {
   ROUTE_STREAMING,
   ROUTE_TOP_ANIME,
   ROUTE_TOP_MANGA,
+  ROUTE_TREND_ANIME,
+  ROUTE_TREND_MANGA,
 } from './commons/constants'
 
 import { Error404 } from './components/error/Error404'
@@ -31,6 +33,8 @@ import TopManga from './components/top/TopManga'
 import Infos from './components/infos/Infos'
 import Streaming from './components/streaming/Streaming'
 import Recommendations from './components/recommendations/Recommendations'
+import TrendingAnimePage from './components/TrendingAnimePage'
+import TrendingMangaPage from './components/TrendingMangaPage'
 
 const AppConsumer = () => {
   return (
@@ -42,6 +46,8 @@ const AppConsumer = () => {
           <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
           <Route path={ROUTE_SEARCH_ANIME} element={<SearchAnime />} />
           <Route path={ROUTE_SEARCH_MANGA} element={<SearchManga />} />
+          <Route path={ROUTE_TREND_ANIME} element={<TrendingAnimePage />} />
+          <Route path={ROUTE_TREND_MANGA} element={<TrendingMangaPage />} />
           <Route path={ROUTE_TOP_ANIME} element={<TopAnime />} />
           <Route path={ROUTE_TOP_MANGA} element={<TopManga />} />
           <Route path={ROUTE_INFOS} element={<Infos />} />
