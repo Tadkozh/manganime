@@ -20,7 +20,7 @@ import { Stat } from './Stat'
 
 const ProfileSideBar = () => {
   return (
-    <Grid item xs={7} md={4} lg={2.75} sx={{maxWidth: 'none'}}>
+    <Grid item xs={7} md={4} lg={2.75} sx={{ maxWidth: 'none' }}>
       <Card
         sx={{
           with: '100%',
@@ -41,10 +41,11 @@ const ProfileSideBar = () => {
   )
 }
 const ProfileSideBarImage = () => {
-  const { data: user, execute, status } = useAuth()
-  const handleUpload = (e) => {
+  const { data: user, setData, status } = useAuth()
+  const handleUpload = async (e) => {
     if (e.target.files.length > 0) {
-      execute(userPicture(e.target.files[0]))
+      const newUser = await userPicture(e.target.files[0])
+      setData(newUser)
     }
   }
 
