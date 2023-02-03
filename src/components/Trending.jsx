@@ -1,18 +1,20 @@
+import { Link } from 'react-router-dom'
 import { useTheme } from '@mui/material'
 import { Box, Typography } from './ui'
 import { ListCardsSkeleton } from './skeletons/CardImageSkeleton'
 import { useTrend } from './../hooks/queriesHooks'
-
+import { getUrl } from '../utils/helper'
+import { INFOS, TREND } from '../commons/constants'
 import { CardImage } from './ui/CardImage'
 
-import { INFOS } from './../commons/constants'
-
-const Trending = ({ type }) => {
+const Trending = ({ type, limit }) => {
   const theme = useTheme()
-  const data = useTrend(type)
+  const data = useTrend(type, limit)
 
   console.log(data?.Page?.media)
   console.log(type)
+
+  const urlTrend = getUrl([type, TREND])
 
   return (
     <>
@@ -24,10 +26,18 @@ const Trending = ({ type }) => {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             marginLeft: '1em',
+            marginBottom: '1em',
             textShadow: `${theme.palette.background.topIcon} 1px 0 0`,
           }}
         >
-          Trending {type}
+          <Link
+            style={{
+              textDecoration: 'none',
+            }}
+            to={urlTrend}
+          >
+            Trending {type}
+          </Link>
         </Typography>
         <Box
           sx={{
@@ -40,7 +50,7 @@ const Trending = ({ type }) => {
         >
           {data ? (
             data?.Page?.media.map((data, index) => {
-              if (index < 12) {
+              if (index < limit) {
                 return (
                   <CardImage
                     type={type}
