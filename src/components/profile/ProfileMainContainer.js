@@ -117,7 +117,6 @@ const ProfileMainStatistics = () => {
 }
 const ProfileMainType = ({ name }) => {
   const { data: user } = useAuth()
-  console.log(user)
   const lastList =
     name === ANIME
       ? getLastFavorites(user?.favorite_anime)

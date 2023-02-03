@@ -7,6 +7,7 @@ import {
   ROUTE_INFOS,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
+  ROUTE_PROFILE_STAT,
   ROUTE_RECOMMENDATIONS,
   ROUTE_SEARCH_ANIME,
   ROUTE_SEARCH_MANGA,
@@ -53,6 +54,10 @@ const AppConsumer = () => {
           <Route path={ROUTE_404} element={<Error404 />} />
           <Route path="/" element={<PrivateRoute />}>
             <Route path={ROUTE_PROFILE} element={<ProfileUser />} />
+            <Route
+              path={ROUTE_PROFILE_STAT}
+              element={<ProfileUser isStatOn />}
+            />
           </Route>
         </Routes>
       </ErrorBoundary>
