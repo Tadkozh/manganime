@@ -7,7 +7,7 @@ import { CardImage } from './ui/CardImage'
 
 import { INFOS } from './../commons/constants'
 
-const Trending = ({ type }) => {
+const Trending = ({ type, limit }) => {
   const theme = useTheme()
   const data = useTrend(type)
 
@@ -40,7 +40,7 @@ const Trending = ({ type }) => {
         >
           {data ? (
             data?.Page?.media.map((data, index) => {
-              if (index < 12) {
+              if (index < limit) {
                 return (
                   <CardImage
                     type={type}
