@@ -61,21 +61,14 @@ const Recommendations = () => {
         >
           {data
             ? data?.Page?.recommendations.map((data, index) => {
-                if (index < 12) {
-                  return (
-                    <CardImage
-                      type={type}
-                      route={INFOS}
-                      data={data.media}
-                      key={index}
-                      // dimension={{
-                        // height: '335px',
-                        // maxwidth: '223px',
-                      // }}
-                    />
-                  )
-                }
-                return null
+                return (
+                  <CardImage
+                    type={type}
+                    route={INFOS}
+                    data={data.media}
+                    key={index}
+                  />
+                )
               })
             : /* <ListCardsSkeleton dimension={{ width: 225, height: 335 }} /> */
               'loading, please wait...'}
