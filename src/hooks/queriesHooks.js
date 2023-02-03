@@ -185,4 +185,5 @@ export {
   useStreaming,
   useRecommendations,
   useFavorites,
+  useTrend,
 }
