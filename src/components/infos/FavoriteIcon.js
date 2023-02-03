@@ -1,12 +1,11 @@
-import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 
-import { Box, Typography } from '@mui/material'
-import { FavoriteRoundedIcon } from '../ui'
+import { Box, FavoriteRoundedIcon } from '../ui'
 
 import Modale from '../Modal'
 
-import { updateFavorite } from '../../database/user'
+import { getTypeFavourite, updateFavorite } from '../../database/user'
 
 function FavoriteIcon({ info }) {
   const [open, setOpen] = useState(false)
@@ -15,10 +14,9 @@ function FavoriteIcon({ info }) {
 
   const { data: authUser, setData } = useAuth()
 
-  const favourites = info.type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
+  const favourites = getTypeFavourite(info?.type)
   const color = () => (authUser[favourites].includes(info.id) ? true : false)
   const [isFav, setIsFav] = useState(authUser ? color : false)
-  // console.log('isFav', isFav)
 
   const handleClickFav = async () => {
     if (authUser === null) {
@@ -35,17 +33,19 @@ function FavoriteIcon({ info }) {
     info && (
       <Box
         sx={{
+          bgcolor: isFav ? 'white' : 'red',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
-          textAlign: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '5px',
+          height: '100%',
         }}
       >
-        <Typography>Add to favorites</Typography>
         <FavoriteRoundedIcon
-          fontSize="large"
+          fontSize="medium"
           onClick={handleClickFav}
-          style={{ color: isFav ? 'red' : 'grey' }}
+          sx={{ color: isFav ? 'red' : 'white' }}
         />
         {open && (
           <Modale
@@ -54,13 +54,6 @@ function FavoriteIcon({ info }) {
             handleCloseModal={handleCloseModal}
           />
         )}
-        <Typography
-          sx={{
-            fontSize: '0.75rem',
-          }}
-        >
-          {isFav ? info.favourites + 1 : info.favourites}
-        </Typography>
       </Box>
     )
   )

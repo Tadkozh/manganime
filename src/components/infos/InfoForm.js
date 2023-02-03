@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
-import { Button, Paper, TextField, Typography } from '../ui'
+import { Button, Paper, TextField } from '../ui'
 
 import { updateComment } from '../../database/user'
 
@@ -70,16 +70,11 @@ function InfoForm({
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        width: '100%',
+        width: '75%',
         p: '10px',
-        m: '10px auto',
       }}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Typography component="h3" variant="h4">
-        Leave a review
-      </Typography>
-
       <PersonalRating info={info} nbStar={nbStar} setNbStar={setNbStar} />
 
       <TextField
@@ -93,6 +88,7 @@ function InfoForm({
         {...register('title')}
         value={commentTitle}
         onChange={(e) => setCommentTitle(e.target.value)}
+        sx={{ width: '75%' }}
       />
 
       <TextField
@@ -105,14 +101,14 @@ function InfoForm({
         {...register('comment')}
         value={commentValue}
         onChange={(e) => setCommentValue(e.target.value)}
+        sx={{ width: '75%' }}
       />
 
       <Button
         variant="contained"
-        style={{ margin: '0 auto' }}
+        sx={{ width: 'fit-content', my: 1 }}
         type="submit"
         value="Submit"
-        color={comment ? 'secondary' : 'success'}
       >
         {comment ? 'Sent!' : 'Submit'}
       </Button>

@@ -1,12 +1,15 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Paper, Typography } from '../ui'
 
-function InfoSynopsis({ synopsis }) {
-  // const [readSynopsis, setReadSynopsis] = useState(false)
-
+function InfoSynopsis({ synopsis, title }) {
   return (
-    <>
-      <Typography component="h3" variant="h4" sx={{ pl: '10px', mb: '10px' }}>
-        Synopsis:
+    <Paper
+      sx={{
+        m: 2,
+        py: 2,
+      }}
+    >
+      <Typography component="h2" variant="h5" sx={{ m: 1, mb: 3 }}>
+        {title?.romaji ?? title?.english}
       </Typography>
       <Box
         sx={{
@@ -14,14 +17,8 @@ function InfoSynopsis({ synopsis }) {
           overflowY: 'auto',
         }}
         dangerouslySetInnerHTML={{ __html: synopsis }}
-        // className={
-        //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
-        // }
       ></Box>
-      {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
-        {readSynopsis ? 'Read less' : 'Read more'}
-      </Button> */}
-    </>
+    </Paper>
   )
 }
 

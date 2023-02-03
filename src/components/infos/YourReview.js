@@ -1,31 +1,29 @@
 import {
+  Avatar,
   Box,
   Button,
-  CardMedia,
-  Paper,
+  Card,
+  CardContent,
+  CardHeader,
   Rating,
   Typography,
-} from '@mui/material'
+} from '../ui'
 
-import { Edit, DeleteForever } from '../ui'
+import { DeleteForever, Edit } from '../ui'
 
-import avatarProfile from '../../assets/images/avatar_2.gif'
-import { deleteComment } from '../../database/user'
 import { useState } from 'react'
+import avatarProfile from '../../assets/images/avatar_2.gif'
+import { useAuth } from '../../context/AuthContext'
+import { deleteComment, getTypeId, getTypeOpinion } from '../../database/user'
 
-function YourReview({
-  user,
-  setUser,
-  newUserComment,
-  info,
-  type_opinion,
-  type_id,
-  editForm,
-  setEditForm,
-}) {
+function YourReview({ info, setEditForm }) {
   const [deleteReviewModale, setDeleteReviewModale] = useState(false)
+  const { data: user, setData: setUser } = useAuth()
 
-  const findReview = newUserComment[type_opinion].find(
+  const type_opinion = getTypeOpinion(info?.type)
+  const type_id = getTypeId(info?.type)
+
+  const findReview = user[type_opinion].find(
     (data) => data[type_id] === info.id,
   )
   const yourReview = findReview?.comments[0]
@@ -42,150 +40,100 @@ function YourReview({
   }
 
   return (
-    <Paper
+    <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
-        position: 'relative',
         width: '100%',
-        p: '10px',
-        m: '10px auto',
+        alignItems: 'flex-start',
       }}
     >
       {deleteReviewModale ? (
         <Box sx={{ m: '0 auto', textAlign: 'center' }}>
           <Typography>Do you confirm the deletion of your comment?</Typography>
-          <Button onClick={confirm}>YES</Button>
-          <Button onClick={cancel}>NO</Button>
+          <Button onClick={confirm} variant="contained" sx={{ m: 1 }}>
+            YES
+          </Button>
+          <Button onClick={cancel} variant="outlined" sx={{ m: 1 }}>
+            NO
+          </Button>
         </Box>
       ) : (
-        <>
-          <EditOrDeleteBtn
-            user={user}
-            info={info}
-            type_opinion={type_opinion}
-            type_id={type_id}
-            setEditForm={setEditForm}
-            setDeleteReviewModale={setDeleteReviewModale}
-          />
-
-          <Typography
-            component="h3"
-            variant="h5"
-            sx={{
-              p: '10px',
-            }}
-          >
-            Your review:
-          </Typography>
-          <Box
-            id="reviews"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              maxWidth: '100%',
-              padding: '5px',
-            }}
-          >
-            <Box
-              sx={{
-                p: '10px',
-                borderRadius: '10px',
-                mb: '20px',
-              }}
-            >
-              <Box
-                sx={{
-                  minHeight: '75px',
-                  mb: '10px',
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxWidth: '75px',
-                    minHeight: '50px',
-                    maxHeight: '75px',
-                    border: 'solid 1px',
-                    mr: '10px',
-                    float: 'left',
-                  }}
-                  image={user.picture !== '' ? user.picture : avatarProfile}
-                  alt={`Avatar of ${user.name}`}
-                />
-                <Box>
-                  <Typography
-                    sx={{
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {user.name} | Published the
-                    {yourReview.create_at} |
-                    {/* Updated the {dateUpdated.toLocaleString()} */}
-                  </Typography>
-                  <Typography>{yourReview.title}</Typography>
-                  <Rating
-                    name="rating"
-                    value={yourReview.note}
-                    precision={0.5}
-                    readOnly
-                  />
-                </Box>
-              </Box>
-
-              <Typography
-                sx={{
-                  maxHeight: '150px',
-                  overflowY: 'auto',
-                  padding: '10px',
-                  boxShadow: '0 0 8px -5px',
-                }}
-              >
-                {yourReview.message}
-              </Typography>
-            </Box>
-          </Box>
-        </>
+        <Review
+          user={user}
+          yourReview={yourReview}
+          editReview={setEditForm}
+          deleteReview={setDeleteReviewModale}
+        />
       )}
-    </Paper>
+    </Box>
   )
 }
 
-function EditOrDeleteBtn({
-  user,
-  info,
-  type_opinion,
-  type_id,
-  setEditForm,
-  setDeleteReviewModale,
-}) {
+const Review = ({ user, yourReview, editReview, deleteReview }) => {
   return (
-    <>
-      <Box
+    <Card
+      sx={{
+        p: 1,
+        width: '100%',
+      }}
+    >
+      <CardHeader
+        avatar={
+          <Avatar
+            src={user.picture !== '' ? user.picture : avatarProfile}
+            variant="circular"
+            sx={{ height: '65px', width: '65px' }}
+          />
+        }
+        title={`${user.name} | Published the
+                        ${yourReview.create_at}`}
+        subheader={yourReview.title}
+        action={
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <EditOrDeleteBtn
+              setEditForm={editReview}
+              setDeleteReviewModale={deleteReview}
+            />
+            <Rating
+              name="rating"
+              value={yourReview.note}
+              precision={0.5}
+              readOnly
+            />
+          </Box>
+        }
+      />
+      <CardContent>
+        <Typography
+          variant="body1"
+          sx={{ p: 2, overflowX: 'hidden', width: '100%' }}
+        >
+          {yourReview.message}
+        </Typography>
+      </CardContent>
+    </Card>
+  )
+}
+
+function EditOrDeleteBtn({ setEditForm, setDeleteReviewModale }) {
+  return (
+    <Box sx={{ alignSelf: 'flex-end' }}>
+      <Edit
+        fontSize="medium"
+        onClick={() => setEditForm(true)}
         sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          p: '10px',
+          ':hover': { color: 'green' },
         }}
-      >
-        <Edit
-          fontSize="large"
-          onClick={() => setEditForm(true)}
-          sx={{
-            ':hover': { color: 'grey' },
-          }}
-        />
-        <DeleteForever
-          fontSize="large"
-          onClick={() => setDeleteReviewModale(true)}
-          sx={{
-            ':hover': { color: 'grey' },
-          }}
-        />
-      </Box>
-    </>
+      />
+      <DeleteForever
+        fontSize="medium"
+        onClick={() => setDeleteReviewModale(true)}
+        sx={{
+          ':hover': { color: 'red' },
+        }}
+      />
+    </Box>
   )
 }
 

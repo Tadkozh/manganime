@@ -1,58 +1,72 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Paper, Typography } from '../ui'
+import { useTheme } from '@mui/material'
 
 function InfoDetails({ info }) {
+  const theme = useTheme()
   const unknown = 'unknown'
+
+  const { startDate, endDate } = info
 
   const typeData = info?.type
   let genresData = info
-    ? Object.keys(info?.genres)
-        .map((data) => {
-          return `${info?.genres[data]}`
-        })
-        .join(', ')
+    ? Object.keys(info?.genres).map((data, index) => {
+        return (
+          <Typography
+            key={index + 'genres'}
+            sx={{ color: theme.palette.text.secondary }}
+          >
+            {info?.genres[data]}
+          </Typography>
+        )
+      })
     : null
   // const rankData = info?.rankings[0]?.rank
   const popularityData = info?.popularity.toLocaleString()
   const statusData = info?.status
-  const startDateYearData = info?.startDate?.year
+  const startDateYearData = startDate?.year
   const startDateData = `${
-    info?.startDate?.day
-      ? info?.startDate?.day < 10
-        ? `0${info?.startDate?.day}/`
-        : `${info?.startDate?.day}/`
+    startDate?.day
+      ? startDate?.day < 10
+        ? `0${startDate?.day}/`
+        : `${startDate?.day}/`
       : ''
   }${
-    info?.startDate?.month
-      ? info?.startDate?.month < 10
-        ? `0${info?.startDate?.month}/`
-        : `${info?.startDate?.month}/`
+    startDate?.month
+      ? startDate?.month < 10
+        ? `0${startDate?.month}/`
+        : `${startDate?.month}/`
       : ''
-  }${info?.startDate?.year ? info?.startDate?.year : ''}`
+  }${startDate?.year ? startDate?.year : ''}`
 
-  const endDateYearData = info?.endDate?.year
+  const endDateYearData = endDate?.year
   const endDateData = `${
-    info?.endDate?.day
-      ? info?.endDate?.day < 10
-        ? `0${info?.endDate?.day}/`
-        : `${info?.endDate?.day}/`
+    endDate?.day
+      ? endDate?.day < 10
+        ? `0${endDate?.day}/`
+        : `${endDate?.day}/`
       : ''
   }${
-    info?.endDate?.month
-      ? info?.endDate?.month < 10
-        ? `0${info?.endDate?.month}/`
-        : `${info?.endDate?.month}/`
+    endDate?.month
+      ? endDate?.month < 10
+        ? `0${endDate?.month}/`
+        : `${endDate?.month}/`
       : ''
-  }${info?.endDate?.year ? info?.endDate?.year : ''}`
+  }${endDate?.year ? endDate?.year : ''}`
   const episodesData = info?.episodes
   const volumesData = info?.volumes
   const chaptersData = info?.chapters
   const durationData = info?.duration
   let studiosData = info
-    ? Object.keys(info?.studios?.nodes)
-        .map((data) => {
-          return `${info?.studios?.nodes[data]?.name}`
-        })
-        .join(', ')
+    ? Object.keys(info?.studios?.nodes).map((data, index) => {
+        return (
+          <Typography
+            key={index + 'studio'}
+            sx={{ color: theme.palette.text.secondary }}
+          >
+            {info?.studios?.nodes[data]?.name}
+          </Typography>
+        )
+      })
     : null
   const isLicensedData = info?.isLicensed
   const sourceData = info?.source
@@ -104,7 +118,7 @@ function InfoDetails({ info }) {
     },
     {
       label: 'Duration',
-      data: `≈ ${durationData} minutes` ?? unknown,
+      data: ` ${durationData} minutes` ?? unknown,
     },
     {
       label: 'Studios',
@@ -125,44 +139,45 @@ function InfoDetails({ info }) {
   ]
 
   return (
-    <>
-      {details.map((data, index) => {
+    <Paper sx={{ mx: 'auto', p: 2, width: '230px' }}>
+      {details.map((item, index) => {
         if (details[index].data !== unknown) {
           return (
             <Box
-              key={index}
+              key={index + 'box'}
               sx={{
                 display: 'flex',
+                flexDirection: 'column',
                 margin: '5px auto',
               }}
             >
-              <Typography
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  width: '50%',
-                  backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                  padding: '5px 10px',
-                }}
-              >
-                {data?.label}:
-              </Typography>
-              <Typography
-                sx={{
-                  width: '50%',
-                  backgroundColor: 'rgba(128, 128, 128, 0.75)',
-                  padding: '5px',
-                }}
-              >
-                {data?.data}
-              </Typography>
+              {item?.data ? (
+                <>
+                  <Typography
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                    key={index + 'details'}
+                  >
+                    {item.label}
+                  </Typography>
+                  {item.label === 'Studios' || item.label === 'Genres' ? (
+                    item.data
+                  ) : (
+                    <Typography sx={{ color: theme.palette.text.secondary }}>
+                      {item.data}
+                    </Typography>
+                  )}
+                </>
+              ) : null}
             </Box>
           )
         } else {
           return null
         }
       })}
-    </>
+    </Paper>
   )
 }
 

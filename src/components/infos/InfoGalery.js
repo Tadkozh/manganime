@@ -1,12 +1,12 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 
-import { Close } from '@mui/icons-material'
+import { Modal } from '@mui/material'
 
 function InfoGalery({ info }) {
   const collectionType = info?.type?.toLowerCase()
 
-  const [largeImg, setLargeImg] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
 
   return info ? (
     <>
@@ -14,51 +14,43 @@ function InfoGalery({ info }) {
         component="img"
         src={info.coverImage.large}
         alt={`Poster of the ${collectionType}`}
-        onClick={() => setLargeImg(!largeImg)}
+        onClick={() => setIsOpen(!isOpen)}
+        sx={{
+          maxWidth: 'fit-content',
+        }}
       />
 
-      <LargeImage
-        data={info}
-        mainLargeImage={info.coverImage.extraLarge}
-        largeImg={largeImg}
-        setLargeImg={setLargeImg}
-        collectionType={collectionType}
-      />
+      <ModalImage info={info} open={isOpen} setIsOpen={setIsOpen} />
     </>
   ) : null
 }
 
-function LargeImage({ mainLargeImage, largeImg, setLargeImg, collectionType }) {
+const sxModalImage = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  flexGrow: 1,
+  transform: 'translate(-50%,-50%)',
+  height: '80%',
+  bgcolor: 'background.paper',
+}
+
+function ModalImage({ info, open, setIsOpen }) {
+  const collectionType = info?.type?.toLowerCase()
+
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display: largeImg ? 'flex' : 'none',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'fixed',
-        top: '50%',
-        left: 0,
-        transform: 'translateY(-50%)',
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        zIndex: 2000,
-      }}
+    <Modal
+      open={open}
+      onClose={() => setIsOpen(false)}
+      aria-labelledby="modalLargeImage"
+      aria-describedby={`modal for large image of ${collectionType}`}
     >
-      <Close
-        sx={{ color: 'red', fontSize: '50px' }}
-        onClick={() => setLargeImg(!largeImg)}
-      />
       <Box
-        component="img"
-        sx={{ maxHeight: '80%' }}
-        src={mainLargeImage}
-        alt={`Poster of the ${collectionType}`}
-        onClick={() => setLargeImg(!largeImg)}
+        component={'img'}
+        src={info.coverImage.extraLarge}
+        sx={sxModalImage}
       />
-    </Box>
+    </Modal>
   )
 }
 
