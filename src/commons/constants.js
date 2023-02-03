@@ -79,6 +79,7 @@ const ROUTES = {
   HOME: '/',
   LOGIN_REGISTER: '/login',
   PROFILE: '/profile',
+  PROFILE_CAT: 'profile/:categorie',
   PROFILE_STAT: '/profile/:categorie/:stat',
   TOP: {
     ANIME: '/anime/top',
@@ -97,6 +98,7 @@ const ROUTES = {
 export const ROUTE_HOME = ROUTES.HOME
 export const ROUTE_LOGIN_REGISTER = ROUTES.LOGIN_REGISTER
 export const ROUTE_PROFILE = ROUTES.PROFILE
+export const ROUTE_PROFILE_CAT = ROUTES.PROFILE_CAT
 export const ROUTE_PROFILE_STAT = ROUTES.PROFILE_STAT
 export const ROUTE_TOP_ANIME = ROUTES.TOP.ANIME
 export const ROUTE_TOP_MANGA = ROUTES.TOP.MANGA

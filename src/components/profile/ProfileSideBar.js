@@ -1,8 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import profilePicture from '../../assets/images/avatar_1.jpg'
-import { IDLE, LOADING, SUCCESS } from '../../commons/constants'
+import { IDLE, LOADING, PROFILE, SUCCESS } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { userPicture } from '../../database/user'
+import { getUrl } from '../../utils/helper'
 import {
   Box,
   Button,
@@ -20,7 +22,7 @@ import { Stat } from './Stat'
 
 const ProfileSideBar = () => {
   return (
-    <Grid item xs={7} md={4} lg={2.75} sx={{maxWidth: 'none'}}>
+    <Grid item xs={7} md={4} lg={2.75} sx={{ maxWidth: 'none' }}>
       <Card
         sx={{
           with: '100%',
@@ -103,10 +105,20 @@ const ProfileSideBarListButtons = () => {
       }}
     >
       <Button variant="contained" color="primary">
-        AnimeList
+        <Link
+          to={getUrl([PROFILE, 'anime'])}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          AnimeList
+        </Link>
       </Button>
       <Button variant="outlined" color="primary">
-        MangaList
+        <Link
+          to={getUrl([PROFILE, 'manga'])}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          MangaList
+        </Link>
       </Button>
     </CardActions>
   )
