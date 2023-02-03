@@ -11,4 +11,4 @@ const TrendingMangaPage = () => {
   )
 }
 
-export { TrendingMangaPage }
+export default TrendingMangaPage
