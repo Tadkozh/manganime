@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
 import { PROFILE } from '../../commons/constants'
 
-const Stat = ({ name, number, type, props }) => {
+const Stat = ({ name, number, type, forList = false, props }) => {
   return (
     <Container
       sx={{
@@ -13,19 +13,33 @@ const Stat = ({ name, number, type, props }) => {
         ...props,
       }}
     >
-      <Typography variant="body1">
-        {name !== 'Total Entries' ? (
-          <Link
-            to={getUrl([PROFILE, type, name.toLowerCase()])}
-            sx={{ cursor: 'pointer' }}
+      {forList ? (
+        <>
+          <Typography
+            variant="body1"
+            sx={{
+              '&:hover': { textDecoration: 'underline' },
+            }}
           >
-            {name}
-          </Link>
-        ) : (
-          name
-        )}
-      </Typography>
-      <Typography variant="body1">{number}</Typography>
+            <Link
+              to={getUrl([PROFILE, type, name.toLowerCase()])}
+              style={{
+                cursor: 'pointer',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              {name}
+            </Link>
+          </Typography>
+          <Typography variant="body1">{number}</Typography>
+        </>
+      ) : (
+        <>
+          <Typography variant="body1">{name}</Typography>
+          <Typography variant="body1">{number}</Typography>
+        </>
+      )}
     </Container>
   )
 }

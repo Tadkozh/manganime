@@ -65,6 +65,7 @@ const ProfileStats = ({ stats, type }) => {
               number={stat[arrayType].length}
               key={key}
               type={type}
+              forList
             />
           </Container>
         ))}

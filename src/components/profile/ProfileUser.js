@@ -4,7 +4,7 @@ import { ProfileMainContainer } from './ProfileMainContainer'
 import { ProfileSideBar } from './ProfileSideBar'
 import ProfileStatView from './ProfileStatView'
 
-const ProfileUser = ({ isStatOn = false }) => {
+const ProfileUser = ({ isStatNav = false, isStatOn = false }) => {
   const { data } = useAuth()
   return (
     <>
@@ -12,7 +12,8 @@ const ProfileUser = ({ isStatOn = false }) => {
         <ProfileSideBar />
         <ProfileMainContainer user={data} />
       </Grid>
-      {isStatOn ? <ProfileStatView /> : null}
+      {isStatNav && !isStatOn ? <ProfileStatView /> : null}
+      {isStatNav && isStatOn ? <ProfileStatView isStatOn /> : null}
     </>
   )
 }
