@@ -9,28 +9,49 @@ import { PersonalRating } from './RatingInfos'
 
 import Modale from './../Modal'
 
-function InfoForm({ info }) {
-  const { data: authUser } = useAuth()
+function InfoForm({
+  info,
+  editForm,
+  setEditForm,
+  formNoteValue,
+  formTitleValue,
+  formCommentValue,
+}) {
+  const { data: authUser, setData: setAuthUser } = useAuth()
+
+  // React Hook Form
+  const { register, handleSubmit } = useForm()
 
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
+  const [nbStar, setNbStar] = useState(editForm ? formNoteValue : null)
+  const [commentTitle, setCommentTitle] = useState(
+    editForm ? formTitleValue : '',
+  )
+  const [commentValue, setCommentValue] = useState(
+    editForm ? formCommentValue : '',
+  )
+  console.log('commentTitle', commentTitle)
   const [comment, setComment] = useState(false)
   const changeComment = setComment
 
-  // React Hook Form
-  const { register, handleSubmit } = useForm()
-
-  const [commentTitle, setCommentTitle] = useState('')
-  const [commentValue, setCommentValue] = useState('')
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       changeComment(!comment)
-      updateComment(info, data, authUser)
+      const newUser = await updateComment(
+        authUser,
+        info,
+        nbStar,
+        data,
+        setEditForm,
+        commentTitle,
+        commentValue,
+      )
+      setAuthUser(newUser)
     }
   }
 
@@ -59,7 +80,7 @@ function InfoForm({ info }) {
         Leave a review
       </Typography>
 
-      <PersonalRating />
+      <PersonalRating info={info} nbStar={nbStar} setNbStar={setNbStar} />
 
       <TextField
         id="outlined-basic"

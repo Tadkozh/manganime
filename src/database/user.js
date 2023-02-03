@@ -11,85 +11,65 @@ const updateProfileUser = (user, userCurrent) => {
   return newUser
 }
 
-const updateComment = (info, comment, user) => {
+const updateComment = async (
+  user,
+  info,
+  note,
+  comment,
+  setEditForm,
+  commentTitle,
+  commentValue,
+) => {
   const newUserComment = structuredClone(user)
   const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
   const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
-  const fullComment = {
-    create_at: new Date().toISOString(),
-    title: comment.title,
-    message: comment.comment,
-  }
-  const commentArray = []
-  commentArray.push(fullComment)
-
-  const isItemId = newUserComment[type_opinion].some(
+  const itemIndex = newUserComment[type_opinion].findIndex(
     (opinion) => opinion[type_id] === info.id,
   )
-  if (isItemId) {
-    newUserComment[type_opinion].map((opinion, key) => {
-      if (opinion[type_id] === info.id) {
-        let newOpinion
-        if (!opinion?.comments) {
-          newOpinion = { ...opinion, comments: [fullComment] }
 
-          newUserComment[type_opinion][key] = newOpinion
-        } else {
-          newUserComment[type_opinion][key].comments.push(fullComment)
-        }
-      }
-    })
-  } else {
+  if (itemIndex === -1) {
     const commentdb = {
       [type_id]: info.id,
-      comments: commentArray,
+      comments: [
+        {
+          create_at: new Date().toISOString(),
+          note,
+          title: comment.title,
+          message: comment.comment,
+        },
+      ],
     }
+
     newUserComment[type_opinion].push(commentdb)
-  }
-
-  console.log('newUserComment', newUserComment)
-  updateUserCurrent(newUserComment)
-}
-
-// const getTypeId = (type) => {
-//   return type === 'ANIME' ? 'anime_id' : 'manga_id'
-// }
-// const getTypeOpinion = (type) => {
-//   return type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
-// }
-
-const updateRating = (info, rating, user) => {
-  const newUserRate = structuredClone(user)
-  const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
-
-  const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
-
-  const isItemId = newUserRate[type_opinion].some(
-    (opinion) => opinion[type_id] === info.id,
-  )
-  if (isItemId) {
-    newUserRate[type_opinion].map((opinion, key) => {
-      if (opinion[type_id] === info.id) {
-        let newOpinion
-        if (!opinion?.rate) {
-          newOpinion = { ...opinion, rate: rating }
-
-          newUserRate[type_opinion][key] = newOpinion
-        } else {
-          opinion.rate = rating
-        }
-      }
-    })
+    updateUserCurrent(newUserComment)
   } else {
-    const ratedb = { rate: rating, [type_id]: info.id }
-    newUserRate[type_opinion].push(ratedb)
+    const editedComment = {
+      create_at: newUserComment[type_opinion][itemIndex].comments[0].create_at,
+      note,
+      title: commentTitle,
+      message: commentValue,
+    }
+
+    newUserComment[type_opinion][itemIndex].comments[0] = editedComment
+    updateUserCurrent(newUserComment)
   }
-  console.log('newUserRate', newUserRate)
-  updateUserCurrent(newUserRate)
+
+  setEditForm(false)
+
+  return getUserById()
 }
 
-const updateStat = async(name, infos, user) => {
+async function deleteComment(user, info, type_opinion, type_id) {
+  const comments = structuredClone(user[type_opinion])
+  const index = comments.findIndex((anime) => anime[type_id] === info.id)
+
+  updateUserCurrent({ [type_opinion]: arrayRemove(comments[index]) })
+
+  return getUserById()
+}
+
+const updateStat = async (name, infos, user) => {
   const newUserStat = structuredClone(user)
   const userStats = newUserStat?.stats
   console.log('user stat', userStats)
@@ -138,6 +118,7 @@ const userPicture = async (picture) => {
 const getType = (type) => {
   return type === 'ANIME' ? 'favorite_anime' : 'favorite_manga'
 }
+
 const updateFavorite = async (info, user) => {
   const typeFavorite = getType(info.type)
   const favorites = structuredClone(user[typeFavorite])
@@ -171,9 +152,9 @@ export {
   userPicture,
   updateProfileUser,
   updateUserCurrent,
-  updateRating,
   updateFavorite,
   updateComment,
+  deleteComment,
   updateStat,
   getUserbyUid,
   storeUser,

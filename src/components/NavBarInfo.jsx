@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { INFOS, STREAMING, RECOMMENDATIONS } from '../commons/constants'
-import { Box, Tab, Tabs } from './ui'
+import { Paper, Tab, Tabs } from './ui'
 import { useStreaming, useRecommendations } from '../hooks/queriesHooks'
 import { getUrl } from '../utils/helper'
 import { useTheme } from '@mui/material'
@@ -26,7 +26,7 @@ export default function NavBarInfo() {
   const urlRecom = getUrl([type, RECOMMENDATIONS, id])
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Paper sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} centered>
         <Tab
           label="Infos"
@@ -56,6 +56,6 @@ export default function NavBarInfo() {
           />
         ) : null}
       </Tabs>
-    </Box>
+    </Paper>
   )
 }

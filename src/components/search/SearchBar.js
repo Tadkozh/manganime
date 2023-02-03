@@ -113,7 +113,7 @@ function SelectSearch({ title, getter, handleChange, selectValues }) {
         {selectValues.map((item, index) =>
           index === 0 ? (
             <MenuItem key={index} value={item.value}>
-              <em> {item.children}</em>
+              <em>{item.children}</em>
             </MenuItem>
           ) : (
             <MenuItem key={index} value={item.value}>
