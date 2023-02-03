@@ -35,7 +35,7 @@ const ProfileMainContainer = ({ user }) => {
     setIsDisplayBioForm(false)
   }
   return (
-    <Grid item xs={10} md={8} sx={{ p: 1 }}>
+    <Grid item xs={10} md={8} sx={{ p: 1, maxWidth: 'inherit' }}>
       <Paper
         sx={{
           with: '100%',

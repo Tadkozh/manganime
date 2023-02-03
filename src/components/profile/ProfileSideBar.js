@@ -20,7 +20,7 @@ import { Stat } from './Stat'
 
 const ProfileSideBar = () => {
   return (
-    <Grid item xs={7} md={4} lg={2.75}>
+    <Grid item xs={7} md={4} lg={2.75} sx={{maxWidth: 'none'}}>
       <Card
         sx={{
           with: '100%',

@@ -1,6 +1,7 @@
 import { Container, Typography } from '../ui'
 import { Link } from 'react-router-dom'
-import { ROUTE_PROFILE } from '../../commons/constants'
+import { getUrl } from '../../utils/helper'
+import { PROFILE } from '../../commons/constants'
 
 const Stat = ({ name, number, type, props }) => {
   return (
@@ -15,7 +16,7 @@ const Stat = ({ name, number, type, props }) => {
       <Typography variant="body1">
         {name !== 'Total Entries' ? (
           <Link
-            to={`${ROUTE_PROFILE}/${type}/${name.toLowerCase()}`}
+            to={getUrl([PROFILE, type, name.toLowerCase()])}
             sx={{ cursor: 'pointer' }}
           >
             {name}

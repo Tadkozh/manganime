@@ -62,6 +62,7 @@ const ROUTES_NAMES = {
   NEWS: 'news',
   RECOMMENDATIONS: 'recommendations',
   EPISODE: 'episode',
+  PROFILE: 'profile',
 }
 
 export const ANIME = ROUTES_NAMES.ANIME
@@ -72,6 +73,7 @@ export const STREAMING = ROUTES_NAMES.STREAMING
 export const NEWS = ROUTES_NAMES.NEWS
 export const RECOMMENDATIONS = ROUTES_NAMES.RECOMMENDATIONS
 export const EPISODE = ROUTES_NAMES.EPISODE
+export const PROFILE = ROUTES_NAMES.PROFILE
 
 const ROUTES = {
   HOME: '/',
