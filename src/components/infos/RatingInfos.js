@@ -112,15 +112,6 @@ function GlobalRating({ info }) {
         onChangeActive={null}
         hover={-1}
       />
-      <Button
-        href="#reviews"
-        variant="contained"
-        size="small"
-        color="success"
-        sx={{ mt: '5px' }}
-      >
-        Read reviews
-      </Button>
     </Box>
   )
 }

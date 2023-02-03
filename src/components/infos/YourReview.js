@@ -10,20 +10,31 @@ import {
 import { Edit, DeleteForever } from '../ui'
 
 import avatarProfile from '../../assets/images/avatar_2.gif'
-import { editComment, deleteComment } from '../../database/user'
+import { deleteComment } from '../../database/user'
 import { useState } from 'react'
 
-function YourReview({ user, newUserComment, info, type_opinion, type_id }) {
+function YourReview({
+  user,
+  setUser,
+  newUserComment,
+  info,
+  type_opinion,
+  type_id,
+  editForm,
+  setEditForm,
+}) {
   const [deleteReviewModale, setDeleteReviewModale] = useState(false)
 
   const findReview = newUserComment[type_opinion].find(
     (data) => data[type_id] === info.id,
   )
-  const yourReview = findReview.comments[0]
+  const yourReview = findReview?.comments[0]
 
-  function confirm() {
-    deleteComment(user, info, type_opinion, type_id)
+  async function confirm() {
     setDeleteReviewModale(false)
+
+    const newUser = await deleteComment(user, info, type_opinion, type_id)
+    setUser(newUser)
   }
 
   function cancel() {
@@ -55,6 +66,7 @@ function YourReview({ user, newUserComment, info, type_opinion, type_id }) {
             info={info}
             type_opinion={type_opinion}
             type_id={type_id}
+            setEditForm={setEditForm}
             setDeleteReviewModale={setDeleteReviewModale}
           />
 
@@ -99,7 +111,7 @@ function YourReview({ user, newUserComment, info, type_opinion, type_id }) {
                     mr: '10px',
                     float: 'left',
                   }}
-                  image={avatarProfile ?? user.picture}
+                  image={user.picture !== '' ? user.picture : avatarProfile}
                   alt={`Avatar of ${user.name}`}
                 />
                 <Box>
@@ -109,7 +121,7 @@ function YourReview({ user, newUserComment, info, type_opinion, type_id }) {
                     }}
                   >
                     {user.name} | Published the
-                    {yourReview.create_at.toLocaleString()} |
+                    {yourReview.create_at} |
                     {/* Updated the {dateUpdated.toLocaleString()} */}
                   </Typography>
                   <Typography>{yourReview.title}</Typography>
@@ -145,6 +157,7 @@ function EditOrDeleteBtn({
   info,
   type_opinion,
   type_id,
+  setEditForm,
   setDeleteReviewModale,
 }) {
   return (
@@ -159,15 +172,14 @@ function EditOrDeleteBtn({
       >
         <Edit
           fontSize="large"
-          onClick={() => editComment(user, info, type_opinion, type_id)}
+          onClick={() => setEditForm(true)}
           sx={{
-            ':hover': { color: 'grey', content: '"aaa"' },
+            ':hover': { color: 'grey' },
           }}
         />
         <DeleteForever
           fontSize="large"
           onClick={() => setDeleteReviewModale(true)}
-          //   onClick={() => deleteComment(user, info, type_opinion)}
           sx={{
             ':hover': { color: 'grey' },
           }}

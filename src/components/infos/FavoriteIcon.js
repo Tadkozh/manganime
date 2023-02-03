@@ -37,12 +37,11 @@ function FavoriteIcon({ info }) {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          position: 'absolute',
-          top: '0',
-          right: '5px',
+          justifyContent: 'space-between',
+          textAlign: 'center',
         }}
       >
+        <Typography>Add to favorites</Typography>
         <FavoriteRoundedIcon
           fontSize="large"
           onClick={handleClickFav}
@@ -60,7 +59,7 @@ function FavoriteIcon({ info }) {
             fontSize: '0.75rem',
           }}
         >
-          {/* {isFav ? info.favourites + 1 : info.favourites} */}
+          {isFav ? info.favourites + 1 : info.favourites}
         </Typography>
       </Box>
     )

@@ -1,36 +1,65 @@
+import { useAuth } from '../../context/AuthContext'
 import { useParams } from 'react-router-dom'
+import { useInfos } from '../../hooks/queriesHooks'
+
+import { useEffect, useMemo, useState } from 'react'
+
 import { Box, Button, Grid } from '../ui'
 
 // Constants
 import { ANIME } from '../../commons/constants'
 
 // Components
-import { useInfos } from '../../hooks/queriesHooks'
 import NavBarInfo from '../NavBarInfo'
-import InfoDetails from './InfoDetails'
-import YourReview from './YourReview'
-import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
-import InfoReviews from './InfoReviews'
 import InfoSynopsis from './InfoSynopsis'
-import { useAuth } from '../../context/AuthContext'
+import InfoDetails from './InfoDetails'
+import InfoForm from './InfoForm'
+import YourReview from './YourReview'
+import InfoReviews from './InfoReviews'
 
 function Infos() {
+  const { data: authUser, setData: setAuthUser } = useAuth()
+  const newUserComment = structuredClone(authUser)
+
   let { type, id } = useParams()
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]
 
-  const { data: authUser } = useAuth()
-  const newUserComment = structuredClone(authUser)
+  const [editForm, setEditForm] = useState(false)
+  const [formNoteValue, setFormNoteValue] = useState()
+  const [formTitleValue, setFormTitleValue] = useState()
+  const [formCommentValue, setFormCommentValue] = useState()
 
   const type_opinion =
     info?.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
 
   const type_id = info?.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
-  const hasUserLetOpinion = newUserComment[type_opinion].some(
+  const searchBySome = newUserComment[type_opinion].some(
     (opinion) => opinion[type_id] === info?.id,
   )
+  const searchByIndex = newUserComment[type_opinion].findIndex(
+    (opinion) => opinion[type_id] === info?.id,
+  )
+
+  const userOpinion = useMemo(
+    () => (editForm ? false : searchBySome),
+    [editForm, searchBySome],
+  )
+
+  useEffect(() => {
+    const actualNote =
+      newUserComment[type_opinion][searchByIndex]?.comments[0]?.note
+    const actualTitle =
+      newUserComment[type_opinion][searchByIndex]?.comments[0]?.title
+    const actualComment =
+      newUserComment[type_opinion][searchByIndex]?.comments[0]?.message
+
+    setFormTitleValue(actualTitle)
+    setFormCommentValue(actualComment)
+    setFormNoteValue(actualNote)
+  }, [newUserComment, searchByIndex, type_opinion])
 
   return (
     info && (
@@ -100,16 +129,26 @@ function Infos() {
 
           {type === ANIME && <Trailer info={info.trailer} />}
 
-          {hasUserLetOpinion ? (
+          {userOpinion ? (
             <YourReview
               user={authUser}
+              setUser={setAuthUser}
               newUserComment={newUserComment}
               info={info}
               type_opinion={type_opinion}
               type_id={type_id}
+              editForm={editForm}
+              setEditForm={setEditForm}
             />
           ) : (
-            <InfoForm info={info} />
+            <InfoForm
+              info={info}
+              editForm={editForm}
+              setEditForm={setEditForm}
+              formNoteValue={formNoteValue}
+              formTitleValue={formTitleValue}
+              formCommentValue={formCommentValue}
+            />
           )}
           <InfoReviews />
         </Box>

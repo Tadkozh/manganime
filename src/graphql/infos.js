@@ -26,6 +26,9 @@ export const INFOS_REQUEST = gql`
           thumbnail
         }
 
+        # FAVORITE ICON
+        favourites
+
         # SYNOPSIS
         description(asHtml: true)
 

@@ -11,77 +11,62 @@ const updateProfileUser = (user, userCurrent) => {
   return newUser
 }
 
-const updateComment = (user, info, note, comment) => {
+const updateComment = async (
+  user,
+  info,
+  note,
+  comment,
+  setEditForm,
+  commentTitle,
+  commentValue,
+) => {
   const newUserComment = structuredClone(user)
   const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
   const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
 
-  const fullComment = {
-    create_at: new Date().toISOString(),
-    note: note,
-    title: comment.title,
-    message: comment.comment,
-  }
-
-  const commentArray = []
-  commentArray.push(fullComment)
-
-  const isItemId = newUserComment[type_opinion].some(
+  const itemIndex = newUserComment[type_opinion].findIndex(
     (opinion) => opinion[type_id] === info.id,
   )
 
-  if (!isItemId) {
+  if (itemIndex === -1) {
     const commentdb = {
       [type_id]: info.id,
-      comments: commentArray,
+      comments: [
+        {
+          create_at: new Date().toISOString(),
+          note,
+          title: comment.title,
+          message: comment.comment,
+        },
+      ],
     }
 
     newUserComment[type_opinion].push(commentdb)
     updateUserCurrent(newUserComment)
+  } else {
+    const editedComment = {
+      create_at: newUserComment[type_opinion][itemIndex].comments[0].create_at,
+      note,
+      title: commentTitle,
+      message: commentValue,
+    }
+
+    newUserComment[type_opinion][itemIndex].comments[0] = editedComment
+    updateUserCurrent(newUserComment)
   }
+
+  setEditForm(false)
+
+  return getUserById()
 }
 
-function editComment(user, info, type_opinion, type_id) {}
-
-function deleteComment(user, info, type_opinion, type_id) {
+async function deleteComment(user, info, type_opinion, type_id) {
   const comments = structuredClone(user[type_opinion])
   const index = comments.findIndex((anime) => anime[type_id] === info.id)
 
   updateUserCurrent({ [type_opinion]: arrayRemove(comments[index]) })
 
-  // A QUOI CA SERT :
-  // return getUserById()
-}
-
-const updateRating = (info, rating, user) => {
-  const newUserRate = structuredClone(user)
-  const type_opinion = info.type === 'ANIME' ? 'anime_opinion' : 'manga_opinion'
-  const type_id = info.type === 'ANIME' ? 'anime_id' : 'manga_id'
-
-  const isItemId = newUserRate[type_opinion].some(
-    (opinion) => opinion[type_id] === info.id,
-  )
-  if (isItemId) {
-    newUserRate[type_opinion].map((opinion, key) => {
-      if (opinion[type_id] === info.id) {
-        let newOpinion
-        if (!opinion?.rate) {
-          newOpinion = { ...opinion, rate: rating }
-
-          return (newUserRate[type_opinion][key] = newOpinion)
-        } else {
-          return (opinion.rate = rating)
-        }
-      } else {
-        return null
-      }
-    })
-  } else {
-    const ratedb = { rate: rating, [type_id]: info.id }
-    newUserRate[type_opinion].push(ratedb)
-  }
-  console.log('newUserRate', newUserRate)
-  updateUserCurrent(newUserRate)
+  return getUserById()
 }
 
 const updateStat = async (name, infos, user) => {
@@ -167,10 +152,8 @@ export {
   userPicture,
   updateProfileUser,
   updateUserCurrent,
-  updateRating,
   updateFavorite,
   updateComment,
-  editComment,
   deleteComment,
   updateStat,
   getUserbyUid,
