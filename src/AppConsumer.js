@@ -30,17 +30,12 @@ import Infos from './components/infos/Infos'
 import Streaming from './components/streaming/Streaming'
 import Recommendations from './components/recommendations/Recommendations'
 
-import ModalOri from './components/ModalOri'
-
 const AppConsumer = () => {
   return (
     <Router>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <MangAnimeHeader />
         <Routes>
-          {/* route provisoire */}
-          <Route path="/modal" element={<ModalOri />} />
-
           <Route path={ROUTE_HOME} element={<MangAnime />} />
           <Route path={ROUTE_LOGIN_REGISTER} element={<LoginRegister />} />
           <Route path={ROUTE_SEARCH_ANIME} element={<SearchAnime />} />
