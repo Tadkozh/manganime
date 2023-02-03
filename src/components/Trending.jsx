@@ -26,11 +26,18 @@ const Trending = ({ type, limit }) => {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             marginLeft: '1em',
+            marginBottom: '1em',
             textShadow: `${theme.palette.background.topIcon} 1px 0 0`,
           }}
         >
-          <Link to={urlTrend}>Trending {type}</Link>
-          {/* Trending {type} */}
+          <Link
+            style={{
+              textDecoration: 'none',
+            }}
+            to={urlTrend}
+          >
+            Trending {type}
+          </Link>
         </Typography>
         <Box
           sx={{
