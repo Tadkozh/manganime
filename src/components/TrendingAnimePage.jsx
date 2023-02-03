@@ -1,8 +1,8 @@
 import Trending from './Trending'
 import { ANIME } from '../commons/constants'
 
-const TrendingAnimePage = () => {
-  const limit = 5000
+const TrendingAnimePage = (limit) => {
+  limit = 5000
 
   return (
     <>
