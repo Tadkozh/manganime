@@ -9,8 +9,8 @@ const MangAnime = () => {
       <CarouselBox />
       <TopDetails isHomePage type={ANIME} />
       <TopDetails isHomePage type={MANGA} />
-      <Trending isHomePage type={ANIME} />
-      <Trending isHomePage type={MANGA} />
+      <Trending type={ANIME} />
+      <Trending type={MANGA} />
     </>
   )
 }
