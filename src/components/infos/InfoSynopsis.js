@@ -1,23 +1,36 @@
-import { Box, Paper, Typography } from '../ui'
+import { useState } from 'react'
+import { Box, Button, Paper, Typography } from '../ui'
 
-function InfoSynopsis({ synopsis, title }) {
+function InfoSynopsis({ info }) {
+  const [readSynopsis, setReadSynopsis] = useState(false)
+
   return (
     <Paper
       sx={{
         m: 2,
-        py: 2,
+        p: 2,
       }}
     >
-      <Typography component="h2" variant="h5" sx={{ m: 1, mb: 3 }}>
-        {title?.romaji ?? title?.english}
+      <Typography component="h3" variant="h4" sx={{ my: 1 }}>
+        Synopsis:
       </Typography>
       <Box
-        sx={{
-          p: '0 10px',
-          overflowY: 'auto',
-        }}
-        dangerouslySetInnerHTML={{ __html: synopsis }}
+        sx={{ maxHeight: readSynopsis ? 'auto' : '200px', overflow: 'hidden' }}
+        dangerouslySetInnerHTML={{ __html: info?.description }}
       ></Box>
+
+      <Button
+        variant="contained"
+        onClick={() => setReadSynopsis(!readSynopsis)}
+        sx={{
+          m: '10px auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        {readSynopsis ? 'Read less' : 'Read more'}
+      </Button>
     </Paper>
   )
 }

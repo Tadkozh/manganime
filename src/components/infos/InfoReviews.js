@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useReviews, useTitle } from '../../hooks/queriesHooks'
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -19,6 +21,8 @@ function InfoReviews() {
 
   const reviews = useReviews(type, id)
   const info = reviews?.Page?.media[0]?.reviews?.nodes
+
+  const [moreReviews, setMoreReviews] = useState(3)
 
   return (
     info && (
@@ -41,11 +45,12 @@ function InfoReviews() {
               variant="h4"
               sx={{
                 p: '10px',
-                m: '10px 0',
+                ml: 1,
               }}
             >
               {info.length} Review{info.length !== 1 && 's'} about {title}
             </Typography>
+
             {info.map((data, index) => {
               const timestampCreated = info[index].createdAt
               const dateCreated = new Date(timestampCreated * 1000)
@@ -53,9 +58,23 @@ function InfoReviews() {
               const dateUpdated = new Date(timestampUpdated * 1000)
 
               return (
-                <Review data={data} create={dateCreated} update={dateUpdated} />
+                index < moreReviews && (
+                  <Review
+                    data={data}
+                    create={dateCreated}
+                    update={dateUpdated}
+                  />
+                )
               )
             })}
+
+            <Button
+              variant="contained"
+              onClick={() => setMoreReviews(moreReviews + 3)}
+              sx={{ mx: 'auto' }}
+            >
+              See more reviews
+            </Button>
           </Box>
         )}
       </>
@@ -64,44 +83,86 @@ function InfoReviews() {
 }
 
 const Review = ({ data, create, update }) => {
+  const [readReview, setReadReview] = useState(false)
+
   return (
-    <Card
-      sx={{
-        p: 1,
-        mb: 3,
-      }}
-    >
-      <CardHeader
-        avatar={
-          <Avatar
-            src={data.user.avatar.medium}
-            variant="circular"
-            sx={{ height: '65px', width: '65px' }}
-          />
-        }
-        title={`${data.user.name} | Published the
-                        ${create.toLocaleString()} | Updated the
-                        ${update.toLocaleString()}`}
-        subheader={data.summary}
-        action={
-          <Rating
-            name="rating"
-            value={data.score / 20}
-            precision={0.5}
-            readOnly
-          />
-        }
-      />
-      <CardContent>
-        <Typography
-          variant="body1"
-          dangerouslySetInnerHTML={{
-            __html: data.body,
+    <>
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          p: 1,
+          m: 2,
+          border: 'solid 1px',
+        }}
+      >
+        <Box
+          sx={{
+            maxHeight: readReview ? 'auto' : '300px',
+            overflowY: 'hidden',
           }}
-          sx={{ p: 2, overflowX: 'hidden', width: '100%' }}
-        />
-      </CardContent>
-    </Card>
+        >
+          <CardHeader
+            avatar={
+              <Avatar
+                src={data.user.avatar.medium}
+                variant="circular"
+                sx={{
+                  width: '65px',
+                  height: '65px',
+                }}
+              />
+            }
+            title={
+              <>
+                <Rating
+                  name="rating"
+                  value={data.score / 20}
+                  precision={0.5}
+                  readOnly
+                  sx={{ mr: 0 }}
+                />
+                <br />
+                {data.user.name}
+                <br />
+                {data.summary}
+              </>
+            }
+            subheader={
+              <>
+                Published the {create.toLocaleString()}
+                <br />
+                Updated the {update.toLocaleString()}
+              </>
+            }
+            // action={
+            //   <Rating
+            //     name="rating"
+            //     value={data.score / 20}
+            //     precision={0.5}
+            //     readOnly
+            //   />
+            // }
+          />
+          <CardContent>
+            <Typography
+              variant="body1"
+              dangerouslySetInnerHTML={{
+                __html: data.body,
+              }}
+              sx={{ p: 2, width: '100%' }}
+            />
+          </CardContent>
+        </Box>
+        <Button
+          variant="contained"
+          onClick={() => setReadReview(!readReview)}
+          sx={{ mt: 1, mx: 'auto' }}
+        >
+          {readReview ? 'Read less' : 'Read full review'}
+        </Button>
+      </Card>
+    </>
   )
 }
 

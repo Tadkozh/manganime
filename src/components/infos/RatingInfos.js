@@ -8,7 +8,6 @@ import StarIcon from '@mui/icons-material/Star'
 
 import Modale from '../Modal'
 
-
 function RatingItem({
   name,
   defaultValue,
@@ -79,13 +78,18 @@ function PersonalRating({ info, nbStar, setNbStar }) {
 function GlobalRating({ info }) {
   return (
     <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-      }}
+      sx={
+        {
+          // display: 'flex',
+          // flexDirection: 'column',
+          // alignItems: 'center',
+          // justifyContent: 'center',
+          // justifyItems: 'center',
+          // textAlign: 'center',
+          // my: '10px',
+          // mt: 2,
+        }
+      }
     >
       {/* <Typography component="legend">Global note:</Typography> */}
       <RatingItem
@@ -103,4 +107,3 @@ function GlobalRating({ info }) {
 }
 
 export { GlobalRating, PersonalRating }
-
