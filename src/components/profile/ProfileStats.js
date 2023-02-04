@@ -33,42 +33,46 @@ const statsColor = [
 ]
 
 const sumOfStats = (stats, arrayType) => {
-  return stats
-    .map((stat) => stat[arrayType].length)
-    .reduce((total, actual) => actual + total)
+  if (stats && stats.length > 0) {
+    return stats
+      .map((stat) => stat[arrayType].length)
+      .reduce((total, actual) => actual + total)
+  }
 }
 
 const ProfileStats = ({ stats, type }) => {
   const arrayType = type === ANIME ? 'animeId' : 'mangaId'
-  const totalStats = sumOfStats(stats, arrayType)
+  const totalStats = stats ? sumOfStats(stats, arrayType) : null
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h6">{capFirstLetter(type)} Stats</Typography>
       <Divider />
       <Container>
-        {stats.map((stat, key) => (
-          <Container
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              m: 1,
-            }}
-            key={stat.name}
-          >
-            <CircleIcon
-              sx={{ color: statsColor[key].color }}
-              key={stat.name + key}
-            />
-            <Stat
-              name={stat.name}
-              number={stat[arrayType].length}
-              key={key}
-              type={type}
-              forList
-            />
-          </Container>
-        ))}
+        {stats
+          ? stats.map((stat, key) => (
+              <Container
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  m: 1,
+                }}
+                key={stat.name}
+              >
+                <CircleIcon
+                  sx={{ color: statsColor[key].color }}
+                  key={stat.name + key}
+                />
+                <Stat
+                  name={stat.name}
+                  number={stat[arrayType].length}
+                  key={key}
+                  type={type}
+                  forList
+                />
+              </Container>
+            ))
+          : null}
         <Stat
           name={'Total Entries'}
           number={totalStats}

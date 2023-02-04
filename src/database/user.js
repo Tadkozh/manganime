@@ -73,7 +73,6 @@ async function deleteComment(user, info, type_opinion, type_id) {
 const updateStat = async (name, infos, user) => {
   const newUserStat = structuredClone(user)
   const userStats = newUserStat?.stats
-  console.log('user stat', userStats)
   const newStat = { name: name, animeId: [], mangaId: [] }
   const idContent = infos?.type === 'ANIME' ? 'animeId' : 'mangaId'
   const isNameStatExist = userStats?.some((array) => array?.name === name)
@@ -97,7 +96,6 @@ const updateStat = async (name, infos, user) => {
   }
 
   userStats?.find((array) => array?.name === name)[idContent]?.push(infos?.id)
-  // console.log('newUserStat', newUserStat)
   updateUserCurrent(newUserStat)
   return getUserById()
 }
