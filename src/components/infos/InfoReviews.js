@@ -60,6 +60,7 @@ function InfoReviews() {
               return (
                 index < moreReviews && (
                   <Review
+                    key={index}
                     data={data}
                     create={dateCreated}
                     update={dateUpdated}
