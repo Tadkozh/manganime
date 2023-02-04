@@ -1,4 +1,4 @@
-import { Paper, Tab, Tabs, useTheme } from '@mui/material'
+import { Paper, Tab, Tabs, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import { PROFILE } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
@@ -58,7 +58,9 @@ export default function ProfileStatNav() {
               ))}
             </Tabs>
           </>
-        ) : null}
+        ) : (
+          'NO ANIMES OR MANGAS TO YOUR LIST YET, ADD SOME !'
+        )}
       </Paper>
     </>
   )
