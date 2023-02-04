@@ -70,7 +70,7 @@ function YourReview({ info, setEditForm }) {
   )
 }
 
-const Review = ({ user, yourReview, editReview, deleteReview }) => {
+function Review({ user, yourReview, editReview, deleteReview }) {
   return (
     <Card
       sx={{

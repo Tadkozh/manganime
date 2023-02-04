@@ -2,22 +2,20 @@ import { useParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useInfos } from '../../hooks/queriesHooks'
 
-import { useEffect, useMemo, useState } from 'react'
-
-import { Box, Button, Grid } from '../ui'
+import { Box, Button, Grid, Typography } from '../ui'
 
 // Constants
 import { ANIME } from '../../commons/constants'
 
 // Components
-import { getTypeId, getTypeOpinion } from '../../database/user'
 import NavBarInfo from '../NavBarInfo'
-import InfoDetails from './InfoDetails'
-import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
-import InfoReviews from './InfoReviews'
+import { GlobalRating } from './RatingInfos'
 import InfoSynopsis from './InfoSynopsis'
-import YourReview from './YourReview'
+import InfoDetails from './InfoDetails'
+import FormOrReview from './FormOrReview'
+import InfoForm from './InfoForm'
+import InfoReviews from './InfoReviews'
 
 function Infos() {
   const { data: authUser } = useAuth()
@@ -31,97 +29,70 @@ function Infos() {
       <>
         <NavBarInfo />
         <Box
-          component={'img'}
+          component="img"
           src={info?.bannerImage}
           sx={{
-            backgroundRepeat: 'no-repeat',
-            objectFit: 'cover',
-            height: '400px',
+            display: { xs: 'none', md: 'block' },
             width: '100%',
+            height: { md: '200px', lg: '400px' },
+            objectFit: 'cover',
             backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
           }}
         />
+
+        <Box sx={{ display: { md: 'none' }, textAlign: 'center' }}>
+          <Typography component="h2" variant="h3" sx={{ mt: 2, mx: 'auto' }}>
+            {info?.title?.romaji ?? info?.title?.english}
+          </Typography>
+          <GlobalRating info={info} />
+        </Box>
+
         <Grid
           container
           sx={{
             p: 1,
           }}
         >
-          <Grid item xs={12} lg={3} xl={3} sx={{ my: 'auto', mt: '-5%' }}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={3}
+            lg={3}
+            xl={3}
+            sx={{
+              my: '0',
+              mt: { md: '-5%' },
+            }}
+          >
             <InfoPresentation info={info} />
-          </Grid>
-          <Grid item xs={12} lg={8} xl={8}>
-            <InfoSynopsis synopsis={info?.description} title={info?.title} />
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          sx={{
-            p: 1,
-          }}
-        >
-          <Grid item xs={12} lg={3} xl={3}>
             <InfoDetails info={info} />
           </Grid>
-          <Grid item xs={12} lg={8} xl={8} sx={{ height: 'fit-content' }}>
+
+          <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
+            <Box sx={{ display: { xs: 'none', md: 'block' }, ml: { md: 2 } }}>
+              <Typography component="h2" variant="h3" sx={{ my: 2 }}>
+                {info?.title?.romaji ?? info?.title?.english}
+              </Typography>
+              <GlobalRating info={info} />
+            </Box>
+
+            <InfoSynopsis info={info} />
+
             {type === ANIME && <Trailer info={info?.trailer} />}
-            <Reviews info={info} user={authUser} />
+
+            {authUser ? (
+              <FormOrReview info={info} user={authUser} />
+            ) : (
+              <InfoForm />
+            )}
+
+            <InfoReviews />
           </Grid>
         </Grid>
       </>
     )
-  )
-}
-
-const Reviews = ({ info, user }) => {
-  const [editForm, setEditForm] = useState(false)
-  const [formNoteValue, setFormNoteValue] = useState()
-  const [formTitleValue, setFormTitleValue] = useState()
-  const [formCommentValue, setFormCommentValue] = useState()
-
-  const type_opinion = getTypeOpinion(info?.type)
-  const type_id = getTypeId(info?.type)
-
-  const searchBySome = user[type_opinion].some(
-    (opinion) => opinion[type_id] === info?.id,
-  )
-  console.log(searchBySome)
-  const searchByIndex = user[type_opinion].findIndex(
-    (opinion) => opinion[type_id] === info?.id,
-  )
-  const userOpinion = useMemo(
-    () => (editForm ? false : searchBySome),
-    [editForm, searchBySome],
-  )
-
-  useEffect(() => {
-    const actualNote = user[type_opinion][searchByIndex]?.comments[0]?.note
-    const actualTitle = user[type_opinion][searchByIndex]?.comments[0]?.title
-    const actualComment =
-      user[type_opinion][searchByIndex]?.comments[0]?.message
-
-    setFormTitleValue(actualTitle)
-    setFormCommentValue(actualComment)
-    setFormNoteValue(actualNote)
-  }, [user, searchByIndex, type_opinion])
-  return (
-    <>
-      <>
-        {userOpinion ? (
-          <YourReview info={info} setEditForm={setEditForm} />
-        ) : (
-          <InfoForm
-            info={info}
-            editForm={editForm}
-            setEditForm={setEditForm}
-            formNoteValue={formNoteValue}
-            formTitleValue={formTitleValue}
-            formCommentValue={formCommentValue}
-          />
-        )}
-      </>
-      <InfoReviews />
-    </>
   )
 }
 

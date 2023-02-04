@@ -1,5 +1,6 @@
 import { Box, Paper, Typography } from '../ui'
-import { useTheme } from '@mui/material'
+import { Button, useTheme } from '@mui/material'
+import { useState } from 'react'
 
 function InfoDetails({ info }) {
   const theme = useTheme()
@@ -138,46 +139,84 @@ function InfoDetails({ info }) {
     },
   ]
 
+  const [seeDetails, setSeeDetails] = useState(false)
+
   return (
-    <Paper sx={{ mx: 'auto', p: 2, width: '230px' }}>
-      {details.map((item, index) => {
-        if (details[index].data !== unknown) {
-          return (
-            <Box
-              key={index + 'box'}
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                margin: '5px auto',
-              }}
-            >
-              {item?.data ? (
-                <>
-                  <Typography
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                    key={index + 'details'}
-                  >
-                    {item.label}
-                  </Typography>
-                  {item.label === 'Studios' || item.label === 'Genres' ? (
-                    item.data
-                  ) : (
+    <>
+      <DetailledInfosBtn
+        seeDetails={seeDetails}
+        setSeeDetails={setSeeDetails}
+      />
+
+      <Paper
+        sx={{
+          display: { xs: seeDetails ? 'grid' : 'none', md: 'block' },
+          gridTemplateColumns: 'repeat(auto-fit, 200px)',
+          gridTemplateRows: 'repeat(auto-fit, auto)',
+          justifyContent: 'center',
+          position: 'sticky',
+          top: '100px',
+          width: { xs: 'auto', md: '230px' },
+          maxHeight: { md: '80vh' },
+          textAlign: 'center',
+          p: 2,
+          mx: { xs: 2, md: 'auto' },
+          overflowY: { md: 'scroll' },
+          // border: 'solid red',
+        }}
+      >
+        {details.map((item, index) => {
+          if (details[index].data !== unknown) {
+            return (
+              <Box
+                key={index + 'box'}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '5px auto',
+                  // border: 'solid blue',
+                  width: '100%',
+                }}
+              >
+                {item?.data && (
+                  <>
+                    <Typography key={index + 'details'}>
+                      {item.label}
+                    </Typography>
+
                     <Typography sx={{ color: theme.palette.text.secondary }}>
                       {item.data}
                     </Typography>
-                  )}
-                </>
-              ) : null}
-            </Box>
-          )
-        } else {
-          return null
-        }
-      })}
-    </Paper>
+                  </>
+                )}
+              </Box>
+            )
+          } else {
+            return null
+          }
+        })}
+      </Paper>
+    </>
+  )
+}
+
+function DetailledInfosBtn({ seeDetails, setSeeDetails }) {
+  return (
+    <Box
+      sx={{
+        display: { xs: 'flex', md: 'none' },
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Button
+        variant="contained"
+        onClick={() => setSeeDetails(!seeDetails)}
+        sx={{ m: '10px auto' }}
+      >
+        {seeDetails ? 'Hide' : 'See'} detailled infos
+      </Button>
+    </Box>
   )
 }
 
