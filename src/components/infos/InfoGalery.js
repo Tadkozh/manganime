@@ -8,21 +8,21 @@ function InfoGalery({ info }) {
 
   const [isOpen, setIsOpen] = React.useState(false)
 
-  return info ? (
-    <>
-      <Box
-        component="img"
-        src={info.coverImage.large}
-        alt={`Poster of the ${collectionType}`}
-        onClick={() => setIsOpen(!isOpen)}
-        sx={{
-          maxWidth: 'fit-content',
-        }}
-      />
+  return (
+    info && (
+      <>
+        <Box
+          component="img"
+          src={info.coverImage.large}
+          alt={`Poster of the ${collectionType}`}
+          onClick={() => setIsOpen(!isOpen)}
+          sx={{ maxWidth: 'fit-content' }}
+        />
 
-      <ModalImage info={info} open={isOpen} setIsOpen={setIsOpen} />
-    </>
-  ) : null
+        <ModalImage info={info} open={isOpen} setIsOpen={setIsOpen} />
+      </>
+    )
+  )
 }
 
 const sxModalImage = {
@@ -30,7 +30,7 @@ const sxModalImage = {
   top: '50%',
   left: '50%',
   flexGrow: 1,
-  transform: 'translate(-50%,-50%)',
+  transform: 'translate(-50%, -50%)',
   height: '80%',
   bgcolor: 'background.paper',
 }
@@ -41,7 +41,7 @@ function ModalImage({ info, open, setIsOpen }) {
   return (
     <Modal
       open={open}
-      onClose={() => setIsOpen(false)}
+      onClick={() => setIsOpen(false)}
       aria-labelledby="modalLargeImage"
       aria-describedby={`modal for large image of ${collectionType}`}
     >
