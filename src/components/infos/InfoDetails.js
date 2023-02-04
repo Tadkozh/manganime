@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from '../ui'
 import { Button, useTheme } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function InfoDetails({ info }) {
   const theme = useTheme()
@@ -12,12 +12,16 @@ function InfoDetails({ info }) {
   let genresData = info
     ? Object.keys(info?.genres).map((data, index) => {
         return (
-          <Typography
-            key={index + 'genres'}
-            sx={{ color: theme.palette.text.secondary }}
-          >
-            {info?.genres[data]}
-          </Typography>
+          <Box component="span" key={'wrapper' + index}>
+            <Box
+              component="span"
+              key={index + 'genres'}
+              sx={{ color: theme.palette.text.secondary }}
+            >
+              {info?.genres[data]}
+            </Box>
+            <br />
+          </Box>
         )
       })
     : null
@@ -60,12 +64,16 @@ function InfoDetails({ info }) {
   let studiosData = info
     ? Object.keys(info?.studios?.nodes).map((data, index) => {
         return (
-          <Typography
-            key={index + 'studio'}
-            sx={{ color: theme.palette.text.secondary }}
-          >
-            {info?.studios?.nodes[data]?.name}
-          </Typography>
+          <Box component="span" key={'wrapper' + index}>
+            <Box
+              component="span"
+              key={index + 'studio'}
+              sx={{ color: theme.palette.text.secondary }}
+            >
+              {info?.studios?.nodes[data]?.name}
+            </Box>
+            <br />
+          </Box>
         )
       })
     : null
@@ -141,6 +149,15 @@ function InfoDetails({ info }) {
 
   const [seeDetails, setSeeDetails] = useState(false)
 
+  const [detailsHeight, setDetailsHeight] = useState(0)
+  const screenHeight = window.innerHeight
+
+  useEffect(() => {
+    const el = document.getElementById('stickyDetails')
+
+    setDetailsHeight(el.offsetHeight)
+  }, [])
+
   return (
     <>
       <DetailledInfosBtn
@@ -149,20 +166,22 @@ function InfoDetails({ info }) {
       />
 
       <Paper
+        id="stickyDetails"
         sx={{
           display: { xs: seeDetails ? 'grid' : 'none', md: 'block' },
           gridTemplateColumns: 'repeat(auto-fit, 200px)',
-          gridTemplateRows: 'repeat(auto-fit, auto)',
           justifyContent: 'center',
-          position: 'sticky',
-          top: '100px',
+          position: { xs: 'block', md: 'sticky' },
+          top: `calc(${
+            detailsHeight -
+            screenHeight -
+            (detailsHeight - screenHeight) * 2 -
+            10
+          }px)`,
           width: { xs: 'auto', md: '230px' },
-          maxHeight: { md: '80vh' },
           textAlign: 'center',
           p: 2,
           mx: { xs: 2, md: 'auto' },
-          overflowY: { md: 'scroll' },
-          // border: 'solid red',
         }}
       >
         {details.map((item, index) => {
@@ -174,17 +193,17 @@ function InfoDetails({ info }) {
                   display: 'flex',
                   flexDirection: 'column',
                   margin: '5px auto',
-                  // border: 'solid blue',
                   width: '100%',
                 }}
               >
                 {item?.data && (
                   <>
-                    <Typography key={index + 'details'}>
-                      {item.label}
-                    </Typography>
+                    <Typography key={'label' + index}>{item.label}</Typography>
 
-                    <Typography sx={{ color: theme.palette.text.secondary }}>
+                    <Typography
+                      key={'details' + index}
+                      sx={{ color: theme.palette.text.secondary }}
+                    >
                       {item.data}
                     </Typography>
                   </>

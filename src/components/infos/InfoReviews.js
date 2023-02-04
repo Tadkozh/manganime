@@ -100,7 +100,7 @@ const Review = ({ data, create, update }) => {
         <Box
           sx={{
             maxHeight: readReview ? 'auto' : '300px',
-            overflowY: 'hidden',
+            overflow: 'hidden',
           }}
         >
           <CardHeader
@@ -146,7 +146,8 @@ const Review = ({ data, create, update }) => {
             // }
           />
           <CardContent>
-            <Typography
+            <Box
+              component="div"
               variant="body1"
               dangerouslySetInnerHTML={{
                 __html: data.body,
