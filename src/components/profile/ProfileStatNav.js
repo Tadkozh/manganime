@@ -47,7 +47,7 @@ export default function ProfileStatNav() {
                   component={Link}
                   value={getUrl([PROFILE, category, stat?.name.toLowerCase()])}
                   sx={{
-                    '&:hover, &focus': {
+                    '&:hover,&:focus': {
                       boxShadow: `inset 0 0 10px ${theme.palette.primary[500]}}`,
                     },
                   }}
