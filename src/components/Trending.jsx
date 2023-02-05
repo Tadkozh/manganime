@@ -29,6 +29,7 @@ const Trending = ({ type, limit }) => {
           <Link
             style={{
               textDecoration: 'none',
+              color: 'inherit',
             }}
             to={urlTrend}
           >
