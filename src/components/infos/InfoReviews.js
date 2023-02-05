@@ -147,12 +147,10 @@ const Review = ({ data, create, update }) => {
           />
           <CardContent>
             <Box
-              component="div"
-              variant="body1"
               dangerouslySetInnerHTML={{
                 __html: data.body,
               }}
-              sx={{ p: 2, width: '100%' }}
+              sx={{ p: 2, width: '100%', '& img,& video': { width: '100%' } }}
             />
           </CardContent>
         </Box>
