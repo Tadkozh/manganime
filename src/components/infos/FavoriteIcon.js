@@ -25,7 +25,6 @@ function FavoriteIcon({ info }) {
       setIsFav(!isFav)
       const newUser = await updateFavorite(info, authUser)
       setData(newUser)
-      console.log(newUser)
     }
   }
 

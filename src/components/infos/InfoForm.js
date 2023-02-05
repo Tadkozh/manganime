@@ -33,7 +33,6 @@ function InfoForm({
   const [commentValue, setCommentValue] = useState(
     editForm ? formCommentValue : '',
   )
-  console.log('commentTitle', commentTitle)
   const [comment, setComment] = useState(false)
   const changeComment = setComment
 

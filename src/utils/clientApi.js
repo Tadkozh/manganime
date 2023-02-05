@@ -3,7 +3,6 @@ import { GraphQLClient } from 'graphql-request'
 import { ANIME_LIST_API } from '../commons/constants'
 
 const clientApi = async (endpoint, API) => {
-  console.log('REQUEST', `${API}/${endpoint}`)
   return await axios
     .get(`${API}/${endpoint}`)
     .then((data) => data?.data)

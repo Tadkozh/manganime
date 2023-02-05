@@ -10,10 +10,6 @@ import { CardImage } from './ui/CardImage'
 const Trending = ({ type, limit }) => {
   const theme = useTheme()
   const data = useTrend(type, limit)
-
-  console.log(data?.Page?.media)
-  console.log(type)
-
   const urlTrend = getUrl([type, TREND])
 
   return (

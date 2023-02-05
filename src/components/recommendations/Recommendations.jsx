@@ -18,8 +18,6 @@ const Recommendations = () => {
 
   const data = useRecommendations(type, id)
 
-  console.log(data.Page.recommendations)
-
   let directives = ''
   if (data?.Page?.recommendations.length === 0) {
     directives = `No recommendation currently.`
