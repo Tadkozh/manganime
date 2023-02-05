@@ -1,9 +1,10 @@
 import React from 'react'
-import { ANIME, LOADING, MANGA, SUCCESS } from '../../commons/constants'
+import { ANIME, INFOS, LOADING, MANGA, SUCCESS } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { useFavorites } from '../../hooks/queriesHooks'
-import { getImageName } from '../../utils/helper'
+import { getImageName, getUrl } from '../../utils/helper'
 import { ProfileLastUpdateSkeleton } from '../skeletons/ProfileLastUpdateSkeleton'
+import { Link as LinkRouter } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -164,12 +165,18 @@ const LastFavourites = ({ type, lastest }) => {
           </>
         ) : (
           items?.map((item, key) => (
-            <Card
-              sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}
-              key={key + getImageName(item?.coverImage.medium)}
+            <LinkRouter
+              key={key + item.id}
+              to={getUrl([type, INFOS, item?.id])}
+              style={{ textDecoration: 'none' }}
             >
-              <PosterImage data={item} key={key} />
-            </Card>
+              <Card
+                sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}
+                key={key + getImageName(item?.coverImage.medium)}
+              >
+                <PosterImage data={item} key={key} />
+              </Card>
+            </LinkRouter>
           ))
         )}
       </Grid>
