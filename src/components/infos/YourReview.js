@@ -81,7 +81,7 @@ function Review({ user, yourReview, editReview, deleteReview }) {
       <CardHeader
         avatar={
           <Avatar
-            src={user.picture !== '' ? user.picture : avatarProfile}
+            src={user?.picture_name ? user.picture_url : avatarProfile}
             variant="circular"
             sx={{ height: '65px', width: '65px' }}
           />
