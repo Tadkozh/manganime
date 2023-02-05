@@ -16,6 +16,7 @@ function InfoSynopsis({ info }) {
         m: 2,
         p: 2,
       }}
+      elevation={12}
     >
       <Typography component="h3" variant="h4" sx={{ my: 1 }}>
         Synopsis:
