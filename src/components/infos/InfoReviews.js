@@ -24,6 +24,8 @@ function InfoReviews() {
 
   const [moreReviews, setMoreReviews] = useState(3)
 
+  const iseReviewLeft = info?.length - 1 - moreReviews >= 4
+
   return (
     info && (
       <>
@@ -48,7 +50,7 @@ function InfoReviews() {
                 ml: 1,
               }}
             >
-              {info.length} Review{info.length !== 1 && 's'} about {title}
+              {info.length - 1} Review{info.length !== 1 && 's'} about {title}
             </Typography>
 
             {info.map((data, index) => {
@@ -68,14 +70,21 @@ function InfoReviews() {
                 )
               )
             })}
-
-            <Button
-              variant="contained"
-              onClick={() => setMoreReviews(moreReviews + 3)}
-              sx={{ mx: 'auto' }}
-            >
-              See more reviews
-            </Button>
+            {info?.length > 3 && moreReviews < info?.length - 1 ? (
+              <Button
+                variant="contained"
+                onClick={() =>
+                  setMoreReviews(
+                    iseReviewLeft
+                      ? moreReviews + 3
+                      : info.length - 1 - moreReviews + moreReviews,
+                  )
+                }
+                sx={{ mx: 'auto' }}
+              >
+                See more reviews
+              </Button>
+            ) : null}
           </Box>
         )}
       </>
@@ -94,8 +103,9 @@ const Review = ({ data, create, update }) => {
           flexDirection: 'column',
           p: 1,
           m: 2,
-          border: 'solid 1px',
+          // border: 'solid 1px',
         }}
+        elevation={12}
       >
         <Box
           sx={{

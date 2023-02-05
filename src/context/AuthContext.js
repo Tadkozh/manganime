@@ -67,9 +67,9 @@ const AuthProviders = ({ children }) => {
   )
 
   const login = React.useCallback(
-    (email, password) => {
+    async (email, password) => {
       try {
-        signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, email, password)
       } catch (err) {
         setError(errorAuth(err))
       }

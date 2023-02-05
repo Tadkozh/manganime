@@ -24,15 +24,17 @@ function Infos() {
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]
 
+  const isBanner = info?.bannerImage ? true : false
+
   return (
     info && (
       <>
         <NavBarInfo />
         <Box
-          component="img"
+          component={isBanner ? 'img' : 'div'}
           src={info?.bannerImage}
           sx={{
-            display: { xs: 'none', md: 'block' },
+            display: { xs: 'none', md: isBanner ? 'block' : 'none' },
             width: '100%',
             height: { md: '200px', lg: '400px' },
             objectFit: 'cover',
@@ -63,7 +65,7 @@ function Infos() {
             xl={3}
             sx={{
               my: '0',
-              mt: { md: '-5%' },
+              mt: { md: isBanner ? '-5%' : 1 },
             }}
           >
             <InfoPresentation info={info} />

@@ -182,6 +182,7 @@ function InfoDetails({ info }) {
           p: 2,
           mx: { xs: 2, md: 'auto' },
         }}
+        elevation={12}
       >
         {details.map((item, index) => {
           if (details[index].data !== unknown) {
