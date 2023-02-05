@@ -74,7 +74,7 @@ const ProfileStats = ({ stats, type }) => {
             ))
           : null}
         <Stat
-          name={'Total Entries'}
+          name={stats && stats?.length > 0 ? 'Total Entries' : 'No Entries'}
           number={totalStats}
           props={{ mx: -2, my: 3 }}
         />
