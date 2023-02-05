@@ -44,7 +44,7 @@ const ProfileStatView = ({ isStatOn = false }) => {
             <TopView
               datas={datas}
               isHomePage={false}
-              type={category.toUpperCase()}
+              type={category}
               rank={1}
             />
           ) : null}
