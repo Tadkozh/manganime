@@ -32,19 +32,20 @@ function FavoriteIcon({ info }) {
     info && (
       <Box
         sx={{
-          bgcolor: isFav ? 'white' : 'red',
+          bgcolor: isFav ? 'red' : 'white',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: '5px',
           height: '100%',
+          cursor: 'pointer',
         }}
+        onClick={handleClickFav}
       >
         <FavoriteRoundedIcon
           fontSize="medium"
-          onClick={handleClickFav}
-          sx={{ color: isFav ? 'red' : 'white' }}
+          sx={{ color: isFav ? 'white' : 'grey' }}
         />
         {open && (
           <Modale
