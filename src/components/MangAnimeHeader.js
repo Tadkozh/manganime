@@ -12,7 +12,7 @@ import {
   ROUTE_SEARCH_MANGA,
   ROUTE_TOP_ANIME,
   ROUTE_TOP_MANGA,
-  THEMES
+  THEMES,
 } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { ColorModeContext } from '../context/ColorModeContext'
@@ -26,7 +26,7 @@ import {
   SEARCH_ANIME,
   SEARCH_MANGA,
   TOP_ANIME,
-  TOP_MANGA
+  TOP_MANGA,
 } from '../utils/constants'
 import {
   AppBar,
@@ -43,7 +43,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  Whatshot
+  Whatshot,
 } from './ui'
 
 const HOME_CHILDREN = (
@@ -362,7 +362,7 @@ const AppBarProfile = ({ navigate }) => {
         <>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {isLoading || (image === null && !user?.picture) ? (
+              {isLoading || (image === null && isLoading) ? (
                 <Skeleton variant="circular" />
               ) : (
                 <Avatar
@@ -402,6 +402,7 @@ const AppBarProfile = ({ navigate }) => {
         <Typography
           textAlign="center"
           onClick={() => handleCloseUserMenu(settingsNotConnected)}
+          sx={{ cursor: 'pointer' }}
         >
           {settingsNotConnected}
         </Typography>
