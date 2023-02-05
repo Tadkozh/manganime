@@ -1,50 +1,54 @@
-import { useAuth } from '../../context/AuthContext'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 
-import { Box, Typography } from '@mui/material'
-import { FavoriteRoundedIcon } from '../ui'
+import { FavoriteRoundedIcon, Paper } from '../ui'
 
 import Modale from '../Modal'
 
-import { updateFavorite } from '../../database/user'
+import { getTypeFavourite, updateFavorite } from '../../database/user'
 
 function FavoriteIcon({ info }) {
-  const [isFav, setIsFav] = useState(false)
-
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
-  const { data: authUser } = useAuth()
-  let { type } = useParams()
+  const { data: authUser, setData } = useAuth()
 
-  const handleClickFav = () => {
+  const favourites = getTypeFavourite(info?.type)
+  const color = () => (authUser[favourites].includes(info.id) ? true : false)
+  const [isFav, setIsFav] = useState(authUser ? color : false)
+
+  const handleClickFav = async () => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       setIsFav(!isFav)
-      updateFavorite(type, info, authUser)
+      const newUser = await updateFavorite(info, authUser)
+      setData(newUser)
     }
   }
 
   return (
     info && (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          position: 'absolute',
-          top: '0',
-          right: '5px',
-        }}
-      >
-        <FavoriteRoundedIcon
-          fontSize="large"
+      <>
+        <Paper
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '5px',
+            height: '100%',
+            cursor: 'pointer',
+          }}
+          elevation={2}
           onClick={handleClickFav}
-          style={{ color: isFav ? 'red' : 'grey' }}
-        />
+        >
+          <FavoriteRoundedIcon
+            fontSize="medium"
+            sx={{ color: isFav ? 'red' : 'grey' }}
+          />
+        </Paper>
         {open && (
           <Modale
             open={open}
@@ -52,14 +56,7 @@ function FavoriteIcon({ info }) {
             handleCloseModal={handleCloseModal}
           />
         )}
-        <Typography
-          sx={{
-            fontSize: '0.75rem',
-          }}
-        >
-          {isFav ? info.favourites + 1 : info.favourites}
-        </Typography>
-      </Box>
+      </>
     )
   )
 }

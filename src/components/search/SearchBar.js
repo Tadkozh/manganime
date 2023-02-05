@@ -7,13 +7,12 @@ import {
   FormControl,
   FormControlLabel,
   InputLabel,
-  MenuItem,
-  Refresh,
+  MenuItem, Refresh,
   Search,
   Select,
   styled,
   Switch,
-  TextField,
+  TextField
 } from '../ui'
 
 import { fields, getSelectValues, selectValues } from './selectValues'
@@ -31,7 +30,6 @@ function SearchBar({ type, query, setQuery, resetQuery }) {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '10px',
-        m: 2,
         p: 2,
       }}
     >
@@ -51,7 +49,7 @@ function SearchBar({ type, query, setQuery, resetQuery }) {
 
       <FormControlLabel
         control={<HideHentai checked={query.isAdult} />}
-        label="Hentai"
+        label="NSFW"
         onChange={() => setQuery(ISADULT)}
       />
       <RightSearch setQuery={setQuery} resetQuery={resetQuery} />
@@ -113,7 +111,7 @@ function SelectSearch({ title, getter, handleChange, selectValues }) {
         {selectValues.map((item, index) =>
           index === 0 ? (
             <MenuItem key={index} value={item.value}>
-              <em> {item.children}</em>
+              <em>{item.children}</em>
             </MenuItem>
           ) : (
             <MenuItem key={index} value={item.value}>

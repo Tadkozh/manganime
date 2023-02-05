@@ -9,9 +9,36 @@ import {
   CardContent,
   CardMedia,
   Paper,
-  Typography,
+  Typography
 } from '../ui'
-import { useTheme } from '@mui/material'
+import { TopIcon } from './TopIcon'
+
+export const sxTopBox = (isHomePage) => ({
+  height: isHomePage ? '502px' : 'inherit',
+  marginTop: '1em',
+  overflow: 'hidden',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, 350px)',
+  justifyItems: 'center',
+  justifyContent: 'center',
+  gap: '30px',
+})
+
+export const sxTopPaper = {
+  backgroundImage: 'inherit',
+  bgcolor: 'inherit',
+  boxShadow: 'inherit',
+  position: 'relative',
+}
+
+const sxTopLiTitle = (isHomePage) => ({
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  marginTop: '0.2em',
+  overflow: isHomePage ? 'hidden' : 'inherit',
+  whiteSpace: isHomePage ? 'nowrap' : 'inherit',
+  textOverflow: isHomePage ? 'ellipsis' : 'inherit',
+})
 
 const TopView = ({ datas, isHomePage = false, type, rank }) => {
   const [showOverlay, setShowOverlay] = React.useState({
@@ -19,66 +46,18 @@ const TopView = ({ datas, isHomePage = false, type, rank }) => {
     index: null,
   })
 
-  const theme = useTheme()
-
-  const sxTopBox = {
-    height: isHomePage ? '502px' : 'inherit',
-    marginTop: '1em',
-    overflow: 'hidden',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, 350px)',
-    justifyItems: 'center',
-    justifyContent: 'center',
-    gap: '30px',
-  }
-
-  const sxTopLiTitle = {
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
-    marginTop: '0.2em',
-    overflow: isHomePage ? 'hidden' : 'inherit',
-    whiteSpace: isHomePage ? 'nowrap' : 'inherit',
-    textOverflow: isHomePage ? 'ellipsis' : 'inherit',
-  }
-
   return (
-    <Box component="ul" sx={sxTopBox}>
+    <Box component="ul" sx={sxTopBox(isHomePage)}>
       {datas.map((data, index) => {
         return (
           <Paper
             key={index}
             title={`${type.toLowerCase()}-list`}
             component="li"
-            sx={{
-              backgroundImage: 'inherit',
-              bgcolor: 'inherit',
-              boxShadow: 'inherit',
-              position: 'relative',
-            }}
+            sx={sxTopPaper}
           >
-            <Typography
-              component="p"
-              sx={{
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-                marginTop: '0.2em',
-                position: 'absolute',
-                top: '0.4em',
-                zIndex: '2',
-                left: '-1em',
-                height: '3em',
-                width: '3em',
-                borderRadius: '50%',
-                m: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                bgcolor: theme.palette.background.topIcon,
-                boxShadow: `inset 0 0 10px ${theme.palette.background.topIcon}, 0 0 9px 3px ${theme.palette.background.topIcon}`,
-              }}
-            >
-              #{rank + index}
-            </Typography>
+            <TopIcon text={`#${rank + index}`} />
+
             <Card
               sx={{
                 maxWidth: '16em',
@@ -106,12 +85,12 @@ const TopView = ({ datas, isHomePage = false, type, rank }) => {
                   alt={data?.title?.romaji ?? data?.title?.english}
                 />
                 {showOverlay?.status && showOverlay?.index === index && (
-                  <Link to={getUrl(type, INFOS, [data?.id])}>
+                  <Link to={getUrl([type, INFOS, data?.id])}>
                     <Box
                       component="div"
                       sx={{
                         position: 'absolute',
-                        bgcolor: 'rgba(68, 68, 68, 0.4)',
+                        opacity: 0.4,
                         width: '100%',
                         height: '100%',
                         top: '50%',
@@ -124,7 +103,7 @@ const TopView = ({ datas, isHomePage = false, type, rank }) => {
                 )}
               </CardActionArea>
               <CardContent sx={{ p: 0 }}>
-                <Typography component="h5" sx={sxTopLiTitle}>
+                <Typography component="h5" sx={sxTopLiTitle(isHomePage)}>
                   {data?.title?.romaji ?? data?.title?.english}
                 </Typography>
               </CardContent>

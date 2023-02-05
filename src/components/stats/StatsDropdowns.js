@@ -10,9 +10,10 @@ import {
   MenuItem,
   MenuList,
 } from '../ui'
+import { updateStat } from '../../database/user'
 
-const options = [
-  'Add to :',
+const nameStats = [
+  'Add To List',
   'Watching',
   'Completed',
   'On-hold',
@@ -20,19 +21,18 @@ const options = [
   'Plan-to-watch',
 ]
 
-const StatsDropdowns = () => {
-  const [stat, setStat] = React.useState('')
+const StatsDropdowns = ({ userDatas, contentInfos, setAuthUser }) => {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const whichContentArray =
+    contentInfos?.type === 'ANIME' ? 'animeId' : 'mangaId'
+  const getActiveStatName = userDatas?.stats?.find((stats) =>
+    stats[whichContentArray]?.includes(contentInfos?.id),
+  )?.name
 
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`)
-    console.info(' Stat : ', stat)
-  }
-
-  const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index + 1)
+  const handleMenuItemClick = async (event, name) => {
+    const user = await updateStat(name, contentInfos, userDatas)
+    setAuthUser(user)
     setOpen(false)
   }
 
@@ -41,27 +41,29 @@ const StatsDropdowns = () => {
   }
 
   const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+    if (anchorRef?.current && anchorRef?.current?.contains(event?.target)) {
       return
     }
     setOpen(false)
   }
 
-  React.useEffect(() => {
-    setStat(`${options[selectedIndex]}`)
-  }, [selectedIndex])
-
   return (
     <>
       <ButtonGroup
-        // variant put by default in contained/div with Material UI.
-        // But with actual css config created it makes a large appearance.
         variant="contained"
         ref={anchorRef}
         aria-label="split button"
+        size="small"
+        sx={{ width: '100%', height: '100%' }}
       >
-        <Button onClick={handleClick} sx={{ maxWidth: 'max-content' }}>
-          {options[selectedIndex]}
+        <Button
+          sx={{
+            width: '100%',
+            textTransform: 'none',
+            fontSize: '0.9em',
+          }}
+        >
+          {getActiveStatName ?? nameStats[0]}
         </Button>
         <Button
           size="small"
@@ -95,15 +97,18 @@ const StatsDropdowns = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options
-                    .filter((option, index) => index !== 0)
-                    .map((option, index) => (
+                  {nameStats
+                    .filter(
+                      (item) =>
+                        item !== nameStats[0] && item !== getActiveStatName,
+                    )
+                    .map((name, index) => (
                       <MenuItem
-                        key={option}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
+                        key={index}
+                        // selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, name)}
                       >
-                        {option}
+                        {name}
                       </MenuItem>
                     ))}
                 </MenuList>

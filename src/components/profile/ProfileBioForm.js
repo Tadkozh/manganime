@@ -6,15 +6,19 @@ import { Box, Button, Container, TextareaAutosize } from '../ui'
 
 const ProfileBioForm = ({ closeBio, user }) => {
   const [bio, setBio] = React.useState('')
-  const { execute } = useAuth()
+  const { setData } = useAuth()
 
-  const handleSaveBio = () => {
-    execute(updateBio(bio, user))
+  const handleSaveBio = async () => {
+    const newUser = await updateBio(bio, user)
+    setData(newUser)
     closeBio(true)
   }
 
   const handleChangeBio = (e) => {
     setBio(e.target.value)
+  }
+  const handleCancelBio = () => {
+    closeBio(true)
   }
 
   return (
@@ -36,8 +40,15 @@ const ProfileBioForm = ({ closeBio, user }) => {
           className="textAsMui"
         />
         <Container>
-          <Button onClick={handleSaveBio} variant="contained">
-            Save Bio
+          <Button
+            onClick={handleSaveBio}
+            variant="contained"
+            sx={{ m: 1, ml: 0 }}
+          >
+            Save
+          </Button>
+          <Button onClick={handleCancelBio} variant="outlined" sx={{ m: 1 }}>
+            Cancel
           </Button>
         </Container>
       </>

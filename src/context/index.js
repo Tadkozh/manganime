@@ -1,8 +1,13 @@
-import { createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material'
+import {
+  createTheme,
+  CssBaseline,
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@mui/material'
 import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
-import { ENV_DEV, LIGHT } from '../commons/constants'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ENV_DEV, THEMES } from '../commons/constants'
 import { ColorModeContext } from '../context/ColorModeContext'
 import { useStorageColorTheme } from '../hooks/storageColorTheme'
 import { changeTheme, getDesignTokens, sameTheme } from '../theme'
@@ -35,8 +40,8 @@ const AppProviders = ({ children }) => {
     if (color) {
       return color
     } else {
-      setColor(LIGHT)
-      return LIGHT
+      setColor(THEMES.LIGHT)
+      return THEMES.LIGHT
     }
   })
   const colorMode = React.useMemo(
@@ -74,4 +79,3 @@ const AppProviders = ({ children }) => {
 }
 
 export { AppProviders }
-

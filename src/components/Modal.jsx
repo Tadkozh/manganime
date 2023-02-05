@@ -21,7 +21,6 @@ export default function Modale(props) {
   const handleClose = () => props.handleCloseModal()
 
   return (
-    <div>
       <Modal
         open={props.open}
         onClose={handleClose}
@@ -72,6 +71,5 @@ export default function Modale(props) {
           </Box>
         </Box>
       </Modal>
-    </div>
   )
 }

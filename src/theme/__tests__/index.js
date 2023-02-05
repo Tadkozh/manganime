@@ -1,6 +1,8 @@
 import { changeTheme, getDesignTokens, sameTheme } from '..'
-import { DARK, LIGHT } from '../../commons/constants'
+import { THEMES } from '../../commons/constants'
 import { palettes } from '..'
+
+const { DARK, LIGHT } = THEMES
 
 describe('getDesignTokens fonction', () => {
   test('Si le mode est light alors on récupère la palette light', () => {

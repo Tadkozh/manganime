@@ -1,8 +1,8 @@
-import { grey, purple, red } from '@mui/material/colors'
-import { DARK, LIGHT } from '../commons/constants'
+import { grey, purple, red } from '../components/ui'
+import { THEMES } from '../commons/constants'
 
 const lightPalette = {
-  mode: LIGHT,
+  mode: THEMES.LIGHT,
   primary: red,
   background: {
     content: '#f44336',
@@ -14,7 +14,7 @@ const lightPalette = {
   },
 }
 const darkPalette = {
-  mode: DARK,
+  mode: THEMES.DARK,
   primary: purple,
   background: {
     default: '#262626',
@@ -36,11 +36,12 @@ const palettes = {
 const getDesignTokens = (mode) => ({
   palette: {
     mode,
-    ...(mode === LIGHT ? lightPalette : darkPalette),
+    ...(mode === THEMES.LIGHT ? lightPalette : darkPalette),
   },
 })
 
-const changeTheme = (mode) => (mode === LIGHT ? DARK : LIGHT)
-const sameTheme = (mode) => (mode === LIGHT ? LIGHT : DARK)
+const changeTheme = (mode) =>
+  mode === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT
+const sameTheme = (mode) => (mode === THEMES.LIGHT ? THEMES.LIGHT : THEMES.DARK)
 
 export { getDesignTokens, changeTheme, sameTheme, palettes }

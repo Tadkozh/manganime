@@ -1,39 +1,56 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
-import { Box, Button, Rating, TextField, Typography } from '../ui'
-import StarIcon from '@mui/icons-material/Star'
+import { Button, Paper, TextField, Typography } from '../ui'
 
 import { updateComment } from '../../database/user'
 
+import { PersonalRating } from './RatingInfos'
+
 import Modale from './../Modal'
 
-import { labels } from './scoreLabels'
+function InfoForm({
+  info,
+  editForm,
+  setEditForm,
+  formNoteValue,
+  formTitleValue,
+  formCommentValue,
+}) {
+  const { data: authUser, setData: setAuthUser } = useAuth()
 
-function InfoForm({ info }) {
-  const { data: authUser } = useAuth()
-  let { type } = useParams()
+  // React Hook Form
+  const { register, handleSubmit } = useForm()
 
   const [open, setOpen] = useState(false)
   const handleOpenModal = () => setOpen(true)
   const handleCloseModal = () => setOpen(false)
 
+  const [nbStar, setNbStar] = useState(editForm ? formNoteValue : null)
+  const [commentTitle, setCommentTitle] = useState(
+    editForm ? formTitleValue : '',
+  )
+  const [commentValue, setCommentValue] = useState(
+    editForm ? formCommentValue : '',
+  )
   const [comment, setComment] = useState(false)
   const changeComment = setComment
 
-  // React Hook Form
-  const { register, handleSubmit } = useForm()
-
-  const [commentTitle, setCommentTitle] = useState('')
-  const [commentValue, setCommentValue] = useState('')
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (authUser === null) {
       handleOpenModal()
     } else {
       changeComment(!comment)
-      updateComment(type, info, data, authUser)
+      const newUser = await updateComment(
+        authUser,
+        info,
+        nbStar,
+        data,
+        setEditForm,
+        commentTitle,
+        commentValue,
+      )
+      setAuthUser(newUser)
     }
   }
 
@@ -46,22 +63,24 @@ function InfoForm({ info }) {
   }, [authUser, commentTitle, commentValue])
 
   return (
-    <Box
+    <Paper
       component="form"
       sx={{
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
         width: '100%',
-        mb: '25px',
+        maxWidth: '600px',
+        p: '10px',
+        m: '10px auto',
       }}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Typography component="h3" variant="h4">
-        Leave a review
+        Write a review
       </Typography>
 
-      <FormRating />
+      <PersonalRating info={info} nbStar={nbStar} setNbStar={setNbStar} />
 
       <TextField
         id="outlined-basic"
@@ -90,10 +109,9 @@ function InfoForm({ info }) {
 
       <Button
         variant="contained"
-        style={{ margin: '0 auto' }}
+        sx={{ width: 'fit-content', m: '0 auto' }}
         type="submit"
         value="Submit"
-        color={comment ? 'secondary' : 'success'}
       >
         {comment ? 'Sent!' : 'Submit'}
       </Button>
@@ -105,44 +123,7 @@ function InfoForm({ info }) {
           handleCloseModal={handleCloseModal}
         />
       )}
-    </Box>
-  )
-}
-
-function FormRating() {
-  const [value, setValue] = useState(null)
-  const [hover, setHover] = useState(-1)
-
-  const [open, setOpen] = useState(false)
-  const handleOpenModal = () => setOpen(true)
-  const handleCloseModal = () => setOpen(false)
-
-  return (
-    <Box>
-      <Rating
-        name={'Review rating'}
-        defaultValue={null}
-        value={value}
-        precision={0.5}
-        readOnly={false}
-        onChange={(e, newValue) => {
-          setValue(newValue)
-        }}
-        onChangeActive={(e, newHover) => {
-          setHover(newHover)
-        }}
-        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-      />
-      <Typography>{labels[hover !== -1 ? hover : value]}</Typography>
-
-      {open && (
-        <Modale
-          open={open}
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
-    </Box>
+    </Paper>
   )
 }
 

@@ -6,20 +6,22 @@ import {
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore'
-import { USER_COLLECTION } from '../commons/constants'
+import { DATABASE_COLLECTION } from '../commons/constants'
 import { db, getUid } from '../firebase-config'
 
-const getDocUser = (uid) => doc(collection(db, USER_COLLECTION), uid)
+const getDocUser = (uid) => doc(collection(db, DATABASE_COLLECTION.USERS), uid)
 
 const getUser = (data) => ({
   email: data.email,
   bio: data?.bio ?? '',
-  picture: data?.picture ?? '',
+  picture_url: data?.picture_url ?? '',
+  picture_name: data?.picture_name ?? '',
   name: data?.name ?? 'user',
   favorite_anime: data?.favorite_anime ?? [],
   favorite_manga: data?.favorite_manga ?? [],
   anime_opinion: data?.anime_opinion ?? [],
   manga_opinion: data?.manga_opinion ?? [],
+  stats: data?.stats ?? [],
 })
 
 const addUser = async (user) => {

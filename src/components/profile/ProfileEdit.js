@@ -2,7 +2,7 @@ import React from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Alert, Box, Button, Grid, TextField } from '../ui'
 
-const ProfileEdit = ({ user }) => {
+const ProfileEdit = ({ user, closeEdit }) => {
   const [email, setEmail] = React.useState(user.email)
   const [password, setPassword] = React.useState('')
   const [username, setUsername] = React.useState(user.name)
@@ -16,6 +16,7 @@ const ProfileEdit = ({ user }) => {
     }
     event.preventDefault()
     validationProfile(userUpdate, currentUser)
+    closeEdit()
   }
 
   const handleChangeUserName = (e) => {

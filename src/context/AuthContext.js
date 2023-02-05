@@ -10,9 +10,7 @@ import React from 'react'
 import {
   AUTH_REQUIRE_RECENT_LOGIN,
   BAD_USE_CONTEXT,
-  LOADING,
-  SIGN_IN,
-  SUCCESS,
+  SIGN,
 } from '../commons/constants'
 import { LoadingScreen } from '../components/ui'
 import {
@@ -22,6 +20,7 @@ import {
   updateUserCurrent,
 } from '../database/user'
 import { auth } from '../firebase-config'
+import { useCleanupError } from '../hooks/cleanupError'
 import { useUserData } from '../hooks/useUserData'
 import {
   errorAuth,
@@ -32,44 +31,54 @@ import {
 const AuthContext = React.createContext()
 
 const AuthProviders = ({ children }) => {
-  const { data, status, error, setError, setData, execute } = useUserData()
+  const { data, status, setData } = useUserData()
+  const { clean: error, setClean: setError } = useCleanupError()
+  const [authUser, setAuthUser] = React.useState(null)
+  const [isLoading, setIsLoading] = React.useState(true)
 
   // Check if user is already connected
   React.useEffect(() => {
-    if (!data) {
+    if (!authUser) {
       const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
-          execute(getUserbyUid())
+          const user = await getUserbyUid()
+          setData(user)
+          setAuthUser(currentUser)
         } else {
-          setData(null)
+          setAuthUser(null)
         }
+        setIsLoading(false)
       })
       return unsubscribe
     }
-  }, [data, execute, setData])
+  }, [authUser, setData])
 
   const register = React.useCallback(
     async (email, password) => {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      ).catch((err) => setError(errorAuth(err)))
+      let user
+      try {
+        user = await createUserWithEmailAndPassword(auth, email, password)
+      } catch (err) {
+        setError(errorAuth(err))
+      }
       storeUser(user)
     },
     [setError],
   )
 
   const login = React.useCallback(
-    (email, password) => {
-      signInWithEmailAndPassword(auth, email, password).catch((err) =>
-        setError(errorAuth(err)),
-      )
+    async (email, password) => {
+      try {
+        await signInWithEmailAndPassword(auth, email, password)
+      } catch (err) {
+        setError(errorAuth(err))
+      }
     },
     [setError],
   )
   const logout = React.useCallback(() => {
     signOut(auth).then(() => {
+      setAuthUser(null)
       setData(null)
     })
   }, [setData])
@@ -84,7 +93,8 @@ const AuthProviders = ({ children }) => {
       await Promise.all(promises)
         .then(async () => {
           await updateUserCurrent(user)
-          execute(getUserbyUid())
+          const newUser = await getUserbyUid()
+          setData(newUser)
         })
         .catch((err) => {
           if (err.code === AUTH_REQUIRE_RECENT_LOGIN) {
@@ -93,7 +103,7 @@ const AuthProviders = ({ children }) => {
           }
         })
     },
-    [execute, logout, setError],
+    [logout, setData, setError],
   )
 
   const validationUpdateAuth = (email, password, user) => {
@@ -121,13 +131,13 @@ const AuthProviders = ({ children }) => {
   )
 
   const validationSign = React.useCallback(
-    (email, password, action = SIGN_IN) => {
+    (email, password, action = SIGN.IN) => {
       const errorForm = validationSignForm(email, password)
       if (errorForm) {
         setError(errorForm)
         return
       }
-      action === SIGN_IN ? login(email, password) : register(email, password)
+      action === SIGN.IN ? login(email, password) : register(email, password)
     },
     [login, register, setError],
   )
@@ -135,22 +145,32 @@ const AuthProviders = ({ children }) => {
   const values = React.useMemo(
     () => ({
       data,
+      setData,
+      error,
+      status,
+      authUser,
+      logout,
+      validationSign,
+      validationProfile,
+    }),
+    [
+      data,
+      authUser,
       error,
       status,
       logout,
       validationSign,
       validationProfile,
-      execute,
-    }),
-    [data, error, status, execute, logout, validationSign, validationProfile],
+      setData,
+    ],
   )
 
-  if (status === LOADING) {
+  if (isLoading) {
     return <LoadingScreen />
   }
   return (
     <AuthContext.Provider value={values}>
-      {status === SUCCESS && children}
+      {!isLoading && children}
     </AuthContext.Provider>
   )
 }

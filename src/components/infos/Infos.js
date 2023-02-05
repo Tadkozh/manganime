@@ -1,114 +1,136 @@
 import { useParams } from 'react-router-dom'
-import { Box, Button, Grid } from '../ui'
+import { useAuth } from '../../context/AuthContext'
+import { useInfos } from '../../hooks/queriesHooks'
+
+import { Box, Button, Grid, Typography } from '../ui'
 
 // Constants
 import { ANIME } from '../../commons/constants'
 
 // Components
-import { useInfos } from '../../hooks/queriesHooks'
 import NavBarInfo from '../NavBarInfo'
-import InfoDetails from './InfoDetails'
-import InfoForm from './InfoForm'
 import InfoPresentation from './InfoPresentation'
-import InfoReviews from './InfoReviews'
+import { GlobalRating } from './RatingInfos'
 import InfoSynopsis from './InfoSynopsis'
+import InfoDetails from './InfoDetails'
+import FormOrReview from './FormOrReview'
+import InfoForm from './InfoForm'
+import InfoReviews from './InfoReviews'
 
 function Infos() {
+  const { data: authUser } = useAuth()
+
   let { type, id } = useParams()
   const data = useInfos(type, id)
   const info = data?.Page?.media[0]
+
+  const isBanner = info?.bannerImage ? true : false
 
   return (
     info && (
       <>
         <NavBarInfo />
         <Box
+          component={isBanner ? 'img' : 'div'}
+          src={info?.bannerImage}
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            alignContent: 'center',
-            justifyContent: 'center',
-            justifyItems: 'center',
-            maxWidth: '100%',
-            padding: '10px',
+            display: { xs: 'none', md: isBanner ? 'block' : 'none' },
+            width: '100%',
+            height: { md: '200px', lg: '400px' },
+            objectFit: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+
+        <Box sx={{ display: { md: 'none' }, textAlign: 'center' }}>
+          <Typography component="h2" variant="h3" sx={{ mt: 2, mx: 'auto' }}>
+            {info?.title?.romaji ?? info?.title?.english}
+          </Typography>
+          <GlobalRating info={info} />
+        </Box>
+
+        <Grid
+          container
+          sx={{
+            p: 1,
           }}
         >
-          <Grid container>
-            <GridChild
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                position: 'relative',
-              }}
-              children={<InfoPresentation />}
-            />
-
-            <GridChild
-              sx={{
-                order: {
-                  md: '-1',
-                },
-                display: 'flex',
-                flexDirection: 'column',
-                maxHeight: '500px',
-                textAlign: 'justify',
-                padding: '10px',
-                borderRadius: '5px',
-                boxShadow: '0 0 12px -5px #000',
-              }}
-              children={<InfoSynopsis />}
-            />
-
-            <GridChild
-              sx={{
-                maxHeight: '500px',
-                backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                padding: '5px 10px',
-                overflowY: 'auto',
-              }}
-              children={<InfoDetails />}
-            />
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={3}
+            lg={3}
+            xl={3}
+            sx={{
+              my: '0',
+              mt: { md: isBanner ? '-5%' : 1 },
+            }}
+          >
+            <InfoPresentation info={info} />
+            <InfoDetails info={info} />
           </Grid>
 
-          {type === ANIME && <Trailer info={info.trailer} />}
+          <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
+            <Box sx={{ display: { xs: 'none', md: 'block' }, ml: { md: 2 } }}>
+              <Typography component="h2" variant="h3" sx={{ my: 2 }}>
+                {info?.title?.romaji ?? info?.title?.english}
+              </Typography>
+              <GlobalRating info={info} />
+            </Box>
 
-          <InfoForm info={info} />
-          <InfoReviews />
-        </Box>
+            <InfoSynopsis info={info} />
+
+            {type === ANIME && <Trailer info={info?.trailer} />}
+
+            {authUser ? (
+              <FormOrReview info={info} user={authUser} />
+            ) : (
+              <InfoForm />
+            )}
+
+            <InfoReviews />
+          </Grid>
+        </Grid>
       </>
     )
-  )
-}
-
-function GridChild({ sx, children }) {
-  return (
-    <Grid item xs={12} sm={6} md={4} sx={sx}>
-      {children}
-    </Grid>
   )
 }
 
 function Trailer({ info }) {
   return (
     info && (
-      <>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          p: 2,
+        }}
+      >
+        <iframe
+          title="Trailer"
+          src={`https://www.youtube.com/embed/${info.id}`}
+          thumbnail={info.thumbnail}
+          style={{
+            width: '100%',
+            maxWidth: '800px',
+            aspectRatio: '3/2',
+            margin: '0 auto',
+          }}
+        />
         <Button
+          variant="outlined"
+          size="small"
           href={`https://www.youtube.com/watch?v=${info.id}`}
           target="_blank"
           rel="noreferrer"
-          sx={{ m: '25px auto 0' }}
+          sx={{ width: 'fit-content', m: 2, p: 1 }}
         >
           Watch trailer on {info.site}
         </Button>
-        <iframe
-          title="Trailer"
-          src={`https://www.youtube.com/embed/${info.id}?autoplay=1&mute=1`}
-          thumbnail={info.thumbnail}
-          style={{ margin: '0 auto' }}
-        />
-      </>
+      </Box>
     )
   )
 }

@@ -1,26 +1,24 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import profilePicture from '../../assets/images/avatar_1.jpg'
-import { LOADING, SUCCESS } from '../../commons/constants'
+import { IDLE, LOADING, PROFILE, SUCCESS } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { userPicture } from '../../database/user'
+import { getUrl } from '../../utils/helper'
 import {
   Box,
   Button,
   Card,
   CardActions,
   CardContent,
-  Container,
-  Divider,
   Edit,
   Grid,
   Skeleton,
-  Typography,
 } from '../ui'
-import { Stat } from './Stat'
 
 const ProfileSideBar = () => {
   return (
-    <Grid item xs={7} md={4} lg={2.75}>
+    <Grid item xs={7} md={4} lg={2.75} sx={{ maxWidth: 'none' }}>
       <Card
         sx={{
           with: '100%',
@@ -34,17 +32,17 @@ const ProfileSideBar = () => {
       >
         <ProfileSideBarImage />
         <ProfileSideBarListButtons />
-        <Divider />
-        <ProfileSideBarStatistics />
       </Card>
     </Grid>
   )
 }
 const ProfileSideBarImage = () => {
-  const { data: user, execute, status } = useAuth()
-  const handleUpload = (e) => {
+  const { data: user, setData, status } = useAuth()
+
+  const handleUpload = async (e) => {
     if (e.target.files.length > 0) {
-      execute(userPicture(e.target.files[0]))
+      const newUser = await userPicture(e.target.files[0], user)
+      setData(newUser)
     }
   }
 
@@ -62,15 +60,15 @@ const ProfileSideBarImage = () => {
       {status === LOADING && (
         <Skeleton sx={{ width: '225px', height: '225px' }} />
       )}
-      {status === SUCCESS && (
+      {status === SUCCESS || status === IDLE ? (
         <img
           width={225}
           alt={'profile img'}
-          src={user?.picture ? user?.picture : profilePicture}
+          src={user?.picture_url ? user?.picture_url : profilePicture}
           style={{ backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
           loading="lazy"
         />
-      )}
+      ) : null}
       <Box
         style={{
           position: 'absolute',
@@ -103,30 +101,40 @@ const ProfileSideBarListButtons = () => {
       }}
     >
       <Button variant="contained" color="primary">
-        AnimeList
+        <Link
+          to={getUrl([PROFILE, 'anime'])}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          AnimeList
+        </Link>
       </Button>
       <Button variant="outlined" color="primary">
-        MangaList
+        <Link
+          to={getUrl([PROFILE, 'manga'])}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          MangaList
+        </Link>
       </Button>
     </CardActions>
   )
 }
 
-const ProfileSideBarStatistics = () => {
-  return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Typography variant="body1" sx={{ my: 2 }}>
-        Statistics
-      </Typography>
-      <Stat name={'Reviews'} number={0} />
-      <Stat name={'Recommendation'} number={0} />
-      <Stat name={'Comments'} number={0} />
-    </Container>
-  )
-}
+// const ProfileSideBarStatistics = () => {
+//   return (
+//     <Container
+//       sx={{
+//         display: 'flex',
+//         flexDirection: 'column',
+//       }}
+//     >
+//       <Typography variant="body1" sx={{ my: 2 }}>
+//         Statistics
+//       </Typography>
+//       <Stat name={'Reviews'} number={0} />
+//       <Stat name={'Recommendation'} number={0} />
+//       <Stat name={'Comments'} number={0} />
+//     </Container>
+//   )
+// }
 export { ProfileSideBar }

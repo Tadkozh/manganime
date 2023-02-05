@@ -11,12 +11,12 @@ export const SEARCH_REQUEST = gql`
     $isAdult: Boolean
     $page: Int
     $perPage: Int
+    $type: MediaType
   ) {
     Page(page: $page, perPage: $perPage) {
       pageInfo {
         currentPage
-        lastPage
-        total
+        hasNextPage
       }
       media(
         search: $search
@@ -26,6 +26,7 @@ export const SEARCH_REQUEST = gql`
         popularity_greater: $popularity
         sort: $sort
         isAdult: $isAdult
+        type:$type
       ) {
         id
 

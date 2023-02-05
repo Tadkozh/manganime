@@ -1,55 +1,23 @@
 import React from 'react'
-import { ANIME, LOADING, MANGA, SUCCESS } from '../../commons/constants'
+import { ANIME, INFOS, LOADING, MANGA, SUCCESS } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { useFavorites } from '../../hooks/queriesHooks'
-import { getImageName } from '../../utils/helper'
+import { getImageName, getUrl } from '../../utils/helper'
 import { ProfileLastUpdateSkeleton } from '../skeletons/ProfileLastUpdateSkeleton'
+import { Link as LinkRouter } from 'react-router-dom'
 import {
-  blue,
   Box,
   Button,
   Card,
   Divider,
-  green,
-  grey,
   Grid,
   Link,
   Paper,
-  red,
   Typography,
-  yellow,
 } from '../ui'
 import { ProfileBioForm } from './ProfileBioForm'
 import { ProfileEdit } from './ProfileEdit'
 import { ProfileStats } from './ProfileStats'
-
-const stats = [
-  {
-    name: 'Watching',
-    number: 5,
-    color: green[500],
-  },
-  {
-    name: 'Completed',
-    number: 10,
-    color: blue[500],
-  },
-  {
-    name: 'On-hold',
-    number: 2,
-    color: yellow[500],
-  },
-  {
-    name: 'Dropped',
-    number: 1,
-    color: red[500],
-  },
-  {
-    name: 'Plan to Watch',
-    number: 23,
-    color: grey[500],
-  },
-]
 
 const ProfileMainContainer = ({ user }) => {
   const [editProfile, setEditProfile] = React.useState(false)
@@ -58,6 +26,9 @@ const ProfileMainContainer = ({ user }) => {
   const handleChangeProfile = () => {
     setEditProfile(!editProfile)
   }
+  const handleSaveProfile = () => {
+    setEditProfile(false)
+  }
   const openFormBio = () => {
     setIsDisplayBioForm(true)
   }
@@ -65,7 +36,7 @@ const ProfileMainContainer = ({ user }) => {
     setIsDisplayBioForm(false)
   }
   return (
-    <Grid item xs={10} md={8} sx={{ p: 1 }}>
+    <Grid item xs={10} md={8} sx={{ p: 1, maxWidth: 'inherit' }}>
       <Paper
         sx={{
           with: '100%',
@@ -85,7 +56,7 @@ const ProfileMainContainer = ({ user }) => {
             justifyContent: 'space-between',
           }}
         >
-          <Typography variant="h4">Welcome {user.name}</Typography>
+          <Typography variant="h4">Welcome {user?.name}</Typography>
           <Button
             variant="outlined"
             color="primary"
@@ -97,9 +68,13 @@ const ProfileMainContainer = ({ user }) => {
         {isDisplayBioForm ? (
           <ProfileBioForm closeBio={closeFormBio} user={user} />
         ) : (
-          <ProfileBio bio={user.bio} openFormBio={openFormBio} />
+          <ProfileBio bio={user?.bio} openFormBio={openFormBio} />
         )}
-        {editProfile ? <ProfileEdit user={user} /> : <ProfileMainContent />}
+        {editProfile ? (
+          <ProfileEdit user={user} closeEdit={handleSaveProfile} />
+        ) : (
+          <ProfileMainContent />
+        )}
       </Paper>
     </Grid>
   )
@@ -145,17 +120,17 @@ const ProfileMainType = ({ name }) => {
   const { data: user } = useAuth()
   const lastList =
     name === ANIME
-      ? getLastFavorites(user.favorite_anime)
-      : getLastFavorites(user.favorite_manga)
+      ? getLastFavorites(user?.favorite_anime)
+      : getLastFavorites(user?.favorite_manga)
   return (
     <>
-      <Stats stats={stats} type={name} />
-      <LastUpdate type={name} lastest={lastList} />
+      <Stats stats={user.stats} type={name} />
+      <LastFavourites type={name} lastest={lastList} />
     </>
   )
 }
 const getLastFavorites = (array) => {
-  if (array.length > 3) {
+  if (array?.length > 3) {
     return array.slice(array.length - 3)
   }
   return array
@@ -169,7 +144,7 @@ const Stats = ({ stats, type }) => {
   )
 }
 
-const LastUpdate = ({ type, lastest }) => {
+const LastFavourites = ({ type, lastest }) => {
   const { data: items, status } = useFavorites(type, lastest)
   if (status === LOADING) {
     return <ProfileLastUpdateSkeleton />
@@ -177,9 +152,9 @@ const LastUpdate = ({ type, lastest }) => {
   if (status === SUCCESS) {
     return (
       <Grid item xs={12} md={6}>
-        <Typography variant="h6">Last {type} Updates</Typography>
+        <Typography variant="h6">Last {type} Favourites</Typography>
 
-        {items.length === 0 ? (
+        {items?.length === 0 ? (
           <>
             <Typography variant="body1" sx={{ m: 1 }}>
               No favourites.
@@ -189,10 +164,19 @@ const LastUpdate = ({ type, lastest }) => {
             </Typography>
           </>
         ) : (
-          items.map((item, key) => (
-            <Card sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}>
-              <PosterImage data={item} key={key} />
-            </Card>
+          items?.map((item, key) => (
+            <LinkRouter
+              key={key + item.id}
+              to={getUrl([type, INFOS, item?.id])}
+              style={{ textDecoration: 'none' }}
+            >
+              <Card
+                sx={{ display: 'flex', flexDirection: 'column', m: 1, p: 1 }}
+                key={key + getImageName(item?.coverImage.medium)}
+              >
+                <PosterImage data={item} key={key} />
+              </Card>
+            </LinkRouter>
           ))
         )}
       </Grid>

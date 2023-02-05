@@ -2,74 +2,57 @@ import { useTheme } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUrl } from '../../utils/helper'
-import { Box, Card, CardMedia, Container, Paper, Typography } from './index'
+import { Card, CardMedia, Typography } from './index'
 
-const CardImage = ({ data, type, route }) => {
+const CardImage = ({ data, type, route, dimension = {} }) => {
   const theme = useTheme()
-  const [hover, setHover] = React.useState(false)
   const title = data.title.romaji ?? data.title.english
-
-  const handleHoverIn = () => {
-    setHover(true)
-  }
-  const handleHoverOut = () => {
-    setHover(false)
-  }
 
   return (
     <Card
-      onMouseLeave={handleHoverOut}
-      onMouseOver={handleHoverIn}
-      sx={{ position: 'relative' }}
+      sx={{
+        position: 'relative',
+        ':hover': {
+          opacity: '0.4',
+        },
+        maxWidth: dimension?.maxwidth,
+      }}
+      elevation={24}
     >
-      <Box
-        to={getUrl(type, route, [data.id])}
-        sx={{
-          cursor: 'pointer',
+      <Link
+        to={getUrl([type, route, data.id])}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          color: theme.palette.text.primary,
           textAlign: 'center',
+          textDecoration: 'none',
+          cursor: 'pointer',
         }}
-        color={theme.palette.text.primary}
       >
         <CardMedia
           component="img"
           image={data.coverImage.large}
           alt={title}
-          height={280}
+          // height={dimension?.height}
+          // width={dimension?.width}
+          sx={{ aspectRatio: '2/3' }}
         />
-        <Container
+        <Typography
+          component="p"
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            my: 1,
+            justifyContent: 'center',
+            height: '100%',
+            p: '10px',
           }}
         >
-          <Typography component="p" sx={{ mt: 'auto' }}>
-            {getTroncateTitle(title)}
-          </Typography>
-        </Container>
-        {hover ? <OverlayCard type={type} data={data} route={route} /> : null}
-      </Box>
+          {getTroncateTitle(title)}
+        </Typography>
+      </Link>
     </Card>
-  )
-}
-
-const OverlayCard = ({ type, data, route }) => {
-  return (
-    <Link to={getUrl(type, route, [data?.id])}>
-      <Paper
-        component="div"
-        sx={{
-          position: 'absolute',
-          opacity: '0.4',
-          width: '100%',
-          height: '100%',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: '1',
-        }}
-      />
-    </Link>
   )
 }
 

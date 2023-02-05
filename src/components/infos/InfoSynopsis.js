@@ -1,33 +1,47 @@
-import { Box, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import { useSynopsis } from '../../hooks/queriesHooks'
+import { useState } from 'react'
+import { Box, Button, Paper, Typography } from '../ui'
 
-function InfoSynopsis() {
-  let { type, id } = useParams()
-  const data = useSynopsis(type, id)
-  const synopsis = data?.Page?.media[0]?.description
-
-  // const [readSynopsis, setReadSynopsis] = useState(false)
+function InfoSynopsis({ info }) {
+  const [readSynopsis, setReadSynopsis] = useState(false)
+  const MAX_LENGTH = 400
+  const description = info?.description || ''
+  const truncatedDescription =
+    description.length > MAX_LENGTH
+      ? description.slice(0, MAX_LENGTH) + '...'
+      : description
 
   return (
-    <>
-      <Typography component="h3" variant="h4" sx={{ pl: '10px', mb: '10px' }}>
+    <Paper
+      sx={{
+        m: 2,
+        p: 2,
+      }}
+      elevation={12}
+    >
+      <Typography component="h3" variant="h4" sx={{ my: 1 }}>
         Synopsis:
       </Typography>
       <Box
-        sx={{
-          p: '0 10px',
-          overflowY: 'auto',
+        dangerouslySetInnerHTML={{
+          __html: readSynopsis ? description : truncatedDescription,
         }}
-        dangerouslySetInnerHTML={{ __html: synopsis }}
-        // className={
-        //   readSynopsis ? 'synopsis active' : 'synopsis inactive'
-        // }
-      ></Box>
-      {/* <Button onClick={() => setReadSynopsis(!readSynopsis)}>
-        {readSynopsis ? 'Read less' : 'Read more'}
-      </Button> */}
-    </>
+      />
+
+      {description.length > MAX_LENGTH && (
+        <Button
+          variant="contained"
+          onClick={() => setReadSynopsis(!readSynopsis)}
+          sx={{
+            m: '10px auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {readSynopsis ? 'Read less' : 'Read more'}
+        </Button>
+      )}
+    </Paper>
   )
 }
 

@@ -9,7 +9,7 @@ import { auth } from '../../firebase-config'
 import { render } from '../../test/test-utils'
 import { LoginRegister } from '../LoginRegister'
 
-jest.mock('../header/MangAnimeAppBar')
+jest.mock('../MangAnimeHeader')
 
 describe('LoginRegister component', () => {
   const user = userEvent.setup()
@@ -18,23 +18,18 @@ describe('LoginRegister component', () => {
     render(<LoginRegister />)
 
     const inputEmail = await screen.findByRole('textbox', {
-      name: /adresse email/i,
+      name: /e-mail address/i,
     })
-    const inputPassword = await screen.findByLabelText(/mot de passe/i)
+    const inputPassword = await screen.findByLabelText(/password/i)
     const email = faker.internet.email()
     const password = faker.internet.password()
 
     await user.type(inputEmail, email)
     await user.type(inputPassword, password)
 
-    const connexionButton = await screen.findByRole('button', {
-      name: /connexion/i,
-    })
+    const loginSubmitButton = await screen.findByLabelText(/loginSubmit/i)
 
-    const testUser = screen.queryByText('Bonjour User')
-
-    expect(testUser).not.toBeInTheDocument()
-    await user.click(connexionButton)
+    await user.click(loginSubmitButton)
     expect(signInWithEmailAndPassword).toHaveBeenLastCalledWith(
       auth,
       email,
@@ -45,23 +40,20 @@ describe('LoginRegister component', () => {
     render(<LoginRegister />)
 
     const inputEmail = await screen.findByRole('textbox', {
-      name: /adresse email/i,
+      name: /e-mail address/i,
     })
-    const inputPassword = await screen.findByLabelText(/mot de passe/i)
+    const inputPassword = await screen.findByLabelText(/password/i)
     const email = faker.internet.email()
     const password = faker.internet.password()
 
-    const createButton = screen.queryByRole('button', {
-      name: 'Créer un compte',
-    })
-    await user.click(createButton)
-    const submitCreateButton = screen.queryByRole('button', {
-      name: 'Créer',
-    })
+    const registerButton = await screen.findByLabelText(/registerAccount/)
+
+    await user.click(registerButton)
+    const registerSubmitButton = await screen.findByLabelText(/registerSubmit/)
 
     await user.type(inputEmail, email)
     await user.type(inputPassword, password)
-    await user.click(submitCreateButton)
+    await user.click(registerSubmitButton)
 
     expect(createUserWithEmailAndPassword).toHaveBeenLastCalledWith(
       auth,
@@ -73,49 +65,26 @@ describe('LoginRegister component', () => {
     const user = userEvent.setup()
     render(<LoginRegister />)
 
-    const createButton = screen.queryByRole('button', {
-      name: 'Créer un compte',
-    })
-    const loginButton = screen.queryByRole('button', {
-      name: 'Se connecter',
-    })
+    const registerButton = screen.queryByLabelText(/registerAccount/)
+    const loginButton = screen.queryByLabelText(/loginAccount/)
 
-    const submitCreateButton = screen.queryByRole('button', {
-      name: 'Créer',
-    })
-    const submitLoginButton = screen.queryByRole('button', {
-      name: 'Connexion',
-    })
+    const registerSubmitButton = screen.queryByLabelText(/registerSubmit/)
+    const loginSubmitButton = screen.queryByLabelText(/loginSubmit/)
+
     const header = screen.queryByRole('heading')
 
-    expect(createButton).toBeInTheDocument()
+    expect(registerButton).toBeInTheDocument()
     expect(loginButton).not.toBeInTheDocument()
-    expect(submitLoginButton).toBeInTheDocument()
-    expect(submitCreateButton).not.toBeInTheDocument()
-    expect(header).toHaveTextContent('Se connecter')
+    expect(loginSubmitButton).toBeInTheDocument()
+    expect(registerSubmitButton).not.toBeInTheDocument()
+    expect(header).toHaveTextContent(/Sign in/)
 
-    await user.click(createButton)
+    await user.click(registerButton)
 
-    expect(
-      screen.queryByRole('button', {
-        name: 'Créer un compte',
-      }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByRole('button', {
-        name: 'Se connecter',
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByRole('button', {
-        name: 'Connexion',
-      }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByRole('button', {
-        name: 'Créer',
-      }),
-    ).toBeInTheDocument()
-    expect(header).toHaveTextContent('Créer un compte')
+    expect(screen.queryByLabelText(/registerAccount/)).not.toBeInTheDocument()
+    expect(screen.getByLabelText(/loginAccount/)).toBeInTheDocument()
+    expect(screen.queryByLabelText(/loginSubmit/)).not.toBeInTheDocument()
+    expect(screen.getByLabelText(/registerSubmit/)).toBeInTheDocument()
+    expect(header).toHaveTextContent(/Sign up/)
   })
 })

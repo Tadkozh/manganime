@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Navigate } from 'react-router-dom'
-import { LOADING, SIGN_IN, SIGN_UP, SUCCESS } from '../commons/constants'
+import { SIGN } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { getRandomNumber } from '../utils/helper'
 import {
@@ -13,11 +13,11 @@ import {
   DialogContent,
   FormControlLabel,
   Grid,
+  LoadingScreen,
   LockOutlinedIcon,
   Paper,
   TextField,
   Typography,
-  LoadingScreen,
 } from './ui'
 
 const TextFieldCustom = ({
@@ -39,8 +39,9 @@ const TextFieldCustom = ({
     onChange={onChange}
   />
 )
-const ButtonCustom = ({ children, onClick, type = 'button' }) => (
+const ButtonCustom = ({ children, onClick, type = 'button', aria }) => (
   <Button
+    aria-label={aria}
     onClick={onClick}
     fullWidth
     variant="contained"
@@ -73,7 +74,7 @@ const getBoxProps = {
 
 const LoginRegister = ({ signup = true }) => {
   const [create, setCreate] = React.useState(signup)
-  const { validationSign, error, data, status } = useAuth()
+  const { validationSign, error, authUser: data, isLoading } = useAuth()
   const [imageRandom] = React.useState(getRandomNumber())
 
   const handleSignUp = () => {
@@ -83,11 +84,11 @@ const LoginRegister = ({ signup = true }) => {
     setCreate(true)
   }
 
-  if (data !== null && status === SUCCESS) {
+  if (data !== null && !isLoading) {
     return <Navigate to="/profile" />
   }
 
-  const label = create ? 'Se connecter' : 'Créer un compte'
+  const label = create ? 'Sign in' : 'Sign up'
   return (
     <>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -111,10 +112,10 @@ const LoginRegister = ({ signup = true }) => {
               <FormLogin
                 validationSign={validationSign}
                 create={create}
-                status={status}
+                isLoading={isLoading}
               />
               {error ? (
-                <Alert severity="error">Erreur: {error.message}</Alert>
+                <Alert severity="error">Error: {error.message}</Alert>
               ) : null}
             </DialogContent>
 
@@ -122,9 +123,13 @@ const LoginRegister = ({ signup = true }) => {
               <Grid item xs></Grid>
               <Grid item>
                 {create ? (
-                  <Button onClick={handleSignUp}>Créer un compte</Button>
+                  <Button aria-label="registerAccount" onClick={handleSignUp}>
+                    Register
+                  </Button>
                 ) : (
-                  <Button onClick={handleSignIn}>Se connecter</Button>
+                  <Button aria-label="loginAccount" onClick={handleSignIn}>
+                    Log in
+                  </Button>
                 )}
               </Grid>
             </Grid>
@@ -134,7 +139,7 @@ const LoginRegister = ({ signup = true }) => {
     </>
   )
 }
-export const FormLogin = ({ validationSign, create, status }) => {
+export const FormLogin = ({ validationSign, create, isLoading }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   // eslint-disable-next-line no-unused-vars
@@ -148,22 +153,22 @@ export const FormLogin = ({ validationSign, create, status }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     create
-      ? validationSign(email, password, SIGN_IN)
-      : validationSign(email, password, SIGN_UP)
+      ? validationSign(email, password, SIGN.IN)
+      : validationSign(email, password, SIGN.UP)
   }
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      {status === LOADING ? <LoadingScreen /> : null}
+      {isLoading ? <LoadingScreen /> : null}
       <TextFieldCustom
-        label="adresse email"
+        label="e-mail address"
         name="email"
         complete="email"
         focus={true}
         onChange={handleChangeEmail}
       />
       <TextFieldCustom
-        label="mot de passe"
+        label="password"
         name="password"
         complete="current-password"
         onChange={handleChangePasword}
@@ -178,9 +183,15 @@ export const FormLogin = ({ validationSign, create, status }) => {
         }
         label="se souvenir de moi"
       />
-      <ButtonCustom type="submit">
-        {create ? 'Connexion' : 'Créer'}
-      </ButtonCustom>
+      {create ? (
+        <ButtonCustom aria={'loginSubmit'} type="submit">
+          Login
+        </ButtonCustom>
+      ) : (
+        <ButtonCustom aria={'registerSubmit'} type="submit">
+          Register
+        </ButtonCustom>
+      )}
     </Box>
   )
 }

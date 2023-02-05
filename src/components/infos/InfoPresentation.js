@@ -1,40 +1,65 @@
 import { useAuth } from '../../context/AuthContext'
-import { Typography } from '../ui'
+import { Box, Grid } from '../ui'
 
 import InfoGalery from './InfoGalery'
-import StatsDropdowns from '../stats/StatsDropdowns'
-import RatingInfos from './RatingInfos'
-
 import FavoriteIcon from './FavoriteIcon'
-import { usePresentation } from '../../hooks/queriesHooks'
-import { useParams } from 'react-router-dom'
+import StatsDropdowns from '../stats/StatsDropdowns'
+import Modale from '../Modal'
+import React from 'react'
 
-function InfoPresentation() {
-  let { type, id } = useParams()
-  const data = usePresentation(type, id)
-  const info = data?.Page?.media[0]
+function InfoPresentation({ info }) {
+  const { data: authUser, setData: setAuthUser } = useAuth()
+  const [open, setOpen] = React.useState(false)
+  const handleOpenModal = () => setOpen(true)
+  const handleCloseModal = () => setOpen(false)
 
-  const authUser = useAuth()
+  const handleClick = () => {
+    if (authUser === null) {
+      handleOpenModal()
+    }
+  }
 
   return (
     info && (
-      <>
-        <Typography
-          component="h2"
-          variant="h3"
-          sx={{ textAlign: 'center', m: '0 auto' }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          m: 1,
+        }}
+      >
+        <InfoGalery info={info} />
+        <Grid
+          container
+          sx={{
+            width: '230px',
+            lineHeight: 1.75,
+            my: 1,
+            display: 'flex',
+            alignContent: 'center',
+            justifyContent: 'center',
+          }}
         >
-          {info.title.english ?? info.title.romaji}
-        </Typography>
-        <Typography>{info.title.native}</Typography>
-
-        <FavoriteIcon info={info} />
-
-        <InfoGalery />
-        <RatingInfos />
-
-        {authUser.data ? <StatsDropdowns /> : null}
-      </>
+          <Grid item xs={9} lg={9} sx={{ pr: 1 }} onClick={handleClick}>
+            <StatsDropdowns
+              userDatas={authUser}
+              contentInfos={info}
+              setAuthUser={setAuthUser}
+            />
+          </Grid>
+          {open && (
+            <Modale
+              open={open}
+              handleOpenModal={handleOpenModal}
+              handleCloseModal={handleCloseModal}
+            />
+          )}
+          <Grid item xs={3} lg={3} xl={3}>
+            <FavoriteIcon info={info} />
+          </Grid>
+        </Grid>
+      </Box>
     )
   )
 }

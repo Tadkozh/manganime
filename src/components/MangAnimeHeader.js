@@ -1,11 +1,10 @@
 import { useTheme } from '@mui/material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
-import avatarProfile from '../assets/images/avatar_2.gif'
+import avatarProfile from '../assets/images/avatar_1.jpg'
 import { ReactComponent as LogoIconDark } from '../assets/images/logo_dark.svg'
 import { ReactComponent as LogoIconLight } from '../assets/images/logo_light.svg'
 import {
-  LIGHT,
   ROUTE_HOME,
   ROUTE_LOGIN_REGISTER,
   ROUTE_PROFILE,
@@ -13,6 +12,7 @@ import {
   ROUTE_SEARCH_MANGA,
   ROUTE_TOP_ANIME,
   ROUTE_TOP_MANGA,
+  THEMES,
 } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { ColorModeContext } from '../context/ColorModeContext'
@@ -27,7 +27,6 @@ import {
   TOP_ANIME,
   TOP_MANGA,
 } from '../utils/constants'
-import { getImageName } from '../utils/helper'
 import {
   AppBar,
   Avatar,
@@ -83,7 +82,7 @@ const pagesChildren = [
 // const settings = [PROFILE, LOG_OUT, LOG_IN]
 let settings = ''
 const settingsConnected = [PROFILE, LOG_OUT]
-const settingsNotConnected = [LOG_IN]
+const settingsNotConnected = LOG_IN
 
 const getPropsTypo = {
   mr: 1,
@@ -137,7 +136,8 @@ const AppBarLogo = ({
     'aria-label': `Logo MangAnime ${arialabel}`,
     onClick: handleCLick,
   }
-  const Logo = getColor() === LIGHT ? <LogoIconLight /> : <LogoIconDark />
+  const Logo =
+    getColor() === THEMES.LIGHT ? <LogoIconLight /> : <LogoIconDark />
 
   return (
     <Typography
@@ -246,7 +246,7 @@ const AppBarMenu = ({ navigate }) => {
         <MUISwitchMode
           mode={mode}
           onClick={colorMode.toggleColorMode}
-          checked={mode === LIGHT ? false : true}
+          checked={mode === THEMES.LIGHT ? false : true}
           sx={{
             position: 'relative',
             left: '50%',
@@ -314,7 +314,7 @@ const AppBarMenu = ({ navigate }) => {
         <MUISwitchMode
           mode={mode}
           onClick={colorMode.toggleColorMode}
-          checked={mode === LIGHT ? false : true}
+          checked={mode === THEMES.LIGHT ? false : true}
         />
       </Box>
     </>
@@ -341,7 +341,8 @@ const handleAuthOption = (option, navigate, logout) => {
 }
 
 const AppBarProfile = ({ navigate }) => {
-  const { logout } = useAuth()
+  const { logout, authUser, data: user } = useAuth()
+
   const [anchorElUser, setAnchorElUser] = React.useState(false)
 
   const handleOpenUserMenu = (event) => {
@@ -355,33 +356,51 @@ const AppBarProfile = ({ navigate }) => {
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt={getImageName(avatarProfile)} src={avatarProfile} />
-        </IconButton>
-      </Tooltip>
-      <Menu
-        sx={{ mt: '45px' }}
-        id="menu-appbar"
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
+      {authUser ? (
+        <>
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar
+                alt={'avatar profile'}
+                src={user?.picture_name ? user?.picture_url : avatarProfile}
+              />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: '45px' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((setting) => (
+              <MenuItem
+                key={setting}
+                onClick={() => handleCloseUserMenu(setting)}
+              >
+                <Typography textAlign="center">{setting}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      ) : (
+        <Typography
+          textAlign="center"
+          onClick={() => handleCloseUserMenu(settingsNotConnected)}
+          sx={{ cursor: 'pointer' }}
+        >
+          {settingsNotConnected}
+        </Typography>
+      )}
     </Box>
   )
 }
