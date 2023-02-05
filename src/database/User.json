@@ -1,7 +1,8 @@
 {
   "user": {
     "email": "example@gmail.com",
-    "picture": "picture.jpeg",
+    "picture_name": "picture.jpeg",
+    "picture_url": "https/firestore/...picture.jpeg",
     "bio": "I'm a test for a bio",
     "name": "user",
     "favorite_anime": [],

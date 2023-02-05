@@ -1,4 +1,4 @@
-import { Skeleton, useTheme } from '@mui/material'
+import { useTheme } from '@mui/material'
 import * as React from 'react'
 import { useNavigate } from 'react-router'
 import avatarProfile from '../assets/images/avatar_1.jpg'
@@ -16,7 +16,6 @@ import {
 } from '../commons/constants'
 import { useAuth } from '../context/AuthContext'
 import { ColorModeContext } from '../context/ColorModeContext'
-import { useLoadImage } from '../hooks/loadImage'
 import { useStorageColorTheme } from '../hooks/storageColorTheme'
 import {
   HOME,
@@ -343,7 +342,6 @@ const handleAuthOption = (option, navigate, logout) => {
 
 const AppBarProfile = ({ navigate }) => {
   const { logout, authUser, data: user } = useAuth()
-  const { isLoading, image } = useLoadImage(user)
 
   const [anchorElUser, setAnchorElUser] = React.useState(false)
 
@@ -362,14 +360,10 @@ const AppBarProfile = ({ navigate }) => {
         <>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {isLoading || (image === null && isLoading) ? (
-                <Skeleton variant="circular" />
-              ) : (
-                <Avatar
-                  alt={'avatar profile'}
-                  src={user?.picture ? image : avatarProfile}
-                />
-              )}
+              <Avatar
+                alt={'avatar profile'}
+                src={user?.picture_name ? user?.picture_url : avatarProfile}
+              />
             </IconButton>
           </Tooltip>
           <Menu

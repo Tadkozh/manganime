@@ -14,7 +14,8 @@ const getDocUser = (uid) => doc(collection(db, DATABASE_COLLECTION.USERS), uid)
 const getUser = (data) => ({
   email: data.email,
   bio: data?.bio ?? '',
-  picture: data?.picture ?? '',
+  picture_url: data?.picture_url ?? '',
+  picture_name: data?.picture_name ?? '',
   name: data?.name ?? 'user',
   favorite_anime: data?.favorite_anime ?? [],
   favorite_manga: data?.favorite_manga ?? [],
