@@ -1,4 +1,4 @@
-import { Paper, Tab, Tabs, Typography, useTheme } from '@mui/material'
+import { Paper, Tab, Tabs, useTheme } from '@mui/material'
 import React from 'react'
 import { PROFILE } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
@@ -47,10 +47,7 @@ export default function ProfileStatNav() {
                   component={Link}
                   value={getUrl([PROFILE, category, stat?.name.toLowerCase()])}
                   sx={{
-                    '&:hover': {
-                      boxShadow: `inset 0 0 10px ${theme.palette.primary[500]}}`,
-                    },
-                    '&:focus': {
+                    '&:hover, &focus': {
                       boxShadow: `inset 0 0 10px ${theme.palette.primary[500]}}`,
                     },
                   }}
