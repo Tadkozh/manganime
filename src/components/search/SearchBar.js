@@ -7,14 +7,12 @@ import {
   FormControl,
   FormControlLabel,
   InputLabel,
-  MenuItem,
-  Paper,
-  Refresh,
+  MenuItem, Refresh,
   Search,
   Select,
   styled,
   Switch,
-  TextField,
+  TextField
 } from '../ui'
 
 import { fields, getSelectValues, selectValues } from './selectValues'
@@ -25,7 +23,7 @@ const getNameInput = (title) => {
 
 function SearchBar({ type, query, setQuery, resetQuery }) {
   return (
-    <Paper
+    <Box
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -51,11 +49,11 @@ function SearchBar({ type, query, setQuery, resetQuery }) {
 
       <FormControlLabel
         control={<HideHentai checked={query.isAdult} />}
-        label="Hentai"
+        label="NSFW"
         onChange={() => setQuery(ISADULT)}
       />
       <RightSearch setQuery={setQuery} resetQuery={resetQuery} />
-    </Paper>
+    </Box>
   )
 }
 

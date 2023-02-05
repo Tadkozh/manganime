@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { INFOS } from '../../commons/constants'
@@ -10,7 +9,7 @@ import {
   CardContent,
   CardMedia,
   Paper,
-  Typography,
+  Typography
 } from '../ui'
 import { TopIcon } from './TopIcon'
 

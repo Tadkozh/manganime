@@ -11,14 +11,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  Container,
-  Divider,
   Edit,
   Grid,
   Skeleton,
-  Typography,
 } from '../ui'
-import { Stat } from './Stat'
 
 const ProfileSideBar = () => {
   return (
@@ -35,6 +31,7 @@ const ProfileSideBar = () => {
         }}
       >
         <ProfileSideBarImage />
+        <ProfileSideBarListButtons />
       </Card>
     </Grid>
   )
@@ -123,21 +120,21 @@ const ProfileSideBarListButtons = () => {
   )
 }
 
-const ProfileSideBarStatistics = () => {
-  return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Typography variant="body1" sx={{ my: 2 }}>
-        Statistics
-      </Typography>
-      <Stat name={'Reviews'} number={0} />
-      <Stat name={'Recommendation'} number={0} />
-      <Stat name={'Comments'} number={0} />
-    </Container>
-  )
-}
+// const ProfileSideBarStatistics = () => {
+//   return (
+//     <Container
+//       sx={{
+//         display: 'flex',
+//         flexDirection: 'column',
+//       }}
+//     >
+//       <Typography variant="body1" sx={{ my: 2 }}>
+//         Statistics
+//       </Typography>
+//       <Stat name={'Reviews'} number={0} />
+//       <Stat name={'Recommendation'} number={0} />
+//       <Stat name={'Comments'} number={0} />
+//     </Container>
+//   )
+// }
 export { ProfileSideBar }
