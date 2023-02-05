@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import profilePicture from '../../assets/images/avatar_1.jpg'
-import { IDLE, LOADING, PROFILE, SUCCESS } from '../../commons/constants'
+import { PROFILE } from '../../commons/constants'
 import { useAuth } from '../../context/AuthContext'
 import { userPicture } from '../../database/user'
+import { useLoadImage } from '../../hooks/loadImage'
 import { getUrl } from '../../utils/helper'
 import {
   Box,
@@ -16,7 +17,7 @@ import {
   Edit,
   Grid,
   Skeleton,
-  Typography,
+  Typography
 } from '../ui'
 import { Stat } from './Stat'
 
@@ -43,10 +44,12 @@ const ProfileSideBar = () => {
   )
 }
 const ProfileSideBarImage = () => {
-  const { data: user, setData, status } = useAuth()
+  const { data: user, setData } = useAuth()
+  const { isLoading, image } = useLoadImage(user)
+
   const handleUpload = async (e) => {
     if (e.target.files.length > 0) {
-      const newUser = await userPicture(e.target.files[0])
+      const newUser = await userPicture(e.target.files[0], user)
       setData(newUser)
     }
   }
@@ -62,18 +65,17 @@ const ProfileSideBarImage = () => {
         overflowY: 'hidden',
       }}
     >
-      {status === LOADING && (
+      {isLoading || (image === null && !user?.picture) ? (
         <Skeleton sx={{ width: '225px', height: '225px' }} />
-      )}
-      {status === SUCCESS || status === IDLE ? (
+      ) : (
         <img
           width={225}
           alt={'profile img'}
-          src={user?.picture !== '' ? user?.picture : profilePicture}
+          src={user?.picture ? image : profilePicture}
           style={{ backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
           loading="lazy"
         />
-      ) : null}
+      )}
       <Box
         style={{
           position: 'absolute',
@@ -143,3 +145,4 @@ const ProfileSideBarStatistics = () => {
   )
 }
 export { ProfileSideBar }
+

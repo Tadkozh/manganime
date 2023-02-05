@@ -1,14 +1,37 @@
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  deleteObject,
+} from 'firebase/storage'
 import { storage } from '../firebase-config'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 export const uploadFile = async (file) => {
   const storageRef = ref(storage, `/images/${file.name}`)
-  let url = null
+  await uploadBytes(storageRef, file)
 
-  await uploadBytes(storageRef, file).then(async (snapshot) => {
-    await getDownloadURL(snapshot.ref).then((newUrl) => {
-      url = newUrl
+  return file.name
+}
+
+export const downloadFile = async (picture) => {
+  const storageRef = ref(storage, `/images/${picture}`)
+
+  return await getDownloadURL(storageRef)
+    .then((url) => {
+      return url
     })
-  })
-  return url
+    .catch((error) => {
+      throw new Error(`Error ${downloadFile.name} : ${error}`)
+    })
+}
+
+export const deleteFile = async (picture) => {
+  const storageRef = ref(storage, `/images/${picture}`)
+  return deleteObject(storageRef)
+    .then(() => {
+      return true
+    })
+    .catch((error) => {
+      throw new Error(`Error ${deleteFile.name} : ${error}`)
+    })
 }

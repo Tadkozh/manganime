@@ -17,6 +17,9 @@ const ProfileBioForm = ({ closeBio, user }) => {
   const handleChangeBio = (e) => {
     setBio(e.target.value)
   }
+  const handleCancelBio = () => {
+    closeBio(true)
+  }
 
   return (
     <Box
@@ -37,8 +40,15 @@ const ProfileBioForm = ({ closeBio, user }) => {
           className="textAsMui"
         />
         <Container>
-          <Button onClick={handleSaveBio} variant="contained">
-            Save Bio
+          <Button
+            onClick={handleSaveBio}
+            variant="contained"
+            sx={{ m: 1, ml: 0 }}
+          >
+            Save
+          </Button>
+          <Button onClick={handleCancelBio} variant="outlined" sx={{ m: 1 }}>
+            Cancel
           </Button>
         </Container>
       </>

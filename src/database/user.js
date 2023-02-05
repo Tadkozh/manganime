@@ -1,6 +1,6 @@
 // import { ManageHistoryRounded } from '@mui/icons-material'
 import { addUser, getUserById, updateUser } from './operations'
-import { uploadFile } from './storage'
+import { deleteFile, uploadFile } from './storage'
 import { arrayRemove, arrayUnion } from 'firebase/firestore'
 import { ANIME } from '../commons/constants'
 
@@ -108,9 +108,13 @@ const updateBio = async (bio, user) => {
   return getUserById()
 }
 
-const userPicture = async (picture) => {
-  const url = await uploadFile(picture)
-  updateUserCurrent({ picture: url })
+const userPicture = async (picture, user) => {
+  const isDelete = await deleteFile(user.picture)
+  if (isDelete) {
+    const url = await uploadFile(picture)
+    updateUserCurrent({ picture: url })
+  }
+
   return getUserById()
 }
 
