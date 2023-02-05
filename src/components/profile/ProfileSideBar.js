@@ -35,9 +35,6 @@ const ProfileSideBar = () => {
         }}
       >
         <ProfileSideBarImage />
-        <ProfileSideBarListButtons />
-        <Divider />
-        <ProfileSideBarStatistics />
       </Card>
     </Grid>
   )
