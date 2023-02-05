@@ -65,7 +65,7 @@ const ProfileSideBarImage = () => {
         overflowY: 'hidden',
       }}
     >
-      {isLoading || (image === null && !user?.picture) ? (
+      {isLoading || (image === null && isLoading) ? (
         <Skeleton sx={{ width: '225px', height: '225px' }} />
       ) : (
         <img

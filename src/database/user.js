@@ -109,11 +109,11 @@ const updateBio = async (bio, user) => {
 }
 
 const userPicture = async (picture, user) => {
-  const isDelete = await deleteFile(user.picture)
-  if (isDelete) {
-    const url = await uploadFile(picture)
-    updateUserCurrent({ picture: url })
+  if (user?.profile) {
+    await deleteFile(user.picture)
   }
+  const url = await uploadFile(picture)
+  updateUserCurrent({ picture: url })
 
   return getUserById()
 }
@@ -122,7 +122,7 @@ const updateFavorite = async (info, user) => {
   const typeFavorite = getTypeFavourite(info.type)
   const favorites = structuredClone(user[typeFavorite])
   const isExist = favorites.some((id) => id === info.id)
-  console.log('isExist', isExist)
+  
   updateUserCurrent(
     isExist
       ? { [typeFavorite]: arrayRemove(info.id) }
