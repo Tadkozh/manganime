@@ -11,12 +11,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  Container,
-  Divider,
-  Edit,
+  Container, Edit,
   Grid,
   Skeleton,
-  Typography,
+  Typography
 } from '../ui'
 import { Stat } from './Stat'
 
@@ -35,6 +33,7 @@ const ProfileSideBar = () => {
         }}
       >
         <ProfileSideBarImage />
+        <ProfileSideBarListButtons />
       </Card>
     </Grid>
   )
@@ -141,3 +140,4 @@ const ProfileSideBarStatistics = () => {
   )
 }
 export { ProfileSideBar }
+
