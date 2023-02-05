@@ -146,21 +146,17 @@ const Review = ({ data, create, update }) => {
                 Updated the {update.toLocaleString()}
               </>
             }
-            // action={
-            //   <Rating
-            //     name="rating"
-            //     value={data.score / 20}
-            //     precision={0.5}
-            //     readOnly
-            //   />
-            // }
           />
           <CardContent>
             <Box
               dangerouslySetInnerHTML={{
                 __html: data.body,
               }}
-              sx={{ p: 2, width: '100%', '& img,& video': { width: '100%' } }}
+              sx={{
+                p: 2,
+                maxWidth: '100%',
+                '& img, & video': { maxWidth: '100%' },
+              }}
             />
           </CardContent>
         </Box>
