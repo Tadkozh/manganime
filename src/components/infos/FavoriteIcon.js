@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 
-import { Box, FavoriteRoundedIcon } from '../ui'
+import { FavoriteRoundedIcon, Paper } from '../ui'
 
 import Modale from '../Modal'
 
@@ -30,23 +30,25 @@ function FavoriteIcon({ info }) {
 
   return (
     info && (
-      <Box
-        sx={{
-          bgcolor: isFav ? 'red' : 'white',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: '5px',
-          height: '100%',
-          cursor: 'pointer',
-        }}
-        onClick={handleClickFav}
-      >
-        <FavoriteRoundedIcon
-          fontSize="medium"
-          sx={{ color: isFav ? 'white' : 'grey' }}
-        />
+      <>
+        <Paper
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '5px',
+            height: '100%',
+            cursor: 'pointer',
+          }}
+          elevation={2}
+          onClick={handleClickFav}
+        >
+          <FavoriteRoundedIcon
+            fontSize="medium"
+            sx={{ color: isFav ? 'red' : 'grey' }}
+          />
+        </Paper>
         {open && (
           <Modale
             open={open}
@@ -54,7 +56,7 @@ function FavoriteIcon({ info }) {
             handleCloseModal={handleCloseModal}
           />
         )}
-      </Box>
+      </>
     )
   )
 }
