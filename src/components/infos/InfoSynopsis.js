@@ -37,7 +37,7 @@ function InfoSynopsis({ info }) {
             alignItems: 'center',
           }}
         >
-          {readSynopsis ? 'Read more' : 'Read less'}
+          {readSynopsis ? 'Read less' : 'Read more'}
         </Button>
       )}
     </Paper>

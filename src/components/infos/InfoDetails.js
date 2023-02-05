@@ -171,7 +171,6 @@ function InfoDetails({ info }) {
           display: { xs: seeDetails ? 'grid' : 'none', md: 'block' },
           gridTemplateColumns: 'repeat(auto-fit, 200px)',
           justifyContent: 'center',
-          position: { xs: 'block', md: 'sticky' },
           top: `calc(${
             detailsHeight -
             screenHeight -
