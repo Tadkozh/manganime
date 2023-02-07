@@ -39,9 +39,13 @@ We choose React application from scratch with [create-react-app](https://create-
 
 You can also see the projet online : [Netlify](https://benevolent-starship-f077f3.netlify.app/)
 
-![MangAnime Home](public/smallpreview.png)
+![MangAnime Home](public/previewhome.png)
 
 ![MangAnime Grids](public/preview.png)
+
+![MangAnime Infos](public/previewinfos.png)
+
+![MangAnime Login](public/previewlogin.png)
 
 ![MangAnime Profile](public/previewprofile.png)
 
