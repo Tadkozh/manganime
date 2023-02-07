@@ -32,14 +32,22 @@ We choose React application from scratch with [create-react-app](https://create-
 
 - git clone git@github.com:Tadkozh/manganime.git
 - Create a Firebase project with 'Authentication', 'Firestore' and 'Storage' and replace the project id in firebaserc
-- Also remember to create your .env.local from the .env template (datas are in you Firebase project)
+- Also remember to create your .env.local from the .env template (datas are in your Firebase project, see project settings)
 - npm install
 - npm start
 - Enjoy !
 
 You can also see the projet online : [Netlify](https://benevolent-starship-f077f3.netlify.app/)
 
-![MangAnime](ressources/smallpreview.png)
+![MangAnime Home](public/previewhome.png)
+
+![MangAnime Grids](public/preview.png)
+
+![MangAnime Infos](public/previewinfos.png)
+
+![MangAnime Login](public/previewlogin.png)
+
+![MangAnime Profile](public/previewprofile.png)
 
 # Technologies
 
