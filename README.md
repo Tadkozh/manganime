@@ -53,8 +53,10 @@ You can also see the projet online : [Netlify](https://benevolent-starship-f077f
 
 **The tools used :**
 
+- Discord
 - Notion
 - Figma
+- Google Drive
 - Trello
 - Git / Github
 - VSCode
