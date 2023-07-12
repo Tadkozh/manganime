@@ -37,7 +37,7 @@ We choose React application from scratch with [create-react-app](https://create-
 - npm start
 - Enjoy !
 
-You can also see the projet online : [Netlify](https://benevolent-starship-f077f3.netlify.app/)
+You can also see the projet online : [Netlify](https://manganimerm.netlify.app/)
 
 ![MangAnime Home](public/previewhome.png)
 
